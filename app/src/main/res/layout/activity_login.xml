@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#1d1f21"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/dc_logo"
+        android:layout_width="157dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="120dp"
+        app:srcCompat="@drawable/dc_logo" />
+
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="298dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint=" #33ffffff"
+        android:hint="고유번호 입력"
+        android:inputType="number"
+        android:letterSpacing="-0.02"
+        android:lineSpacingExtra="21sp"
+        android:maxLength="4"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#33ffffff"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="20dp"
+        android:background="#3993de"
+        android:text="로그인"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/bt_dwload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="40dp"
+        android:background="#ffffff"
+        android:text="앱 다운로드"
+        android:textColor="#3993de" />
+
+    <TextView
+        android:id="@+id/txt_log_exp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:letterSpacing="-0.02"
+        android:lineSpacingExtra="18sp"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:text="고유번호는 다이나믹케어 앱에서 확인하실 수 있습니다\n(앱 &gt; 더보기 &gt; 키오스크 간편 로그인)" />
+
+
+
+</LinearLayout>
