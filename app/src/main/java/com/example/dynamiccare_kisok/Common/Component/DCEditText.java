@@ -21,6 +21,10 @@ public class DCEditText implements TextWatcher {
         source.addTextChangedListener(this);
     }
 
+    public EditText getSource() {
+        return source;
+    }
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
