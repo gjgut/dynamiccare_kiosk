@@ -38,6 +38,7 @@ public class DeadLift extends Excercise {
     @Override
     public Uri getVideoUri()
     {
-        return Uri.parse("android.resource://"+main.getPackageName()+"/raw/video_deadlift.mp4");
+        return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_deadlift);
+
     }
 }

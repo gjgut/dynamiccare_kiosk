@@ -38,6 +38,7 @@ public class Instruction extends DCfragment {
 
         title = view.findViewById(R.id.txt_ins_title);
         content = view.findViewById(R.id.txt_ins_content);
+
         videoView = view.findViewById(R.id.video_instruct);
         MediaController mediaController = new MediaController(main);
         mediaController.setAnchorView(videoView);
@@ -45,7 +46,6 @@ public class Instruction extends DCfragment {
         videoView.setMediaController(mediaController);
         videoView.setVideoURI(video);
         videoView.requestFocus();
-        videoView.start();
 
         title.setText(Main.getCurrentExcercise().getSimpleName());
         content.setText(Main.getCurrentExcercise().getInstruction());

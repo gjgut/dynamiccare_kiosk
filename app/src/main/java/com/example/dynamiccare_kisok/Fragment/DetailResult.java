@@ -38,7 +38,7 @@ public class DetailResult extends DCfragment {
         lowertitle = view.findViewById(R.id.txt_detail_cont_title);
         body = view.findViewById(R.id.detail_body);
 
-        uppertitle.setText(main.getCurrentExcercise().getSimpleName());
+        uppertitle.setText("측정 결과 확인");
         lowertitle.setText(main.getCurrentExcercise().getSimpleName()+" "+main.getCurrentExcercise().getMuscleName());
         body.setImageDrawable(main.getCurrentExcercise().getMappingBody());
 
