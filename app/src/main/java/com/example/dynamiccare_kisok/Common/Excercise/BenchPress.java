@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Common.Excercise;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,5 +33,11 @@ public class BenchPress extends Excercise {
     @Override
     public Drawable getMappingBody() {
         return  main.getResources().getDrawable(R.drawable.body_pec);
+    }
+
+    @Override
+    public Uri getVideoUri()
+    {
+        return Uri.parse("android.resource://"+main.getPackageName()+"/raw/video_bench.mp4");
     }
 }

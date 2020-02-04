@@ -1,10 +1,13 @@
 package com.example.dynamiccare_kisok.Fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +18,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class Instruction extends DCfragment {
     TextView title,content;
+    VideoView videoView;
 
     public Instruction(Main main)
     {
@@ -34,6 +38,14 @@ public class Instruction extends DCfragment {
 
         title = view.findViewById(R.id.txt_ins_title);
         content = view.findViewById(R.id.txt_ins_content);
+        videoView = view.findViewById(R.id.video_instruct);
+        MediaController mediaController = new MediaController(main);
+        mediaController.setAnchorView(videoView);
+        Uri video = Main.getCurrentExcercise().getVideoUri();
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(video);
+        videoView.requestFocus();
+        videoView.start();
 
         title.setText(Main.getCurrentExcercise().getSimpleName());
         content.setText(Main.getCurrentExcercise().getInstruction());
