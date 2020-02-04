@@ -94,7 +94,7 @@ public class Explain extends DCfragment {
                 break;
             }
         }
-//        setBottomBar(DCButton.isPressed());
+        setBottomBar(DCButton.getPressedButton().isPressed());
     }
 
     @Nullable
@@ -108,7 +108,7 @@ public class Explain extends DCfragment {
     public void setViews(View view)
     {
         try {
-//            setBottomBar(DCButton.isPressed());
+            setBottomBar(DCButton.getPressedButton().isPressed());
             bench = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));

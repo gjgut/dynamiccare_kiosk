@@ -67,7 +67,9 @@ public class DCButton  {
     {
         return isPressed;
     }
-    public void setIsPressed(boolean value) { isPressed = value;}
+    public static DCButton getPressedButton() {
+        return PressedButton;
+    }
 
     public void setPressed()
     {
