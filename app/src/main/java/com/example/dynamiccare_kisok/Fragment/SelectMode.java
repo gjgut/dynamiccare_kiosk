@@ -9,17 +9,20 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.R;
 
 public class SelectMode extends DCfragment {
-    ImageButton selectExec,isometronic,isotonic;
+    ImageButton selectExec,isokinetic,isometronic,isotonic;
 
 
     public SelectMode(Main main)
     {
         super(main);
+//        Main.setCurrentExcercise(null);
+//        DCButton.setIsPressed(false);
     }
 
     @Override
@@ -29,16 +32,25 @@ public class SelectMode extends DCfragment {
         {
             case R.id.btn_select_exec:
             {
+                Main.setisIsoKinetic(false);
+                ((Main)getActivity()).ReplaceFragment(new ExcerciseMode(main),true);
+                break;
+            }
+            case R.id.btn_select_exec_isokinetic:
+            {
+                Main.setisIsoKinetic(true);
                 ((Main)getActivity()).ReplaceFragment(new ExcerciseMode(main),true);
                 break;
             }
             case R.id.btn_sel_mes_isometric:
             {
+                Main.setIsIsoTonic(false);
                 ((Main)getActivity()).ReplaceFragment(new Explain(main),true);
                 break;
             }
             case R.id.btn_sel_mes_isotonic:
             {
+                Main.setIsIsoTonic(true);
                 ((Main)getActivity()).ReplaceFragment(new Explain(main),true);
                 break;
             }
@@ -50,10 +62,12 @@ public class SelectMode extends DCfragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_mode,container, false);
         selectExec = view.findViewById(R.id.btn_select_exec);
+        isokinetic = view.findViewById(R.id.btn_select_exec_isokinetic);
         isometronic = view.findViewById(R.id.btn_sel_mes_isometric);
         isotonic = view.findViewById(R.id.btn_sel_mes_isotonic);
 
         selectExec.setOnClickListener(this);
+        isokinetic.setOnClickListener(this);
         isometronic.setOnClickListener(this);
         isotonic.setOnClickListener(this);
 

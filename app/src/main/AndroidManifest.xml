@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.Main"></activity>
+        <activity android:name=".Activity.ModifyAdmin"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.Authentification"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.Main" />
         <activity android:name=".temporary.DetailResult" />
         <activity android:name=".temporary.GraphResult" />
         <activity android:name=".temporary.Instruction" />

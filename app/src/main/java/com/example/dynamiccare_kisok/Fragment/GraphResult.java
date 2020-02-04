@@ -71,7 +71,10 @@ public class GraphResult extends DCfragment {
 
     @Override
     public String getTitle() {
-        return "등장성 측정 모드";
+        if(Main.getisIsoTonic())
+            return "등척성 측정 모드";
+        else
+            return "등장성 측정 모드";
     }
 
     @Override

@@ -23,10 +23,30 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCfragment currentFragment;
     ImageButton btn_back, btn_next;
     DCActionBar customActionBar;
-    ConstraintLayout bottombar;
+    static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
-    boolean isIsoKinetic,isIsoTonic;
+    static boolean isIsoKinetic,isIsoTonic;
     static Excercise currentExcercise;
+    public static ConstraintLayout getBottombar()
+    {
+        return bottombar;
+    }
+
+    public static void setisIsoKinetic(boolean value){
+        isIsoKinetic = value;
+    }
+    public static void setIsIsoTonic(boolean value)
+    {
+        isIsoTonic = value;
+    }
+    public static boolean getisIsoKinetic()
+    {
+        return isIsoKinetic;
+    }
+    public static boolean getisIsoTonic()
+    {
+        return  isIsoTonic;
+    }
     public static Excercise getCurrentExcercise()
     {
         return currentExcercise;

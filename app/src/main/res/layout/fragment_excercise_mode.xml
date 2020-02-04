@@ -221,10 +221,8 @@
                         android:id="@+id/spin_level"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:backgroundTint=" #33ffffff"
-                        android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:layout_gravity="center"
+                        android:backgroundTint=" #33ffffff" />
                 </LinearLayout>
 
             </LinearLayout>

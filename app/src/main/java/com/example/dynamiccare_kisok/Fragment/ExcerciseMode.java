@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class ExcerciseMode extends DCfragment{
     DCEditText edt_rest,edt_weight,edt_set,edt_count;
     TextView txt_count,txt_set;
     ImageView Body;
+    LinearLayout container;
     Spinner spin_level;
     boolean isIsokinetic;
 
@@ -131,6 +133,15 @@ public class ExcerciseMode extends DCfragment{
     public void setViews(View view)
     {
         try {
+            if(Main.getisIsoKinetic()) {
+                view.findViewById(R.id.container_weight).setVisibility(View.GONE);
+                view.findViewById(R.id.container_level).setVisibility(View.VISIBLE);
+            }
+            else {
+                view.findViewById(R.id.container_level).setVisibility(View.GONE);
+                view.findViewById(R.id.container_weight).setVisibility(View.VISIBLE);
+            }
+
 
             bench = new DCButton();
             squat = new DCButton();
@@ -211,7 +222,10 @@ public class ExcerciseMode extends DCfragment{
     }
     @Override
     public String getTitle() {
-        return "운동 모드";
+        if(Main.getisIsoKinetic())
+            return "등속성 운동 모드";
+        else
+            return "등장성 운동 모드";
     }
 
     @Override
@@ -275,15 +289,8 @@ class spinnerAdapter extends BaseAdapter
         }
         //데이터세팅
         String text = data.get(position);
-        ((Button)convertView.findViewById(R.id.spinnerbutton)).setText(text);
-        ((Button)convertView.findViewById(R.id.spinnerbutton)).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                v.getBackground().setColorFilter(Color.parseColor("#33ffffff"),
-                        PorterDuff.Mode.SRC_ATOP);
-            }
-        });
+        ((TextView)convertView.findViewById(R.id.spinnerText)).setText(text);
+
 
         return convertView;
     }

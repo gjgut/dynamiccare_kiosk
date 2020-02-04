@@ -33,6 +33,14 @@ public class Explain extends DCfragment {
         super(main);
     }
 
+    public void setBottomBar(boolean pressed)
+    {
+        if(pressed)
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+        else
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -86,6 +94,7 @@ public class Explain extends DCfragment {
                 break;
             }
         }
+//        setBottomBar(DCButton.isPressed());
     }
 
     @Nullable
@@ -99,6 +108,7 @@ public class Explain extends DCfragment {
     public void setViews(View view)
     {
         try {
+//            setBottomBar(DCButton.isPressed());
             bench = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));
@@ -143,12 +153,15 @@ public class Explain extends DCfragment {
 
     @Override
     public String getTitle() {
-        return "등장성 측정 모드";
+        if(Main.getisIsoTonic())
+            return "등척성 측정 모드";
+        else
+            return "등장성 측정 모드";
     }
 
     @Override
     public int isHomeVisible() {
-        return  View.VISIBLE;
+        return  View.INVISIBLE;
     }
 
     @Override
