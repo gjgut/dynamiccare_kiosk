@@ -33,12 +33,13 @@ public class Explain extends DCfragment {
         super(main);
     }
 
-    public void setBottomBar(boolean pressed)
+    public void setBottomBar()
     {
-        if(pressed)
-            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
-        else
+        if(DCButton.getPressedButton()==null)
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+        else
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -94,7 +95,7 @@ public class Explain extends DCfragment {
                 break;
             }
         }
-        setBottomBar(DCButton.getPressedButton().isPressed());
+        setBottomBar();
     }
 
     @Nullable
@@ -108,7 +109,6 @@ public class Explain extends DCfragment {
     public void setViews(View view)
     {
         try {
-            setBottomBar(DCButton.getPressedButton().isPressed());
             bench = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));

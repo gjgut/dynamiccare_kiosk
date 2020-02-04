@@ -21,8 +21,8 @@ public class SelectMode extends DCfragment {
     public SelectMode(Main main)
     {
         super(main);
-//        Main.setCurrentExcercise(null);
-//        DCButton.setIsPressed(false);
+        Main.setCurrentExcercise(null);
+        DCButton.PressedOff();
     }
 
     @Override

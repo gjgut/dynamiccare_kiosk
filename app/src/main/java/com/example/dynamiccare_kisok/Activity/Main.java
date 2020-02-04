@@ -107,10 +107,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
         }
 
+
+        if(currentFragment.getClass() == ExcerciseMode.class  || currentFragment.getClass() == DetailResult.class)
+            btn_next.setVisibility(View.INVISIBLE);
+        else
+            btn_next.setVisibility(View.VISIBLE);
+
         switch(fragment.getClass().getSimpleName())
         {
             case "Explain":
             {
+                btn_next.setVisibility(View.INVISIBLE);
                 btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
                 break;
             }
@@ -128,10 +135,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         customActionBar.setHome(fragment.isHomeVisible());
         customActionBar.setTitle(fragment.getTitle());
-        if(currentFragment.getClass() == ExcerciseMode.class  || currentFragment.getClass() == DetailResult.class)
-            btn_next.setVisibility(View.INVISIBLE);
-        else
-            btn_next.setVisibility(View.VISIBLE);
         fragmentTransaction.replace(R.id.main_container,fragment);
         fragmentTransaction.commit();
     }

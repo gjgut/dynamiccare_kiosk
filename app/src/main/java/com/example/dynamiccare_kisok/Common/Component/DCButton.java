@@ -67,9 +67,11 @@ public class DCButton  {
     {
         return isPressed;
     }
+
     public static DCButton getPressedButton() {
         return PressedButton;
     }
+    public static void PressedOff(){ PressedButton = null;}
 
     public void setPressed()
     {
