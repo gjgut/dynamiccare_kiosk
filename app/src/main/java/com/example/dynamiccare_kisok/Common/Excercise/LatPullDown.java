@@ -26,6 +26,8 @@ public class LatPullDown extends Excercise {
     public String getSimpleName() {
         return "랫 풀 다운";
     }
+    @Override
+    public String getMuscleName() { return "광배근";}
 
     @Override
     public Drawable getMappingBody() {

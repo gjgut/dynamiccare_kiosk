@@ -26,6 +26,8 @@ public class DeadLift extends Excercise {
     public String getSimpleName() {
         return "데드 리프트";
     }
+    @Override
+    public String getMuscleName() { return "척추기립근";}
 
     @Override
     public Drawable getMappingBody() {

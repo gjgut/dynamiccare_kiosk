@@ -28,6 +28,8 @@ public class ArmCurl extends Excercise {
         return "암 컬";
     }
 
+    public String getMuscleName() { return "상완이두근";}
+
     @Override
     public Drawable getMappingBody() {
         return main.getResources().getDrawable(R.drawable.body_biceps);

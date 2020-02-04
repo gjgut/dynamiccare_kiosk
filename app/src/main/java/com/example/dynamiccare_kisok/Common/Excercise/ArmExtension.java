@@ -24,8 +24,11 @@ public class ArmExtension extends Excercise {
 
     @Override
     public String getSimpleName() {
-        return "암 extends";
+        return "암 익스텐션";
     }
+
+    @Override
+    public String getMuscleName() { return "상완삼두근";}
 
     @Override
     public Drawable getMappingBody() {

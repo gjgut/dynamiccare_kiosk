@@ -26,6 +26,8 @@ public class CarfRaise extends Excercise {
     public String getSimpleName() {
         return "카프 레이즈";
     }
+    @Override
+    public String getMuscleName() { return "하퇴삼두근";}
 
     @Override
     public Drawable getMappingBody() {

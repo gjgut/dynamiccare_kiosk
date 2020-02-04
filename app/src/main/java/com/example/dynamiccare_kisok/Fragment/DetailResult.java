@@ -39,7 +39,7 @@ public class DetailResult extends DCfragment {
         body = view.findViewById(R.id.detail_body);
 
         uppertitle.setText(main.getCurrentExcercise().getSimpleName());
-        lowertitle.setText(main.getCurrentExcercise().getSimpleName());
+        lowertitle.setText(main.getCurrentExcercise().getSimpleName()+" "+main.getCurrentExcercise().getMuscleName());
         body.setImageDrawable(main.getCurrentExcercise().getMappingBody());
 
 

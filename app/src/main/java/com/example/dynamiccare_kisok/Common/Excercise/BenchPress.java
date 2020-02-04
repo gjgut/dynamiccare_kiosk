@@ -26,6 +26,8 @@ public class BenchPress extends Excercise {
     public String getSimpleName() {
         return "벤치 프레스";
     }
+    @Override
+    public String getMuscleName() { return "대흉근";}
 
     @Override
     public Drawable getMappingBody() {

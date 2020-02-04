@@ -13,5 +13,6 @@ public abstract class Excercise {
     public abstract void getVideo();
     public abstract String getInstruction();
     public abstract String getSimpleName();
+    public abstract String getMuscleName();
     public abstract Drawable getMappingBody();
 }

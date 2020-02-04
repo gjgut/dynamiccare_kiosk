@@ -26,6 +26,8 @@ public class ShoulderPress extends Excercise {
     public String getSimpleName() {
         return "숄더 프레스";
     }
+    @Override
+    public String getMuscleName() { return "삼각근";}
 
     @Override
     public Drawable getMappingBody() {
