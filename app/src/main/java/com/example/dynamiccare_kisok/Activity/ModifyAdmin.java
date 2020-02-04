@@ -61,16 +61,16 @@ public class ModifyAdmin extends AppCompatActivity {
                 {
                     newpwvisible.setImageDrawable(getDrawable(R.drawable.ic_visibility_off));
                     newpwvisible.setPadding(30,30,30,30);
-                    New.getSource().setSelection(New.getSource().length());
                     New.getSource().setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    New.getSource().setSelection(New.getSource().length());
                     isVisible=false;
                 }
                 else
                 {
                     newpwvisible.setImageDrawable(getDrawable(R.drawable.ic_visibility_on));
                     newpwvisible.setPadding(40,35,31,38);
-                    New.getSource().setSelection(New.getSource().length());
                     New.getSource().setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    New.getSource().setSelection(New.getSource().length());
                     isVisible=true;
                 }
         }
