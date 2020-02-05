@@ -1,5 +1,6 @@
 package com.example.dynamiccare_kisok.Fragment;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,12 +41,33 @@ public class Instruction extends DCfragment {
         content = view.findViewById(R.id.txt_ins_content);
 
         videoView = view.findViewById(R.id.video_instruct);
-        MediaController mediaController = new MediaController(main);
+
+
+        final MediaController mediaController = new MediaController(main);
         mediaController.setAnchorView(videoView);
-        Uri video = Main.getCurrentExcercise().getVideoUri();
+        Uri video = Uri.parse("https://www.radiantmediaplayer.com/media/bbb-360p.mp4");
+        mediaController.setPadding(0, 0, 0, 800); //상위 레이어의 바닥에서 얼마 만큼? 패딩을 줌
         videoView.setMediaController(mediaController);
         videoView.setVideoURI(video);
         videoView.requestFocus();
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            // 동영상 재생준비가 완료된후 호출되는 메서드
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                //이부분을 하지않으면, 맨처음에 VideoPlayer 에 검은화면이 나오므로, 해주셔야합니다~
+                videoView.start();
+                videoView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mediaController.show(0);
+                        videoView.pause();
+                    }
+                }, 100);
+            }
+        });
+
+        videoView.start();
 
         title.setText(Main.getCurrentExcercise().getSimpleName());
         content.setText(Main.getCurrentExcercise().getInstruction());

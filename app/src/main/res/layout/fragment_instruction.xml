@@ -70,8 +70,11 @@
         <VideoView
             android:id="@+id/video_instruct"
             android:layout_width="match_parent"
-            android:layout_height="215dp"
-            android:background="#FFFFFF" />
+            android:layout_height="250dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="#FFFFFF"
+            android:keepScreenOn="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +84,7 @@
 
             <TextView
                 android:id="@+id/txt_ins_label"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="주의 사항"
                 android:textColor="#3993de"
@@ -89,8 +92,8 @@
 
             <TextView
                 android:id="@+id/txt_ins_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="8sp"
                 android:lines="10"

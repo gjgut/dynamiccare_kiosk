@@ -141,7 +141,7 @@
 
     <LinearLayout
         android:id="@+id/exc_view"
-        android:layout_width="385dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
