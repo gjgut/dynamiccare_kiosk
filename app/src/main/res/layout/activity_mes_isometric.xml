@@ -73,7 +73,7 @@
                 tools:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout2"
+                    android:id="@+id/ButtonGroup"
                     android:layout_width="336dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="30dp"
@@ -121,7 +121,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout3"
+                    android:id="@+id/IconGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -208,7 +208,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/buttons_maniplate"
+                    android:id="@+id/ActionButtonGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

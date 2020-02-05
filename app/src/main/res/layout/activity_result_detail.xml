@@ -71,14 +71,14 @@
             android:padding="40dp"
             android:scaleType="fitCenter"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintBottom_toTopOf="@+id/ResultBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/body_shape" />
 
         <LinearLayout
-            android:id="@+id/linearLayout4"
+            android:id="@+id/ResultBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
