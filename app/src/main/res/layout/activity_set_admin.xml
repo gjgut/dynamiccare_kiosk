@@ -66,7 +66,7 @@
                 android:backgroundTint=" #33ffffff"
                 android:ems="10"
                 android:hint="기존 관리자 번호 입력"
-                android:inputType="number|textPassword"
+                android:inputType="numberPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#00BB3636"
                 android:textColorHint="#33ffffff" />
@@ -84,7 +84,7 @@
                     android:backgroundTint=" #33ffffff"
                     android:ems="10"
                     android:hint="새로운 관리자 번호 입력"
-                    android:inputType="number|textPassword"
+                    android:inputType="numberPassword"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#33ffffff"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
                 android:backgroundTint=" #33ffffff"
                 android:ems="10"
                 android:hint="새로운 관리자 번호 확인"
-                android:inputType="number|textPassword"
+                android:inputType="numberPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#33ffffff" />
 

@@ -16,7 +16,6 @@ import com.example.dynamiccare_kisok.R;
 
 public class GraphResult extends DCfragment {
 
-    DCButton Low,Mid,High;
 
     public GraphResult(Main main)
     {
@@ -27,47 +26,17 @@ public class GraphResult extends DCfragment {
     @Override
     public void onClick(View v)
     {
-        switch (v.getId())
-        {
-            case R.id.btn_low:
-            {
-                Low.setPressed();
-                break;
-            }
-            case R.id.btn_mid:
-            {
-                Mid.setPressed();
-                break;
-            }
 
-            case R.id.btn_high:
-            {
-                High.setPressed();
-                break;
-            }
-
-        }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result_graph,container, false);
-        setViews(view);
         return view;
     }
 
-    public void setViews(View v)
-    {
-        Low = new DCButton((ImageButton)v.findViewById(R.id.btn_low),getResources().getDrawable(R.drawable.pressed_btn_low));
-        Mid = new DCButton((ImageButton)v.findViewById(R.id.btn_mid),getResources().getDrawable(R.drawable.pressed_btn_mid));
-        High = new DCButton((ImageButton)v.findViewById(R.id.btn_high),getResources().getDrawable(R.drawable.pressed_btn_high));
 
-        Low.getButton().setOnClickListener(this);
-        Mid.getButton().setOnClickListener(this);
-        High.getButton().setOnClickListener(this);
-
-    }
 
     @Override
     public String getTitle() {
