@@ -173,12 +173,16 @@
             android:layout_weight="2"
             android:background="#242629"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
 
             <LinearLayout
                 android:id="@+id/container_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
@@ -187,9 +191,10 @@
 
                 <TextView
                     android:id="@+id/txt_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="3"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:letterSpacing="-0.02"
                     android:lineSpacingExtra="19sp"
@@ -198,8 +203,9 @@
                     android:textSize="14sp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -219,8 +225,8 @@
 
                     <Spinner
                         android:id="@+id/spin_level"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:backgroundTint=" #33ffffff" />
                 </LinearLayout>
@@ -229,8 +235,8 @@
 
             <LinearLayout
                 android:id="@+id/container_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
@@ -241,8 +247,9 @@
                 <TextView
                     android:id="@+id/txt_weight"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:letterSpacing="-0.02"
                     android:lineSpacingExtra="19sp"
@@ -252,8 +259,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:orientation="horizontal">
 
@@ -294,8 +302,8 @@
 
             <LinearLayout
                 android:id="@+id/container_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="0dp"
                 android:layout_weight="1"
@@ -304,9 +312,10 @@
 
                 <TextView
                     android:id="@+id/txt_labelCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="4"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:letterSpacing="-0.02"
                     android:lineSpacingExtra="19sp"
@@ -315,19 +324,19 @@
                     android:textSize="14sp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/txt_realcount"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center|right"
                         android:letterSpacing="-0.02"
                         android:lineSpacingExtra="19sp"
                         android:text="0 "
@@ -338,10 +347,10 @@
                     <TextView
                         android:id="@+id/textView5"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center"
                         android:letterSpacing="-0.02"
                         android:lineSpacingExtra="19sp"
                         android:text=" / "
@@ -351,12 +360,11 @@
 
                     <EditText
                         android:id="@+id/et_count"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint=" #33ffffff"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center|left"
                         android:inputType="numberDecimal"
                         android:maxLength="2"
                         android:text="1"
@@ -372,8 +380,8 @@
 
             <LinearLayout
                 android:id="@+id/container_set"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="0dp"
                 android:layout_weight="1"
@@ -381,9 +389,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:letterSpacing="-0.02"
                     android:lineSpacingExtra="19sp"
@@ -392,19 +401,19 @@
                     android:textSize="14sp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="4"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/txt_realset"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center|right"
                         android:letterSpacing="-0.02"
                         android:lineSpacingExtra="19sp"
                         android:text="0 "
@@ -414,11 +423,11 @@
 
                     <TextView
                         android:id="@+id/txt_labelseparator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center"
                         android:letterSpacing="-0.02"
                         android:lineSpacingExtra="19sp"
                         android:text=" / "
@@ -428,12 +437,11 @@
 
                     <EditText
                         android:id="@+id/et_set"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint=" #33ffffff"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center|left"
                         android:inputType="numberDecimal"
                         android:maxLength="2"
                         android:text="1"
@@ -449,8 +457,8 @@
 
             <LinearLayout
                 android:id="@+id/container_rest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="top"
@@ -458,9 +466,10 @@
 
                 <TextView
                     android:id="@+id/txt_rest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="4"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:letterSpacing="-0.02"
                     android:lineSpacingExtra="19sp"
@@ -469,17 +478,19 @@
                     android:textSize="14sp" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center|center_horizontal|top|center_vertical"
                     android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/et_rest"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="bottom"
+                        android:layout_weight="1"
                         android:backgroundTint=" #33ffffff"
                         android:gravity="center|center_horizontal|top|center_vertical"
                         android:inputType="numberDecimal"
@@ -492,11 +503,11 @@
 
                     <TextView
                         android:id="@+id/txt_labelsec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:gravity="center|center_horizontal|top|center_vertical"
+                        android:gravity="center"
                         android:letterSpacing="-0.02"
                         android:lineSpacingExtra="19sp"
                         android:text="sec"

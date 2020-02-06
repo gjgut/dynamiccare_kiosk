@@ -85,7 +85,7 @@
             <TextView
                 android:id="@+id/txt_ins_label"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="주의 사항"
                 android:textColor="#3993de"
                 android:textSize="18sp" />
