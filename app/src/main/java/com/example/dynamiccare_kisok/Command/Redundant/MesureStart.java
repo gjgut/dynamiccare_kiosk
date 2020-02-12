@@ -1,9 +1,9 @@
-package com.example.dynamiccare_kisok.Command;
+package com.example.dynamiccare_kisok.Command.Redundant;
 
 //측정모드 READY
-public class MesureReady extends Command {
+public class MesureStart extends Command {
 
-    public MesureReady(String max, String time)
+    public MesureStart(String max, String time)
     {
         data = TrimParameter(max,"005")+TrimParameter(time,"005");
 
@@ -11,7 +11,7 @@ public class MesureReady extends Command {
 
     @Override
     protected String getCommandCode() {
-        return "CRY";
+        return "CST";
     }
 
     @Override

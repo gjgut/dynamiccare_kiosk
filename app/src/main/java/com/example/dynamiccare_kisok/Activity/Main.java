@@ -41,7 +41,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     FragmentManager fragmentManager;
     static boolean isIsoKinetic,isIsoTonic;
     static Excercise currentExcercise;
-    private UsbService usbService;
+    static UsbService usbService;
+
+    public static UsbService getusbService()
+    {
+        return usbService;
+    }
     public static ConstraintLayout getBottombar()
     {
         return bottombar;

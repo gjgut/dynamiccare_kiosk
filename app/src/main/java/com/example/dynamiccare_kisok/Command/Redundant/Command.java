@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Command;
+package com.example.dynamiccare_kisok.Command.Redundant;
 
 public abstract class Command {
     protected String Checksums="";

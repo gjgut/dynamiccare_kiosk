@@ -54,6 +54,7 @@ public class StaticCommands {
      }
     public static String ExcerciseMode(boolean isKinetic){ return getFullCommand(false,"CE"+(isKinetic ? "K" : "G"));}
     public static String ExcerciseSetting(String Mode, String weight, String count, String rData){ return getFullCommand(true,"CET"+TrimParameter(Mode,"00")+TrimParameter(weight,"010")+TrimParameter(count,"010")+TrimParameter(rData,"03"));}
+    public static String ExcerciseStart(String Mode, String weight, String count, String rData){ return getFullCommand(true,"CES"+TrimParameter(Mode,"00")+TrimParameter(weight,"010")+TrimParameter(count,"010")+TrimParameter(rData,"03"));}
     public static String ExcerciseReady(String Mode, String weight, String count, String rData){ return getFullCommand(true,"CER"+TrimParameter(Mode,"00")+TrimParameter(weight,"010")+TrimParameter(count,"010")+TrimParameter(rData,"03"));}
     public static String ExcercisePause(String Mode, String weight, String count, String rData){ return getFullCommand(true,"CEU"+TrimParameter(Mode,"00")+TrimParameter(weight,"000")+TrimParameter(count,"000")+TrimParameter(rData,"03"));}
     public static String ExcerciseStop(String Mode, String weight, String count, String rData){ return getFullCommand(true,"CEP"+TrimParameter(Mode,"00")+TrimParameter(weight,"000")+TrimParameter(count,"000")+TrimParameter(rData,"03"));}

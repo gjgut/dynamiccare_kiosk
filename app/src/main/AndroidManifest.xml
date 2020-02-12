@@ -39,6 +39,10 @@
         <activity
             android:name=".Activity.Login"
             android:theme="@style/AppTheme.NoActionBar" />
+        <service
+            android:name="com.example.dynamiccare_kisok.Common.Util.UsbService"
+            android:enabled="true">
+        </service>
     </application>
 
 </manifest>

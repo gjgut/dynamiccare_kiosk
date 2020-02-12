@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Command;
+package com.example.dynamiccare_kisok.Command.Redundant;
 
 
 //운동모드 READY

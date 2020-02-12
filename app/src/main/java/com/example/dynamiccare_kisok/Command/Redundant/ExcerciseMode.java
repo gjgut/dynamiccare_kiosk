@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Command;
+package com.example.dynamiccare_kisok.Command.Redundant;
 
 //    일반/등속성 운동모드 명령
 public class ExcerciseMode extends Command {

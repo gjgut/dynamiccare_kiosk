@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Command;
+package com.example.dynamiccare_kisok.Command.Redundant;
 
 //연결
 public class Connect extends Command {

@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Command.StaticCommands;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
@@ -63,41 +64,81 @@ public class ExcerciseMode extends DCfragment{
             case R.id.exc_tab_btn_bench:
             {
                 bench.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("05",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_squat:
             {
                 squat.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("01",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_deadlift:
             {
                 deadlift.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("02",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_shoulderpress:
             {
                 press.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("03",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_latpulldown:
             {
                 latpull.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("18",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_carfraise:
             {
                 carf.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("14",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_armcurl:
             {
                 curl.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("16",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_tab_btn_armextension:
             {
                 extension.setPressed();
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseStart("17",
+                                edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_btn_start:
