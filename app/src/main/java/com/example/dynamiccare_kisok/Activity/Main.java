@@ -51,6 +51,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     {
         return bottombar;
     }
+    public static void PlaySound()
+    {
+
+    }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override

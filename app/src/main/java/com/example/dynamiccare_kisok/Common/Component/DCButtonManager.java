@@ -11,7 +11,7 @@ public class DCButtonManager {
     {
         return DCState;
     }
-    public enum State { Clear,StartSetting,Setted,Excercise,Stop }
+    public enum State { Clear,StartSetting,Setted,Excercise,Paused,Stop }
 
     public DCButtonManager(DCButton Bench,
                            DCButton Squat,
@@ -85,7 +85,16 @@ public class DCButtonManager {
                     DCState = State.Excercise;
                     break;
                 }
+                case Paused:
+                {
+                    DCState = State.Paused;
+                    break;
+                }
                 case Stop: {
+                    if(Ready.isPressed)
+                        Ready.setPressed();
+                    if(Start.isPressed)
+                        Start.setPressed();
                     DCState = State.Stop;
                     break;
                 }
