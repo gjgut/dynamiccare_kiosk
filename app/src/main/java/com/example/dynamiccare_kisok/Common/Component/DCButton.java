@@ -6,6 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.R;
+
 public class DCButton  {
     ImageButton button;
     static DCButton PressedButton;
@@ -13,8 +16,13 @@ public class DCButton  {
     boolean isPressed;
     Drawable Pressed,UnPressed,MappingBody;
     static Drawable DefaultBody;
+    Main main;
 
     public DCButton(){}
+    public DCButton(Main main)
+    {
+        this.main = main;
+    }
     public DCButton(ImageButton button,Drawable pressed)
     {
         setButton(button,pressed);
@@ -89,6 +97,7 @@ public class DCButton  {
 
     public void setPressed()
     {
+        main.PlaySound(R.raw.normal_button);
         isPressed = !isPressed;
         ToggleButton();
         UpdateBody();

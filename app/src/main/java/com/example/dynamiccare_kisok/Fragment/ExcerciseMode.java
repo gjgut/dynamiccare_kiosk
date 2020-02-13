@@ -297,14 +297,14 @@ public class ExcerciseMode extends DCfragment{
             }
 
 
-            bench = new DCButton();
-            squat = new DCButton();
-            deadlift = new DCButton();
-            press = new DCButton();
-            latpull = new DCButton();
-            carf = new DCButton();
-            curl = new DCButton();
-            extension = new DCButton();
+            bench = new DCButton(main);
+            squat = new DCButton(main);
+            deadlift = new DCButton(main);
+            press = new DCButton(main);
+            latpull = new DCButton(main);
+            carf = new DCButton(main);
+            curl = new DCButton(main);
+            extension = new DCButton(main);
             start = new DCActionButton();
             stop = new DCActionButton();
             ready = new DCActionButton();

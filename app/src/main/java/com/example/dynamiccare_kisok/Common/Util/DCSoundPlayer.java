@@ -8,9 +8,6 @@ import android.media.SoundPool;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.R;
 
-import java.util.HashMap;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class DCSoundPlayer {
 

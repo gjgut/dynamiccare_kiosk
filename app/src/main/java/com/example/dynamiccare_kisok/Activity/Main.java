@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
+import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
@@ -41,24 +42,21 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCActionBar customActionBar;
     static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
-    static boolean isIsoKinetic,isIsoTonic;
+    static boolean isIsoKinetic, isIsoTonic;
     static Excercise currentExcercise;
     static UsbService usbService;
-    SoundPool soundPool;
+    DCSoundPlayer dcSoundPlayer;
 
-    public static UsbService getusbService()
-    {
+    public static UsbService getusbService() {
         return usbService;
     }
-    public static ConstraintLayout getBottombar()
-    {
+
+    public static ConstraintLayout getBottombar() {
         return bottombar;
     }
-    public void PlaySound(int soundId)
-    {
-        SoundPool soundpool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        int tak = soundpool.load(getApplicationContext(),soundId, 1);
-        soundpool.play(tak, 1, 1, 0, 1, 1);
+
+    public void PlaySound(int soundId) {
+        dcSoundPlayer.play(soundId);
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
@@ -97,34 +95,37 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         }
     };
 
-    public static void setisIsoKinetic(boolean value){
+    public static void setisIsoKinetic(boolean value) {
         isIsoKinetic = value;
     }
-    public static void setIsIsoTonic(boolean value)
-    {
+
+    public static void setIsIsoTonic(boolean value) {
         isIsoTonic = value;
     }
-    public static boolean getisIsoKinetic()
-    {
+
+    public static boolean getisIsoKinetic() {
         return isIsoKinetic;
     }
-    public static boolean getisIsoTonic()
-    {
-        return  isIsoTonic;
+
+    public static boolean getisIsoTonic() {
+        return isIsoTonic;
     }
-    public static Excercise getCurrentExcercise()
-    {
+
+    public static Excercise getCurrentExcercise() {
         return currentExcercise;
     }
-    public static void setCurrentExcercise(Excercise excercise){currentExcercise = excercise;}
 
+    public static void setCurrentExcercise(Excercise excercise) {
+        currentExcercise = excercise;
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        dcSoundPlayer = new DCSoundPlayer();
+        dcSoundPlayer.initSounds(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
@@ -141,59 +142,50 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back: {
-                ReplaceFragment(currentFragment.getBackFragment(),false);
+                ReplaceFragment(currentFragment.getBackFragment(), false);
                 break;
             }
             case R.id.btn_next: {
-                ReplaceFragment(currentFragment.getNextFragment(),true);
+                ReplaceFragment(currentFragment.getNextFragment(), true);
                 break;
             }
         }
     }
 
-    public void ReplaceFragment(DCfragment fragment,boolean isRight)
-    {
+    public void ReplaceFragment(DCfragment fragment, boolean isRight) {
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         currentFragment = fragment;
 
-        if(isRight && fragment.getClass() != SelectMode.class) {
+        if (isRight && fragment.getClass() != SelectMode.class) {
             bottombar.setVisibility(View.VISIBLE);
             fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-        }
-        else if(!isRight && fragment.getClass() != SelectMode.class)
-        {
+        } else if (!isRight && fragment.getClass() != SelectMode.class) {
             bottombar.setVisibility(View.VISIBLE);
             fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-        }
-        else
-        {
+        } else {
             bottombar.setVisibility(View.INVISIBLE);
             fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
         }
 
 
-        if(currentFragment.getClass() == ExcerciseMode.class  || currentFragment.getClass() == DetailResult.class)
+        if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
             btn_next.setVisibility(View.INVISIBLE);
         else
             btn_next.setVisibility(View.VISIBLE);
 
-        switch(fragment.getClass().getSimpleName())
-        {
-            case "Explain":
-            {
+        switch (fragment.getClass().getSimpleName()) {
+            case "Explain": {
                 btn_next.setVisibility(View.INVISIBLE);
                 btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
                 break;
             }
-            case "Instruction":
-            {
+            case "Instruction": {
                 btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
                 break;
             }
-            case "GraphResult":
-            {
+            case "GraphResult": {
                 btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
                 break;
             }
@@ -201,32 +193,29 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         customActionBar.setHome(fragment.isHomeVisible());
         customActionBar.setTitle(fragment.getTitle());
-        fragmentTransaction.replace(R.id.main_container,fragment);
+        fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
     }
 
-    public void ReplaceFragment(DCfragment fragment)
-    {
+    public void ReplaceFragment(DCfragment fragment) {
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         currentFragment = fragment;
 
-        if(fragment.getClass() != SelectMode.class) {
+        if (fragment.getClass() != SelectMode.class) {
             bottombar.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             bottombar.setVisibility(View.INVISIBLE);
         }
 
         customActionBar.setHome(fragment.isHomeVisible());
         customActionBar.setTitle(fragment.getTitle());
-        if(currentFragment.getClass() == ExcerciseMode.class  || currentFragment.getClass() == DetailResult.class)
+        if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
             btn_next.setVisibility(View.INVISIBLE);
         else
             btn_next.setVisibility(View.VISIBLE);
-        fragmentTransaction.replace(R.id.main_container,fragment);
+        fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
     }
 
@@ -271,30 +260,4 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         registerReceiver(mUsbReceiver, filter);
     }
 
-    /*
-     * This handler will be passed to UsbService. Data received from serial port is displayed through this handler
-     */
-//    private static class MyHandler extends Handler {
-//        private final WeakReference<Main> mActivity;
-//
-//        public MyHandler(Main activity) {
-//            mActivity = new WeakReference<>(activity);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case UsbService.MESSAGE_FROM_SERIAL_PORT:
-//                    String data = (String) msg.obj;
-//                    mActivity.get().display.append(data);
-//                    break;
-//                case UsbService.CTS_CHANGE:
-//                    Toast.makeText(mActivity.get(), "CTS_CHANGE",Toast.LENGTH_LONG).show();
-//                    break;
-//                case UsbService.DSR_CHANGE:
-//                    Toast.makeText(mActivity.get(), "DSR_CHANGE",Toast.LENGTH_LONG).show();
-//                    break;
-//            }
-//        }
-//    }
 }
