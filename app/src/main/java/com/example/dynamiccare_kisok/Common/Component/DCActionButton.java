@@ -5,12 +5,20 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageButton;
 
+import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.R;
+
 public class DCActionButton {
     ImageButton button;
     boolean isPressed;
     Drawable Pressed,UnPressed;
+    Main main;
 
     public DCActionButton(){}
+    public DCActionButton(Main main)
+    {
+        this.main = main;
+    }
 
     public DCActionButton(ImageButton button, Drawable pressed)
     {
@@ -19,6 +27,7 @@ public class DCActionButton {
 
     public void setPressed()
     {
+        main.PlaySound(R.raw.normal_button);
         isPressed = !isPressed;
         if(isPressed)
             this.button.setImageDrawable(Pressed);

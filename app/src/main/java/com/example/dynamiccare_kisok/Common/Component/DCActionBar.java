@@ -63,6 +63,7 @@ public class DCActionBar {
             Home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    main.PlaySound(R.raw.home_button);
                     main.ReplaceFragment(new SelectMode(main),true);
                     main.overridePendingTransition(R.anim.left_in,R.anim.right_out);
                 }
@@ -70,6 +71,7 @@ public class DCActionBar {
             LogOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    main.PlaySound(R.raw.back_button);
                     Intent intent = new Intent(main, Login.class);
                     main.startActivity(intent);
                     main.overridePendingTransition(R.anim.left_in,R.anim.right_out);

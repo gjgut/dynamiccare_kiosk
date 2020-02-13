@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
+import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
@@ -46,6 +48,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     static Excercise currentExcercise;
     static UsbService usbService;
     DCSoundPlayer dcSoundPlayer;
+    ACKListener ackListener;
 
     public static UsbService getusbService() {
         return usbService;
@@ -57,6 +60,51 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void PlaySound(int soundId) {
         dcSoundPlayer.play(soundId);
+    }
+
+    public void HandleACK(ACK ack) {
+        switch (ack.getCommandCode())
+        {
+            case "AME":
+            {
+                break;
+            }
+            case "ASP":
+            {
+
+                break;
+            }
+            case "ACD":
+            {
+
+                break;
+            }
+            case "ACB":
+            {
+                switch(ack.getData())
+                {
+                    case "1":
+                    case "2":
+                        PlaySound(R.raw.bee_measurement_begin);
+                        break;
+                    case "3":
+                        PlaySound(R.raw.ring);
+                        break;
+                }
+            }
+            case "AET":
+            {
+
+                break;
+            }
+            case "ACS":
+            case "AEE":
+            case "ASS":
+            {
+
+                break;
+            }
+        }
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
@@ -86,7 +134,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
             usbService = ((UsbService.UsbBinder) arg1).getService();
-//            usbService.setHandler(mHandler);
+            usbService.setHandler(ackListener);
         }
 
         @Override
@@ -124,6 +172,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ackListener = new ACKListener(this);
+
         dcSoundPlayer = new DCSoundPlayer();
         dcSoundPlayer.initSounds(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
@@ -142,10 +193,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back: {
+                PlaySound(R.raw.back_button);
                 ReplaceFragment(currentFragment.getBackFragment(), false);
                 break;
             }
             case R.id.btn_next: {
+                PlaySound(R.raw.back_button);
                 ReplaceFragment(currentFragment.getNextFragment(), true);
                 break;
             }

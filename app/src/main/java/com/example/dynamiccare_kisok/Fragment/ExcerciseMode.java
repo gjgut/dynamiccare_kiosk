@@ -305,9 +305,9 @@ public class ExcerciseMode extends DCfragment{
             carf = new DCButton(main);
             curl = new DCButton(main);
             extension = new DCButton(main);
-            start = new DCActionButton();
-            stop = new DCActionButton();
-            ready = new DCActionButton();
+            start = new DCActionButton(main);
+            stop = new DCActionButton(main);
+            ready = new DCActionButton(main);
             edt_count = new DCEditText((EditText)view.findViewById(R.id.et_count));
             edt_weight = new DCEditText((EditText)view.findViewById(R.id.et_weight));
             edt_rest = new DCEditText((EditText)view.findViewById(R.id.et_rest));
