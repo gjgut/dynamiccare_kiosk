@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -42,6 +44,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     static boolean isIsoKinetic,isIsoTonic;
     static Excercise currentExcercise;
     static UsbService usbService;
+    SoundPool soundPool;
 
     public static UsbService getusbService()
     {
@@ -51,9 +54,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     {
         return bottombar;
     }
-    public static void PlaySound()
+    public void PlaySound(int soundId)
     {
-
+        SoundPool soundpool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        int tak = soundpool.load(getApplicationContext(),soundId, 1);
+        soundpool.play(tak, 1, 1, 0, 1, 1);
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
@@ -119,6 +124,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);

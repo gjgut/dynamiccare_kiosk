@@ -69,6 +69,7 @@ public class ExcerciseMode extends DCfragment{
             {
                 bench.setPressed();
                 if(bench.isPressed()) {
+                    main.PlaySound(R.raw.normal_button);
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             StaticCommands.ExcerciseStart("05",
