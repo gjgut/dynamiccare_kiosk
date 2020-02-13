@@ -540,10 +540,11 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:background="#37393e"
+            android:background="#0037393E"
             android:cropToPadding="true"
             android:padding="0dp"
             android:scaleType="fitCenter"
+            android:tint="#00000000"
             app:srcCompat="@drawable/btn_start" />
 
         <ImageButton

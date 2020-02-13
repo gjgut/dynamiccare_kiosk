@@ -1,5 +1,7 @@
 package com.example.dynamiccare_kisok.Common.Component;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +22,18 @@ public class DCButton  {
     public DCButton(ImageButton button,Drawable pressed,Drawable mappingBody)
     {
         setButton(button, pressed, mappingBody);
+    }
+    public void Deactivate()
+    {
+        this.button.setClickable(false);
+        this.button.setColorFilter(Color.parseColor("#28FFFFFF"),
+                PorterDuff.Mode.SRC_ATOP);
+    }
+    public void Activate()
+    {
+        this.button.setClickable(true);
+        this.button.setColorFilter(Color.parseColor("#00000000"),
+                PorterDuff.Mode.SRC_ATOP);
     }
     public static void setBody(ImageView body)
     {

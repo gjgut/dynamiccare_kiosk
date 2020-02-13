@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -26,7 +27,9 @@ import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Command.StaticCommands;
+import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
+import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.R;
@@ -36,7 +39,9 @@ import java.util.List;
 
 public class ExcerciseMode extends DCfragment{
 
-    DCButton bench,squat,deadlift,press,curl,extension,latpull,carf,start,stop,ready;
+    DCButton bench,squat,deadlift,press,curl,extension,latpull,carf;
+    DCActionButton start,stop,ready;
+    DCButtonManager dcButtonManager;
     DCEditText edt_rest,edt_weight,edt_set,edt_count;
     TextView txt_count,txt_set;
     ImageView Body;
@@ -54,106 +59,213 @@ public class ExcerciseMode extends DCfragment{
         this.isIsokinetic = isIsokinetic;
     }
 
-
-
     @Override
     public void onClick(View v)
     {
+        Handler handler = new Handler();
         switch (v.getId())
         {
             case R.id.exc_tab_btn_bench:
             {
                 bench.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("05",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(bench.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("05",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_squat:
             {
                 squat.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("01",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(squat.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("01",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_deadlift:
             {
                 deadlift.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("02",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(deadlift.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("02",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_shoulderpress:
             {
                 press.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("03",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(press.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("03",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_latpulldown:
             {
                 latpull.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("18",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(latpull.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("18",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_carfraise:
             {
                 carf.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("14",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(carf.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("14",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_armcurl:
             {
                 curl.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("16",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(curl.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("16",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_tab_btn_armextension:
             {
                 extension.setPressed();
-                Main.getusbService().write(
-                        StaticCommands.ExcerciseStart("17",
-                                edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                if(extension.isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.getusbService().write(
+                            StaticCommands.ExcerciseStart("17",
+                                    edt_weight.getSource().getText().toString(),
+                                    edt_count.getSource().getText().toString(),
+                                    edt_set.getSource().getText().toString()).getBytes());
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        }
+                    }, 5000);
+                }
+                else
+                {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                }
                 break;
             }
             case R.id.exc_btn_start:
             {
                 start.setPressed();
+                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                 break;
             }
             case R.id.exc_btn_stop:
             {
                 stop.setPressed();
+                dcButtonManager.setDCState(DCButtonManager.State.Stop);
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        stop.setPressed();
+                    }
+                }, 5000);
                 break;
             }
             case R.id.exc_btn_ready:
             {
                 ready.setPressed();
+                dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+                Main.getusbService().write(
+                        StaticCommands.ExcerciseReady("01",edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString()).getBytes()
+                );
                 break;
             }
 
@@ -192,9 +304,9 @@ public class ExcerciseMode extends DCfragment{
             carf = new DCButton();
             curl = new DCButton();
             extension = new DCButton();
-            start = new DCButton();
-            stop = new DCButton();
-            ready = new DCButton();
+            start = new DCActionButton();
+            stop = new DCActionButton();
+            ready = new DCActionButton();
             edt_count = new DCEditText((EditText)view.findViewById(R.id.et_count));
             edt_weight = new DCEditText((EditText)view.findViewById(R.id.et_weight));
             edt_rest = new DCEditText((EditText)view.findViewById(R.id.et_rest));
@@ -255,6 +367,8 @@ public class ExcerciseMode extends DCfragment{
             ready.getButton().setOnClickListener(this);
             txt_count.setOnClickListener(this);
             txt_set.setOnClickListener(this);
+
+            dcButtonManager = new DCButtonManager(bench,squat,deadlift,press,curl,extension,latpull,carf,start,ready,stop);
 
         }catch (Exception e)
         {

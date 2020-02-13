@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,32 +29,34 @@ public class SelectMode extends DCfragment {
     @Override
     public void onClick(View v)
     {
-        switch (v.getId())
+        try {
+
+            switch (v.getId()) {
+                case R.id.btn_select_exec: {
+                    Main.setisIsoKinetic(false);
+                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                    break;
+                }
+                case R.id.btn_select_exec_isokinetic: {
+                    Main.setisIsoKinetic(true);
+                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                    break;
+                }
+                case R.id.btn_sel_mes_isometric: {
+                    Main.setIsIsoTonic(false);
+                    ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
+                    break;
+                }
+                case R.id.btn_sel_mes_isotonic: {
+                    Main.setIsIsoTonic(true);
+                    ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
+                    break;
+                }
+            }
+        }catch (Exception e)
         {
-            case R.id.btn_select_exec:
-            {
-                Main.setisIsoKinetic(false);
-                ((Main)getActivity()).ReplaceFragment(new ExcerciseMode(main),true);
-                break;
-            }
-            case R.id.btn_select_exec_isokinetic:
-            {
-                Main.setisIsoKinetic(true);
-                ((Main)getActivity()).ReplaceFragment(new ExcerciseMode(main),true);
-                break;
-            }
-            case R.id.btn_sel_mes_isometric:
-            {
-                Main.setIsIsoTonic(false);
-                ((Main)getActivity()).ReplaceFragment(new Explain(main),true);
-                break;
-            }
-            case R.id.btn_sel_mes_isotonic:
-            {
-                Main.setIsIsoTonic(true);
-                ((Main)getActivity()).ReplaceFragment(new Explain(main),true);
-                break;
-            }
+            e.printStackTrace();
+            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

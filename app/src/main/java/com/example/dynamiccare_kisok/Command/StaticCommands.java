@@ -16,8 +16,9 @@ public class StaticCommands {
              asciisum +=(int)datum;
          }
          String CheckSumBase = Integer.toHexString(asciisum & 0x00FF);
-         Checksums = CheckSumBase.substring(0,1)+CheckSumBase.substring(CheckSumBase.length()-1);
-         return Checksums;
+         if(CheckSumBase.length()<2)
+             CheckSumBase = "0"+CheckSumBase;
+         return CheckSumBase;
      }
      protected static String TrimParameter(String str, String def)
      {
