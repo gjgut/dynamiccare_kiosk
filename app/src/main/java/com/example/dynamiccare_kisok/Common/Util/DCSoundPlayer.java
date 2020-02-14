@@ -63,6 +63,17 @@ public class DCSoundPlayer {
             six_sets_completed_english,
             ten_sets_completed_english;
 
+    private int select_the_mode,
+            select_the_mode_english,
+            excercise_mode,
+            excercise_mode_english,
+            kinetic_excercise_mode,
+            kinetic_excercise_mode_english,
+            metric_log_mode,
+            metric_log_mode_english,
+            sotonic_log_mode,
+            sotonic_log_mode_english;
+
 
     public void initSounds(Context context) {
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
@@ -117,6 +128,19 @@ public class DCSoundPlayer {
         seven_sets_completed_english = soundPool.load(context, R.raw.seven_sets_completed_english, 1);
         six_sets_completed_english = soundPool.load(context, R.raw.six_sets_completed_english, 1);
         ten_sets_completed_english = soundPool.load(context, R.raw.ten_sets_completed_english, 1);
+
+        select_the_mode = soundPool.load(context, R.raw.select_the_mode, 1);
+        select_the_mode_english = soundPool.load(context, R.raw.select_the_mode_english, 1);
+        excercise_mode = soundPool.load(context, R.raw.excercise_mode, 1);
+        excercise_mode_english = soundPool.load(context, R.raw.excercise_mode_english, 1);
+        kinetic_excercise_mode = soundPool.load(context, R.raw.kinetic_excercise_mode, 1);
+        kinetic_excercise_mode_english = soundPool.load(context, R.raw.kinetic_excercise_mode_english, 1);
+        metric_log_mode = soundPool.load(context, R.raw.metric_log_mode, 1);
+        metric_log_mode_english = soundPool.load(context, R.raw.metric_log_mode_english, 1);
+        sotonic_log_mode = soundPool.load(context, R.raw.sotonic_log_mode, 1);
+        sotonic_log_mode_english = soundPool.load(context, R.raw.sotonic_log_mode_english, 1);
+
+
 
     }
 
@@ -270,6 +294,37 @@ public class DCSoundPlayer {
                 break;
             case R.raw.ten_sets_completed_english:
                 soundPool.play(ten_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+
+            case R.raw.select_the_mode:
+            soundPool.play(select_the_mode, 1, 1, 0, 0, 1);
+            break;
+            case R.raw.select_the_mode_english:
+                soundPool.play(select_the_mode_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.excercise_mode:
+                soundPool.play(excercise_mode, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.excercise_mode_english:
+                soundPool.play(excercise_mode_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.kinetic_excercise_mode:
+                soundPool.play(kinetic_excercise_mode, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.kinetic_excercise_mode_english:
+                soundPool.play(kinetic_excercise_mode_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.metric_log_mode:
+                soundPool.play(metric_log_mode, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.metric_log_mode_english:
+                soundPool.play(metric_log_mode_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.sotonic_log_mode:
+                soundPool.play(sotonic_log_mode, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.sotonic_log_mode_english:
+                soundPool.play(sotonic_log_mode_english, 1, 1, 0, 0, 1);
                 break;
         }
     }
