@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 public class SelectMode extends DCfragment {
@@ -35,21 +36,25 @@ public class SelectMode extends DCfragment {
                 case R.id.btn_select_exec: {
                     Main.setisIsoKinetic(false);
                     ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                    Commands.ExcerciseMode(false);
                     break;
                 }
                 case R.id.btn_select_exec_isokinetic: {
                     Main.setisIsoKinetic(true);
                     ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                    Commands.ExcerciseMode(true);
                     break;
                 }
                 case R.id.btn_sel_mes_isometric: {
                     Main.setIsIsoTonic(false);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
+                    Commands.MeasureMode(false);
                     break;
                 }
                 case R.id.btn_sel_mes_isotonic: {
                     Main.setIsIsoTonic(true);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
+                    Commands.MeasureMode(true);
                     break;
                 }
             }

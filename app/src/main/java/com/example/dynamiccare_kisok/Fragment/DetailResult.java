@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 public class DetailResult extends DCfragment {
@@ -97,17 +98,23 @@ public class DetailResult extends DCfragment {
             case R.id.btn_low:
             {
                 Low.setPressed();
+                if(Low.isPressed())
+                    Commands.MeasureLevelCheck("L");
                 break;
             }
             case R.id.btn_mid:
             {
                 Mid.setPressed();
+                if(Mid.isPressed())
+                    Commands.MeasureLevelCheck("M");
                 break;
             }
 
             case R.id.btn_high:
             {
                 High.setPressed();
+                if(High.isPressed())
+                    Commands.MeasureLevelCheck("H");
                 break;
             }
 

@@ -1,32 +1,24 @@
 package com.example.dynamiccare_kisok.Fragment;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
-import com.example.dynamiccare_kisok.Command.StaticCommands;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
@@ -72,7 +64,7 @@ public class ExcerciseMode extends DCfragment{
                     main.PlaySound(R.raw.normal_button);
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("05",
+                            Commands.ExcerciseStart("05",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -94,7 +86,7 @@ public class ExcerciseMode extends DCfragment{
                 if(squat.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("01",
+                            Commands.ExcerciseStart("01",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -116,7 +108,7 @@ public class ExcerciseMode extends DCfragment{
                 if(deadlift.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("02",
+                            Commands.ExcerciseStart("02",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -138,7 +130,7 @@ public class ExcerciseMode extends DCfragment{
                 if(press.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("03",
+                            Commands.ExcerciseStart("03",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -160,7 +152,7 @@ public class ExcerciseMode extends DCfragment{
                 if(latpull.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("18",
+                            Commands.ExcerciseStart("18",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -182,7 +174,7 @@ public class ExcerciseMode extends DCfragment{
                 if(carf.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("14",
+                            Commands.ExcerciseStart("14",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -204,7 +196,7 @@ public class ExcerciseMode extends DCfragment{
                 if(curl.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("16",
+                            Commands.ExcerciseStart("16",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -226,7 +218,7 @@ public class ExcerciseMode extends DCfragment{
                 if(extension.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
-                            StaticCommands.ExcerciseStart("17",
+                            Commands.ExcerciseStart("17",
                                     edt_weight.getSource().getText().toString(),
                                     edt_count.getSource().getText().toString(),
                                     edt_set.getSource().getText().toString()).getBytes());
@@ -265,7 +257,7 @@ public class ExcerciseMode extends DCfragment{
                 ready.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Excercise);
                 Main.getusbService().write(
-                        StaticCommands.ExcerciseReady("01",edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString()).getBytes()
+                        Commands.ExcerciseReady("01",edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString()).getBytes()
                 );
                 break;
             }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
-import com.example.dynamiccare_kisok.Command.StaticCommands;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
@@ -51,7 +49,7 @@ public class Explain extends DCfragment {
             {
                 bench.setPressed();
                 Main.setCurrentExcercise(new BenchPress(main));
-//                Main.getusbService().write(StaticCommands.MeasureSet());
+//                Main.getusbService().write(Commands.MeasureSet());
                 break;
             }
             case R.id.mes_btn_squat:
