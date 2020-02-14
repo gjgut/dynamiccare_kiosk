@@ -55,6 +55,13 @@ public class DCSoundPlayer {
             thank_you_for_your_efforts,
             thank_you_for_your_efforts_english;
 
+    private int eight_sets_completed_english,
+            five_sets_completed_english,
+            four_sets_completed_english,
+            nine_sets_completed_english,
+            seven_sets_completed_english,
+            six_sets_completed_english,
+            ten_sets_completed_english;
 
 
     public void initSounds(Context context) {
@@ -102,6 +109,14 @@ public class DCSoundPlayer {
         take_down_the_bar_english = soundPool.load(context, R.raw.take_down_the_bar_english, 1);
         thank_you_for_your_efforts = soundPool.load(context, R.raw.thank_you_for_your_efforts, 1);
         thank_you_for_your_efforts_english = soundPool.load(context, R.raw.thank_you_for_your_efforts_english, 1);
+
+        eight_sets_completed_english = soundPool.load(context, R.raw.eight_sets_completed_english, 1);
+        five_sets_completed_english = soundPool.load(context, R.raw.five_sets_completed_english, 1);
+        four_sets_completed_english = soundPool.load(context, R.raw.four_sets_completed_english, 1);
+        nine_sets_completed_english = soundPool.load(context, R.raw.nine_sets_completed_english, 1);
+        seven_sets_completed_english = soundPool.load(context, R.raw.seven_sets_completed_english, 1);
+        six_sets_completed_english = soundPool.load(context, R.raw.six_sets_completed_english, 1);
+        ten_sets_completed_english = soundPool.load(context, R.raw.ten_sets_completed_english, 1);
 
     }
 
@@ -175,64 +190,86 @@ public class DCSoundPlayer {
                 break;
 
             case R.raw.one_set_complete:
-                soundPool.play( one_set_complete, 1, 1, 0, 0, 1);
+                soundPool.play(one_set_complete, 1, 1, 0, 0, 1);
                 break;
             case R.raw.one_set_complete_english:
                 soundPool.play(one_set_complete_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.two_set_complete:
-                soundPool.play(two_set_complete , 1, 1, 0, 0, 1);
+                soundPool.play(two_set_complete, 1, 1, 0, 0, 1);
                 break;
             case R.raw.two_set_complete_english:
-                soundPool.play(two_set_complete_english , 1, 1, 0, 0, 1);
+                soundPool.play(two_set_complete_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.three_set_complete:
-                soundPool.play(three_set_complete , 1, 1, 0, 0, 1);
+                soundPool.play(three_set_complete, 1, 1, 0, 0, 1);
                 break;
             case R.raw.three_set_complete_english:
-                soundPool.play( three_set_complete_english, 1, 1, 0, 0, 1);
+                soundPool.play(three_set_complete_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.excercise_is_going_to_stop:
-                soundPool.play(excercise_is_going_to_stop , 1, 1, 0, 0, 1);
+                soundPool.play(excercise_is_going_to_stop, 1, 1, 0, 0, 1);
                 break;
             case R.raw.excercise_is_going_to_stop_english:
-                soundPool.play(excercise_is_going_to_stop_english , 1, 1, 0, 0, 1);
+                soundPool.play(excercise_is_going_to_stop_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.next_set_will_start_soon:
-                soundPool.play(next_set_will_start_soon , 1, 1, 0, 0, 1);
+                soundPool.play(next_set_will_start_soon, 1, 1, 0, 0, 1);
                 break;
             case R.raw.next_set_will_start_soon_english:
-                soundPool.play( next_set_will_start_soon_english, 1, 1, 0, 0, 1);
+                soundPool.play(next_set_will_start_soon_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.raise_the_bar:
-                soundPool.play(raise_the_bar , 1, 1, 0, 0, 1);
+                soundPool.play(raise_the_bar, 1, 1, 0, 0, 1);
                 break;
             case R.raw.raise_the_bar_english:
-                soundPool.play(raise_the_bar_english , 1, 1, 0, 0, 1);
+                soundPool.play(raise_the_bar_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.start_excercise:
-                soundPool.play( start_excercise, 1, 1, 0, 0, 1);
+                soundPool.play(start_excercise, 1, 1, 0, 0, 1);
                 break;
             case R.raw.start_excercise_english:
-                soundPool.play(start_excercise_english , 1, 1, 0, 0, 1);
+                soundPool.play(start_excercise_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.take_a_break:
-                soundPool.play(take_a_break , 1, 1, 0, 0, 1);
+                soundPool.play(take_a_break, 1, 1, 0, 0, 1);
                 break;
             case R.raw.take_a_break_english:
-                soundPool.play( take_a_break_english, 1, 1, 0, 0, 1);
+                soundPool.play(take_a_break_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.take_down_the_bar:
-                soundPool.play( take_down_the_bar, 1, 1, 0, 0, 1);
+                soundPool.play(take_down_the_bar, 1, 1, 0, 0, 1);
                 break;
             case R.raw.take_down_the_bar_english:
-                soundPool.play(take_down_the_bar_english , 1, 1, 0, 0, 1);
+                soundPool.play(take_down_the_bar_english, 1, 1, 0, 0, 1);
                 break;
             case R.raw.thank_you_for_your_efforts:
-                soundPool.play(thank_you_for_your_efforts , 1, 1, 0, 0, 1);
+                soundPool.play(thank_you_for_your_efforts, 1, 1, 0, 0, 1);
                 break;
             case R.raw.thank_you_for_your_efforts_english:
                 soundPool.play(thank_you_for_your_efforts_english, 1, 1, 0, 0, 1);
+                break;
+
+            case R.raw.eight_sets_completed_english:
+                soundPool.play(eight_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.five_sets_completed_english:
+                soundPool.play(five_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.four_sets_completed_english:
+                soundPool.play(four_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.nine_sets_completed_english:
+                soundPool.play(nine_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.seven_sets_completed_english:
+                soundPool.play(seven_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.six_sets_completed_english:
+                soundPool.play(six_sets_completed_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.ten_sets_completed_english:
+                soundPool.play(ten_sets_completed_english, 1, 1, 0, 0, 1);
                 break;
         }
     }
