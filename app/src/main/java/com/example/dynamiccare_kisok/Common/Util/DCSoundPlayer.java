@@ -74,6 +74,16 @@ public class DCSoundPlayer {
             sotonic_log_mode,
             sotonic_log_mode_english;
 
+    private int setup_is_complete_english,
+            please_follow_the_directions_english,
+            adjust_the_bar_or_wire_properly_english,
+            please_do_your_best_in_measuring_english,
+            do_not_stop_measuring_until_the_end_comment_is_made_english,
+            the_measurement_wil_begin_shortly_english,
+            the_measurement_starts_when_you_hear_the_beep_sound_english,
+            the_measurement_is_going_to_stop_english,
+            please_check_the_results_english;
+
 
     public void initSounds(Context context) {
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
@@ -140,7 +150,15 @@ public class DCSoundPlayer {
         sotonic_log_mode = soundPool.load(context, R.raw.sotonic_log_mode, 1);
         sotonic_log_mode_english = soundPool.load(context, R.raw.sotonic_log_mode_english, 1);
 
-
+        setup_is_complete_english = soundPool.load(context, R.raw.setup_is_complete_english, 1);
+        please_follow_the_directions_english = soundPool.load(context, R.raw.please_follow_the_directions_english, 1);
+        adjust_the_bar_or_wire_properly_english = soundPool.load(context, R.raw.adjust_the_bar_or_wire_properly_english, 1);
+        please_do_your_best_in_measuring_english = soundPool.load(context, R.raw.please_do_your_best_in_measuring_english, 1);
+        do_not_stop_measuring_until_the_end_comment_is_made_english = soundPool.load(context, R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english, 1);
+        the_measurement_wil_begin_shortly_english = soundPool.load(context, R.raw.the_measurement_wil_begin_shortly_english, 1);
+        the_measurement_starts_when_you_hear_the_beep_sound_english = soundPool.load(context, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english, 1);
+        the_measurement_is_going_to_stop_english = soundPool.load(context, R.raw.the_measurement_is_going_to_stop_english, 1);
+        please_check_the_results_english = soundPool.load(context, R.raw.please_check_the_results_english, 1);
 
     }
 
@@ -297,8 +315,8 @@ public class DCSoundPlayer {
                 break;
 
             case R.raw.select_the_mode:
-            soundPool.play(select_the_mode, 1, 1, 0, 0, 1);
-            break;
+                soundPool.play(select_the_mode, 1, 1, 0, 0, 1);
+                break;
             case R.raw.select_the_mode_english:
                 soundPool.play(select_the_mode_english, 1, 1, 0, 0, 1);
                 break;
@@ -325,6 +343,34 @@ public class DCSoundPlayer {
                 break;
             case R.raw.sotonic_log_mode_english:
                 soundPool.play(sotonic_log_mode_english, 1, 1, 0, 0, 1);
+                break;
+
+            case R.raw.setup_is_complete_english:
+                soundPool.play(setup_is_complete_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.please_follow_the_directions_english:
+                soundPool.play(please_follow_the_directions_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.adjust_the_bar_or_wire_properly_english:
+                soundPool.play(adjust_the_bar_or_wire_properly_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.please_do_your_best_in_measuring_english:
+                soundPool.play(please_do_your_best_in_measuring_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english:
+                soundPool.play(do_not_stop_measuring_until_the_end_comment_is_made_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.the_measurement_wil_begin_shortly_english:
+                soundPool.play(the_measurement_wil_begin_shortly_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english:
+                soundPool.play(the_measurement_starts_when_you_hear_the_beep_sound_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.the_measurement_is_going_to_stop_english:
+                soundPool.play(the_measurement_is_going_to_stop_english, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.please_check_the_results_english:
+                soundPool.play(please_check_the_results_english, 1, 1, 0, 0, 1);
                 break;
         }
     }
