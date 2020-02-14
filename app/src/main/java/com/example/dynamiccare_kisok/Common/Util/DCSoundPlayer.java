@@ -84,6 +84,57 @@ public class DCSoundPlayer {
             the_measurement_is_going_to_stop_english,
             please_check_the_results_english;
 
+    private int one,
+            two,
+            three,
+            four,
+            five,
+            six,
+            seven,
+            eight,
+            nine,
+            ten,
+            eleven,
+            twelve,
+            threeteen,
+            fourteen,
+            fifteen,
+            sixteen,
+            seventeen,
+            eighteen,
+            nineteen,
+            twenty,
+            twenty_one,
+            twenty_two,
+            twenty_three,
+            twenty_four,
+            twenty_five,
+            twenty_six,
+            twenty_seven,
+            twenty_eight,
+            twenty_nine,
+            thirty,
+            thirty_one,
+            thirty_two,
+            thirty_three,
+            thirty_four,
+            thirty_five,
+            thirty_six,
+            thirty_seven,
+            thirty_eight,
+            thirty_nine,
+            fourty,
+            fourty_one,
+            fourty_two,
+            fourty_three,
+            fourty_four,
+            fourty_five,
+            fourty_six,
+            fourty_seven,
+            fourty_eight,
+            fourty_nine,
+            fifty;
+
 
     public void initSounds(Context context) {
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
@@ -160,6 +211,56 @@ public class DCSoundPlayer {
         the_measurement_is_going_to_stop_english = soundPool.load(context, R.raw.the_measurement_is_going_to_stop_english, 1);
         please_check_the_results_english = soundPool.load(context, R.raw.please_check_the_results_english, 1);
 
+        one = soundPool.load(context, R.raw.one, 1);
+        two = soundPool.load(context, R.raw.two, 1);
+        three = soundPool.load(context, R.raw.three, 1);
+        four = soundPool.load(context, R.raw.four, 1);
+        five = soundPool.load(context, R.raw.five, 1);
+        six = soundPool.load(context, R.raw.six, 1);
+        seven = soundPool.load(context, R.raw.seven, 1);
+        eight = soundPool.load(context, R.raw.eight, 1);
+        nine = soundPool.load(context, R.raw.nine, 1);
+        ten = soundPool.load(context, R.raw.ten, 1);
+        eleven = soundPool.load(context, R.raw.eleven, 1);
+        twelve = soundPool.load(context, R.raw.twelve, 1);
+        threeteen = soundPool.load(context, R.raw.threeteen, 1);
+        fourteen = soundPool.load(context, R.raw.fourteen, 1);
+        fifteen = soundPool.load(context, R.raw.fifteen, 1);
+        sixteen = soundPool.load(context, R.raw.sixteen, 1);
+        seventeen = soundPool.load(context, R.raw.seventeen, 1);
+        eighteen = soundPool.load(context, R.raw.eighteen, 1);
+        nineteen = soundPool.load(context, R.raw.nineteen, 1);
+        twenty = soundPool.load(context, R.raw.twenty, 1);
+        twenty_one = soundPool.load(context, R.raw.twenty_one, 1);
+        twenty_two = soundPool.load(context, R.raw.twenty_two, 1);
+        twenty_three = soundPool.load(context, R.raw.twenty_three, 1);
+        twenty_four = soundPool.load(context, R.raw.twenty_four, 1);
+        twenty_five = soundPool.load(context, R.raw.twenty_five, 1);
+        twenty_six = soundPool.load(context, R.raw.twenty_six, 1);
+        twenty_seven = soundPool.load(context, R.raw.twenty_seven, 1);
+        twenty_eight = soundPool.load(context, R.raw.twenty_eight, 1);
+        twenty_nine = soundPool.load(context, R.raw.twenty_nine, 1);
+        thirty = soundPool.load(context, R.raw.thirty, 1);
+        thirty_one = soundPool.load(context, R.raw.thirty_one, 1);
+        thirty_two = soundPool.load(context, R.raw.thirty_two, 1);
+        thirty_three = soundPool.load(context, R.raw.thirty_three, 1);
+        thirty_four = soundPool.load(context, R.raw.thirty_four, 1);
+        thirty_five = soundPool.load(context, R.raw.thirty_five, 1);
+        thirty_six = soundPool.load(context, R.raw.thirty_six, 1);
+        thirty_seven = soundPool.load(context, R.raw.thirty_seven, 1);
+        thirty_eight = soundPool.load(context, R.raw.thirty_eight, 1);
+        thirty_nine = soundPool.load(context, R.raw.thirty_nine, 1);
+        fourty = soundPool.load(context, R.raw.fourty, 1);
+        fourty_one = soundPool.load(context, R.raw.fourty_one, 1);
+        fourty_two = soundPool.load(context, R.raw.fourty_two, 1);
+        fourty_three = soundPool.load(context, R.raw.fourty_three, 1);
+        fourty_four = soundPool.load(context, R.raw.fourty_four, 1);
+        fourty_five = soundPool.load(context, R.raw.fourty_five, 1);
+        fourty_six = soundPool.load(context, R.raw.fourty_six, 1);
+        fourty_seven = soundPool.load(context, R.raw.fourty_seven, 1);
+        fourty_eight = soundPool.load(context, R.raw.fourty_eight, 1);
+        fourty_nine = soundPool.load(context, R.raw.fourty_nine, 1);
+        fifty = soundPool.load(context, R.raw.fifty, 1);
     }
 
     public void play(int raw_id) {
@@ -371,6 +472,157 @@ public class DCSoundPlayer {
                 break;
             case R.raw.please_check_the_results_english:
                 soundPool.play(please_check_the_results_english, 1, 1, 0, 0, 1);
+                break;
+
+            case R.raw.one:
+                soundPool.play(one, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.two:
+                soundPool.play(two, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.three:
+                soundPool.play(three, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.four:
+                soundPool.play(four, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.five:
+                soundPool.play(five, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.six:
+                soundPool.play(six, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.seven:
+                soundPool.play(seven, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.eight:
+                soundPool.play(eight, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.nine:
+                soundPool.play(nine, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.ten:
+                soundPool.play(ten, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.eleven:
+                soundPool.play(eleven, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twelve:
+                soundPool.play(twelve, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.threeteen:
+                soundPool.play(threeteen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourteen:
+                soundPool.play(fourteen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fifteen:
+                soundPool.play(fifteen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.sixteen:
+                soundPool.play(sixteen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.seventeen:
+                soundPool.play(seventeen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.eighteen:
+                soundPool.play(eighteen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.nineteen:
+                soundPool.play(nineteen, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty:
+                soundPool.play(twenty, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_one:
+                soundPool.play(twenty_one, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_two:
+                soundPool.play(twenty_two, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_three:
+                soundPool.play(twenty_three, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_four:
+                soundPool.play(twenty_four, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_five:
+                soundPool.play(twenty_five, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_six:
+                soundPool.play(twenty_six, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_seven:
+                soundPool.play(twenty_seven, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_eight:
+                soundPool.play(twenty_eight, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.twenty_nine:
+                soundPool.play(twenty_nine, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty:
+                soundPool.play(thirty, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_one:
+                soundPool.play(thirty_one, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_two:
+                soundPool.play(thirty_two, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_three:
+                soundPool.play(thirty_three, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_four:
+                soundPool.play(thirty_three, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_five:
+                soundPool.play(thirty_five, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_six:
+                soundPool.play(thirty_six, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_seven:
+                soundPool.play(thirty_seven, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_eight:
+                soundPool.play(thirty_eight, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.thirty_nine:
+                soundPool.play(thirty_nine, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty:
+                soundPool.play(fourty, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_one:
+                soundPool.play(fourty_one, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_two:
+                soundPool.play(fourty_two, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_three:
+                soundPool.play(fourty_three, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_four:
+                soundPool.play(fourty_four, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_five:
+                soundPool.play(fourty_five, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_six:
+                soundPool.play(fourty_six, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_seven:
+                soundPool.play(fourty_seven, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_eight:
+                soundPool.play(fourty_eight, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fourty_nine:
+                soundPool.play(fourty_nine, 1, 1, 0, 0, 1);
+                break;
+            case R.raw.fifty:
+                soundPool.play(fifty, 1, 1, 0, 0, 1);
                 break;
         }
     }
