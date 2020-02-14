@@ -22,6 +22,8 @@ public class ACKListener extends Handler{
         switch (msg.what) {
             case UsbService.MESSAGE_FROM_SERIAL_PORT:
                 {
+                    if(!msg.obj.toString().contains("$"))
+                        return;
                     main.HandleACK(ACKParser.ParseACK(msg.obj.toString()));
                  }
                 break;
@@ -37,6 +39,7 @@ public class ACKListener extends Handler{
     {
         public static ACK ParseACK(String ack)
         {
+
             ack = ack.substring(1,ack.length()-1);
             ACK result = new ACK();
             switch (ack.substring(0,3))
