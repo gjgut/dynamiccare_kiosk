@@ -23,6 +23,7 @@ public class SelectMode extends DCfragment {
     public SelectMode(Main main)
     {
         super(main);
+        main.PlaySound(new int[]{R.raw.select_the_mode,R.raw.select_the_mode_english});
         Main.setCurrentExcercise(null);
         DCButton.PressedOff();
     }

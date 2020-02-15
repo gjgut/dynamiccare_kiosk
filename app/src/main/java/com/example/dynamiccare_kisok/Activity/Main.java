@@ -29,6 +29,7 @@ import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Util.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
+import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
@@ -48,6 +49,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     static Excercise currentExcercise;
     static UsbService usbService;
     DCSoundPlayer dcSoundPlayer;
+    DCSoundThread dcSoundThread;
     ACKListener ackListener;
 
     public static UsbService getusbService() {
@@ -60,6 +62,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void PlaySound(int soundId) {
         dcSoundPlayer.play(soundId);
+    }
+    public void PlaySound(int []stream)
+    {
+        dcSoundThread.playstream(stream);
     }
 
     public void HandleACK(ACK ack) {
@@ -177,6 +183,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         dcSoundPlayer = new DCSoundPlayer();
         dcSoundPlayer.initSounds(this);
+        dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);

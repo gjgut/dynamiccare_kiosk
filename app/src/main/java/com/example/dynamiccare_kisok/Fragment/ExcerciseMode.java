@@ -24,6 +24,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
 
 import java.util.ArrayList;
@@ -44,11 +45,7 @@ public class ExcerciseMode extends DCfragment{
     public ExcerciseMode(Main main)
     {
         super(main);
-    }
-    public ExcerciseMode(Main main,boolean isIsokinetic)
-    {
-        super(main);
-        this.isIsokinetic = isIsokinetic;
+        main.PlaySound(new int[]{R.raw.excercise_mode,R.raw.excercise_mode_english});
     }
 
     @Override
@@ -61,7 +58,7 @@ public class ExcerciseMode extends DCfragment{
             {
                 bench.setPressed();
                 if(bench.isPressed()) {
-                    main.PlaySound(R.raw.normal_button);
+                    main.PlaySound(new int[]{R.raw.normal_button});
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("05",
