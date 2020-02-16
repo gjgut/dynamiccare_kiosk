@@ -301,6 +301,12 @@ public class ExcerciseMode extends DCfragment {
             Log.i("Dynamic", e.toString());
         }
     }
+    public void ResumeWorkout()
+    {
+        exc_rest.setVisibility(View.INVISIBLE);
+        exc_table.setVisibility(View.VISIBLE);
+        DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+    }
 
 
     public void setViews(View view) {
@@ -373,12 +379,15 @@ public class ExcerciseMode extends DCfragment {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     rest_time.setText(String.valueOf(count));
+                    if(count<Integer.parseInt(edt_rest.getSource().getText().toString())/2)
+                        main.PlaySound(new int[]{R.raw.next_set_will_start_soon,R.raw.next_set_will_start_soon_english});
                     count--;
                 }
 
                 @Override
                 public void onFinish() {
                     rest_time.setText("0");
+                    ResumeWorkout();
                 }
             };
 
