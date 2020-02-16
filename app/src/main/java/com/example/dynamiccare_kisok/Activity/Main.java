@@ -74,13 +74,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         switch (ack.getCommandCode())
         {
             case "AME":
-                currentFragment.HandleACK(ack);
                 break;
             case "ASP":
-                currentFragment.HandleACK(ack);
                 break;
             case "ACD":
-                currentFragment.HandleACK(ack);
                 break;
             case "ACB":
                 switch(ack.getData())
@@ -303,6 +300,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 break;
             case "PCA":
                 DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                break;
         }
         currentFragment.HandleACK(ack);
     }

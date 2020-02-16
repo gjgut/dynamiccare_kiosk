@@ -32,34 +32,30 @@ import com.example.dynamiccare_kisok.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExcerciseMode extends DCfragment{
+public class ExcerciseMode extends DCfragment {
 
-    DCButton bench,squat,deadlift,press,curl,extension,latpull,carf;
+    DCButton bench, squat, deadlift, press, curl, extension, latpull, carf;
     LayoutInflater inflater;
-    DCActionButton start,stop,ready;
+    DCActionButton start, stop, ready;
     DCButtonManager dcButtonManager;
-    DCEditText edt_rest,edt_weight,edt_set,edt_count;
-    TextView txt_count,txt_set;
+    DCEditText edt_rest, edt_weight, edt_set, edt_count;
+    TextView txt_count, txt_set;
     ImageView Body;
     LinearLayout container;
     Spinner spin_level;
 
-    public ExcerciseMode(Main main)
-    {
+    public ExcerciseMode(Main main) {
         super(main);
-        main.PlaySound(new int[]{R.raw.excercise_mode,R.raw.excercise_mode_english});
+        main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         Handler handler = new Handler();
-        switch (v.getId())
-        {
-            case R.id.exc_tab_btn_bench:
-            {
+        switch (v.getId()) {
+            case R.id.exc_tab_btn_bench: {
                 bench.setPressed();
-                if(bench.isPressed()) {
+                if (bench.isPressed()) {
                     main.PlaySound(new int[]{R.raw.normal_button});
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -71,18 +67,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_squat:
-            {
+            case R.id.exc_tab_btn_squat: {
                 squat.setPressed();
-                if(squat.isPressed()) {
+                if (squat.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("01",
@@ -93,18 +86,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_deadlift:
-            {
+            case R.id.exc_tab_btn_deadlift: {
                 deadlift.setPressed();
-                if(deadlift.isPressed()) {
+                if (deadlift.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("02",
@@ -115,18 +105,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_shoulderpress:
-            {
+            case R.id.exc_tab_btn_shoulderpress: {
                 press.setPressed();
-                if(press.isPressed()) {
+                if (press.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("03",
@@ -137,18 +124,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_latpulldown:
-            {
+            case R.id.exc_tab_btn_latpulldown: {
                 latpull.setPressed();
-                if(latpull.isPressed()) {
+                if (latpull.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("18",
@@ -159,18 +143,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_carfraise:
-            {
+            case R.id.exc_tab_btn_carfraise: {
                 carf.setPressed();
-                if(carf.isPressed()) {
+                if (carf.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("14",
@@ -181,18 +162,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_armcurl:
-            {
+            case R.id.exc_tab_btn_armcurl: {
                 curl.setPressed();
-                if(curl.isPressed()) {
+                if (curl.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("16",
@@ -203,18 +181,15 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_tab_btn_armextension:
-            {
+            case R.id.exc_tab_btn_armextension: {
                 extension.setPressed();
-                if(extension.isPressed()) {
+                if (extension.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
                             Commands.ExcerciseStart("17",
@@ -225,25 +200,21 @@ public class ExcerciseMode extends DCfragment{
                         public void run() {
                             dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         }
-                    }, 5000);
-                }
-                else
-                {
+                    }, 2000);
+                } else {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 break;
             }
-            case R.id.exc_btn_start:
-            {
+            case R.id.exc_btn_start: {
                 start.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                 break;
             }
-            case R.id.exc_btn_stop:
-            {
+            case R.id.exc_btn_stop: {
                 stop.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
-                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop,R.raw.excercise_is_going_to_stop_english});
+                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.excercise_is_going_to_stop_english});
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         stop.setPressed();
@@ -252,93 +223,89 @@ public class ExcerciseMode extends DCfragment{
                 }, 5000);
                 break;
             }
-            case R.id.exc_btn_ready:
-            {
+            case R.id.exc_btn_ready: {
                 ready.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Excercise);
-               handler.post(new Runnable() {
-                   @Override
-                   public void run() {
-                       try {
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
-                           Thread.sleep(7000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS04#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS05#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS06#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS07#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS08#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS09#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS10#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
-                           Thread.sleep(2000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AET2#"));
-                           Thread.sleep(7000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS04#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS05#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS06#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS07#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS08#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS09#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS10#"));
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
+//                           Thread.sleep(7000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS04#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS05#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS06#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS07#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS08#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS09#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS10#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
+//                           Thread.sleep(2000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AET2#"));
+//                           Thread.sleep(7000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS04#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS05#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS06#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS07#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS08#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS09#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS10#"));
+//                           Thread.sleep(1000);
+//                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
+                            Thread.sleep(1000);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB1#"));
 
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB1#"));
+                            Thread.sleep(5000);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD03030#"));
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                            Thread.sleep(1500);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD02030#"));
+                            Thread.sleep(1500);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                            Thread.sleep(1500);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD01030#"));
+                            Thread.sleep(1500);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD00030#"));
+                            Thread.sleep(1500);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
+                            Thread.sleep(1500);
 
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AC0#"));
-
-                           Thread.sleep(1000);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD03030#"));
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
-                           Thread.sleep(1500);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
-                           Thread.sleep(1500);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
-                           Thread.sleep(1500);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
-                           Thread.sleep(1500);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
-                           Thread.sleep(1500);
-                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
-                           Thread.sleep(1500);
-
-
-
-                       }catch (Exception e)
-                       {
-                           e.printStackTrace();
-                       }
-                   }
-               });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
                 Main.getusbService().write(
-                        Commands.ExcerciseReady("01",edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString()).getBytes()
+                        Commands.ExcerciseReady("01", edt_weight.getSource().getText().toString(), edt_count.getSource().getText().toString(), edt_set.getSource().getText().toString()).getBytes()
                 );
                 break;
             }
@@ -350,7 +317,7 @@ public class ExcerciseMode extends DCfragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_excercise_mode,container, false);
+        View view = inflater.inflate(R.layout.fragment_excercise_mode, container, false);
         setViews(view);
 
 
@@ -358,33 +325,28 @@ public class ExcerciseMode extends DCfragment{
     }
 
     @Override
-    public void HandleACK(ACK ack)
-    {
-        switch (ack.getCommandCode())
-        {
+    public void HandleACK(ACK ack) {
+        switch (ack.getCommandCode()) {
             case "ACD":
-                String count = ack.getData().substring(0,2);
-                String set = ack.getData().substring(2,4);
-                String restOn =ack.getData().substring(4,5);
+                String count = String.valueOf(Integer.parseInt(ack.getData().substring(0, 2)));
+                String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
+                String restOn = ack.getData().substring(4, 5);
                 txt_set.setText(String.valueOf(Integer.parseInt(set)));
                 txt_count.setText(String.valueOf(Integer.parseInt(count)));
                 break;
         }
     }
 
-    public void TakeBreak()
-    {
+    public void TakeBreak() {
 
     }
 
-    public void setViews(View view)
-    {
+    public void setViews(View view) {
         try {
-            if(Main.getisIsoKinetic()) {
+            if (Main.getisIsoKinetic()) {
                 view.findViewById(R.id.container_weight).setVisibility(View.GONE);
                 view.findViewById(R.id.container_level).setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 view.findViewById(R.id.container_level).setVisibility(View.GONE);
                 view.findViewById(R.id.container_weight).setVisibility(View.VISIBLE);
             }
@@ -401,10 +363,10 @@ public class ExcerciseMode extends DCfragment{
             start = new DCActionButton(main);
             stop = new DCActionButton(main);
             ready = new DCActionButton(main);
-            edt_count = new DCEditText((EditText)view.findViewById(R.id.et_count));
-            edt_weight = new DCEditText((EditText)view.findViewById(R.id.et_weight));
-            edt_rest = new DCEditText((EditText)view.findViewById(R.id.et_rest));
-            edt_set = new DCEditText((EditText)view.findViewById(R.id.et_set));
+            edt_count = new DCEditText((EditText) view.findViewById(R.id.et_count));
+            edt_weight = new DCEditText((EditText) view.findViewById(R.id.et_weight));
+            edt_rest = new DCEditText((EditText) view.findViewById(R.id.et_rest));
+            edt_set = new DCEditText((EditText) view.findViewById(R.id.et_set));
 
             bench.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
@@ -443,9 +405,13 @@ public class ExcerciseMode extends DCfragment{
             DCButton.setBody(Body);
 
             List<String> data = new ArrayList<String>();
-            data.add("1");data.add("2");data.add("3");data.add("4");data.add("5");
+            data.add("1");
+            data.add("2");
+            data.add("3");
+            data.add("4");
+            data.add("5");
 
-            spinnerAdapter spinnerAdapter = new spinnerAdapter(main,data);
+            spinnerAdapter spinnerAdapter = new spinnerAdapter(main, data);
             spin_level.setAdapter(spinnerAdapter);
 
             bench.getButton().setOnClickListener(this);
@@ -462,16 +428,16 @@ public class ExcerciseMode extends DCfragment{
             txt_count.setOnClickListener(this);
             txt_set.setOnClickListener(this);
 
-            dcButtonManager = new DCButtonManager(bench,squat,deadlift,press,curl,extension,latpull,carf,start,ready,stop);
+            dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf, start, ready, stop);
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public String getTitle() {
-        if(Main.getisIsoKinetic())
+        if (Main.getisIsoKinetic())
             return "등속성 운동 모드";
         else
             return "등장성 운동 모드";
@@ -479,53 +445,50 @@ public class ExcerciseMode extends DCfragment{
 
     @Override
     public int isHomeVisible() {
-        return  View.VISIBLE;
+        return View.VISIBLE;
     }
 
     @Override
-    public DCfragment getBackFragment()
-    {
+    public DCfragment getBackFragment() {
         return new SelectMode(main);
     }
 
     @Override
-    public DCfragment getNextFragment()
-    {
+    public DCfragment getNextFragment() {
         return null;
     }
 }
 
 
-class spinnerAdapter extends BaseAdapter
-{
+class spinnerAdapter extends BaseAdapter {
     Context context;
     List<String> data;
     LayoutInflater inflater;
 
 
-    public spinnerAdapter(Context context, List<String> data){
+    public spinnerAdapter(Context context, List<String> data) {
         this.context = context;
         this.data = data;
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
 
     @Override
     public int getCount() {
-        if(data!=null) return data.size();
+        if (data != null) return data.size();
         else return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null) {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_normal, parent, false);
         }
 
-        if(data!=null){
+        if (data != null) {
             //데이터세팅
             String text = data.get(position);
-            ((TextView)convertView.findViewById(R.id.spinnerText)).setText(text);
+            ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
         }
 
         return convertView;
@@ -533,12 +496,12 @@ class spinnerAdapter extends BaseAdapter
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.spinner_drop_down, parent, false);
         }
         //데이터세팅
         String text = data.get(position);
-        ((TextView)convertView.findViewById(R.id.spinnerText)).setText(text);
+        ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
 
 
         return convertView;
