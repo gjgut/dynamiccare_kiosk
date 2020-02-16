@@ -2,7 +2,9 @@ package com.example.dynamiccare_kisok.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,23 +30,28 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ExcerciseMode extends DCfragment {
 
     DCButton bench, squat, deadlift, press, curl, extension, latpull, carf;
     TableLayout exc_table;
+    LinearLayout exc_rest;
     DCActionButton start, stop, ready;
     DCButtonManager dcButtonManager;
     DCEditText edt_rest, edt_weight, edt_set, edt_count;
-    TextView txt_count, txt_set;
+    TextView txt_count, txt_set, rest_time;
     ImageView Body;
     LinearLayout container;
     Spinner spin_level;
+    CountDownTimer countDownTimer;
+    int count;
 
     public ExcerciseMode(Main main) {
         super(main);
@@ -192,7 +200,7 @@ public class ExcerciseMode extends DCfragment {
                 /*테스트용 ACK 전송*/
                 try {
                     main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
@@ -215,7 +223,7 @@ public class ExcerciseMode extends DCfragment {
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 }
                 /*테스트용 ACK 전송*/
-                main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD03030#"));
+                main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD03031#"));
                 break;
             case R.id.exc_btn_start: {
                 start.setPressed();
@@ -268,16 +276,32 @@ public class ExcerciseMode extends DCfragment {
         switch (ack.getCommandCode()) {
             case "ACD":
                 String count = String.valueOf(Integer.parseInt(ack.getData().substring(0, 2)));
-                String restOn = ack.getData().substring(2, 4);
+                String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
+                String restOn = ack.getData().substring(4, 5);
                 txt_count.setText(count);
+                switch (restOn) {
+                    case "1":
+                        DCButtonManager.setDCState(DCButtonManager.State.onRest);
+                        TakeBreak();
+                        break;
+                }
                 break;
             case "ACB":
         }
     }
 
     public void TakeBreak() {
-        exc_table.setVisibility(View.INVISIBLE);
+        try {
+            exc_table.setVisibility(View.INVISIBLE);
+            exc_rest.setVisibility(View.VISIBLE);
+            main.PlaySound(new int[]{R.raw.take_a_break, R.raw.take_a_break_english});
+            count = Integer.parseInt(edt_rest.getSource().getText().toString());
+            countDownTimer.start();
+        } catch (Exception e) {
+            Log.i("Dynamic", e.toString());
+        }
     }
+
 
     public void setViews(View view) {
         try {
@@ -338,9 +362,27 @@ public class ExcerciseMode extends DCfragment {
                     getResources().getDrawable(R.drawable.pressed_btn_ready));
             txt_count = view.findViewById(R.id.txt_realcount);
             txt_set = view.findViewById(R.id.txt_realset);
+            rest_time = view.findViewById(R.id.rest_time);
             spin_level = view.findViewById(R.id.spin_level);
             Body = view.findViewById(R.id.exc_body);
             exc_table = view.findViewById(R.id.exc_table);
+            exc_rest = view.findViewById(R.id.exc_rest);
+
+
+            countDownTimer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString())*1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    rest_time.setText(String.valueOf(count));
+                    count--;
+                }
+
+                @Override
+                public void onFinish() {
+                    rest_time.setText("0");
+                }
+            };
+
+
 
             DCButton.setBody(Body);
 

@@ -7,138 +7,173 @@
     android:layout_height="match_parent"
     android:background="#1d1f21">
 
-    <TableLayout
-        android:id="@+id/exc_table"
+    <FrameLayout
+        android:id="@+id/exc_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <TableRow
+        <LinearLayout
+            android:id="@+id/exc_rest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="1dp">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_bench"
-                android:layout_width="78dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
+            <TextView
+                android:id="@+id/rest_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_bench" />
+                android:gravity="right"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="100sp" />
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_squat"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
+            <TextView
+                android:id="@+id/time_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_squat" />
+                android:gravity="center"
+                android:text="초 후에 \n시작합니다."
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_deadlift"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_dead" />
+        </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_shoulderpress"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_press" />
-
-        </TableRow>
-
-        <TableRow
+        <TableLayout
+            android:id="@+id/exc_table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="visible">
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_carfraise"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_carf" />
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_armcurl"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_curl" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp">
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_armextension"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_extension" />
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_bench"
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_bench" />
 
-            <ImageButton
-                android:id="@+id/exc_tab_btn_latpulldown"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_latpulldown" />
-        </TableRow>
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_squat"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_squat" />
 
-    </TableLayout>
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_deadlift"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_dead" />
+
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_shoulderpress"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_press" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp">
+
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_carfraise"
+                    android:layout_width="106dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_carf" />
+
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_armcurl"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_curl" />
+
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_armextension"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_extension" />
+
+                <ImageButton
+                    android:id="@+id/exc_tab_btn_latpulldown"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_latpulldown" />
+            </TableRow>
+
+        </TableLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/exc_view"
@@ -153,7 +188,7 @@
         app:layout_constraintBottom_toTopOf="@+id/exc_buttons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exc_table">
+        app:layout_constraintTop_toBottomOf="@+id/exc_frame">
 
         <ImageView
             android:id="@+id/exc_body"
@@ -496,6 +531,7 @@
                         android:gravity="center|center_horizontal|top|center_vertical"
                         android:inputType="numberDecimal"
                         android:maxLength="2"
+                        android:text="30"
                         android:textColor="#FFFFFF"
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
