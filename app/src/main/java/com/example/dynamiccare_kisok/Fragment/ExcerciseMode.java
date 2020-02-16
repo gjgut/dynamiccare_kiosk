@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
@@ -33,6 +35,7 @@ import java.util.List;
 public class ExcerciseMode extends DCfragment{
 
     DCButton bench,squat,deadlift,press,curl,extension,latpull,carf;
+    LayoutInflater inflater;
     DCActionButton start,stop,ready;
     DCButtonManager dcButtonManager;
     DCEditText edt_rest,edt_weight,edt_set,edt_count;
@@ -40,7 +43,6 @@ public class ExcerciseMode extends DCfragment{
     ImageView Body;
     LinearLayout container;
     Spinner spin_level;
-    boolean isIsokinetic;
 
     public ExcerciseMode(Main main)
     {
@@ -67,7 +69,7 @@ public class ExcerciseMode extends DCfragment{
                                     edt_set.getSource().getText().toString()).getBytes());
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                            main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
                         }
                     }, 5000);
                 }
@@ -241,10 +243,11 @@ public class ExcerciseMode extends DCfragment{
             {
                 stop.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
+                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop,R.raw.excercise_is_going_to_stop_english});
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        dcButtonManager.setDCState(DCButtonManager.State.Setted);
                         stop.setPressed();
+                        main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
                     }
                 }, 5000);
                 break;
@@ -253,6 +256,87 @@ public class ExcerciseMode extends DCfragment{
             {
                 ready.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+               handler.post(new Runnable() {
+                   @Override
+                   public void run() {
+                       try {
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
+                           Thread.sleep(7000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS04#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS05#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS06#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS07#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS08#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS09#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS10#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
+                           Thread.sleep(2000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AET2#"));
+                           Thread.sleep(7000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS04#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS05#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS06#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS07#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS08#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS09#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS10#"));
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
+
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB1#"));
+
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$AC0#"));
+
+                           Thread.sleep(1000);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD03030#"));
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                           Thread.sleep(1500);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS03#"));
+                           Thread.sleep(1500);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                           Thread.sleep(1500);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS02#"));
+                           Thread.sleep(1500);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                           Thread.sleep(1500);
+                           main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
+                           Thread.sleep(1500);
+
+
+
+                       }catch (Exception e)
+                       {
+                           e.printStackTrace();
+                       }
+                   }
+               });
                 Main.getusbService().write(
                         Commands.ExcerciseReady("01",edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString()).getBytes()
                 );
@@ -271,6 +355,26 @@ public class ExcerciseMode extends DCfragment{
 
 
         return view;
+    }
+
+    @Override
+    public void HandleACK(ACK ack)
+    {
+        switch (ack.getCommandCode())
+        {
+            case "ACD":
+                String count = ack.getData().substring(0,2);
+                String set = ack.getData().substring(2,4);
+                String restOn =ack.getData().substring(4,5);
+                txt_set.setText(String.valueOf(Integer.parseInt(set)));
+                txt_count.setText(String.valueOf(Integer.parseInt(count)));
+                break;
+        }
+    }
+
+    public void TakeBreak()
+    {
+
     }
 
     public void setViews(View view)
@@ -332,7 +436,7 @@ public class ExcerciseMode extends DCfragment{
                     getResources().getDrawable(R.drawable.pressed_btn_stop));
             ready.setButton((ImageButton) view.findViewById(R.id.exc_btn_ready),
                     getResources().getDrawable(R.drawable.pressed_btn_ready));
-            txt_count = view.findViewById(R.id.txt_labelCount);
+            txt_count = view.findViewById(R.id.txt_realcount);
             txt_set = view.findViewById(R.id.txt_realset);
             spin_level = view.findViewById(R.id.spin_level);
             Body = view.findViewById(R.id.exc_body);

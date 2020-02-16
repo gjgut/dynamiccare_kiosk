@@ -58,7 +58,7 @@ public class DCSoundThread {
             case R.raw.twelve:
             case R.raw.twenty:
             case R.raw.twenty_eight:
-                return 700;
+                return 1000;
             case R.raw.delay_sound:
             case R.raw.dynamic_care:
             case R.raw.excercise_is_going_to_stop:
@@ -117,7 +117,7 @@ public class DCSoundThread {
             case R.raw.twenty_two:
             case R.raw.two:
             case R.raw.two_set_complete_english:
-                return 1700;
+                return 2000;
             case R.raw.eight_sets_completed_english:
             case R.raw.excercise_is_going_to_stop_english:
             case R.raw.five_sets_completed_english:
@@ -142,7 +142,7 @@ public class DCSoundThread {
             case R.raw.the_measurement_wil_begin_shortly_english:
             case R.raw.three_set_complete:
             case R.raw.two_set_complete:
-                return 2700;
+                return 3000;
             case R.raw.      dont_stop_measurement_by_stop_sound:
             case R.raw.    do_not_stop_measuring_until_the_end_comment_is_made_english:
             case R.raw.    effort_maximally_during_measurement:
@@ -151,11 +151,11 @@ public class DCSoundThread {
             case R.raw.  ready_get_set_go:
             case R.raw.   take_down_the_bar:
             case R.raw.   the_measurement_starts_when_you_hear_the_beep_sound_english:
-                return 3700;
+                return 4000;
             case R.raw.  adjust_the_bar_or_wire_properly_english:
-                return 4700;
+                return 5000;
             case R.raw.  take_pose_and_place_bar_or_wire_to_right_position:
-                return 6700;
+                return 7000;
 
         }
         return 0;

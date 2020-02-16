@@ -35,7 +35,7 @@ public class ACKListener extends Handler{
                 break;
         }
     }
-    private static class ACKParser
+    public static class ACKParser
     {
         public static ACK ParseACK(String ack)
         {
@@ -80,6 +80,9 @@ public class ACKListener extends Handler{
                     result.setData(ack.substring(3,5));
                     break;
                 }
+                case "PCA":
+                    result.setCommandCode(ack.substring(0,3));
+                    break;
             }
             return result;
         }

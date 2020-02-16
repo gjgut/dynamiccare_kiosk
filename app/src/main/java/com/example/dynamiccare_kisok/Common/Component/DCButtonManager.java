@@ -3,15 +3,16 @@ package com.example.dynamiccare_kisok.Common.Component;
 import android.widget.Toast;
 
 public class DCButtonManager {
-    static DCButton Bench,Squat,Deadlift,Press,Carf,Curl,Extension,Lat;
+    static DCButton Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat;
     static DCButton Union[];
-    static DCActionButton Start,Ready,Stop;
+    static DCActionButton Start, Ready, Stop;
     static State DCState;
-    public static State getDCState()
-    {
+
+    public static State getDCState() {
         return DCState;
     }
-    public enum State { Clear,StartSetting,Setted,Excercise,Paused,Stop }
+
+    public enum State {Clear, StartSetting, Setted, Excercise, Paused, Stop}
 
     public DCButtonManager(DCButton Bench,
                            DCButton Squat,
@@ -23,8 +24,7 @@ public class DCButtonManager {
                            DCButton Lat,
                            DCActionButton Start,
                            DCActionButton Ready,
-                           DCActionButton Stop)
-    {
+                           DCActionButton Stop) {
         this.Bench = Bench;
         this.Squat = Squat;
         this.Deadlift = Deadlift;
@@ -37,13 +37,11 @@ public class DCButtonManager {
         this.Start = Start;
         this.Ready = Ready;
         this.Stop = Stop;
-        Union = new DCButton[]{Bench,Squat,Deadlift,Press,Carf,Curl,Extension,Lat};
-
-        DCState = State.Clear;
+        Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
+        setDCState(State.Clear);
     }
 
-    public static void setDCState(State state)
-    {
+    public static void setDCState(State state) {
         try {
             switch (state) {
                 case Clear: {
@@ -85,26 +83,23 @@ public class DCButtonManager {
                     DCState = State.Excercise;
                     break;
                 }
-                case Paused:
-                {
+                case Paused: {
                     DCState = State.Paused;
                     break;
                 }
                 case Stop: {
-                    if(Ready.isPressed)
+                    if (Ready.isPressed)
                         Ready.setPressed();
-                    if(Start.isPressed)
+                    if (Start.isPressed)
                         Start.setPressed();
                     DCState = State.Stop;
                     break;
                 }
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
 
 }
