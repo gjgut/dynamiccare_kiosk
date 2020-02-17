@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -71,238 +72,240 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void HandleACK(ACK ack) {
-        switch (ack.getCommandCode())
+        try {
+            Log.i("ACK data:",ack.getCommandCode()+ack.getData());
+            switch (ack.getCommandCode()) {
+                case "AME":
+                    break;
+                case "ASP":
+                    break;
+                case "ACD":
+                    break;
+                case "ACB":
+                    switch (ack.getData()) {
+                        case "1":
+                            PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
+                            break;
+                        case "2":
+                            PlaySound(new int[]{R.raw.bee_measurement_begin});
+                            break;
+                        case "3":
+                            PlaySound(R.raw.ring);
+                            break;
+                    }
+                    break;
+                case "AET":
+                    switch (ack.getData()) {
+                        case "1":
+                            PlaySound(new int[]{R.raw.take_down_the_bar, R.raw.take_down_the_bar_english});
+                            break;
+                        case "2":
+                            PlaySound(new int[]{R.raw.raise_the_bar, R.raw.raise_the_bar_english});
+                            break;
+                    }
+                    break;
+                case "AEE":
+                case "ACS":
+                    switch (ack.getData()) {
+                        case "01":
+                            PlaySound(new int[]{R.raw.one});
+                            break;
+                        case "02":
+                            PlaySound(new int[]{R.raw.two});
+                            break;
+                        case "03":
+                            PlaySound(new int[]{R.raw.three});
+                            break;
+                        case "04":
+                            PlaySound(new int[]{R.raw.four});
+                            break;
+                        case "05":
+                            PlaySound(new int[]{R.raw.five});
+                            break;
+                        case "06":
+                            PlaySound(new int[]{R.raw.six});
+                            break;
+                        case "07":
+                            PlaySound(new int[]{R.raw.seven});
+                            break;
+                        case "08":
+                            PlaySound(new int[]{R.raw.eight});
+                            break;
+                        case "09":
+                            PlaySound(new int[]{R.raw.nine});
+                            break;
+                        case "10":
+                            PlaySound(new int[]{R.raw.ten});
+                            break;
+                        case "11":
+                            PlaySound(new int[]{R.raw.eleven});
+                            break;
+                        case "12":
+                            PlaySound(new int[]{R.raw.twelve});
+                            break;
+                        case "13":
+                            PlaySound(new int[]{R.raw.threeteen});
+                            break;
+                        case "14":
+                            PlaySound(new int[]{R.raw.fourteen});
+                            break;
+                        case "15":
+                            PlaySound(new int[]{R.raw.fifteen});
+                            break;
+                        case "16":
+                            PlaySound(new int[]{R.raw.sixteen});
+                            break;
+                        case "17":
+                            PlaySound(new int[]{R.raw.seventeen});
+                            break;
+                        case "18":
+                            PlaySound(new int[]{R.raw.eighteen});
+                            break;
+                        case "19":
+                            PlaySound(new int[]{R.raw.nineteen});
+                            break;
+                        case "20":
+                            PlaySound(new int[]{R.raw.twenty});
+                            break;
+                        case "21":
+                            PlaySound(new int[]{R.raw.twenty_one});
+                            break;
+                        case "22":
+                            PlaySound(new int[]{R.raw.twenty_two});
+                            break;
+                        case "23":
+                            PlaySound(new int[]{R.raw.twenty_three});
+                            break;
+                        case "24":
+                            PlaySound(new int[]{R.raw.twenty_four});
+                            break;
+                        case "25":
+                            PlaySound(new int[]{R.raw.twenty_five});
+                            break;
+                        case "26":
+                            PlaySound(new int[]{R.raw.twenty_six});
+                            break;
+                        case "27":
+                            PlaySound(new int[]{R.raw.twenty_seven});
+                            break;
+                        case "28":
+                            PlaySound(new int[]{R.raw.twenty_eight});
+                            break;
+                        case "29":
+                            PlaySound(new int[]{R.raw.twenty_nine});
+                            break;
+                        case "30":
+                            PlaySound(new int[]{R.raw.thirty});
+                            break;
+                        case "31":
+                            PlaySound(new int[]{R.raw.thirty_one});
+                            break;
+                        case "32":
+                            PlaySound(new int[]{R.raw.thirty_two});
+                            break;
+                        case "33":
+                            PlaySound(new int[]{R.raw.thirty_three});
+                            break;
+                        case "34":
+                            PlaySound(new int[]{R.raw.thirty_three});
+                            break;
+                        case "35":
+                            PlaySound(new int[]{R.raw.thirty_five});
+                            break;
+                        case "36":
+                            PlaySound(new int[]{R.raw.thirty_six});
+                            break;
+                        case "37":
+                            PlaySound(new int[]{R.raw.thirty_seven});
+                            break;
+                        case "38":
+                            PlaySound(new int[]{R.raw.thirty_eight});
+                            break;
+                        case "39":
+                            PlaySound(new int[]{R.raw.thirty_nine});
+                            break;
+                        case "40":
+                            PlaySound(new int[]{R.raw.fourty});
+                            break;
+                        case "41":
+                            PlaySound(new int[]{R.raw.fourty_one});
+                            break;
+                        case "42":
+                            PlaySound(new int[]{R.raw.fourty_two});
+                            break;
+                        case "43":
+                            PlaySound(new int[]{R.raw.fourty_three});
+                            break;
+                        case "44":
+                            PlaySound(new int[]{R.raw.fourty_four});
+                            break;
+                        case "45":
+                            PlaySound(new int[]{R.raw.fourty_five});
+                            break;
+                        case "46":
+                            PlaySound(new int[]{R.raw.fourty_six});
+                            break;
+                        case "47":
+                            PlaySound(new int[]{R.raw.fourty_seven});
+                            break;
+                        case "48":
+                            PlaySound(new int[]{R.raw.fourty_eight});
+                            break;
+                        case "49":
+                            PlaySound(new int[]{R.raw.fourty_nine});
+                            break;
+                        case "50":
+                            PlaySound(new int[]{R.raw.fifty});
+                            break;
+
+                    }
+                    break;
+                case "ASS":
+                    switch (ack.getData()) {
+                        case "00":
+                            PlaySound(new int[]{R.raw.thank_you_for_your_efforts, R.raw.thank_you_for_your_efforts_english});
+                            break;
+                        case "01":
+                            PlaySound(new int[]{R.raw.one_set_complete, R.raw.one_set_complete_english});
+                            break;
+                        case "02":
+                            PlaySound(new int[]{R.raw.two_set_complete, R.raw.two_set_complete_english});
+                            break;
+                        case "03":
+                            PlaySound(new int[]{R.raw.three_set_complete, R.raw.two_set_complete_english});
+                            break;
+                        case "04":
+                            PlaySound(new int[]{R.raw.four_sets_completed_english});
+                            break;
+                        case "05":
+                            PlaySound(new int[]{R.raw.five_sets_completed_english});
+                            break;
+                        case "06":
+                            PlaySound(new int[]{R.raw.six_sets_completed_english});
+                            break;
+                        case "07":
+                            PlaySound(new int[]{R.raw.seven_sets_completed_english});
+                            break;
+                        case "08":
+                            PlaySound(new int[]{R.raw.eight_sets_completed_english});
+                            break;
+                        case "09":
+                            PlaySound(new int[]{R.raw.nine_sets_completed_english});
+                            break;
+                        case "10":
+                            PlaySound(new int[]{R.raw.ten_sets_completed_english});
+                            break;
+                    }
+                    break;
+                case "PCA":
+                    DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                    break;
+            }
+            currentFragment.HandleACK(ack);
+        }catch (Exception e)
         {
-            case "AME":
-                break;
-            case "ASP":
-                break;
-            case "ACD":
-                break;
-            case "ACB":
-                switch(ack.getData())
-                {
-                    case "1":
-                        PlaySound(new int[]{R.raw.start_excercise,R.raw.start_excercise_english});
-                        break;
-                    case "2":
-                        PlaySound(new int[]{R.raw.bee_measurement_begin});
-                        break;
-                    case "3":
-                        PlaySound(R.raw.ring);
-                        break;
-                }
-                break;
-            case "AET":
-                switch (ack.getData())
-                {
-                    case "1":
-                        PlaySound(new int[]{R.raw.take_down_the_bar,R.raw.take_down_the_bar_english});
-                        break;
-                    case"2":
-                        PlaySound(new int[]{R.raw.raise_the_bar,R.raw.raise_the_bar_english});
-                        break;
-                }
-                break;
-            case "AEE":
-            case "ACS":
-                switch (ack.getData())
-                {
-                    case "01":
-                        PlaySound(new int[]{R.raw.one});
-                        break;
-                    case "02":
-                        PlaySound(new int[]{R.raw.two});
-                        break;
-                    case "03":
-                        PlaySound(new int[]{R.raw.three});
-                        break;
-                    case "04":
-                        PlaySound(new int[]{R.raw.four});
-                        break;
-                    case "05":
-                        PlaySound(new int[]{R.raw.five});
-                        break;
-                    case "06":
-                        PlaySound(new int[]{R.raw.six});
-                        break;
-                    case "07":
-                        PlaySound(new int[]{R.raw.seven});
-                        break;
-                    case "08":
-                        PlaySound(new int[]{R.raw.eight});
-                        break;
-                    case "09":
-                        PlaySound(new int[]{R.raw.nine});
-                        break;
-                    case "10":
-                        PlaySound(new int[]{R.raw.ten});
-                        break;
-                    case "11":
-                        PlaySound(new int[]{R.raw.eleven});
-                        break;
-                    case "12":
-                        PlaySound(new int[]{R.raw.twelve});
-                        break;
-                    case "13":
-                        PlaySound(new int[]{R.raw.threeteen});
-                        break;
-                    case "14":
-                        PlaySound(new int[]{R.raw.fourteen});
-                        break;
-                    case "15":
-                        PlaySound(new int[]{R.raw.fifteen});
-                        break;
-                    case "16":
-                        PlaySound(new int[]{R.raw.sixteen});
-                        break;
-                    case "17":
-                        PlaySound(new int[]{R.raw.seventeen});
-                        break;
-                    case "18":
-                        PlaySound(new int[]{R.raw.eighteen});
-                        break;
-                    case "19":
-                        PlaySound(new int[]{R.raw.nineteen});
-                        break;
-                    case "20":
-                        PlaySound(new int[]{R.raw.twenty});
-                        break;
-                    case "21":
-                        PlaySound(new int[]{R.raw.twenty_one});
-                        break;
-                    case "22":
-                        PlaySound(new int[]{R.raw.twenty_two});
-                        break;
-                    case "23":
-                        PlaySound(new int[]{R.raw.twenty_three});
-                        break;
-                    case "24":
-                        PlaySound(new int[]{R.raw.twenty_four});
-                        break;
-                    case "25":
-                        PlaySound(new int[]{R.raw.twenty_five});
-                        break;
-                    case "26":
-                        PlaySound(new int[]{R.raw.twenty_six});
-                        break;
-                    case "27":
-                        PlaySound(new int[]{R.raw.twenty_seven});
-                        break;
-                    case "28":
-                        PlaySound(new int[]{R.raw.twenty_eight});
-                        break;
-                    case "29":
-                        PlaySound(new int[]{R.raw.twenty_nine});
-                        break;
-                    case "30":
-                        PlaySound(new int[]{R.raw.thirty});
-                        break;
-                    case "31":
-                        PlaySound(new int[]{R.raw.thirty_one});
-                        break;
-                    case "32":
-                        PlaySound(new int[]{R.raw.thirty_two});
-                        break;
-                    case "33":
-                        PlaySound(new int[]{R.raw.thirty_three});
-                        break;
-                    case "34":
-                        PlaySound(new int[]{R.raw.thirty_three});
-                        break;
-                    case "35":
-                        PlaySound(new int[]{R.raw.thirty_five});
-                        break;
-                    case "36":
-                        PlaySound(new int[]{R.raw.thirty_six});
-                        break;
-                    case "37":
-                        PlaySound(new int[]{R.raw.thirty_seven});
-                        break;
-                    case "38":
-                        PlaySound(new int[]{R.raw.thirty_eight});
-                        break;
-                    case "39":
-                        PlaySound(new int[]{R.raw.thirty_nine});
-                        break;
-                    case "40":
-                        PlaySound(new int[]{R.raw.fourty});
-                        break;
-                    case "41":
-                        PlaySound(new int[]{R.raw.fourty_one});
-                        break;
-                    case "42":
-                        PlaySound(new int[]{R.raw.fourty_two});
-                        break;
-                    case "43":
-                        PlaySound(new int[]{R.raw.fourty_three});
-                        break;
-                    case "44":
-                        PlaySound(new int[]{R.raw.fourty_four});
-                        break;
-                    case "45":
-                        PlaySound(new int[]{R.raw.fourty_five});
-                        break;
-                    case "46":
-                        PlaySound(new int[]{R.raw.fourty_six});
-                        break;
-                    case "47":
-                        PlaySound(new int[]{R.raw.fourty_seven});
-                        break;
-                    case "48":
-                        PlaySound(new int[]{R.raw.fourty_eight});
-                        break;
-                    case "49":
-                        PlaySound(new int[]{R.raw.fourty_nine});
-                        break;
-                    case "50":
-                        PlaySound(new int[]{R.raw.fifty});
-                        break;
-                        
-                }
-                break;
-            case "ASS":
-                switch (ack.getData()) {
-                    case "00":
-                        PlaySound(new int[]{R.raw.thank_you_for_your_efforts,R.raw.thank_you_for_your_efforts_english});
-                        break;
-                    case "01":
-                        PlaySound(new int[]{R.raw.one_set_complete,R.raw.one_set_complete_english});
-                        break;
-                    case "02":
-                        PlaySound(new int[]{R.raw.two_set_complete,R.raw.two_set_complete_english});
-                        break;
-                    case "03":
-                        PlaySound(new int[]{R.raw.three_set_complete,R.raw.two_set_complete_english});
-                        break;
-                    case "04":
-                        PlaySound(new int[]{R.raw.four_sets_completed_english});
-                        break;
-                    case "05":
-                        PlaySound(new int[]{R.raw.five_sets_completed_english});
-                        break;
-                    case "06":
-                        PlaySound(new int[]{R.raw.six_sets_completed_english});
-                        break;
-                    case "07":
-                        PlaySound(new int[]{R.raw.seven_sets_completed_english});
-                        break;
-                    case "08":
-                        PlaySound(new int[]{R.raw.eight_sets_completed_english});
-                        break;
-                    case "09":
-                        PlaySound(new int[]{R.raw.nine_sets_completed_english});
-                        break;
-                    case "10":
-                        PlaySound(new int[]{R.raw.ten_sets_completed_english});
-                        break;
-                }
-                break;
-            case "PCA":
-                DCButtonManager.setDCState(DCButtonManager.State.Setted);
-                break;
+            e.printStackTrace();
         }
-        currentFragment.HandleACK(ack);
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
