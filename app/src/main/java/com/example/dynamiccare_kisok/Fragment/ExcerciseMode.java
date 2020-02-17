@@ -244,7 +244,7 @@ public class ExcerciseMode extends DCfragment {
             case R.id.exc_btn_start: {
                 start.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Paused);
-                Commands.ExcercisePause(main.getCurrentExcercise().getMode(),edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString())
+                Commands.ExcercisePause(main.getCurrentExcercise().getMode(),edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString());
                 break;
             }
             case R.id.exc_btn_stop: {
@@ -253,13 +253,16 @@ public class ExcerciseMode extends DCfragment {
                 txt_set.setText("0");
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
                 ResumeWorkout();
-                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.excercise_is_going_to_stop_english});
+                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop,R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english,R.raw.thank_you_for_your_efforts_english});
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         stop.setPressed();
                         main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
                     }
-                }, 5000);
+                }, 7000);
+                edt_count.getSource().setClickable(true);
+                edt_set.getSource().setClickable(true);
+                edt_rest.getSource().setClickable(true);
                 break;
             }
             case R.id.exc_btn_ready:
@@ -273,6 +276,9 @@ public class ExcerciseMode extends DCfragment {
                     Main.getusbService().write(
                             Commands.ExcerciseReady("01", edt_weight.getSource().getText().toString(), edt_count.getSource().getText().toString(), edt_set.getSource().getText().toString()).getBytes()
                     );
+                    edt_count.getSource().setClickable(false);
+                    edt_set.getSource().setClickable(false);
+                    edt_rest.getSource().setClickable(false);
                 }
                 break;
         }
@@ -296,6 +302,7 @@ public class ExcerciseMode extends DCfragment {
                 String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
                 String restOn = ack.getData().substring(4, 5);
                 txt_count.setText(count);
+                txt_set.setText(set);
                 switch (restOn) {
                     case "1":
                         DCButtonManager.setDCState(DCButtonManager.State.onRest);
@@ -346,6 +353,22 @@ public class ExcerciseMode extends DCfragment {
 
             }
             count = Integer.parseInt(edt_rest.getSource().getText().toString());
+            countDownTimer = new CountDownTimer(count*1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    rest_time.setText(String.valueOf(count));
+                    if(count==15)
+                        main.PlaySound(new int[]{R.raw.next_set_will_start_soon,R.raw.next_set_will_start_soon_english});
+                    count--;
+                }
+
+                @Override
+                public void onFinish() {
+                    rest_time.setText("0");
+                    ResumeWorkout();
+                }
+            };
+            count = Integer.parseInt(edt_rest.getSource().getText().toString());
             countDownTimer.start();
         } catch (Exception e) {
             Log.i("Dynamic", e.toString());
@@ -357,6 +380,7 @@ public class ExcerciseMode extends DCfragment {
         exc_table.setVisibility(View.VISIBLE);
         countDownTimer.cancel();
         DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+        main.PlaySound(new int[]{R.raw.start_excercise,R.raw.start_excercise_english});
     }
 
 
@@ -426,21 +450,7 @@ public class ExcerciseMode extends DCfragment {
             exc_rest = view.findViewById(R.id.exc_rest);
 
 
-            countDownTimer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString())*1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    rest_time.setText(String.valueOf(count));
-                    if(count==Integer.parseInt(edt_rest.getSource().getText().toString())/2)
-                        main.PlaySound(new int[]{R.raw.next_set_will_start_soon,R.raw.next_set_will_start_soon_english});
-                    count--;
-                }
 
-                @Override
-                public void onFinish() {
-                    rest_time.setText("0");
-                    ResumeWorkout();
-                }
-            };
 
 
 
