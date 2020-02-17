@@ -22,6 +22,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
+import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
+import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
+import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
+import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
+import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
+import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Util.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
@@ -64,6 +72,7 @@ public class ExcerciseMode extends DCfragment {
         switch (v.getId()) {
             case R.id.exc_tab_btn_bench: {
                 bench.setPressed();
+                Main.setCurrentExcercise(new BenchPress(main));
                 if (bench.isPressed()) {
                     main.PlaySound(new int[]{R.raw.normal_button});
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
@@ -84,6 +93,7 @@ public class ExcerciseMode extends DCfragment {
             }
             case R.id.exc_tab_btn_squat: {
                 squat.setPressed();
+                Main.setCurrentExcercise(new Squat(main));
                 if (squat.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -103,6 +113,7 @@ public class ExcerciseMode extends DCfragment {
             }
             case R.id.exc_tab_btn_deadlift: {
                 deadlift.setPressed();
+                Main.setCurrentExcercise(new DeadLift(main));
                 if (deadlift.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -122,6 +133,7 @@ public class ExcerciseMode extends DCfragment {
             }
             case R.id.exc_tab_btn_shoulderpress: {
                 press.setPressed();
+                Main.setCurrentExcercise(new ShoulderPress(main));
                 if (press.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -141,6 +153,7 @@ public class ExcerciseMode extends DCfragment {
             }
             case R.id.exc_tab_btn_latpulldown:
                 latpull.setPressed();
+                Main.setCurrentExcercise(new LatPullDown(main));
                 if (latpull.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -161,6 +174,7 @@ public class ExcerciseMode extends DCfragment {
                 break;
             case R.id.exc_tab_btn_carfraise:
                 carf.setPressed();
+                Main.setCurrentExcercise(new CarfRaise(main));
                 if (carf.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -182,6 +196,7 @@ public class ExcerciseMode extends DCfragment {
 
             case R.id.exc_tab_btn_armcurl:
                 curl.setPressed();
+                Main.setCurrentExcercise(new ArmCurl(main));
                 if (curl.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -207,6 +222,7 @@ public class ExcerciseMode extends DCfragment {
 
             case R.id.exc_tab_btn_armextension:
                 extension.setPressed();
+                Main.setCurrentExcercise(new ArmExtension(main));
                 if (extension.isPressed()) {
                     dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     Main.getusbService().write(
@@ -227,7 +243,8 @@ public class ExcerciseMode extends DCfragment {
                 break;
             case R.id.exc_btn_start: {
                 start.setPressed();
-                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                dcButtonManager.setDCState(DCButtonManager.State.Paused);
+                Commands.ExcercisePause(main.getCurrentExcercise().getMode(),edt_weight.getSource().getText().toString(),edt_count.getSource().getText().toString(),edt_set.getSource().getText().toString())
                 break;
             }
             case R.id.exc_btn_stop: {
@@ -235,6 +252,7 @@ public class ExcerciseMode extends DCfragment {
                 txt_count.setText("0");
                 txt_set.setText("0");
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
+                ResumeWorkout();
                 main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.excercise_is_going_to_stop_english});
                 handler.postDelayed(new Runnable() {
                     public void run() {
@@ -244,20 +262,19 @@ public class ExcerciseMode extends DCfragment {
                 }, 5000);
                 break;
             }
-            case R.id.exc_btn_ready: {
+            case R.id.exc_btn_ready:
                 ready.setPressed();
-
-                txt_count.setText(edt_count.getSource().getText().toString());
-                txt_set.setText(edt_set.getSource().getText().toString());
-                dcButtonManager.setDCState(DCButtonManager.State.Excercise);
-                main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
-                Main.getusbService().write(
-                        Commands.ExcerciseReady("01", edt_weight.getSource().getText().toString(), edt_count.getSource().getText().toString(), edt_set.getSource().getText().toString()).getBytes()
-                );
+                if(ready.getButton().isPressed())
+                {
+                    txt_count.setText(edt_count.getSource().getText().toString());
+                    txt_set.setText(edt_set.getSource().getText().toString());
+                    dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+                    main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
+                    Main.getusbService().write(
+                            Commands.ExcerciseReady("01", edt_weight.getSource().getText().toString(), edt_count.getSource().getText().toString(), edt_set.getSource().getText().toString()).getBytes()
+                    );
+                }
                 break;
-            }
-
-
         }
     }
 
@@ -282,7 +299,7 @@ public class ExcerciseMode extends DCfragment {
                 switch (restOn) {
                     case "1":
                         DCButtonManager.setDCState(DCButtonManager.State.onRest);
-                        TakeBreak();
+                        TakeBreak(set);
                         break;
                 }
                 break;
@@ -290,11 +307,44 @@ public class ExcerciseMode extends DCfragment {
         }
     }
 
-    public void TakeBreak() {
+    public void TakeBreak(String Set) {
         try {
             exc_table.setVisibility(View.INVISIBLE);
             exc_rest.setVisibility(View.VISIBLE);
-            main.PlaySound(new int[]{R.raw.take_a_break, R.raw.take_a_break_english});
+            switch (Set)
+            {
+                case "1":
+                    main.PlaySound(new int[]{R.raw.one_set_complete,R.raw.take_a_break,R.raw.one_set_complete_english,R.raw.take_a_break_english});
+                    break;
+                case "2":
+                    main.PlaySound(new int[]{R.raw.two_set_complete,R.raw.take_a_break,R.raw.two_set_complete_english,R.raw.take_a_break_english});
+                    break;
+                case "3":
+                    main.PlaySound(new int[]{R.raw.three_set_complete,R.raw.take_a_break,R.raw.three_set_complete_english,R.raw.take_a_break_english});
+                    break;
+                case "4":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.four_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+                case "5":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.five_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+                case "6":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.six_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+                case "7":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.seven_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+                case "8":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.eight_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+                case "9":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.nine_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+                case "10":
+                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.ten_sets_completed_english,R.raw.take_a_break_english});
+                    break;
+
+            }
             count = Integer.parseInt(edt_rest.getSource().getText().toString());
             countDownTimer.start();
         } catch (Exception e) {
@@ -305,6 +355,7 @@ public class ExcerciseMode extends DCfragment {
     {
         exc_rest.setVisibility(View.INVISIBLE);
         exc_table.setVisibility(View.VISIBLE);
+        countDownTimer.cancel();
         DCButtonManager.setDCState(DCButtonManager.State.Excercise);
     }
 
@@ -379,7 +430,7 @@ public class ExcerciseMode extends DCfragment {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     rest_time.setText(String.valueOf(count));
-                    if(count<Integer.parseInt(edt_rest.getSource().getText().toString())/2)
+                    if(count==Integer.parseInt(edt_rest.getSource().getText().toString())/2)
                         main.PlaySound(new int[]{R.raw.next_set_will_start_soon,R.raw.next_set_will_start_soon_english});
                     count--;
                 }
