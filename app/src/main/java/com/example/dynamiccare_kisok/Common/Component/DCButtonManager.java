@@ -79,11 +79,13 @@ public class DCButtonManager {
                     break;
                 }
                 case Excercise: {
-//                    for (DCButton i : Union) {
-//                        if (i != DCButton.PressedButton) {
-//                            i.Deactivate();
-//                        }
-//                    }
+                    for (DCButton i : Union) {
+                        if (i != DCButton.PressedButton) {
+                            i.Deactivate();
+                        }
+                    }
+                    Ready.Activate();
+                    Start.Activate();
                     DCState = State.Excercise;
                     break;
                 }

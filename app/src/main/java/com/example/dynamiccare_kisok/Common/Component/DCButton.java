@@ -23,12 +23,14 @@ public class DCButton  {
     {
         this.main = main;
     }
-    public DCButton(ImageButton button,Drawable pressed)
+    public DCButton(Main main,ImageButton button,Drawable pressed)
     {
+        this.main = main;
         setButton(button,pressed);
     }
-    public DCButton(ImageButton button,Drawable pressed,Drawable mappingBody)
+    public DCButton(Main main,ImageButton button,Drawable pressed,Drawable mappingBody)
     {
+        this.main = main;
         setButton(button, pressed, mappingBody);
     }
     public void Deactivate()
@@ -97,14 +99,19 @@ public class DCButton  {
 
     public void setPressed()
     {
-        main.PlaySound(R.raw.normal_button);
-        isPressed = !isPressed;
-        ToggleButton();
-        UpdateBody();
-        if(isPressed)
-            this.button.setImageDrawable(Pressed);
-        else
-            this.button.setImageDrawable(UnPressed);
+        try {
+            main.PlaySound(new int[]{R.raw.normal_button});
+            isPressed = !isPressed;
+            ToggleButton();
+            UpdateBody();
+            if (isPressed)
+                this.button.setImageDrawable(Pressed);
+            else
+                this.button.setImageDrawable(UnPressed);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public Drawable getMappingBody()

@@ -36,9 +36,9 @@ public class DetailResult extends DCfragment {
 
     public void setViews(View v)
     {
-        Low = new DCButton((ImageButton)v.findViewById(R.id.btn_low),getResources().getDrawable(R.drawable.pressed_btn_low));
-        Mid = new DCButton((ImageButton)v.findViewById(R.id.btn_mid),getResources().getDrawable(R.drawable.pressed_btn_mid));
-        High = new DCButton((ImageButton)v.findViewById(R.id.btn_high),getResources().getDrawable(R.drawable.pressed_btn_high));
+        Low = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_low),getResources().getDrawable(R.drawable.pressed_btn_low));
+        Mid = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_mid),getResources().getDrawable(R.drawable.pressed_btn_mid));
+        High = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_high),getResources().getDrawable(R.drawable.pressed_btn_high));
 
         start = (ProgressBar)v.findViewById(R.id.progressBar_start);
         average = (ProgressBar)v.findViewById(R.id.progressBar_average);

@@ -30,6 +30,10 @@ public class Explain extends DCfragment {
     public Explain(Main main)
     {
         super(main);
+        if(main.getisIsoTonic())
+            main.PlaySound(new int[]{R.raw.sotonic_log_mode,R.raw.sotonic_log_mode_english});
+        else
+            main.PlaySound(new int[]{R.raw.metric_log_mode,R.raw.metric_log_mode_english});
     }
 
     public void setBottomBar()
@@ -109,28 +113,28 @@ public class Explain extends DCfragment {
     public void setViews(View view)
     {
         try {
-            bench = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_bench),
+            bench = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));
-            squat = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_squat),
+            squat = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_squat),
                     getResources().getDrawable(R.drawable.pressed_btn_squat),
                     getResources().getDrawable(R.drawable.exp_quad));
-            deadlift = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_deadlift),
+            deadlift = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_deadlift),
                     getResources().getDrawable(R.drawable.pressed_btn_deadlift),
                     getResources().getDrawable(R.drawable.exp_spine));
-            press = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_shoulderpress),
+            press = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.pressed_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.exp_shoulder));
-            latpull = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_latpulldown),
+            latpull = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_latpulldown),
                     getResources().getDrawable(R.drawable.pressed_btn_latpulldown),
                     getResources().getDrawable(R.drawable.exp_lat));
-            carf = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_carfraise),
+            carf = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_carfraise),
                     getResources().getDrawable(R.drawable.pressed_btn_carfraise),
                     getResources().getDrawable(R.drawable.exp_lower_leg));
-            curl = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_armcurl),
+            curl = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_armcurl),
                     getResources().getDrawable(R.drawable.pressed_btn_amrcurl),
                     getResources().getDrawable(R.drawable.exp_biceps));
-            extension = new DCButton((ImageButton) view.findViewById(R.id.mes_btn_armextension),
+            extension = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_armextension),
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.exp_triceps));
             Body = view.findViewById(R.id.exp_body);

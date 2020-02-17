@@ -235,7 +235,7 @@ public class ExcerciseMode extends DCfragment {
                 txt_count.setText("0");
                 txt_set.setText("0");
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
-                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.excercise_is_going_to_stop_english});
+                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         stop.setPressed();
@@ -295,47 +295,46 @@ public class ExcerciseMode extends DCfragment {
         try {
             exc_table.setVisibility(View.INVISIBLE);
             exc_rest.setVisibility(View.VISIBLE);
-            switch (set)
-            {
+            switch (set) {
                 case "1":
-                    main.PlaySound(new int[]{R.raw.one_set_complete,R.raw.take_a_break,R.raw.one_set_complete_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
                     break;
                 case "2":
-                    main.PlaySound(new int[]{R.raw.two_set_complete,R.raw.take_a_break,R.raw.two_set_complete_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.two_set_complete, R.raw.take_a_break, R.raw.two_set_complete_english, R.raw.take_a_break_english});
                     break;
                 case "3":
-                    main.PlaySound(new int[]{R.raw.three_set_complete,R.raw.take_a_break,R.raw.three_set_complete_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.three_set_complete, R.raw.take_a_break, R.raw.three_set_complete_english, R.raw.take_a_break_english});
                     break;
                 case "4":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.four_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.four_sets_completed_english, R.raw.take_a_break_english});
                     break;
                 case "5":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.five_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.five_sets_completed_english, R.raw.take_a_break_english});
                     break;
                 case "6":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.six_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.six_sets_completed_english, R.raw.take_a_break_english});
                     break;
                 case "7":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.seven_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.seven_sets_completed_english, R.raw.take_a_break_english});
                     break;
                 case "8":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.eight_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.eight_sets_completed_english, R.raw.take_a_break_english});
                     break;
                 case "9":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.nine_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.nine_sets_completed_english, R.raw.take_a_break_english});
                     break;
                 case "10":
-                    main.PlaySound(new int[]{R.raw.take_a_break,R.raw.ten_sets_completed_english,R.raw.take_a_break_english});
+                    main.PlaySound(new int[]{R.raw.take_a_break, R.raw.ten_sets_completed_english, R.raw.take_a_break_english});
                     break;
             }
             count = Integer.parseInt(edt_rest.getSource().getText().toString());
 
-            countDownTimer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString())*1000, 1000) {
+            countDownTimer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString()) * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     rest_time.setText(String.valueOf(count));
-                    if(count==15)
-                        main.PlaySound(new int[]{R.raw.next_set_will_start_soon,R.raw.next_set_will_start_soon_english});
+                    if (count == 15)
+                        main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
                     count--;
                 }
 
@@ -350,11 +349,11 @@ public class ExcerciseMode extends DCfragment {
             Log.i("Dynamic", e.toString());
         }
     }
-    public void ResumeWorkout()
-    {
+
+    public void ResumeWorkout() {
         exc_rest.setVisibility(View.INVISIBLE);
         exc_table.setVisibility(View.VISIBLE);
-        main.PlaySound(new int[]{R.raw.start_excercise,R.raw.start_excercise_english});
+        main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
         DCButtonManager.setDCState(DCButtonManager.State.Excercise);
     }
 
@@ -425,7 +424,6 @@ public class ExcerciseMode extends DCfragment {
             exc_rest = view.findViewById(R.id.exc_rest);
 
 
-
             DCButton.setBody(Body);
 
             List<String> data = new ArrayList<String>();
@@ -460,10 +458,10 @@ public class ExcerciseMode extends DCfragment {
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-        countDownTimer.cancel();
+        if (countDownTimer != null)
+            countDownTimer.cancel();
     }
 
     @Override
