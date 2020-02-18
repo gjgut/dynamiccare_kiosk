@@ -36,6 +36,7 @@ public class DetailResult extends DCfragment {
 
     public void setViews(View v)
     {
+        try{
         Low = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_low),getResources().getDrawable(R.drawable.pressed_btn_low));
         Mid = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_mid),getResources().getDrawable(R.drawable.pressed_btn_mid));
         High = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_high),getResources().getDrawable(R.drawable.pressed_btn_high));
@@ -86,13 +87,15 @@ public class DetailResult extends DCfragment {
             }
         });
         t.start(); // 쓰레드 시작
-
-
-
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
     @Override
     public void onClick(View v)
     {
+        try{
         switch (v.getId())
         {
             case R.id.btn_low:
@@ -118,6 +121,10 @@ public class DetailResult extends DCfragment {
                 break;
             }
 
+        }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -161,6 +168,7 @@ public class DetailResult extends DCfragment {
 
         public void run()
         {
+            try {
             for (int i = 0; i <= 100; i++)
             {
                final Message msg = ProgressHandler.obtainMessage(MSG_PROGRESS, i, 0);
@@ -172,6 +180,10 @@ public class DetailResult extends DCfragment {
                     }
                 }, 1000);
             }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -181,6 +193,7 @@ public class DetailResult extends DCfragment {
         {
             int currentProgress = msg.arg1;
 
+            try{
             switch (msg.what)
             {
                 // 프로그레스 바의 진행과 관계된 메시지 코드입니다.
@@ -190,6 +203,10 @@ public class DetailResult extends DCfragment {
                     break;
                 default:
                     break;
+            }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
             }
         }
     }

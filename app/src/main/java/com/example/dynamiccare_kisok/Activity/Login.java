@@ -19,6 +19,7 @@ public class Login extends AppCompatActivity {
     ImageView dclogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         dclogo = (ImageView)findViewById(R.id.dc_logo);
@@ -58,5 +59,9 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

@@ -12,25 +12,30 @@ public class DCSoundThread {
     }
 
     public void playstream(int[] stream) {
-        if (soundstream != null)
-            soundstream.interrupt();
-        soundstream = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    for (int i : stream) {
-                        main.PlaySound(i);
-                        Thread.sleep(getSleeptime(i));
+        try {
+            if (soundstream != null)
+                soundstream.interrupt();
+            soundstream = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        for (int i : stream) {
+                            main.PlaySound(i);
+                            Thread.sleep(getSleeptime(i));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
-        soundstream.start();
+            });
+            soundstream.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getSleeptime(int raw_id) {
+        try{
         switch (raw_id) {
             case R.raw.back_button:
             case R.raw.bee_measurement_begin:
@@ -143,21 +148,27 @@ public class DCSoundThread {
             case R.raw.three_set_complete:
             case R.raw.two_set_complete:
                 return 3000;
-            case R.raw.      dont_stop_measurement_by_stop_sound:
-            case R.raw.    do_not_stop_measuring_until_the_end_comment_is_made_english:
-            case R.raw.    effort_maximally_during_measurement:
-            case R.raw.  next_set_will_start_soon:
-            case R.raw.    raise_the_bar:
-            case R.raw.  ready_get_set_go:
-            case R.raw.   take_down_the_bar:
-            case R.raw.   the_measurement_starts_when_you_hear_the_beep_sound_english:
+            case R.raw.dont_stop_measurement_by_stop_sound:
+            case R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english:
+            case R.raw.effort_maximally_during_measurement:
+            case R.raw.next_set_will_start_soon:
+            case R.raw.raise_the_bar:
+            case R.raw.ready_get_set_go:
+            case R.raw.take_down_the_bar:
+            case R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english:
                 return 4000;
-            case R.raw.  adjust_the_bar_or_wire_properly_english:
+            case R.raw.adjust_the_bar_or_wire_properly_english:
                 return 5000;
-            case R.raw.  take_pose_and_place_bar_or_wire_to_right_position:
+            case R.raw.take_pose_and_place_bar_or_wire_to_right_position:
                 return 7000;
 
         }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return 0;
+        }
         return 0;
     }
+
 }

@@ -10,6 +10,7 @@ public class Commands {
      }
      protected static String getCheckSums(String content)
      {
+         try{
          int asciisum=0;
          for(char datum:content.toCharArray())
          {
@@ -19,6 +20,11 @@ public class Commands {
          if(CheckSumBase.length()<2)
              CheckSumBase = "0"+CheckSumBase;
          return CheckSumBase;
+         }catch (Exception e)
+         {
+             e.printStackTrace();
+             return  null;
+         }
      }
      protected static String TrimParameter(String str, String def)
      {

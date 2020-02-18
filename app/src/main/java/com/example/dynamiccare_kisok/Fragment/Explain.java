@@ -42,7 +42,6 @@ public class Explain extends DCfragment {
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
         else
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
-
     }
 
     @Override

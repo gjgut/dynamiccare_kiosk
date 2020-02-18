@@ -24,6 +24,7 @@ public class ModifyAdmin extends AppCompatActivity {
     boolean isVisible;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_admin);
 
@@ -75,7 +76,10 @@ public class ModifyAdmin extends AppCompatActivity {
                 }
         }
         });
-
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 }
