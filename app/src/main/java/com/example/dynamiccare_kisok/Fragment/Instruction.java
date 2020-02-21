@@ -76,6 +76,6 @@ public class Instruction extends DCfragment {
     @Override
     public DCfragment getNextFragment()
     {
-        return new DetailResult(main);
+        return new GraphResult(main);
     }
 }

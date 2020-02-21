@@ -1,70 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#1d1f21">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/TopLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/TopLayout"
+            android:id="@+id/action_title"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:gravity="top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/icon_blue"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="#3993de"
+                android:orientation="horizontal"
+                android:visibility="visible"></LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="측정 그래프"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mes_res_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TopLayout">
+
+        <LinearLayout
+            android:id="@+id/ResultBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="3"
             android:orientation="vertical"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/action_title"
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                tools:visibility="visible">
+                android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/icon_blue"
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="#3993de"
-                    android:orientation="horizontal"
-                    android:visibility="visible"></LinearLayout>
-
-                <TextView
-                    android:id="@+id/txt_content_title"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="측정 그래프"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:visibility="visible" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="시작 무게"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_start"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:background="#00FFFFFF"
+                        android:backgroundTint="#707070"
+                        android:progress="50"
+                        android:progressBackgroundTint="#707070"
+                        android:progressDrawable="@drawable/custom_progressbar"
+                        android:progressTint="#FFDD03"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/txt_weight_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="88kg"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="평균 무게"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_average"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:background="#00FFFFFF"
+                        android:backgroundTint="#8A8A8A"
+                        android:progress="50"
+                        android:progressBackgroundTint="#707070"
+                        android:progressDrawable="@drawable/custom_progressbar"
+                        android:progressTint="#FFDD03"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/txt_weight_average"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="88kg"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="최대 무게"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_max"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:background="#00FFFFFF"
+                        android:backgroundTint="#8A8A8A"
+                        android:progress="50"
+                        android:progressBackgroundTint="#707070"
+                        android:progressDrawable="@drawable/custom_progressbar"
+                        android:progressTint="#FFDD03"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/txt_weight_max"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="88kg"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="최소 무게"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_min"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:background="#00FFFFFF"
+                        android:backgroundTint="#8A8A8A"
+                        android:progress="50"
+                        android:progressBackgroundTint="#707070"
+                        android:progressDrawable="@drawable/custom_progressbar"
+                        android:progressTint="#FFDD03"
+                        android:progressTintMode="src_in"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/txt_weight_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="88kg"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+                </TableRow>
+            </TableLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ButtonGroup"
-            android:layout_width="336dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#00FFFFFF"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/IconGroup"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@+id/ResultBar">
 
             <ImageButton
                 android:id="@+id/btn_low"
@@ -73,6 +289,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:background="#00FFFFFF"
                 android:cropToPadding="true"
                 android:padding="0dp"
                 android:scaleType="fitCenter"
@@ -85,6 +302,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:background="#00FFFFFF"
                 android:cropToPadding="true"
                 android:padding="0dp"
                 android:scaleType="fitCenter"
@@ -97,6 +315,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:background="#00FFFFFF"
                 android:cropToPadding="true"
                 android:padding="0dp"
                 android:scaleType="fitCenter"
@@ -105,14 +324,16 @@
 
         <LinearLayout
             android:id="@+id/IconGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="148dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="35dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/buttons_maniplate"
-            tools:visibility="visible">
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/ActionButtonGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,17 +346,19 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
-                    android:layout_height="59dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
-                    android:padding="10dp"
+                    android:padding="20dp"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_weight" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="최대 무게"
                     android:textColor="#727272"
@@ -145,6 +368,7 @@
                     android:id="@+id/txt_maxweight"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="300kg"
                     android:textColor="#FFFFFF"
@@ -162,17 +386,19 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="match_parent"
-                    android:layout_height="59dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
-                    android:padding="10dp"
+                    android:padding="20dp"
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_time" />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="측정 시간"
                     android:textColor="#727272"
@@ -182,6 +408,7 @@
                     android:id="@+id/txt_duration"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="20sec"
                     android:textColor="#FFFFFF"
@@ -196,7 +423,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageButton
                 android:id="@+id/btn_up"
@@ -246,4 +475,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
