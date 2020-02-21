@@ -55,6 +55,7 @@ public class ExcerciseMode extends DCfragment {
 
     public ExcerciseMode(Main main) {
         super(main);
+        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
     }
 

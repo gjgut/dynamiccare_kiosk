@@ -21,6 +21,7 @@ import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
 import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
 import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 public class Explain extends DCfragment {
@@ -30,6 +31,7 @@ public class Explain extends DCfragment {
     public Explain(Main main)
     {
         super(main);
+        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()).getBytes());
         if(main.getisIsoTonic())
             main.PlaySound(new int[]{R.raw.sotonic_log_mode,R.raw.sotonic_log_mode_english});
         else

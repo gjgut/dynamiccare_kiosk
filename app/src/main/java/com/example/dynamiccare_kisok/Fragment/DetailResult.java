@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -20,8 +22,9 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
-public class DetailResult extends DCfragment {
+public class DetailResult extends DCfragment implements View.OnTouchListener {
     DCButton Low,Mid,High;
+    ImageButton Up,Down;
     ProgressBar start,average,max,min;
     TextView txt_start,txt_average,txt_max,txt_min;
 
@@ -36,6 +39,10 @@ public class DetailResult extends DCfragment {
 
     public void setViews(View v)
     {
+
+        Up = (ImageButton)v.findViewById(R.id.btn_up);
+        Down = (ImageButton)v.findViewById(R.id.btn_down);
+
         Low = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_low),getResources().getDrawable(R.drawable.pressed_btn_low));
         Mid = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_mid),getResources().getDrawable(R.drawable.pressed_btn_mid));
         High = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_high),getResources().getDrawable(R.drawable.pressed_btn_high));
@@ -53,8 +60,9 @@ public class DetailResult extends DCfragment {
         Low.getButton().setOnClickListener(this);
         Mid.getButton().setOnClickListener(this);
         High.getButton().setOnClickListener(this);
-//        ThreadToProgress threadToProgress = new ThreadToProgress();
-////        threadToProgress.start();
+
+        Up.setOnTouchListener(this);
+        Down.setOnTouchListener(this);
 
 
 
@@ -90,11 +98,51 @@ public class DetailResult extends DCfragment {
 
 
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event)
+    {
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                if(v.getId() == R.id.btn_up)
+                {
+                    Up.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_up));
+                    main.getusbService().write(Commands.Position("U").getBytes());
+                }
+                else
+                {
+                    Down.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_down));
+                    main.getusbService().write(Commands.Position("D").getBytes());
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if(v.getId() == R.id.btn_up)
+                {
+                    Up.setImageDrawable(getResources().getDrawable(R.drawable.btn_up));
+                }
+                else
+                {
+                    Down.setImageDrawable(getResources().getDrawable(R.drawable.btn_down));
+                }
+                break;
+        }
+        return false;
+    }
+
     @Override
     public void onClick(View v)
     {
         switch (v.getId())
         {
+
+            case R.id.btn_ready:
+                main.PlaySound(new int [] {R.raw.power_log,R.raw.setting_is_completed,R.raw.follow_instruction,R.raw.take_pose_and_place_bar_or_wire_to_right_position,R.raw.effort_maximally_during_measurement,R.raw.dont_stop_measurement_by_stop_sound,R.raw.measurement_begin_soon});
+                break;
+            case R.id.btn_start:
+
+                break;
+
             case R.id.btn_low:
             {
                 Low.setPressed();

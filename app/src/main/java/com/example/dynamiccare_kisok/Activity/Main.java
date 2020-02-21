@@ -378,8 +378,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         dcSoundPlayer = new DCSoundPlayer();
         dcSoundPlayer.initSounds(this);
+
         dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
+
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
         bottombar = findViewById(R.id.Bottom);
@@ -466,10 +468,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         customActionBar.setHome(fragment.isHomeVisible());
         customActionBar.setTitle(fragment.getTitle());
+
         if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
             btn_next.setVisibility(View.INVISIBLE);
         else
             btn_next.setVisibility(View.VISIBLE);
+
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
     }
