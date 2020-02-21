@@ -15,6 +15,7 @@ public class QRlink extends AppCompatActivity {
     ImageButton btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_link);
         btn_back = (ImageButton)findViewById(R.id.btn_back);
@@ -27,5 +28,9 @@ public class QRlink extends AppCompatActivity {
                 finish();
             }
         });
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

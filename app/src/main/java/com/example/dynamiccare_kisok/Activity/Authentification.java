@@ -22,7 +22,7 @@ public class Authentification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentification);
-
+        try{
         code = new DCEditText((EditText)findViewById(R.id.et_code));
         confirm = (Button)findViewById(R.id.bt_confirm);
         modify = (Button)findViewById(R.id.bt_modify);
@@ -58,6 +58,10 @@ public class Authentification extends AppCompatActivity {
                 finish();
             }
         });
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 }

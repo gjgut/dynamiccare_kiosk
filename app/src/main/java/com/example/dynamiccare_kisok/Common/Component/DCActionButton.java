@@ -28,12 +28,17 @@ public class DCActionButton {
 
     public void setPressed()
     {
+        try{
         main.PlaySound(R.raw.normal_button);
         isPressed = !isPressed;
         if(isPressed)
             this.button.setImageDrawable(Pressed);
         else
             this.button.setImageDrawable(UnPressed);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
     public ImageButton getButton()
     {

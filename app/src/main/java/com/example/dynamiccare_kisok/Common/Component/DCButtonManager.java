@@ -25,20 +25,25 @@ public class DCButtonManager {
                            DCActionButton Start,
                            DCActionButton Ready,
                            DCActionButton Stop) {
-        this.Bench = Bench;
-        this.Squat = Squat;
-        this.Deadlift = Deadlift;
-        this.Press = Press;
-        this.Carf = Carf;
-        this.Curl = Curl;
-        this.Extension = Extension;
-        this.Lat = Lat;
+        try {
+            this.Bench = Bench;
+            this.Squat = Squat;
+            this.Deadlift = Deadlift;
+            this.Press = Press;
+            this.Carf = Carf;
+            this.Curl = Curl;
+            this.Extension = Extension;
+            this.Lat = Lat;
 
-        this.Start = Start;
-        this.Ready = Ready;
-        this.Stop = Stop;
-        Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
-        setDCState(State.Clear);
+            this.Start = Start;
+            this.Ready = Ready;
+            this.Stop = Stop;
+            Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
+            setDCState(State.Clear);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public static void setDCState(State state) {
