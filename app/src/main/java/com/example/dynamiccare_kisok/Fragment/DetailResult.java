@@ -80,22 +80,4 @@ public class DetailResult extends DCfragment{
     }
 
 
-    private class ProgressHandler extends Handler
-    {
-        public void handleMessage(Message msg)
-        {
-            int currentProgress = msg.arg1;
-
-            switch (msg.what)
-            {
-                // 프로그레스 바의 진행과 관계된 메시지 코드입니다.
-                case MSG_PROGRESS:
-                    // 텍스트 뷰와 프로그레스 바를 갱신합니다.
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
 }

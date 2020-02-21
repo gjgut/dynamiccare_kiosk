@@ -71,37 +71,37 @@ public class GraphResult extends DCfragment implements View.OnTouchListener{
 
         ready.getButton().setOnClickListener(this);
 
-
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() { // Thread 로 작업할 내용을 구현
-                int value = 0;
-                int add = 1;
-                while(true) {
-                    value = value + add;
-                    if (value>=100) {
-                        break;
-                    }
-                    final int value2=value;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() { // 화면에 변경하는 작업을 구현
-                            start.setProgress(value2);
-                            average.setProgress(value2);
-                            max.setProgress(value2);
-                            min.setProgress(value2);
-                        }
-                    });
-
-                    try {
-                        Thread.sleep(50); // 시간지연
-                    } catch (InterruptedException e) {    }
-                } // end of while
-            }
-        });
-        t.start(); // 쓰레드 시작
-
+//
+//
+//        Thread t = new Thread(new Runnable() {
+//            @Override
+//            public void run() { // Thread 로 작업할 내용을 구현
+//                int value = 0;
+//                int add = 1;
+//                while(true) {
+//                    value = value + add;
+//                    if (value>=100) {
+//                        break;
+//                    }
+//                    final int value2=value;
+//                    handler.post(new Runnable() {
+//                        @Override
+//                        public void run() { // 화면에 변경하는 작업을 구현
+//                            start.setProgress(value2);
+//                            average.setProgress(value2);
+//                            max.setProgress(value2);
+//                            min.setProgress(value2);
+//                        }
+//                    });
+//
+//                    try {
+//                        Thread.sleep(50); // 시간지연
+//                    } catch (InterruptedException e) {    }
+//                } // end of while
+//            }
+//        });
+//        t.start(); // 쓰레드 시작
+//
 
 
     }
@@ -223,23 +223,4 @@ public class GraphResult extends DCfragment implements View.OnTouchListener{
         return new DetailResult(main);
     }
 
-
-    private class ProgressHandler extends Handler
-    {
-        public void handleMessage(Message msg)
-        {
-            int currentProgress = msg.arg1;
-
-            switch (msg.what)
-            {
-                // 프로그레스 바의 진행과 관계된 메시지 코드입니다.
-                case MSG_PROGRESS:
-                    // 텍스트 뷰와 프로그레스 바를 갱신합니다.
-                    start.setProgress(currentProgress);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 }
