@@ -20,8 +20,9 @@ public class DCActionButton {
         this.main = main;
     }
 
-    public DCActionButton(ImageButton button, Drawable pressed)
+    public DCActionButton(Main main,ImageButton button, Drawable pressed)
     {
+        this.main = main;
         setButton(button,pressed);
     }
 

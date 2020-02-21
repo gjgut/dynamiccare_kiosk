@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
@@ -25,6 +26,7 @@ import com.example.dynamiccare_kisok.R;
 public class DetailResult extends DCfragment implements View.OnTouchListener {
     DCButton Low,Mid,High;
     ImageButton Up,Down;
+    DCActionButton ready,go;
     ProgressBar start,average,max,min;
     TextView txt_start,txt_average,txt_max,txt_min;
 
@@ -47,6 +49,8 @@ public class DetailResult extends DCfragment implements View.OnTouchListener {
         Mid = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_mid),getResources().getDrawable(R.drawable.pressed_btn_mid));
         High = new DCButton(main,(ImageButton)v.findViewById(R.id.btn_high),getResources().getDrawable(R.drawable.pressed_btn_high));
 
+        ready = new DCActionButton(main,(ImageButton)v.findViewById(R.id.btn_ready),getResources().getDrawable(R.drawable.pressed_btn_ready));
+
         start = (ProgressBar)v.findViewById(R.id.progressBar_start);
         average = (ProgressBar)v.findViewById(R.id.progressBar_average);
         max = (ProgressBar)v.findViewById(R.id.progressBar_max);
@@ -63,6 +67,8 @@ public class DetailResult extends DCfragment implements View.OnTouchListener {
 
         Up.setOnTouchListener(this);
         Down.setOnTouchListener(this);
+
+        ready.getButton().setOnClickListener(this);
 
 
 
@@ -137,7 +143,20 @@ public class DetailResult extends DCfragment implements View.OnTouchListener {
         {
 
             case R.id.btn_ready:
-                main.PlaySound(new int [] {R.raw.power_log,R.raw.setting_is_completed,R.raw.follow_instruction,R.raw.take_pose_and_place_bar_or_wire_to_right_position,R.raw.effort_maximally_during_measurement,R.raw.dont_stop_measurement_by_stop_sound,R.raw.measurement_begin_soon});
+                main.PlaySound(
+                        new int [] {R.raw.power_log,
+                        R.raw.setting_is_completed,
+                        R.raw.follow_instruction,
+                        R.raw.take_pose_and_place_bar_or_wire_to_right_position,
+                        R.raw.effort_maximally_during_measurement,
+                        R.raw.dont_stop_measurement_by_stop_sound,
+                        R.raw.measurement_begin_soon,
+                        R.raw.please_follow_the_directions_english,
+                        R.raw.adjust_the_bar_or_wire_properly_english,
+                        R.raw.please_do_your_best_in_measuring_english,
+                        R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english,
+                        R.raw.the_measurement_wil_begin_shortly_english});
+                ready.setPressed();
                 break;
             case R.id.btn_start:
 
