@@ -18,12 +18,6 @@
             android:name=".Activity.Authentification"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.Main" />
-        <activity android:name=".temporary.DetailResult" />
-        <activity android:name=".temporary.GraphResult" />
-        <activity android:name=".temporary.Instruction" />
-        <activity android:name=".temporary.Explain" />
-        <activity android:name=".temporary.ExcerciseMode" />
-        <activity android:name=".temporary.SelectMode" />
         <activity
             android:name=".Activity.QRlink"
             android:theme="@style/AppTheme.NoActionBar" />
