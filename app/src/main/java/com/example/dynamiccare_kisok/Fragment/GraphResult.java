@@ -41,6 +41,14 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     }
 
 
+    public void setBottomBar()
+    {
+        if(resCalculator==null)
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+        else
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+    }
+
     public void setViews(View v) {
 
         Up = (ImageButton) v.findViewById(R.id.btn_up);
@@ -64,6 +72,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         Down.setOnTouchListener(this);
 
         ready.getButton().setOnClickListener(this);
+        go.getButton().setOnClickListener(this);
 
 
         Thread t = new Thread(new Runnable() {
@@ -91,7 +100,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 } // end of while
             }
         });
-        t.start(); // 쓰레드 시작
+//        t.start(); // 쓰레드 시작
 
 
     }
@@ -146,6 +155,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 if (resCalculator != null)
                     main.getusbService().write(Commands.MeasureStart("300", "10").getBytes());
                 resCalculator = new ResCalculator();
+                go.setPressed();
+                setBottomBar();
                 break;
 
             case R.id.btn_low: {
@@ -176,7 +187,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
         setViews(view);
-
+setBottomBar();
         return view;
     }
 
@@ -187,8 +198,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case "AME":
                 if (Integer.parseInt(ack.getTime()) % 120 == 0) {
                     resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
-                    power.setMax(resCalculator.getStart()+150);
-                    power.setProgress(resCalculator.getMax());
+                    power.setMax(resCalculator.getStart()+300000);
+                    power.setProgress(Integer.parseInt(ack.getmTension()));
                 }
                 break;
         }
@@ -214,22 +225,25 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     @Override
     public DCfragment getNextFragment() {
-        return new DetailResult(main);
+        return new DetailResult(main,resCalculator.getStart(),resCalculator.getMax(),resCalculator.getMin(),resCalculator.getAverage());
     }
 
 
     private class ResCalculator {
         int sum = 0, count = 0, max = 0, min = 0, average = 0, start = -1;
 
-        public void putNumber(int entry) {
+        public void putNumber(int entry)
+        {
             count++;
             start = start == -1 ? entry : 0;
             sum += entry;
+            average = sum/count;
             if (entry > max)
                 max = entry;
             if (entry < min)
                 min = entry;
         }
+
         public int getStart(){return start;}
 
         public int getAverage() {

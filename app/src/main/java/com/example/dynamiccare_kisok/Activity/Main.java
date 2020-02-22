@@ -73,7 +73,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void HandleACK(ACK ack) {
         try {
-            Log.i("ACK data:",ack.getCommandCode()+ack.getData());
+            Log.i("ACK data:",ack.getmTension());
             switch (ack.getCommandCode()) {
                 case "AME":
                     break;
