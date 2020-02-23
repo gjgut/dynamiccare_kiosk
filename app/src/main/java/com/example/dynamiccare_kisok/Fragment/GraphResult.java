@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -213,10 +214,16 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        try{
         View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
         setViews(view);
         setBottomBar();
-        return view;
+            return view;
+        }catch (Exception e)
+        {
+            Toast.makeText(main,e.toString(),Toast.LENGTH_LONG).show();
+            return null;
+        }
     }
 
 
