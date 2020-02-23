@@ -41,9 +41,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     }
 
 
-    public void setBottomBar()
-    {
-        if(resCalculator==null)
+    public void setBottomBar() {
+        if (resCalculator == null)
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
         else
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
@@ -133,6 +132,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         switch (v.getId()) {
 
             case R.id.btn_ready:
+                ready.setPressed();
                 if (ready.getButton().isPressed()) {
                     main.PlaySound(
                             new int[]{R.raw.power_log,
@@ -147,35 +147,39 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                                     R.raw.please_do_your_best_in_measuring_english,
                                     R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english,
                                     R.raw.the_measurement_wil_begin_shortly_english});
-                }
-                ready.setPressed();
-
+                    main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
+                } else
+                    main.getusbService().write("$CSP0#".getBytes());
                 break;
             case R.id.btn_start:
-                if (resCalculator != null)
-                    main.getusbService().write(Commands.MeasureStart("300", "10").getBytes());
-                resCalculator = new ResCalculator();
                 go.setPressed();
+                if (go.getButton().isPressed())
+                {
+                    if (resCalculator != null)
+                        main.getusbService().write(Commands.MeasureStart(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
+                    resCalculator = new ResCalculator();
+                } else
+                    main.getusbService().write("$CSP0#".getBytes());
                 setBottomBar();
                 break;
 
             case R.id.btn_low: {
                 Low.setPressed();
                 if (Low.isPressed())
-                    Commands.MeasureLevelCheck("L");
+                    main.getusbService().write(Commands.MeasureLevelCheck("L").getBytes());
                 break;
             }
             case R.id.btn_mid: {
                 Mid.setPressed();
                 if (Mid.isPressed())
-                    Commands.MeasureLevelCheck("M");
+                    main.getusbService().write(Commands.MeasureLevelCheck("M").getBytes());
                 break;
             }
 
             case R.id.btn_high: {
                 High.setPressed();
                 if (High.isPressed())
-                    Commands.MeasureLevelCheck("H");
+                    main.getusbService().write(Commands.MeasureLevelCheck("H").getBytes());
                 break;
             }
 
@@ -187,7 +191,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
         setViews(view);
-setBottomBar();
+        setBottomBar();
         return view;
     }
 
@@ -198,7 +202,7 @@ setBottomBar();
             case "AME":
                 if (Integer.parseInt(ack.getTime()) % 120 == 0) {
                     resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
-                    power.setMax(resCalculator.getStart()+300000);
+                    power.setMax(resCalculator.getStart() + 300000);
                     power.setProgress(Integer.parseInt(ack.getmTension()));
                 }
                 break;
@@ -225,26 +229,27 @@ setBottomBar();
 
     @Override
     public DCfragment getNextFragment() {
-        return new DetailResult(main,resCalculator.getStart(),resCalculator.getMax(),resCalculator.getMin(),resCalculator.getAverage());
+        return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
     }
 
 
     private class ResCalculator {
         int sum = 0, count = 0, max = 0, min = 0, average = 0, start = -1;
 
-        public void putNumber(int entry)
-        {
+        public void putNumber(int entry) {
             count++;
             start = start == -1 ? entry : 0;
             sum += entry;
-            average = sum/count;
+            average = sum / count;
             if (entry > max)
                 max = entry;
             if (entry < min)
                 min = entry;
         }
 
-        public int getStart(){return start;}
+        public int getStart() {
+            return start;
+        }
 
         public int getAverage() {
             return average;

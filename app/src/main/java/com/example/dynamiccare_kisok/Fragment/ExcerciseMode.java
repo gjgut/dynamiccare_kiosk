@@ -72,28 +72,28 @@ public class ExcerciseMode extends DCfragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.exc_tab_btn_bench:
-            setExcercise(bench,new BenchPress(main));
+                setExcercise(bench, new BenchPress(main));
                 break;
             case R.id.exc_tab_btn_squat:
-                setExcercise(squat,new Squat(main));
+                setExcercise(squat, new Squat(main));
                 break;
             case R.id.exc_tab_btn_deadlift:
-                setExcercise(deadlift,new BenchPress(main));
+                setExcercise(deadlift, new BenchPress(main));
                 break;
             case R.id.exc_tab_btn_shoulderpress:
-                setExcercise(press,new ShoulderPress(main));
+                setExcercise(press, new ShoulderPress(main));
                 break;
             case R.id.exc_tab_btn_latpulldown:
-                setExcercise(latpull,new LatPullDown(main));
+                setExcercise(latpull, new LatPullDown(main));
                 break;
             case R.id.exc_tab_btn_carfraise:
-                setExcercise(carf,new CarfRaise(main));
+                setExcercise(carf, new CarfRaise(main));
                 break;
             case R.id.exc_tab_btn_armcurl:
-                setExcercise(curl,new ArmCurl(main));
+                setExcercise(curl, new ArmCurl(main));
                 break;
             case R.id.exc_tab_btn_armextension:
-                setExcercise(extension,new ArmExtension(main));
+                setExcercise(extension, new ArmExtension(main));
                 break;
             case R.id.exc_btn_start: {
                 start.setPressed();
@@ -126,12 +126,20 @@ public class ExcerciseMode extends DCfragment {
                 txt_count.setText(edt_count.getSource().getText().toString());
                 ready.setPressed();
                 txt_set.setText(edt_set.getSource().getText().toString());
-                dcButtonManager.setDCState(DCButtonManager.State.Excercise);
-                main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
-                        edt_weight.getSource().getText().toString(),
-                        txt_count.getText().toString(),
-                        txt_set.getText().toString()).getBytes());
-//                );
+                if (ready.getButton().isPressed()) {
+                    dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+                    main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
+                            edt_weight.getSource().getText().toString(),
+                            txt_count.getText().toString(),
+                            txt_set.getText().toString()).getBytes());
+                }
+                else
+                {
+                    main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                            edt_weight.getSource().getText().toString(),
+                            txt_count.getText().toString(),
+                            txt_set.getText().toString()).getBytes());
+                }
                 break;
             }
 
@@ -139,8 +147,7 @@ public class ExcerciseMode extends DCfragment {
         }
     }
 
-    public void setExcercise(DCButton button, Excercise excercise)
-    {
+    public void setExcercise(DCButton button, Excercise excercise) {
         button.setPressed();
         if (button.isPressed()) {
             main.PlaySound(new int[]{R.raw.normal_button});
@@ -149,7 +156,7 @@ public class ExcerciseMode extends DCfragment {
             Main.getusbService().write(
                     Commands.MeasureSet(excercise.getMode(),
                             String.valueOf(main.getMeasureWeight()),
-                            "000",String.valueOf(main.getMeasureTime()),
+                            "000", String.valueOf(main.getMeasureTime()),
                             "1",
                             "0").getBytes());
             handler.postDelayed(new Runnable() {
@@ -282,40 +289,40 @@ public class ExcerciseMode extends DCfragment {
             start = new DCActionButton(main);
             stop = new DCActionButton(main);
             ready = new DCActionButton(main);
-            edt_count = new DCEditText( view.findViewById(R.id.et_count));
-            edt_weight = new DCEditText( view.findViewById(R.id.et_weight));
-            edt_rest = new DCEditText( view.findViewById(R.id.et_rest));
-            edt_set = new DCEditText( view.findViewById(R.id.et_set));
+            edt_count = new DCEditText(view.findViewById(R.id.et_count));
+            edt_weight = new DCEditText(view.findViewById(R.id.et_weight));
+            edt_rest = new DCEditText(view.findViewById(R.id.et_rest));
+            edt_set = new DCEditText(view.findViewById(R.id.et_set));
 
-            bench.setButton( view.findViewById(R.id.exc_tab_btn_bench),
+            bench.setButton(view.findViewById(R.id.exc_tab_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.body_pec));
-            squat.setButton( view.findViewById(R.id.exc_tab_btn_squat),
+            squat.setButton(view.findViewById(R.id.exc_tab_btn_squat),
                     getResources().getDrawable(R.drawable.pressed_btn_squat),
                     getResources().getDrawable(R.drawable.body_quad));
-            deadlift.setButton( view.findViewById(R.id.exc_tab_btn_deadlift),
+            deadlift.setButton(view.findViewById(R.id.exc_tab_btn_deadlift),
                     getResources().getDrawable(R.drawable.pressed_btn_deadlift),
                     getResources().getDrawable(R.drawable.body_spine));
-            press.setButton( view.findViewById(R.id.exc_tab_btn_shoulderpress),
+            press.setButton(view.findViewById(R.id.exc_tab_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.pressed_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.body_deltoid));
-            latpull.setButton( view.findViewById(R.id.exc_tab_btn_latpulldown),
+            latpull.setButton(view.findViewById(R.id.exc_tab_btn_latpulldown),
                     getResources().getDrawable(R.drawable.pressed_btn_latpulldown),
                     getResources().getDrawable(R.drawable.body_lat));
-            carf.setButton( view.findViewById(R.id.exc_tab_btn_carfraise),
+            carf.setButton(view.findViewById(R.id.exc_tab_btn_carfraise),
                     getResources().getDrawable(R.drawable.pressed_btn_carfraise),
                     getResources().getDrawable(R.drawable.body_carf));
-            curl.setButton( view.findViewById(R.id.exc_tab_btn_armcurl),
+            curl.setButton(view.findViewById(R.id.exc_tab_btn_armcurl),
                     getResources().getDrawable(R.drawable.pressed_btn_amrcurl),
                     getResources().getDrawable(R.drawable.body_biceps));
-            extension.setButton( view.findViewById(R.id.exc_tab_btn_armextension),
+            extension.setButton(view.findViewById(R.id.exc_tab_btn_armextension),
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.body_triceps));
-            start.setButton( view.findViewById(R.id.exc_btn_start),
+            start.setButton(view.findViewById(R.id.exc_btn_start),
                     getResources().getDrawable(R.drawable.pressed_btn_start));
-            stop.setButton( view.findViewById(R.id.exc_btn_stop),
+            stop.setButton(view.findViewById(R.id.exc_btn_stop),
                     getResources().getDrawable(R.drawable.pressed_btn_stop));
-            ready.setButton( view.findViewById(R.id.exc_btn_ready),
+            ready.setButton(view.findViewById(R.id.exc_btn_ready),
                     getResources().getDrawable(R.drawable.pressed_btn_ready));
             txt_count = view.findViewById(R.id.txt_realcount);
             txt_set = view.findViewById(R.id.txt_realset);

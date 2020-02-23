@@ -74,10 +74,10 @@ public class DetailResult extends DCfragment{
             max = (ProgressBar) v.findViewById(R.id.progressBar_max);
             min = (ProgressBar) v.findViewById(R.id.progressBar_min);
 
-            start.setMax(value_start + 150000);
-            average.setMax(value_start + 150000);
-            max.setMax(value_start + 150000);
-            min.setMax(value_start + 150000);
+//            start.setMax(value_start + 150000);
+//            average.setMax(value_start + 150000);
+//            max.setMax(value_start + 150000);
+//            min.setMax(value_start + 150000);
 
 
             uppertitle = v.findViewById(R.id.txt_detail_title);
@@ -93,7 +93,7 @@ public class DetailResult extends DCfragment{
                 public void run() { // Thread 로 작업할 내용을 구현
                     int value = 0;
                     while (true) {
-                        value+=1000;
+                        value++;
                         if (value >= value_start) {
                             break;
                         }
@@ -117,7 +117,7 @@ public class DetailResult extends DCfragment{
                 public void run() { // Thread 로 작업할 내용을 구현
                     int value = 0;
                     while (true) {
-                        value+=1000;
+                        value++;
                         if (value >= value_max) {
                             break;
                         }
@@ -141,7 +141,7 @@ public class DetailResult extends DCfragment{
                 public void run() { // Thread 로 작업할 내용을 구현
                     int value = 0;
                     while (true) {
-                        value+=1000;
+                        value++;
                         if (value >= value_min) {
                             break;
                         }
@@ -165,7 +165,7 @@ public class DetailResult extends DCfragment{
                 public void run() { // Thread 로 작업할 내용을 구현
                     int value = 0;
                     while (true) {
-                        value+=1000;
+                        value++;
                         if (value >= value_average) {
                             break;
                         }
