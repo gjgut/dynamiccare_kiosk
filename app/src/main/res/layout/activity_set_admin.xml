@@ -10,6 +10,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,16 +20,16 @@
 
         <LinearLayout
             android:id="@+id/action_title"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/icon_blue"
-                android:layout_width="56dp"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
@@ -43,7 +45,7 @@
                 android:gravity="center|left"
                 android:text="   관리자 번호 변경"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
@@ -62,6 +64,7 @@
                 android:id="@+id/et_prevpw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:backgroundTint=" #33ffffff"
                 android:ems="10"
@@ -69,7 +72,8 @@
                 android:inputType="numberPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#00BB3636"
-                android:textColorHint="#33ffffff" />
+                android:textColorHint="#33ffffff"
+                android:textSize="30sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -87,6 +91,7 @@
                     android:inputType="numberPassword"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#33ffffff"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -112,24 +117,27 @@
                 android:id="@+id/et_pwconfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
                 android:layout_weight="1"
                 android:backgroundTint=" #33ffffff"
                 android:ems="10"
                 android:hint="새로운 관리자 번호 확인"
                 android:inputType="numberPassword"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#33ffffff" />
+                android:textColorHint="#33ffffff"
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/btn_set_admin_ok"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="90dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="#3993de"
                 android:text="완료"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
         </LinearLayout>
 
     </LinearLayout>
