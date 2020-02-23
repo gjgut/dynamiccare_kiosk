@@ -54,6 +54,24 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCSoundPlayer dcSoundPlayer;
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
+    int MeasureTime=10;
+    int MeasureWeight=500;
+
+    public int getMeasureTime() {
+        return MeasureTime;
+    }
+
+    public void setMeasureTime(int measureTime) {
+        MeasureTime = measureTime;
+    }
+
+    public int getMeasureWeight() {
+        return MeasureWeight;
+    }
+
+    public void setMeasureWeight(int measureWeight) {
+        MeasureWeight = measureWeight;
+    }
 
     public static UsbService getusbService() {
         return usbService;

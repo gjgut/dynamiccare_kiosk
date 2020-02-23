@@ -41,4 +41,9 @@ public class ArmCurl extends Excercise {
     {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_curl);
     }
+
+    @Override
+    public String getMode() {
+        return "15";
+    }
 }

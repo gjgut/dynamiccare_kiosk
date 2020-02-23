@@ -41,4 +41,9 @@ public class ArmExtension extends Excercise {
     {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_extension);
     }
+
+    @Override
+    public String getMode(){
+        return "16";
+    }
 }

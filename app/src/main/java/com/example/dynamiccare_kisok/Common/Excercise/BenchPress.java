@@ -41,8 +41,9 @@ public class BenchPress extends Excercise {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_bench);
     }
 
+
     @Override
     public String getMode() {
-        return "00";
+        return "04";
     }
 }

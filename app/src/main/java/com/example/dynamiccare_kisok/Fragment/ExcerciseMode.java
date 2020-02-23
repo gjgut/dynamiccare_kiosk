@@ -22,6 +22,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
+import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
+import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
+import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
+import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
+import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Util.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
@@ -52,6 +60,7 @@ public class ExcerciseMode extends DCfragment {
     Spinner spin_level;
     CountDownTimer countDownTimer;
     int count;
+    Handler handler = new Handler();
 
     public ExcerciseMode(Main main) {
         super(main);
@@ -61,170 +70,30 @@ public class ExcerciseMode extends DCfragment {
 
     @Override
     public void onClick(View v) {
-        Handler handler = new Handler();
         switch (v.getId()) {
-            case R.id.exc_tab_btn_bench: {
-                bench.setPressed();
-                if (bench.isPressed()) {
-                    main.PlaySound(new int[]{R.raw.normal_button});
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("05",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
+            case R.id.exc_tab_btn_bench:
+            setExcercise(bench,new BenchPress(main));
                 break;
-            }
-            case R.id.exc_tab_btn_squat: {
-                squat.setPressed();
-                if (squat.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("01",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
+            case R.id.exc_tab_btn_squat:
+                setExcercise(squat,new Squat(main));
                 break;
-            }
-            case R.id.exc_tab_btn_deadlift: {
-                deadlift.setPressed();
-                if (deadlift.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("02",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
+            case R.id.exc_tab_btn_deadlift:
+                setExcercise(deadlift,new BenchPress(main));
                 break;
-            }
-            case R.id.exc_tab_btn_shoulderpress: {
-                press.setPressed();
-                if (press.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("03",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
+            case R.id.exc_tab_btn_shoulderpress:
+                setExcercise(press,new ShoulderPress(main));
                 break;
-            }
             case R.id.exc_tab_btn_latpulldown:
-                latpull.setPressed();
-                if (latpull.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("18",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
-                /*테스트용 ACK 전송*/
-                main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
+                setExcercise(latpull,new LatPullDown(main));
                 break;
             case R.id.exc_tab_btn_carfraise:
-                carf.setPressed();
-                if (carf.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("14",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
-                /*테스트용 ACK 전송*/
-                main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB2#"));
+                setExcercise(carf,new CarfRaise(main));
                 break;
-
             case R.id.exc_tab_btn_armcurl:
-                curl.setPressed();
-                if (curl.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("16",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
-                /*테스트용 ACK 전송*/
-                try {
-                    main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                setExcercise(curl,new ArmCurl(main));
                 break;
-
             case R.id.exc_tab_btn_armextension:
-                extension.setPressed();
-                if (extension.isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.getusbService().write(
-                            Commands.ExcerciseStart("17",
-                                    edt_weight.getSource().getText().toString(),
-                                    edt_count.getSource().getText().toString(),
-                                    edt_set.getSource().getText().toString()).getBytes());
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                        }
-                    }, 2000);
-                } else {
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                }
-                /*테스트용 ACK 전송*/
-                main.HandleACK(ACKListener.ACKParser.ParseACK("$ACD03031#"));
+                setExcercise(extension,new ArmExtension(main));
                 break;
             case R.id.exc_btn_start: {
                 start.setPressed();
@@ -259,6 +128,28 @@ public class ExcerciseMode extends DCfragment {
             }
 
 
+        }
+    }
+
+    public void setExcercise(DCButton button, Excercise excercise)
+    {
+        button.setPressed();
+        if (button.isPressed()) {
+            main.PlaySound(new int[]{R.raw.normal_button});
+            dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+            Main.getusbService().write(
+                    Commands.MeasureSet(excercise.getMode(),
+                            String.valueOf(main.getMeasureWeight()),
+                            "000",String.valueOf(main.getMeasureTime()),
+                            "1",
+                            "0").getBytes());
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+                }
+            }, 2000);
+        } else {
+            dcButtonManager.setDCState(DCButtonManager.State.Clear);
         }
     }
 
@@ -381,40 +272,40 @@ public class ExcerciseMode extends DCfragment {
             start = new DCActionButton(main);
             stop = new DCActionButton(main);
             ready = new DCActionButton(main);
-            edt_count = new DCEditText((EditText) view.findViewById(R.id.et_count));
-            edt_weight = new DCEditText((EditText) view.findViewById(R.id.et_weight));
-            edt_rest = new DCEditText((EditText) view.findViewById(R.id.et_rest));
-            edt_set = new DCEditText((EditText) view.findViewById(R.id.et_set));
+            edt_count = new DCEditText( view.findViewById(R.id.et_count));
+            edt_weight = new DCEditText( view.findViewById(R.id.et_weight));
+            edt_rest = new DCEditText( view.findViewById(R.id.et_rest));
+            edt_set = new DCEditText( view.findViewById(R.id.et_set));
 
-            bench.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_bench),
+            bench.setButton( view.findViewById(R.id.exc_tab_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.body_pec));
-            squat.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_squat),
+            squat.setButton( view.findViewById(R.id.exc_tab_btn_squat),
                     getResources().getDrawable(R.drawable.pressed_btn_squat),
                     getResources().getDrawable(R.drawable.body_quad));
-            deadlift.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_deadlift),
+            deadlift.setButton( view.findViewById(R.id.exc_tab_btn_deadlift),
                     getResources().getDrawable(R.drawable.pressed_btn_deadlift),
                     getResources().getDrawable(R.drawable.body_spine));
-            press.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_shoulderpress),
+            press.setButton( view.findViewById(R.id.exc_tab_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.pressed_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.body_deltoid));
-            latpull.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_latpulldown),
+            latpull.setButton( view.findViewById(R.id.exc_tab_btn_latpulldown),
                     getResources().getDrawable(R.drawable.pressed_btn_latpulldown),
                     getResources().getDrawable(R.drawable.body_lat));
-            carf.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_carfraise),
+            carf.setButton( view.findViewById(R.id.exc_tab_btn_carfraise),
                     getResources().getDrawable(R.drawable.pressed_btn_carfraise),
                     getResources().getDrawable(R.drawable.body_carf));
-            curl.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_armcurl),
+            curl.setButton( view.findViewById(R.id.exc_tab_btn_armcurl),
                     getResources().getDrawable(R.drawable.pressed_btn_amrcurl),
                     getResources().getDrawable(R.drawable.body_biceps));
-            extension.setButton((ImageButton) view.findViewById(R.id.exc_tab_btn_armextension),
+            extension.setButton( view.findViewById(R.id.exc_tab_btn_armextension),
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.body_triceps));
-            start.setButton((ImageButton) view.findViewById(R.id.exc_btn_start),
+            start.setButton( view.findViewById(R.id.exc_btn_start),
                     getResources().getDrawable(R.drawable.pressed_btn_start));
-            stop.setButton((ImageButton) view.findViewById(R.id.exc_btn_stop),
+            stop.setButton( view.findViewById(R.id.exc_btn_stop),
                     getResources().getDrawable(R.drawable.pressed_btn_stop));
-            ready.setButton((ImageButton) view.findViewById(R.id.exc_btn_ready),
+            ready.setButton( view.findViewById(R.id.exc_btn_ready),
                     getResources().getDrawable(R.drawable.pressed_btn_ready));
             txt_count = view.findViewById(R.id.txt_realcount);
             txt_set = view.findViewById(R.id.txt_realset);

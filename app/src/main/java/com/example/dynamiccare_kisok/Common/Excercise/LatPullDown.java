@@ -41,4 +41,9 @@ public class LatPullDown extends Excercise {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_lat);
 
     }
+
+    @Override
+    public String getMode() {
+        return "17";
+    }
 }

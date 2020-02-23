@@ -41,4 +41,10 @@ public class CarfRaise extends Excercise {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_carf);
 
     }
+
+
+    @Override
+    public String getMode() {
+        return "03";
+    }
 }

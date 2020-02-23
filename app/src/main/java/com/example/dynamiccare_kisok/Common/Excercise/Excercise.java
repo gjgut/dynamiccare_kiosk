@@ -17,5 +17,5 @@ public abstract class Excercise {
     public abstract String getMuscleName();
     public abstract Drawable getMappingBody();
     public abstract Uri getVideoUri();
-    public String getMode(){ return ""; }
+    public abstract String getMode();
 }

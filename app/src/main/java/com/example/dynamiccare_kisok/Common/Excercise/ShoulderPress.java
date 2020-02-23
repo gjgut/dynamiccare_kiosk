@@ -41,4 +41,9 @@ public class ShoulderPress extends Excercise {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_press);
 
     }
+
+    @Override
+    public String getMode() {
+        return "02";
+    }
 }

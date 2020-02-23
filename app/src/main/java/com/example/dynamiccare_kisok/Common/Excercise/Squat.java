@@ -41,4 +41,9 @@ public class Squat extends Excercise {
         return Uri.parse("android.resource://"+main.getPackageName()+"/"+R.raw.video_squat);
 
     }
+
+    @Override
+    public String getMode() {
+        return "00";
+    }
 }
