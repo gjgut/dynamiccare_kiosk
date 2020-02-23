@@ -54,8 +54,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCSoundPlayer dcSoundPlayer;
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
-    int MeasureTime=10;
-    int MeasureWeight=500;
+    int MeasureTime = 10;
+    int MeasureWeight = 500;
+    Handler handler;
 
     public int getMeasureTime() {
         return MeasureTime;
@@ -84,14 +85,14 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void PlaySound(int soundId) {
         dcSoundPlayer.play(soundId);
     }
-    public void PlaySound(int []stream)
-    {
+
+    public void PlaySound(int[] stream) {
         dcSoundThread.playstream(stream);
     }
 
     public void HandleACK(ACK ack) {
         try {
-            Log.i("ACK data:",ack.getmTension());
+            Log.i("ACK data:", ack.getmTension());
             switch (ack.getCommandCode()) {
                 case "AME":
                     break;
@@ -320,8 +321,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     break;
             }
             currentFragment.HandleACK(ack);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -347,8 +347,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
                         break;
                 }
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -358,13 +357,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
-            try{
-            usbService = ((UsbService.UsbBinder) arg1).getService();
-            usbService.setHandler(ackListener);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+            try {
+                usbService = ((UsbService.UsbBinder) arg1).getService();
+                usbService.setHandler(ackListener);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -402,11 +400,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        handler = new Handler();
 
         ackListener = new ACKListener(this);
 
         dcSoundPlayer = new DCSoundPlayer();
-        dcSoundPlayer.initSounds(this);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                dcSoundPlayer.initSounds(getApplicationContext());
+            }
+        });
 
         dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
@@ -439,72 +443,81 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void ReplaceFragment(DCfragment fragment, boolean isRight) {
+        try {
 
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        currentFragment = fragment;
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            currentFragment = fragment;
 
-        if (isRight && fragment.getClass() != SelectMode.class) {
-            bottombar.setVisibility(View.VISIBLE);
-            fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-        } else if (!isRight && fragment.getClass() != SelectMode.class) {
-            bottombar.setVisibility(View.VISIBLE);
-            fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-        } else {
-            bottombar.setVisibility(View.INVISIBLE);
-            fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-        }
+            if (isRight && fragment.getClass() != SelectMode.class) {
+                bottombar.setVisibility(View.VISIBLE);
+                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+            } else if (!isRight && fragment.getClass() != SelectMode.class) {
+                bottombar.setVisibility(View.VISIBLE);
+                fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+            } else {
+                bottombar.setVisibility(View.INVISIBLE);
+                fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+            }
 
 
-        if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
-            btn_next.setVisibility(View.INVISIBLE);
-        else
-            btn_next.setVisibility(View.VISIBLE);
-
-        switch (fragment.getClass().getSimpleName()) {
-            case "Explain": {
+            if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
                 btn_next.setVisibility(View.INVISIBLE);
-                btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
-                break;
-            }
-            case "Instruction": {
-                btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
-                break;
-            }
-            case "GraphResult": {
-                btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
-                break;
-            }
-        }
+            else
+                btn_next.setVisibility(View.VISIBLE);
 
-        customActionBar.setHome(fragment.isHomeVisible());
-        customActionBar.setTitle(fragment.getTitle());
-        fragmentTransaction.replace(R.id.main_container, fragment);
-        fragmentTransaction.commit();
+            switch (fragment.getClass().getSimpleName()) {
+                case "Explain": {
+                    btn_next.setVisibility(View.INVISIBLE);
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
+                    break;
+                }
+                case "Instruction": {
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
+                    break;
+                }
+                case "GraphResult": {
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
+                    break;
+                }
+            }
+
+            customActionBar.setHome(fragment.isHomeVisible());
+            customActionBar.setTitle(fragment.getTitle());
+            fragmentTransaction.replace(R.id.main_container, fragment);
+            fragmentTransaction.commit();
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void ReplaceFragment(DCfragment fragment) {
 
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        currentFragment = fragment;
+        try {
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            currentFragment = fragment;
 
-        if (fragment.getClass() != SelectMode.class) {
-            bottombar.setVisibility(View.VISIBLE);
-        } else {
-            bottombar.setVisibility(View.INVISIBLE);
+            if (fragment.getClass() != SelectMode.class) {
+                bottombar.setVisibility(View.VISIBLE);
+            } else {
+                bottombar.setVisibility(View.INVISIBLE);
+            }
+
+            customActionBar.setHome(fragment.isHomeVisible());
+            customActionBar.setTitle(fragment.getTitle());
+
+            if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
+                btn_next.setVisibility(View.INVISIBLE);
+            else
+                btn_next.setVisibility(View.VISIBLE);
+
+            fragmentTransaction.replace(R.id.main_container, fragment);
+            fragmentTransaction.commit();
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
-
-        customActionBar.setHome(fragment.isHomeVisible());
-        customActionBar.setTitle(fragment.getTitle());
-
-        if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
-            btn_next.setVisibility(View.INVISIBLE);
-        else
-            btn_next.setVisibility(View.VISIBLE);
-
-        fragmentTransaction.replace(R.id.main_container, fragment);
-        fragmentTransaction.commit();
     }
 
 

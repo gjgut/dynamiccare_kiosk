@@ -74,7 +74,7 @@
             <VideoView
                 android:id="@+id/video_instruct"
                 android:layout_width="match_parent"
-                android:layout_height="460dp" />
+                android:layout_height="500dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -96,10 +96,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:lineSpacingExtra="8sp"
+                android:lineSpacingExtra="30sp"
                 android:lines="10"
-                android:text="1. 바를 잡을 때 엄지손가락도 다른 손가락과 같은 방향으로 위치하세요 \n(스텐다드 썸리스 그립)\n
-        2. 바의 위치가 유두와 일치하도록 하십시오. \n3. 바와 몸 사이의 거리는 5cm가 되도록 조정하십시오. \n4. 바를 들어올릴 때 가슴(대흉근)에 힘을 주십시오. \n5. 바를 들어올릴 때 견갑골(어깨)를 사용하지 마십시오. \n6. 팔이 완전히 펴진 상태면 측정이 종료된 상태이니, 견갑골(어깨)를 사용하여 \n더 이상 들어올리지 마십시오."
+                android:text="1. 바를 잡을 때 엄지손가락도 다른 손가락과 같은 방향으로 위치하세요 \n(스탠다드 썸리스 그립)\n2. 바의 위치가 유두와 일치하도록 하십시오. \n3. 바와 몸 사이의 거리는 5cm가 되도록 조정하십시오. \n4. 바를 들어올릴 때 가슴(대흉근)에 힘을 주십시오. \n5. 바를 들어올릴 때 견갑골(어깨)를 사용하지 마십시오. \n6. 팔이 완전히 펴진 상태면 측정이 종료된 상태이니, 견갑골(어깨)를 사용하여 \n더 이상 들어올리지 마십시오."
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
