@@ -98,31 +98,39 @@ public class ExcerciseMode extends DCfragment {
             case R.id.exc_btn_start: {
                 start.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                        edt_weight.getSource().getText().toString(),
+                        txt_count.getText().toString(),
+                        txt_set.getText().toString()).getBytes());
                 break;
             }
             case R.id.exc_btn_stop: {
                 stop.setPressed();
-                txt_count.setText("0");
-                txt_set.setText("0");
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
                 main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        stop.setPressed();
-                        main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
-                    }
-                }, 5000);
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                        edt_weight.getSource().getText().toString(),
+                        txt_count.getText().toString(),
+                        txt_set.getText().toString()).getBytes());
+                txt_count.setText("0");
+                txt_set.setText("0");
+//                handler.postDelayed(new Runnable() {
+//                    public void run() {
+//                        stop.setPressed();
+//                        main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+//                    }
+//                }, 5000);
                 break;
             }
             case R.id.exc_btn_ready: {
-                ready.setPressed();
                 txt_count.setText(edt_count.getSource().getText().toString());
+                ready.setPressed();
                 txt_set.setText(edt_set.getSource().getText().toString());
                 dcButtonManager.setDCState(DCButtonManager.State.Excercise);
-//                main.HandleACK(ACKListener.ACKParser.ParseACK("$AET1#"));
-                Main.getusbService().write("$CER#".getBytes());
-//                Main.getusbService().write(
-//                        Commands.ExcerciseReady("01", edt_weight.getSource().getText().toString(), edt_count.getSource().getText().toString(), edt_set.getSource().getText().toString()).getBytes()
+                main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
+                        edt_weight.getSource().getText().toString(),
+                        txt_count.getText().toString(),
+                        txt_set.getText().toString()).getBytes());
 //                );
                 break;
             }
@@ -136,6 +144,7 @@ public class ExcerciseMode extends DCfragment {
         button.setPressed();
         if (button.isPressed()) {
             main.PlaySound(new int[]{R.raw.normal_button});
+            main.setCurrentExcercise(excercise);
             dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
             Main.getusbService().write(
                     Commands.MeasureSet(excercise.getMode(),
@@ -150,6 +159,7 @@ public class ExcerciseMode extends DCfragment {
             }, 2000);
         } else {
             dcButtonManager.setDCState(DCButtonManager.State.Clear);
+            main.setCurrentExcercise(null);
         }
     }
 
