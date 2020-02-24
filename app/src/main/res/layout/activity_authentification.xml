@@ -25,7 +25,7 @@
         <ImageView
             android:id="@+id/dc_logo"
             android:layout_width="match_parent"
-            android:layout_height="103dp"
+            android:layout_height="149dp"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/dc_logo" />
 
@@ -33,11 +33,11 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="관리자 승인"
             android:textColor="#FFFFFF"
-            android:textSize="36sp"
+            android:textSize="45sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -57,7 +57,7 @@
             android:id="@+id/et_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="40dp"
             android:backgroundTint=" #33ffffff"
             android:hint="관리자 번호 입력"
             android:inputType="number"
@@ -67,7 +67,7 @@
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textColorHint="#33ffffff"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/bt_confirm"
