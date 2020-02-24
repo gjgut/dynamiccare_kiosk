@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.R;
 
 public class Splash extends AppCompatActivity {
@@ -14,6 +15,8 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        DynamicCare care = (DynamicCare)getApplicationContext();
+        care.initSounds();
 
         Handler hd = new Handler();
         hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
