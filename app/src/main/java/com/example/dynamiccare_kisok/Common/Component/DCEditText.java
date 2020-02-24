@@ -14,6 +14,7 @@ public class DCEditText implements TextWatcher {
     public DCEditText(EditText editText) {
         source = editText;
         source.addTextChangedListener(this);
+
     }
 
     public void setSource(EditText editText) {

@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -28,6 +29,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Util.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
@@ -51,7 +53,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     static boolean isIsoKinetic, isIsoTonic;
     static Excercise currentExcercise;
     static UsbService usbService;
-    DCSoundPlayer dcSoundPlayer;
+    static DCSoundPlayer dcSoundPlayer;
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
     int MeasureTime = 10;
@@ -395,22 +397,22 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         currentExcercise = excercise;
     }
 
+    public void LoadSound()
+    {
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        handler = new Handler();
 
         ackListener = new ACKListener(this);
+        handler = new Handler();
 
-        dcSoundPlayer = new DCSoundPlayer();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                dcSoundPlayer.initSounds(getApplicationContext());
-            }
-        });
+        DynamicCare care = (DynamicCare)getApplicationContext();
+        dcSoundPlayer = care.getDcSoundPlayer();
 
         dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");

@@ -321,6 +321,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
@@ -413,6 +414,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
@@ -489,6 +491,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
@@ -543,6 +546,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
