@@ -16,7 +16,7 @@ public class Commands {
          {
              asciisum +=(int)datum;
          }
-         String CheckSumBase = Integer.toHexString(asciisum & 0x00FF);
+         String CheckSumBase = Integer.toHexString(asciisum & 0x00FF).toUpperCase();
          if(CheckSumBase.length()<2)
              CheckSumBase = "0"+CheckSumBase;
          return CheckSumBase;
@@ -34,7 +34,7 @@ public class Commands {
              return str;
          else if(strleng<defleng)
          {
-             for(int i=0;i<=defleng-strleng;i++)
+             for(int i=0;i<defleng-strleng;i++)
                  str = "0"+str;
              return str;
          }
