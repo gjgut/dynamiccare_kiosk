@@ -55,7 +55,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
     int MeasureTime=10;
-    int MeasureWeight=500;
+    int MeasureWeight=300;
 
     public int getMeasureTime() {
         return MeasureTime;

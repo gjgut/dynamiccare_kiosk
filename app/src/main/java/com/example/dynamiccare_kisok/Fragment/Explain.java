@@ -12,15 +12,18 @@ import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
+import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
 import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
 import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
 import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
 import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
+import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
@@ -51,58 +54,47 @@ public class Explain extends DCfragment {
         switch (v.getId())
         {
             case R.id.mes_btn_bench:
-            {
-                bench.setPressed();
-                Main.setCurrentExcercise(new BenchPress(main));
-//                Main.getusbService().write(Commands.MeasureSet());
+                setExcercise(bench, new BenchPress(main));
                 break;
-            }
             case R.id.mes_btn_squat:
-            {
-                squat.setPressed();
-                Main.setCurrentExcercise(new Squat(main));
+                setExcercise(squat, new Squat(main));
                 break;
-            }
             case R.id.mes_btn_deadlift:
-            {
-                deadlift.setPressed();
-                Main.setCurrentExcercise(new DeadLift(main));
+                setExcercise(deadlift, new BenchPress(main));
                 break;
-            }
             case R.id.mes_btn_shoulderpress:
-            {
-                press.setPressed();
-                Main.setCurrentExcercise(new ShoulderPress(main));
+                setExcercise(press, new ShoulderPress(main));
                 break;
-            }
             case R.id.mes_btn_latpulldown:
-            {
-                latpull.setPressed();
-                Main.setCurrentExcercise(new LatPullDown(main));
+                setExcercise(latpull, new LatPullDown(main));
                 break;
-            }
             case R.id.mes_btn_carfraise:
-            {
-                carf.setPressed();
-                Main.setCurrentExcercise(new CarfRaise(main));
+                setExcercise(carf, new CarfRaise(main));
                 break;
-            }
             case R.id.mes_btn_armcurl:
-            {
-                curl.setPressed();
-                Main.setCurrentExcercise(new ArmCurl(main));
+                setExcercise(curl, new ArmCurl(main));
                 break;
-            }
             case R.id.mes_btn_armextension:
-            {
-                extension.setPressed();
-                Main.setCurrentExcercise(new ArmExtension(main));
+                setExcercise(extension, new ArmExtension(main));
                 break;
-            }
         }
         setBottomBar();
     }
 
+    public void setExcercise(DCButton button, Excercise excercise) {
+        button.setPressed();
+        if (button.isPressed()) {
+            Main.setCurrentExcercise(excercise);
+            Main.getusbService().write(
+                    Commands.MeasureSet(excercise.getMode(),
+                            String.valueOf(main.getMeasureWeight()),
+                            "000", String.valueOf(main.getMeasureTime()),
+                            "1",
+                            "0").getBytes());
+        } else {
+
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
