@@ -249,7 +249,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="20sec"
+                    android:text="20 sec"
                     android:textColor="#FFFFFF"
                     android:textSize="30sp" />
 
