@@ -38,6 +38,19 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     public GraphResult(Main main) {
         super(main);
+        main.PlaySound(
+                new int[]{R.raw.power_log,
+                        R.raw.setting_is_completed,
+                        R.raw.follow_instruction,
+                        R.raw.take_pose_and_place_bar_or_wire_to_right_position,
+                        R.raw.effort_maximally_during_measurement,
+                        R.raw.dont_stop_measurement_by_stop_sound,
+                        R.raw.measurement_begin_soon,
+                        R.raw.please_follow_the_directions_english,
+                        R.raw.adjust_the_bar_or_wire_properly_english,
+                        R.raw.please_do_your_best_in_measuring_english,
+                        R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english,
+                        R.raw.the_measurement_wil_begin_shortly_english});
     }
 
 
@@ -130,23 +143,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.btn_ready:
                 ready.setPressed();
                 if (ready.getButton().isPressed()) {
-                    main.PlaySound(
-                            new int[]{R.raw.power_log,
-                                    R.raw.setting_is_completed,
-                                    R.raw.follow_instruction,
-                                    R.raw.take_pose_and_place_bar_or_wire_to_right_position,
-                                    R.raw.effort_maximally_during_measurement,
-                                    R.raw.dont_stop_measurement_by_stop_sound,
-                                    R.raw.measurement_begin_soon,
-                                    R.raw.please_follow_the_directions_english,
-                                    R.raw.adjust_the_bar_or_wire_properly_english,
-                                    R.raw.please_do_your_best_in_measuring_english,
-                                    R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english,
-                                    R.raw.the_measurement_wil_begin_shortly_english});
+
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
@@ -156,7 +156,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 if (go.getButton().isPressed())
                 {
                     if (resCalculator != null)
-                        main.getusbService().write(Commands.MeasureStart(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
+                        main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
                     resCalculator = new ResCalculator();
                 } else
                     main.getusbService().write("$CSP0#".getBytes());

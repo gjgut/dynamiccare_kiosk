@@ -57,16 +57,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     int MeasureTime=10;
     int MeasureWeight=300;
 
-    public int getMeasureTime() {
-        return MeasureTime;
+    public String getMeasureTime() {
+        return String.valueOf(MeasureTime);
     }
 
     public void setMeasureTime(int measureTime) {
         MeasureTime = measureTime;
     }
 
-    public int getMeasureWeight() {
-        return MeasureWeight;
+    public String getMeasureWeight() {
+        return String.valueOf(MeasureWeight);
     }
 
     public void setMeasureWeight(int measureWeight) {
