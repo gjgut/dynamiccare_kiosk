@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1d1f21"
+    android:background="#000000"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -17,6 +17,7 @@
         android:layout_marginStart="160dp"
         android:layout_marginTop="264dp"
         android:layout_marginEnd="160dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
-        android:layout_marginTop="272dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="120dp"
         android:backgroundTint=" #33ffffff"
         android:gravity="center"
@@ -39,12 +40,12 @@
         android:maxLength="4"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textColorHint="#33ffffff"
+        android:textColorHint="#83FFFFFF"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dc_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/videoView" />
 
     <Button
         android:id="@+id/bt_login"
@@ -93,6 +94,17 @@
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_dwload" />
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="360dp"
+        android:layout_height="241dp"
+        android:layout_marginTop="232dp"
+        android:clickable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
