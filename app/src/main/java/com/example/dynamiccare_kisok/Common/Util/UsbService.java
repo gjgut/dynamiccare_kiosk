@@ -25,7 +25,7 @@ import java.util.Map;
 public class UsbService extends Service {
 
     public static final String TAG = "UsbService";
-    
+
     public static final String ACTION_USB_READY = "com.felhr.connectivityservices.USB_READY";
     public static final String ACTION_USB_ATTACHED = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
     public static final String ACTION_USB_DETACHED = "android.hardware.usb.action.USB_DEVICE_DETACHED";
@@ -179,7 +179,7 @@ public class UsbService extends Service {
         // This snippet will try to open the first encountered usb device connected, excluding usb root hubs
         HashMap<String, UsbDevice> usbDevices = usbManager.getDeviceList();
         if (!usbDevices.isEmpty()) {
-            
+
             // first, dump the hashmap for diagnostic purposes
             for (Map.Entry<String, UsbDevice> entry : usbDevices.entrySet()) {
                 device = entry.getValue();
@@ -266,12 +266,12 @@ public class UsbService extends Service {
                     serialPort.read(mCallback);
                     serialPort.getCTS(ctsCallback);
                     serialPort.getDSR(dsrCallback);
-                    
+
                     //
                     // Some Arduinos would need some sleep because firmware wait some time to know whether a new sketch is going 
                     // to be uploaded or not
                     //Thread.sleep(2000); // sleep some. YMMV with different chips.
-                    
+
                     // Everything went as expected. Send an intent to MainActivity
                     Intent intent = new Intent(ACTION_USB_READY);
                     context.sendBroadcast(intent);

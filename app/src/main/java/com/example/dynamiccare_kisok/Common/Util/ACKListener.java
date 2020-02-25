@@ -26,6 +26,7 @@ public class ACKListener extends Handler{
                     if (!msg.obj.toString().contains("$"))
                         return;
                     main.HandleACK(ACKParser.ParseACK(msg.obj.toString()));
+                    Toast.makeText(main,"ACK:"+msg.obj.toString(),Toast.LENGTH_SHORT).show();
                 }
                 break;
                 case UsbService.CTS_CHANGE:
