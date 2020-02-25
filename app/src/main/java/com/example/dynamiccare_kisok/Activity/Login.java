@@ -46,17 +46,17 @@ public class Login extends AppCompatActivity {
                         videoView.seekTo(0);
                         videoView.start();
                 }});
-
-            dclogo.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), Authentification.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                    finish();
-                    return false;
-                }
-            });
+//
+//            dclogo.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    Intent intent = new Intent(getApplicationContext(), Authentification.class);
+//                    startActivity(intent);
+//                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//                    finish();
+//                    return false;
+//                }
+//            });
 
             btn_download.setOnClickListener(new View.OnClickListener() {
                 @Override
