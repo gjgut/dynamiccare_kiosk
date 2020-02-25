@@ -35,19 +35,19 @@ public class Login extends AppCompatActivity {
 
             videoView = findViewById(R.id.video_instruct);
 
-            videoView.setVideoURI(Uri.parse("android.resource://"+getPackageName()+"/raw/dynamic_care_logo.mp4"));
+            videoView.setVideoURI(Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.dynamic_care_logo));
             videoView.setMediaController(new MediaController(this));
             videoView.requestFocus();
-            videoView.start();
-            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
-                int count = 0; // initialize somewhere before, not sure if this will work here
-                int maxCount = 5;
-
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                        videoView.seekTo(0);
-                        videoView.start();
-                }});
+//            videoView.start();
+//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+//                int count = 0; // initialize somewhere before, not sure if this will work here
+//                int maxCount = 5;
+//
+//                @Override
+//                public void onCompletion(MediaPlayer mediaPlayer) {
+//                        videoView.seekTo(0);
+//                        videoView.start();
+//                }});
 
             dclogo.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

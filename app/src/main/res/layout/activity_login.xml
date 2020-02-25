@@ -10,9 +10,23 @@
     android:orientation="vertical">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <VideoView
+            android:id="@+id/video_instruct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/dc_logo"
-        android:layout_width="399dp"
+        android:layout_width="0dp"
         android:layout_height="180dp"
         android:layout_marginStart="160dp"
         android:layout_marginTop="264dp"
@@ -29,7 +43,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
-        android:layout_marginTop="172dp"
         android:layout_marginEnd="120dp"
         android:backgroundTint=" #33ffffff"
         android:gravity="center"
@@ -45,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/videoView" />
+        tools:layout_editor_absoluteY="1320dp" />
 
     <Button
         android:id="@+id/bt_login"
@@ -94,17 +107,6 @@
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_dwload" />
-
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_width="360dp"
-        android:layout_height="241dp"
-        android:layout_marginTop="232dp"
-        android:clickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
