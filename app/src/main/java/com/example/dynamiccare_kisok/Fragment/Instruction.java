@@ -46,6 +46,12 @@ public class Instruction extends DCfragment {
         videoView.setMediaController(new MediaController(main));
         videoView.requestFocus();
         videoView.start();
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                videoView.seekTo(0);
+                videoView.start();
+            }});
 
 
         title.setText(Main.getCurrentExcercise().getSimpleName());
