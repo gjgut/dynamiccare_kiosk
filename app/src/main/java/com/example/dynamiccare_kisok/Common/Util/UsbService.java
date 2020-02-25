@@ -25,7 +25,7 @@ import java.util.Map;
 public class UsbService extends Service {
 
     public static final String TAG = "UsbService";
-    
+
     public static final String ACTION_USB_READY = "com.felhr.connectivityservices.USB_READY";
     public static final String ACTION_USB_ATTACHED = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
     public static final String ACTION_USB_DETACHED = "android.hardware.usb.action.USB_DEVICE_DETACHED";
@@ -39,8 +39,9 @@ public class UsbService extends Service {
     public static final int MESSAGE_FROM_SERIAL_PORT = 0;
     public static final int CTS_CHANGE = 1;
     public static final int DSR_CHANGE = 2;
+    public static final int SYNC_READ = 3;
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
-    private static final int BAUD_RATE = 115200; // BaudRate. Change this value if you need
+    private static final int BAUD_RATE = 9600; // BaudRate. Change this value if you need
     public static boolean SERVICE_CONNECTED = false;
 
     private IBinder binder = new UsbBinder();
@@ -120,7 +121,7 @@ public class UsbService extends Service {
                 Intent intent = new Intent(ACTION_USB_DISCONNECTED);
                 arg0.sendBroadcast(intent);
                 if (serialPortConnected) {
-                    serialPort.close();
+                    serialPort.syncClose();
                 }
                 serialPortConnected = false;
             }
@@ -168,7 +169,16 @@ public class UsbService extends Service {
      */
     public void write(byte[] data) {
         if (serialPort != null)
-            serialPort.write(data);
+            serialPort.syncWrite(data, 0);
+    }
+
+    /*
+     * This function will be called from MainActivity to change baud rate
+     */
+
+    public void changeBaudRate(int baudRate){
+        if(serialPort != null)
+            serialPort.setBaudRate(baudRate);
     }
 
     public void setHandler(Handler mHandler) {
@@ -179,8 +189,8 @@ public class UsbService extends Service {
         // This snippet will try to open the first encountered usb device connected, excluding usb root hubs
         HashMap<String, UsbDevice> usbDevices = usbManager.getDeviceList();
         if (!usbDevices.isEmpty()) {
-            
-            // first, dump the hashmap for diagnostic purposes
+
+            // first, dump the map for diagnostic purposes
             for (Map.Entry<String, UsbDevice> entry : usbDevices.entrySet()) {
                 device = entry.getValue();
                 Log.d(TAG, String.format("USBDevice.HashMap (vid:pid) (%X:%X)-%b class:%X:%X name:%s",
@@ -195,9 +205,9 @@ public class UsbService extends Service {
                 int deviceVID = device.getVendorId();
                 int devicePID = device.getProductId();
 
-//                if (deviceVID != 0x1d6b && (devicePID != 0x0001 && devicePID != 0x0002 && devicePID != 0x0003) && deviceVID != 0x5c6 && devicePID != 0x904c) {
+//                if (deviceVID != 0x1d6b && (devicePID != 0x0001 && devicePID != 0x0002 && devicePID != 0x0003)) {
                 if (UsbSerialDevice.isSupported(device)) {
-                    // There is a supported device connected - request permission to access it.
+                    // There is a device connected to our Android device. Try to open it as a Serial Port.
                     requestUserPermission();
                     break;
                 } else {
@@ -206,7 +216,7 @@ public class UsbService extends Service {
                 }
             }
             if (device==null) {
-                // There are no USB devices connected (but usb host were listed). Send an intent to MainActivity.
+                // There is no USB devices connected (but usb host were listed). Send an intent to MainActivity.
                 Intent intent = new Intent(ACTION_NO_USB);
                 sendBroadcast(intent);
             }
@@ -250,7 +260,7 @@ public class UsbService extends Service {
         public void run() {
             serialPort = UsbSerialDevice.createUsbSerialDevice(device, connection);
             if (serialPort != null) {
-                if (serialPort.open()) {
+                if (serialPort.syncOpen()) {
                     serialPortConnected = true;
                     serialPort.setBaudRate(BAUD_RATE);
                     serialPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
@@ -266,12 +276,14 @@ public class UsbService extends Service {
                     serialPort.read(mCallback);
                     serialPort.getCTS(ctsCallback);
                     serialPort.getDSR(dsrCallback);
-                    
+
+                    new ReadThread().start();
+
                     //
-                    // Some Arduinos would need some sleep because firmware wait some time to know whether a new sketch is going 
+                    // Some Arduinos would need some sleep because firmware wait some time to know whether a new sketch is going
                     // to be uploaded or not
                     //Thread.sleep(2000); // sleep some. YMMV with different chips.
-                    
+
                     // Everything went as expected. Send an intent to MainActivity
                     Intent intent = new Intent(ACTION_USB_READY);
                     context.sendBroadcast(intent);
@@ -293,4 +305,21 @@ public class UsbService extends Service {
             }
         }
     }
+
+    private class ReadThread extends Thread {
+        @Override
+        public void run() {
+            while(true){
+                byte[] buffer = new byte[100];
+                int n = serialPort.syncRead(buffer, 0);
+                if(n > 0) {
+                    byte[] received = new byte[n];
+                    System.arraycopy(buffer, 0, received, 0, n);
+                    String receivedStr = new String(received);
+                    mHandler.obtainMessage(SYNC_READ, receivedStr).sendToTarget();
+                }
+            }
+        }
+    }
 }
+
