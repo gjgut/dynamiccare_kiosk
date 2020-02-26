@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout12"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="163dp"
+        android:background="#37393e"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout13"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="1dp"
+            android:background="#3993de"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+        <TextView
+            android:id="@+id/item_exc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="32dp"
+            android:text="운동 종목"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout13"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_exc_prop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:text="운동 분류,무게"
+            android:textColor="#808080"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout13"
+            app:layout_constraintTop_toBottomOf="@+id/item_exc_title" />
+
+        <ImageButton
+            android:id="@+id/item_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            android:adjustViewBounds="true"
+            android:background="#00FFFFFF"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/btn_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
