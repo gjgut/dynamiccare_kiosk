@@ -104,6 +104,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="관리자 승인"
             android:textColor="#3993de"
             android:textSize="30sp"
@@ -111,7 +112,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="-2dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/et_prevpw2"
@@ -177,6 +178,21 @@
             app:layout_constraintStart_toStartOf="@id/bg_frame"
             app:layout_constraintTop_toTopOf="@id/bg_frame"
             app:srcCompat="@drawable/btn_left" />
+
+        <ImageButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="32dp"
+            android:adjustViewBounds="true"
+            android:background="#00FFFFFF"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/bg_frame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bg_frame"
+            app:srcCompat="@drawable/btn_next" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
