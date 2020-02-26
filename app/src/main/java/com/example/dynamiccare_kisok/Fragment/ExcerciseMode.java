@@ -38,12 +38,15 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
+import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
 import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseReady1;
 import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseStart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ExcerciseMode extends DCfragment {
 
@@ -135,9 +138,6 @@ public class ExcerciseMode extends DCfragment {
                             txt_count.getText().toString(),
                             txt_set.getText().toString()).getBytes());
                 }
-                main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB1#"));
-//                Thread thread = new Thread(new ExcerciseStart(main));
-//                thread.start();
                 break;
             }
 
@@ -309,7 +309,6 @@ public class ExcerciseMode extends DCfragment {
             edt_weight = new DCEditText(view.findViewById(R.id.et_weight));
             edt_rest = new DCEditText(view.findViewById(R.id.et_rest));
             edt_set = new DCEditText(view.findViewById(R.id.et_set));
-
 
             bench.setButton(view.findViewById(R.id.exc_tab_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
