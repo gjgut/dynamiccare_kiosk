@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Fragment;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -146,39 +147,64 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case R.id.btn_ready:
                 ready.setPressed();
                 if (ready.getButton().isPressed()) {
-
+                    main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound,R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
                 break;
             case R.id.btn_start:
                 go.setPressed();
-                if (go.getButton().isPressed())
+                if (go.IsPressed())
                 {
+                    main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                     if (resCalculator != null)
                         main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
                     resCalculator = new ResCalculator();
-                } else
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            CountDownTimer timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime())*1000,1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                                            R.raw.stopping_measurement,
+                                            R.raw.thank_you_for_your_efforts,
+                                            R.raw.show_your_result,
+                                            R.raw.the_measurement_is_going_to_stop_english,
+                                            R.raw.thank_you_for_your_efforts_english,
+                                            R.raw.please_check_the_results_english,
+                                            R.raw.dynamic_care});
+                                }
+                            };
+                            timer.start();
+                        }
+                    });
+                }
+                else
                     main.getusbService().write("$CSP0#".getBytes());
                 setBottomBar();
                 break;
 
             case R.id.btn_low: {
                 Low.setPressed();
-                if (Low.isPressed())
+                if (Low.IsPressed())
                     main.getusbService().write(Commands.MeasureLevelCheck("L").getBytes());
                 break;
             }
             case R.id.btn_mid: {
                 Mid.setPressed();
-                if (Mid.isPressed())
+                if (Mid.IsPressed())
                     main.getusbService().write(Commands.MeasureLevelCheck("M").getBytes());
                 break;
             }
 
             case R.id.btn_high: {
                 High.setPressed();
-                if (High.isPressed())
+                if (High.IsPressed())
                     main.getusbService().write(Commands.MeasureLevelCheck("H").getBytes());
                 break;
             }

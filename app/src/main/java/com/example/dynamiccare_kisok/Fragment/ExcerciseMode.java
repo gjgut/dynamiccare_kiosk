@@ -149,7 +149,7 @@ public class ExcerciseMode extends DCfragment {
 
     public void setExcercise(DCButton button, Excercise excercise) {
         button.setPressed();
-        if (button.isPressed()) {
+        if (button.IsPressed()) {
             main.PlaySound(new int[]{R.raw.normal_button});
             main.setCurrentExcercise(excercise);
             dcButtonManager.setDCState(DCButtonManager.State.StartSetting);

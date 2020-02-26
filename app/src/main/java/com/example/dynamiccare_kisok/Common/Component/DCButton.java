@@ -76,7 +76,7 @@ public class DCButton  {
     {
         if(PressedButton != null && PressedButton.button != button)
             PressedButton.setPressed();
-        if(isPressed())
+        if(IsPressed())
             PressedButton = this;
         else
             PressedButton = null;
@@ -87,7 +87,7 @@ public class DCButton  {
         return button;
     }
 
-    public boolean isPressed()
+    public boolean IsPressed()
     {
         return isPressed;
     }

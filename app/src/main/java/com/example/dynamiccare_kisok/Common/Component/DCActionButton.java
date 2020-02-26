@@ -39,6 +39,10 @@ public class DCActionButton {
     {
         return button;
     }
+    public boolean IsPressed()
+    {
+        return isPressed;
+    }
 
     public void setButton(ImageButton button,Drawable pressed) {
         this.button = button;

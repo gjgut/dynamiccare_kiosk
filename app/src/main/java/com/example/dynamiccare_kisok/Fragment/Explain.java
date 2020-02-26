@@ -83,7 +83,7 @@ public class Explain extends DCfragment {
 
     public void setExcercise(DCButton button, Excercise excercise) {
         button.setPressed();
-        if (button.isPressed()) {
+        if (button.IsPressed()) {
             Main.setCurrentExcercise(excercise);
             Main.getusbService().write(
                     Commands.MeasureSet(excercise.getMode(),
