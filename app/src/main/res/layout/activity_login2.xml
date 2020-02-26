@@ -34,9 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:contextClickable="false"
-                android:longClickable="true"
-                android:scrollbars="none" />
+                android:longClickable="false" />
         </LinearLayout>
 
     </LinearLayout>
