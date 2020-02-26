@@ -203,15 +203,37 @@
                     android:textColor="#727272"
                     android:textSize="30sp" />
 
-                <TextView
-                    android:id="@+id/txt_maxweight"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="300kg"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:text="300"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_maxweight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:text="kg"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -243,15 +265,35 @@
                     android:textColor="#727272"
                     android:textSize="30sp" />
 
-                <TextView
-                    android:id="@+id/txt_duration"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="20 sec"
-                    android:textColor="#FFFFFF"
-                    android:textSize="30sp" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:text="10"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:text="sec"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
