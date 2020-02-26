@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.dynamiccare_kisok.Activity.Login;
 import com.example.dynamiccare_kisok.R;
 
 public class QRlink extends AppCompatActivity {
@@ -17,7 +16,7 @@ public class QRlink extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_link);
+        setContentView(R.layout.activity_etc_qr_link);
         btn_back = (ImageButton)findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener(){
             @Override
