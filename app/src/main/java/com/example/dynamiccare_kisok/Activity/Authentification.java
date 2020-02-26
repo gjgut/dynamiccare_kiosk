@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.R;
@@ -21,7 +20,7 @@ public class Authentification extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authentification);
+        setContentView(R.layout.activity_etc_authentification);
         try{
         code = new DCEditText((EditText)findViewById(R.id.et_code));
         confirm = (Button)findViewById(R.id.bt_confirm);

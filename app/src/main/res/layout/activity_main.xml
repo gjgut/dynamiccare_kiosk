@@ -64,19 +64,6 @@
             app:layout_constraintTop_toTopOf="@id/bg_frame"
             app:srcCompat="@drawable/btn_left" />
 
-        <TextView
-            android:id="@+id/usertimer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="00 : 00"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/Bottom"
-            app:layout_constraintEnd_toEndOf="@+id/Bottom"
-            app:layout_constraintStart_toStartOf="@+id/Bottom"
-            app:layout_constraintTop_toTopOf="@+id/Bottom" />
-
         <ImageButton
             android:id="@+id/btn_next"
             android:layout_width="wrap_content"

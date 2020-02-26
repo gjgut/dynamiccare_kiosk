@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +24,7 @@ public class ModifyAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try{
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_admin);
+        setContentView(R.layout.activity_etc_set_admin);
 
         back = (ImageButton)findViewById(R.id.btn_back);
         newpwvisible = (ImageButton)findViewById(R.id.btn_newpw_visible);
