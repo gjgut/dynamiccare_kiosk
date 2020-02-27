@@ -9,11 +9,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/txt_today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="현재 날짜"
@@ -44,11 +42,12 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="어떤 운동을 하시겠습니까?"
                 android:textColor="#3993de"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_today" />
 
             <View
                 android:id="@+id/divider"
@@ -109,10 +108,12 @@
                 <ListView
                     android:id="@+id/list_plan"
                     android:layout_width="0dp"
-                    android:layout_height="350dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="#B8B8B8"
+                    android:divider="#1d1f21"
+                    android:dividerHeight="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btn_plan_right"
                     app:layout_constraintStart_toEndOf="@+id/btn_plan_left"
@@ -195,16 +196,16 @@
                 <ListView
                     android:id="@+id/list_workout"
                     android:layout_width="0dp"
-                    android:layout_height="350dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="#B8B8B8"
+                    android:divider="#1d1f21"
+                    android:dividerHeight="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btn_workout_right"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/btn_workout_left"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0">
+                    app:layout_constraintTop_toTopOf="parent">
 
                 </ListView>
             </androidx.constraintlayout.widget.ConstraintLayout>

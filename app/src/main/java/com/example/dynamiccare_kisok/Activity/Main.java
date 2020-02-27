@@ -411,13 +411,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Dialog dialog = new Dialog(this);
-
-        dialog.setContentView(R.layout.dialog_isload_workout_plan);
-
-        dialog.setTitle("Custom Dialog");
-        dialog.show();
-
         ackListener = new ACKListener(this);
         handler = new Handler();
 
