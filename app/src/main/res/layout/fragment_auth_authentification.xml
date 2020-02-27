@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageButton
-            android:id="@+id/btn_select_exec2"
+            android:id="@+id/btn_limit_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -87,7 +87,7 @@
             android:src="@drawable/btn_limit_off" />
 
         <ImageButton
-            android:id="@+id/btn_select_exec_isokinetic2"
+            android:id="@+id/btn_modify_psswd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -105,53 +105,5 @@
             android:src="@drawable/btn_modify_password"
             android:visibility="visible" />
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Bottom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <FrameLayout
-            android:id="@+id/bg_frame"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:id="@+id/img_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="fill"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:scaleType="fitCenter"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/underbar_bg" />
-        </FrameLayout>
-
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:background="#00FFFFFF"
-            android:cropToPadding="true"
-            android:scaleType="fitCenter"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/bg_frame"
-            app:layout_constraintStart_toStartOf="@id/bg_frame"
-            app:layout_constraintTop_toTopOf="@id/bg_frame"
-            app:srcCompat="@drawable/btn_left" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

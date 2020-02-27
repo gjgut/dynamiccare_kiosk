@@ -14,11 +14,12 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
+import com.example.dynamiccare_kisok.Dialog.LoadPlan;
 import com.example.dynamiccare_kisok.R;
 
 public class SelectMode extends DCfragment {
     ImageButton selectExec,isokinetic,isometronic,isotonic;
-
+    LoadPlan loadPlandialog;
 
     public SelectMode(Main main)
     {
@@ -35,6 +36,24 @@ public class SelectMode extends DCfragment {
 
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
+                    loadPlandialog = new LoadPlan(main,
+                            new View.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(View v)
+                                {
+
+                                }
+                            },
+                            new View.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(View v)
+                                {
+
+                                }
+                            });
+                    loadPlandialog.show();
                     Main.setisIsoKinetic(false);
                     ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                     Commands.ExcerciseMode(false);

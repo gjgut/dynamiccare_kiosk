@@ -27,7 +27,7 @@
             tools:layout_editor_absoluteX="0dp">
 
             <ImageButton
-                android:id="@+id/btn_korean"
+                android:id="@+id/btn_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -39,7 +39,7 @@
                 app:srcCompat="@drawable/btn_no" />
 
             <ImageButton
-                android:id="@+id/btn_english"
+                android:id="@+id/btn_yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -69,8 +69,8 @@
             android:text="앱에 등록된 오늘의 운동 계획을 \n불러오시겠습니까?"
             android:textColor="#FFFFFF"
             android:textSize="36sp"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         <TextView
             android:id="@+id/textView11"
@@ -80,8 +80,8 @@
             android:text="불러온 계획은 운동 전 수정이 가능합니다."
             android:textColor="#808080"
             android:textSize="30sp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout11"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 
         <View
             android:id="@+id/divider"

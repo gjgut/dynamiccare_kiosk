@@ -75,34 +75,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         go.getButton().setOnClickListener(this);
 
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() { // Thread 로 작업할 내용을 구현
-                int value = 0;
-                int add = 1;
-                while (true) {
-                    value = value + add;
-                    if (value >= 100) {
-                        break;
-                    }
-                    final int value2 = value;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() { // 화면에 변경하는 작업을 구현
-                            power.setProgress(value2);
-                        }
-                    });
-
-                    try {
-                        Thread.sleep(50); // 시간지연
-                    } catch (InterruptedException e) {
-                    }
-                } // end of while
-            }
-        });
-//        t.start(); // 쓰레드 시작
-
-
     }
 
     @Override
@@ -154,8 +126,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 break;
             case R.id.btn_start:
                 go.setPressed();
-                if (go.getButton().isPressed())
-                {
+                if (go.getButton().isPressed()) {
                     if (resCalculator != null)
                         main.getusbService().write(Commands.MeasureStart(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
                     resCalculator = new ResCalculator();
@@ -190,14 +161,13 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        try{
-        View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
-        setViews(view);
-        setBottomBar();
+        try {
+            View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
+            setViews(view);
+            setBottomBar();
             return view;
-        }catch (Exception e)
-        {
-            Toast.makeText(main,e.toString(),Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(main, e.toString(), Toast.LENGTH_LONG).show();
             return null;
         }
     }

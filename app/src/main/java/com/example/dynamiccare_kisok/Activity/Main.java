@@ -36,6 +36,7 @@ import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
+import com.example.dynamiccare_kisok.Fragment.Administrator.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
 import com.example.dynamiccare_kisok.Fragment.SelectMode;
@@ -59,6 +60,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     int MeasureTime = 10;
     int MeasureWeight = 500;
     Handler handler;
+    DynamicCare care;
+
+    public DynamicCare getDynamicCare()
+    {
+        return care;
+    }
 
     public int getMeasureTime() {
         return MeasureTime;
@@ -397,11 +404,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         currentExcercise = excercise;
     }
 
-    public void LoadSound()
-    {
-
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -411,7 +413,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         ackListener = new ACKListener(this);
         handler = new Handler();
 
-        DynamicCare care = (DynamicCare)getApplicationContext();
+        care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
 
         dcSoundThread = new DCSoundThread(this);
@@ -424,7 +426,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
 
-        ReplaceFragment(new SelectMode(this));
+        if (care.getLimit()!=0)
+            ReplaceFragment(new TimeSetting(this));
+        else
+            ReplaceFragment(new SelectMode(this));
 
     }
 
@@ -450,6 +455,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             currentFragment = fragment;
+
+            if (fragment.getClass() != SelectMode.class && fragment.getClass() != TimeSetting.class) {
+                bottombar.setVisibility(View.VISIBLE);
+            } else {
+                bottombar.setVisibility(View.INVISIBLE);
+            }
 
             if (isRight && fragment.getClass() != SelectMode.class) {
                 bottombar.setVisibility(View.VISIBLE);
@@ -500,7 +511,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             currentFragment = fragment;
 
-            if (fragment.getClass() != SelectMode.class) {
+            if (fragment.getClass() != SelectMode.class && fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
             } else {
                 bottombar.setVisibility(View.INVISIBLE);

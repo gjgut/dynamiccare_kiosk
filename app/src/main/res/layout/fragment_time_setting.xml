@@ -44,7 +44,7 @@
             app:layout_constraintTop_toBottomOf="@id/textView4">
 
             <ImageButton
-                android:id="@+id/btn_low"
+                android:id="@+id/btn_minutes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
@@ -57,7 +57,7 @@
                 app:srcCompat="@drawable/btn_minute" />
 
             <ImageButton
-                android:id="@+id/btn_mid"
+                android:id="@+id/btn_hour"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
@@ -101,21 +101,18 @@
         app:layout_constraintTop_toBottomOf="@+id/buttons">
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/password_reject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="관리자 승인"
-            android:textColor="#3993de"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:text="관리자 비밀번호가 틀립니다."
+            android:textColor="#8F1B1B"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
 
         <EditText
-            android:id="@+id/et_prevpw2"
+            android:id="@+id/et_adminpw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -134,78 +131,32 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <TextView
-            android:id="@+id/password_reject"
+            android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="관리자 비밀번호가 틀립니다."
-            android:textColor="#8F1B1B"
-            android:textSize="24sp"
+            android:layout_marginTop="16dp"
+            android:text="관리자 승인"
+            android:textColor="#3993de"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_prevpw2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Bottom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <FrameLayout
-            android:id="@+id/bg_frame"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="263dp"
+            android:layout_height="116dp"
+            android:layout_marginTop="56dp"
+            android:background="#37393e "
+            android:text="확인"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:id="@+id/img_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="fill"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                android:scaleType="fitCenter"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/underbar_bg" />
-        </FrameLayout>
-
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:background="#00FFFFFF"
-            android:cropToPadding="true"
-            android:scaleType="fitCenter"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/bg_frame"
-            app:layout_constraintStart_toStartOf="@id/bg_frame"
-            app:layout_constraintTop_toTopOf="@id/bg_frame"
-            app:srcCompat="@drawable/btn_left" />
-
-        <ImageButton
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="32dp"
-            android:adjustViewBounds="true"
-            android:background="#00FFFFFF"
-            android:cropToPadding="true"
-            android:scaleType="fitCenter"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/bg_frame"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bg_frame"
-            app:srcCompat="@drawable/btn_next" />
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_reject" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

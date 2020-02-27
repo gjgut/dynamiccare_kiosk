@@ -6,7 +6,16 @@ import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 
 public class DynamicCare extends Application {
-    public  static DCSoundPlayer dcSoundPlayer;
+    public static DCSoundPlayer dcSoundPlayer;
+    public static int Iimit = 0;
+
+    public int getLimit() {
+        return Iimit;
+    }
+
+    public void setLimit(int limit) {
+        Iimit = limit;
+    }
 
     public DCSoundPlayer getDcSoundPlayer() {
         return dcSoundPlayer;
@@ -16,14 +25,12 @@ public class DynamicCare extends Application {
         DynamicCare.dcSoundPlayer = dcSoundPlayer;
     }
 
-    public void initSounds()
-    {
+    public void initSounds() {
         dcSoundPlayer.initSounds(getApplicationContext());
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         dcSoundPlayer = new DCSoundPlayer();
     }
