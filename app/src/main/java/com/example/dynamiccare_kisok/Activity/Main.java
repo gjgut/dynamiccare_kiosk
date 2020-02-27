@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -418,6 +419,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_isload_workout_plan);
+
+        dialog.setTitle("Custom Dialog");
+        dialog.show();
 
         ackListener = new ACKListener(this);
         handler = new Handler();
