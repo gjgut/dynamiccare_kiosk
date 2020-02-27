@@ -13,11 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activity.Administrator"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Activity.ModifyAdmin"
+            android:name=".Fragment.Administrator.ModifyAdmin"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.Authentification"
+            android:name=".Fragment.Administrator.Authentification"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.Main" />
         <activity
@@ -35,10 +37,10 @@
         <activity
             android:name=".Activity.Login"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service
-            android:name="com.example.dynamiccare_kisok.Common.Util.UsbService"
-            android:enabled="true">
-        </service>
+            android:name=".Common.Util.UsbService"
+            android:enabled="true"></service>
     </application>
 
 </manifest>

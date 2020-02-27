@@ -39,6 +39,7 @@ import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
+import com.example.dynamiccare_kisok.Fragment.Administrator.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
 import com.example.dynamiccare_kisok.Fragment.SelectMode;
@@ -450,7 +451,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
 
-        ReplaceFragment(new SelectMode(this));
+        if (care.getLimit()!=0)
+            ReplaceFragment(new TimeSetting(this));
+        else
+            ReplaceFragment(new SelectMode(this));
 
     }
 
@@ -476,6 +480,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             currentFragment = fragment;
+
+            if (fragment.getClass() != SelectMode.class && fragment.getClass() != TimeSetting.class) {
+                bottombar.setVisibility(View.VISIBLE);
+            } else {
+                bottombar.setVisibility(View.INVISIBLE);
+            }
 
             if (isRight && fragment.getClass() != SelectMode.class) {
                 bottombar.setVisibility(View.VISIBLE);
@@ -526,7 +536,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             currentFragment = fragment;
 
-            if (fragment.getClass() != SelectMode.class) {
+            if (fragment.getClass() != SelectMode.class && fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
             } else {
                 bottombar.setVisibility(View.INVISIBLE);

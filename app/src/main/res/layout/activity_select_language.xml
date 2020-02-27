@@ -43,7 +43,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/btn_korean"
+                android:id="@+id/btn_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -55,7 +55,7 @@
                 app:srcCompat="@drawable/btn_korean" />
 
             <ImageButton
-                android:id="@+id/btn_english"
+                android:id="@+id/btn_yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

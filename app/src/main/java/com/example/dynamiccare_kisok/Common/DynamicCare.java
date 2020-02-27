@@ -45,14 +45,12 @@ public class DynamicCare extends Application {
         DynamicCare.dcSoundPlayer = dcSoundPlayer;
     }
 
-    public void initSounds()
-    {
+    public void initSounds() {
         dcSoundPlayer.initSounds(getApplicationContext());
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         dcSoundPlayer = new DCSoundPlayer();
     }
