@@ -42,7 +42,7 @@ public class SelectMode extends DCfragment {
                                 @Override
                                 public void onClick(View v)
                                 {
-
+                                    loadPlandialog.dismiss();
                                 }
                             },
                             new View.OnClickListener()
@@ -50,16 +50,19 @@ public class SelectMode extends DCfragment {
                                 @Override
                                 public void onClick(View v)
                                 {
-
+                                    Main.setisIsoKinetic(false);
+                                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                                    Commands.ExcerciseMode(false);
+                                    loadPlandialog.dismiss();
                                 }
                             });
                     loadPlandialog.show();
-                    Main.setisIsoKinetic(false);
-                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                    Commands.ExcerciseMode(false);
+
+
                     break;
                 }
-                case R.id.btn_select_exec_isokinetic: {
+                case R.id.btn_select_exec_isokinetic:
+                    {
                     Main.setisIsoKinetic(true);
                     ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                     Commands.ExcerciseMode(true);

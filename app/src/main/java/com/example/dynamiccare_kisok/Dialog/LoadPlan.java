@@ -16,12 +16,11 @@ public class LoadPlan extends Dialog {
     View.OnClickListener yeslistner,nolistener;
 
     public LoadPlan(@NonNull Context context, View.OnClickListener yes, View.OnClickListener no) {
-        super(context);
+        super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.yeslistner = yes;
         this.nolistener = no;
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
