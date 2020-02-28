@@ -39,7 +39,7 @@ public class LoadPlan extends Dialog {
         setContentView(R.layout.dialog_isload_workout_plan);
 
         Date currentTime = Calendar.getInstance().getTime();
-        String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일", Locale.getDefault()).format(currentTime);
+        String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
 
         txt_today = findViewById(R.id.txt_today);
         txt_today.setText(date_text);

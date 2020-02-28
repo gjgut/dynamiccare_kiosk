@@ -2,6 +2,7 @@ package com.example.dynamiccare_kisok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -525,6 +526,20 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 btn_next.setVisibility(View.INVISIBLE);
             else
                 btn_next.setVisibility(View.VISIBLE);
+
+            fragmentTransaction.replace(R.id.main_container, fragment);
+            fragmentTransaction.commit();
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void ReplaceFragment(Fragment fragment) {
+
+        try {
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             fragmentTransaction.replace(R.id.main_container, fragment);
             fragmentTransaction.commit();

@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +20,15 @@ import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Fragment.SelectMode;
 import com.example.dynamiccare_kisok.R;
 
+import static android.view.HapticFeedbackConstants.LONG_PRESS;
+
 public class Login extends AppCompatActivity {
 
     Button btn_download, btn_login;
     DCEditText edt_code;
     ImageView dclogo;
     VideoView videoView;
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +40,43 @@ public class Login extends AppCompatActivity {
             btn_login = (Button) findViewById(R.id.bt_login);
             edt_code = new DCEditText((EditText) findViewById(R.id.et_code));
 
+//            mHandler = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    switch (msg.what) {
+//                        case LONG_PRESS:
+//                            Intent intent = new Intent(getApplicationContext(), Administrator.class);
+//                            startActivity(intent);
+//                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//                            finish();
+//                    }
+//                }
+//            };
+//
 //            videoView = findViewById(R.id.video_instruct);
 //
-//            videoView.setVideoURI(Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.dynamic_care_logo));
+//            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dynamic_care_logo));
 //            videoView.setMediaController(new MediaController(this));
 //            videoView.requestFocus();
 //            videoView.start();
-//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 //                @Override
 //                public void onCompletion(MediaPlayer mediaPlayer) {
-//                        videoView.seekTo(0);
-//                        videoView.start();
-//                }});
+//                    videoView.seekTo(0);
+//                    videoView.start();
+//                }
+//            });
+//            videoView.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    if (event.getAction() == MotionEvent.ACTION_DOWN)
+//                        mHandler.sendEmptyMessageAtTime(LONG_PRESS, event.getDownTime() + 1000);
+//                    return true;
+//                }
+//            });
 //            videoView.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
 //                public boolean onLongClick(View v) {
-//                    Intent intent = new Intent(getApplicationContext(), Administrator.class);
-//                    startActivity(intent);
-//                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
-//                    finish();
 //                    return false;
 //                }
 //            });

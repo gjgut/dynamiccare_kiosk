@@ -39,7 +39,7 @@ public class SelectMode extends DCfragment {
                             new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    main.ReplaceFragment(new SelectWorkOut(main),true);
+                                    main.ReplaceFragment(new SelectWorkOut(main));
                                     loadPlandialog.dismiss();
                                 }
                             },
