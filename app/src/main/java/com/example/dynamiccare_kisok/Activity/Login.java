@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
@@ -29,68 +31,92 @@ public class Login extends AppCompatActivity {
     ImageView dclogo;
     VideoView videoView;
     Handler mHandler;
+    CountDownTimer mcountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_login);
-            dclogo = (ImageView) findViewById(R.id.dc_logo);
-            btn_download = (Button) findViewById(R.id.bt_dwload);
-            btn_login = (Button) findViewById(R.id.bt_login);
-            edt_code = new DCEditText((EditText) findViewById(R.id.et_code));
+            setContentView(R.layout.activity_login2);
+            dclogo = findViewById(R.id.dc_logo);
+            btn_download = findViewById(R.id.bt_dwload);
+            btn_login = findViewById(R.id.bt_login);
+            edt_code = new DCEditText(findViewById(R.id.et_code));
 
-//            mHandler = new Handler() {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    switch (msg.what) {
-//                        case LONG_PRESS:
-//                            Intent intent = new Intent(getApplicationContext(), Administrator.class);
-//                            startActivity(intent);
-//                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-//                            finish();
-//                    }
-//                }
-//            };
-//
-//            videoView = findViewById(R.id.video_instruct);
-//
-//            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dynamic_care_logo));
-//            videoView.setMediaController(new MediaController(this));
-//            videoView.requestFocus();
-//            videoView.start();
-//            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mediaPlayer) {
-//                    videoView.seekTo(0);
-//                    videoView.start();
-//                }
-//            });
-//            videoView.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (event.getAction() == MotionEvent.ACTION_DOWN)
-//                        mHandler.sendEmptyMessageAtTime(LONG_PRESS, event.getDownTime() + 1000);
-//                    return true;
-//                }
-//            });
-//            videoView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    return false;
-//                }
-//            });
-
-            dclogo.setOnLongClickListener(new View.OnLongClickListener() {
+            mHandler = new Handler() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case LONG_PRESS:
+                    }
+                }
+            };
+
+            videoView = findViewById(R.id.video_instruct);
+
+            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dynamic_care_logo));
+            videoView.setMediaController(new MediaController(this));
+            videoView.requestFocus();
+            videoView.start();
+            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer)
+                {
+                    videoView.seekTo(0);
+                    videoView.start();
+                }
+            });
+
+            mcountDownTimer = new CountDownTimer(1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                }
+
+                @Override
+                public void onFinish() {
                     Intent intent = new Intent(getApplicationContext(), Administrator.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    Toast.makeText(getApplicationContext(),"intented",Toast.LENGTH_SHORT).show();
                     finish();
-                    return false;
+                }
+            };
+
+            videoView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    {
+                        mcountDownTimer.start();
+                        Toast.makeText(getApplicationContext(),"timer started",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(event.getAction() == MotionEvent.ACTION_UP)
+                        mcountDownTimer.cancel();
+                    Toast.makeText(getApplicationContext(),"timer canceled",Toast.LENGTH_SHORT).show();
+                    return true;
                 }
             });
+            videoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), Administrator.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                        finish();
+                    return true;
+                }
+            });
+//
+//            dclogo.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    Intent intent = new Intent(getApplicationContext(), Administrator.class);
+//                    startActivity(intent);
+//                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//                    finish();
+//                    return false;
+//                }
+//            });
 
             btn_download.setOnClickListener(new View.OnClickListener() {
                 @Override

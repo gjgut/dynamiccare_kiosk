@@ -32,7 +32,6 @@ public class SelectMode extends DCfragment {
     @Override
     public void onClick(View v) {
         try {
-
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
                     loadPlandialog = new LoadPlan(main,
@@ -47,14 +46,12 @@ public class SelectMode extends DCfragment {
                                 @Override
                                 public void onClick(View v) {
                                     Main.setisIsoKinetic(false);
-                                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                                    ((Main) getActivity()).ReplaceFragment(new TimeSetting(main), true);
                                     Commands.ExcerciseMode(false);
                                     loadPlandialog.dismiss();
                                 }
                             });
                     loadPlandialog.show();
-
-
                     break;
                 }
                 case R.id.btn_select_exec_isokinetic: {
