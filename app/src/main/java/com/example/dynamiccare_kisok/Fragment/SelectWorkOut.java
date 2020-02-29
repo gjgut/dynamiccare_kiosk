@@ -78,12 +78,6 @@ public class SelectWorkOut extends DCfragment {
             ListViewAdapter adapter_plan, adapter_workout;
 
             Workout workoutlist[] = {
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new BenchPress(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
                     new Workout(true, false, new Squat(main), 20, 20, 3),
                     new Workout(true, false, new Squat(main), 20, 20, 3),
             };
