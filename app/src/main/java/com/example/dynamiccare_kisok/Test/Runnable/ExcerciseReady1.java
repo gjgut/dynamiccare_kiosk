@@ -2,7 +2,7 @@ package com.example.dynamiccare_kisok.Test.Runnable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 
 public class ExcerciseReady1 implements Runnable {

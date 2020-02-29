@@ -5,9 +5,20 @@ import android.app.Application;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 
+import org.json.JSONObject;
+
 public class DynamicCare extends Application {
     public  static DCSoundPlayer dcSoundPlayer;
     public static String CurrentUser;
+    public static JSONObject CurrentUserJson;
+
+    public static JSONObject getCurrentUserJson() {
+        return CurrentUserJson;
+    }
+
+    public static void setCurrentUserJson(JSONObject currentUserJson) {
+        CurrentUserJson = currentUserJson;
+    }
 
     public static String getCurrentUser() {
         return CurrentUser;

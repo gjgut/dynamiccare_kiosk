@@ -2,6 +2,7 @@ package com.example.dynamiccare_kisok.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.BlockedNumberContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +14,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
 import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
+import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
+import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
+import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
+import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Object.Workout;
@@ -38,20 +48,21 @@ public class SelectWorkOut extends DCfragment {
     TextView txt_today;
     ConstraintLayout planlayout, worklayout;
     ImageButton btn_workout_right, btn_workout_left, btn_plan_right, btn_plan_left;
+    JSONObject WorkoutJson;
     int plan_page = 1, workout_page = 1;
     int plan_max = 1, workout_max = 1;
+
 
     public SelectWorkOut() {
         super();
     }
 
-    public SelectWorkOut(Main main) {
+    public SelectWorkOut(Main main,JSONObject WorkoutJson) {
         super(main);
+        this.WorkoutJson = WorkoutJson;
+
     }
 
-    public SelectWorkOut(Administrator admin) {
-        super(admin);
-    }
 
     @Override
     public void onClick(View v) {
@@ -82,6 +93,58 @@ public class SelectWorkOut extends DCfragment {
                     new Workout(true, false, new Squat(main), 20, 20, 3),
             };
 
+            JSONArray programlistArray = (JSONArray) WorkoutJson.get("programList");
+
+            Workout programlist[] = new Workout[8];
+            for(int i=0;i<programlistArray.length();i++)
+            {
+                JSONObject program = programlistArray.getJSONObject(i);
+                boolean isKinetic=false;
+                Excercise excercise= new BenchPress(main);
+                switch(program.get("plnVwCommonCode").toString().substring(0,1))
+                {
+                    case "A":
+                        excercise = new BenchPress(main);
+                        break;
+                    case "B":
+                        excercise = new Squat(main);
+                        break;
+                    case "C":
+                        excercise = new DeadLift(main);
+                        break;
+                    case "D":
+                        excercise = new ShoulderPress(main);
+                        break;
+                    case "E":
+                        excercise = new CarfRaise(main);
+                        break;
+                    case "F":
+                        excercise = new ArmCurl(main);
+                        break;
+                    case "G":
+                        excercise = new ArmExtension(main);
+                        break;
+                    case "H":
+                        excercise = new LatPullDown(main);
+                        break;
+                }
+                switch (program.get("plnVwCommonCode").toString().substring(2))
+                {
+                    case "1":
+                        isKinetic=false;
+                    default:
+                        isKinetic=true;
+                        break;
+                }
+                programlist[i] =  new Workout(false,
+                        false, excercise,
+                        Integer.valueOf(program.get("plnVwWeight").toString()),
+                        Integer.valueOf(program.get("plnVwCount").toString()),
+                        Integer.valueOf(program.get("plnVwSet").toString()));
+            }
+
+
+
             btn_plan_left = view.findViewById(R.id.btn_plan_left);
             btn_plan_right = view.findViewById(R.id.btn_plan_right);
             btn_workout_left = view.findViewById(R.id.btn_workout_left);
@@ -102,7 +165,16 @@ public class SelectWorkOut extends DCfragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-                        main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
+                        if(item.getWorkout().getIsKinetic())
+                        {
+                            main.setisIsoKinetic(true);
+                            main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
+                        }
+                        else
+                        {
+                            main.setisIsoKinetic(false);
+                            main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -113,14 +185,22 @@ public class SelectWorkOut extends DCfragment {
             workout.setOnItemClickListener(itemlistener);
 
 
-            for (Workout work : workoutlist) {
-                if (work.isWorkout()) {
-                    worklayout.setVisibility(View.VISIBLE);
-                    adapter_workout.Fillitem(work);
-                } else {
-                    planlayout.setVisibility(View.VISIBLE);
-                    adapter_plan.Fillitem(work);
-                }
+//            for (Workout work : workoutlist) {
+//                if (work.isWorkout()) {
+//                    worklayout.setVisibility(View.VISIBLE);
+//                    adapter_workout.Fillitem(work);
+//                } else {
+//                    planlayout.setVisibility(View.VISIBLE);
+//                    adapter_plan.Fillitem(work);
+//                }
+//            }
+
+            for(Workout work:programlist)
+            {
+                if(work==null)
+                    break;
+                planlayout.setVisibility(View.VISIBLE);
+                adapter_plan.Fillitem(work);
             }
 
             if (adapter_plan.getSize() == 1 || adapter_plan.getSize() == 2 || adapter_plan.getSize() == 3)

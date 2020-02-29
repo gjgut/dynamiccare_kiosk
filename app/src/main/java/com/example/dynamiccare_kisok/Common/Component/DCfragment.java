@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import com.example.dynamiccare_kisok.Activity.Main;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
 
 public abstract class DCfragment extends Fragment implements View.OnClickListener{
     protected  Main main;

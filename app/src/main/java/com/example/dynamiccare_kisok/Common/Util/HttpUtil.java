@@ -13,10 +13,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpUtil extends AsyncTask<String, Void, org.json.simple.JSONObject> {
+public class HttpUtil extends AsyncTask<String, Void, JSONObject> {
     @Override
-    public org.json.simple.JSONObject doInBackground(String... params) {
-        org.json.simple.JSONObject result=null;
+    public JSONObject doInBackground(String... params) {
+        JSONObject result=null;
         try {
             String url = "http://powerlogmobile.com/kiosk/uidlogin";
             URL obj = new URL(url);
@@ -46,13 +46,12 @@ public class HttpUtil extends AsyncTask<String, Void, org.json.simple.JSONObject
             }
             br.close();
             JSONParser parser = new JSONParser();
-
             String res = response.toString();
             Object Obj  = parser.parse(res);
-            org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject)Obj;
+            JSONObject jsonObject1 = new JSONObject(response.toString());
 
             Log.i("response",res.toString());
-            result = jsonObject;
+            result = jsonObject1;
 
 
         } catch (Exception e) {

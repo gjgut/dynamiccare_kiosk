@@ -43,6 +43,10 @@ public class Workout {
     public String isKinetic() {
         return isKinetic ? "등속성" : "일반";
     }
+    public boolean getIsKinetic()
+    {
+        return isKinetic;
+    }
 
     public void setKinetic(boolean kinetic) {
         isKinetic = kinetic;

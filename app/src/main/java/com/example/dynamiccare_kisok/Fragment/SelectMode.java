@@ -1,5 +1,6 @@
 package com.example.dynamiccare_kisok.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,12 @@ import androidx.annotation.Nullable;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
+import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
 import com.example.dynamiccare_kisok.R;
+
+import org.json.JSONObject;
 
 public class SelectMode extends DCfragment {
     ImageButton selectExec,isokinetic,isometronic,isotonic;
@@ -35,9 +40,16 @@ public class SelectMode extends DCfragment {
 
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
-                    Main.setisIsoKinetic(false);
-                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                    Commands.ExcerciseMode(false);
+                    DynamicCare care = (DynamicCare)main.getApplication();
+                    JSONObject jsonObject= care.getCurrentUserJson();
+                    JSONObject resultData = (JSONObject)jsonObject.get("resultData");
+                    if (resultData != null) {
+                        ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main,resultData), true);
+                    } else {
+                        Main.setisIsoKinetic(false);
+                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                        Commands.ExcerciseMode(false);
+                    }
                     break;
                 }
                 case R.id.btn_select_exec_isokinetic: {
@@ -81,6 +93,22 @@ public class SelectMode extends DCfragment {
         isotonic.setOnClickListener(this);
 
         return view;
+    }
+
+    public org.json.JSONObject isTherePlan()
+    {
+        try {
+            DynamicCare care = (DynamicCare)main.getApplication();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("uid", care.getCurrentUser());
+            String json = jsonObject.toString();
+            return new HttpUtil().execute(json).get();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
