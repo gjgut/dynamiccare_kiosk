@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
@@ -33,6 +34,7 @@ import java.util.Locale;
 
 public class SelectWorkOut extends DCfragment {
     TextView txt_today;
+    ConstraintLayout planlayout,worklayout;
 
     public SelectWorkOut() {
         super();
@@ -61,18 +63,17 @@ public class SelectWorkOut extends DCfragment {
             Date currentTime = Calendar.getInstance().getTime();
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
 
+
+            worklayout = (ConstraintLayout)view.findViewById(R.id.Workout);
+            planlayout = (ConstraintLayout)view.findViewById(R.id.Plan);
+
             txt_today = view.findViewById(R.id.txt_today);
             txt_today.setText(date_text);
             ListView plan, workout;
             ListViewAdapter adapter_plan, adapter_workout;
 
             Workout workoutlist[] = {
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3),
-                    new Workout(false, false, new Squat(main), 20, 20, 3)
+                    new Workout(true, false, new Squat(main), 20, 20, 3)
             };
 
             // 리스트뷰 참조 및 Adapter 달기
@@ -84,26 +85,33 @@ public class SelectWorkOut extends DCfragment {
 
             plan.setAdapter(adapter_plan);
             workout.setAdapter(adapter_workout);
-            plan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            AdapterView.OnItemClickListener itemlistener = new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    main.ReplaceFragment(new ExcerciseMode(main),true);
+                    try {
+                        ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+                        main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
-            });
-            workout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    main.ReplaceFragment(new ExcerciseMode(main),true);
-                }
-            });
+            };
+
+            plan.setOnItemClickListener(itemlistener);
+            workout.setOnItemClickListener(itemlistener);
+
 
             for (Workout work : workoutlist) {
-                if (work.isWorkout())
+                if (work.isWorkout()) {
+                    worklayout.setVisibility(View.VISIBLE);
                     adapter_workout.addItem(work);
-                else
+                }
+                else {
+                    planlayout.setVisibility(View.VISIBLE);
                     adapter_plan.addItem(work);
+                }
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
