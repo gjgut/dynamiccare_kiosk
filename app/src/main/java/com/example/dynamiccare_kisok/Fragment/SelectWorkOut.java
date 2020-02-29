@@ -38,7 +38,8 @@ public class SelectWorkOut extends DCfragment {
     TextView txt_today;
     ConstraintLayout planlayout, worklayout;
     ImageButton btn_workout_right, btn_workout_left, btn_plan_right, btn_plan_left;
-    int plan_page,workout_page;
+    int plan_page = 1, workout_page = 1;
+    int plan_max = 1, workout_max = 1;
 
     public SelectWorkOut() {
         super();
@@ -77,13 +78,13 @@ public class SelectWorkOut extends DCfragment {
             ListViewAdapter adapter_plan, adapter_workout;
 
             Workout workoutlist[] = {
-                    new Workout(true, false, new Squat(main), 20, 20, 3),
-                    new Workout(true, false, new Squat(main), 20, 20, 3),
-                    new Workout(true, false, new Squat(main), 20, 20, 3),
-                    new Workout(true, false, new BenchPress(main), 20, 20, 3),
-                    new Workout(true, false, new Squat(main), 20, 20, 3),
                     new Workout(false, false, new Squat(main), 20, 20, 3),
                     new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new BenchPress(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(true, false, new Squat(main), 20, 20, 3),
                     new Workout(true, false, new Squat(main), 20, 20, 3),
             };
 
@@ -128,6 +129,41 @@ public class SelectWorkOut extends DCfragment {
                 }
             }
 
+            if (adapter_plan.getSize() == 1 || adapter_plan.getSize() == 2 || adapter_plan.getSize() == 3)
+                plan_max = 1;
+            else if (adapter_plan.getSize() == 4 || adapter_plan.getSize() == 5 || adapter_plan.getSize() == 6)
+                plan_max = 2;
+            else
+                plan_max = 3;
+
+            if (adapter_workout.getSize() == 1 || adapter_workout.getSize() == 2 || adapter_workout.getSize() == 3)
+                workout_max = 1;
+            else if (adapter_workout.getSize() == 4 || adapter_workout.getSize() == 5 || adapter_workout.getSize() == 6)
+                workout_max = 2;
+            else
+                workout_max = 3;
+
+
+            if (workout_page != 1)
+                btn_workout_left.setVisibility(View.VISIBLE);
+            else
+                btn_workout_left.setVisibility(View.INVISIBLE);
+
+            if (workout_page == workout_max)
+                btn_workout_right.setVisibility(View.INVISIBLE);
+            else
+                btn_workout_right.setVisibility(View.VISIBLE);
+
+            if (plan_page != 1)
+                btn_plan_left.setVisibility(View.VISIBLE);
+            else
+                btn_plan_left.setVisibility(View.INVISIBLE);
+
+            if (plan_page == plan_max)
+                btn_plan_right.setVisibility(View.INVISIBLE);
+            else
+                btn_plan_right.setVisibility(View.VISIBLE);
+
             adapter_plan.setPage(1);
             adapter_workout.setPage(1);
 
@@ -135,8 +171,18 @@ public class SelectWorkOut extends DCfragment {
             btn_workout_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(workout_page<3)
+                    if (workout_page < workout_max)
                         workout_page++;
+
+                    if (workout_page != 1)
+                        btn_workout_left.setVisibility(View.VISIBLE);
+                    else
+                        btn_workout_left.setVisibility(View.INVISIBLE);
+
+                    if (workout_page == workout_max)
+                        btn_workout_right.setVisibility(View.INVISIBLE);
+                    else
+                        btn_workout_right.setVisibility(View.VISIBLE);
                     adapter_workout.setPage(workout_page);
                     adapter_workout.notifyDataSetChanged();
                 }
@@ -144,8 +190,18 @@ public class SelectWorkOut extends DCfragment {
             btn_workout_left.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(workout_page>1)
+                    if (workout_page > 1)
                         workout_page--;
+
+                    if (workout_page != 1)
+                        btn_workout_left.setVisibility(View.VISIBLE);
+                    else
+                        btn_workout_left.setVisibility(View.INVISIBLE);
+
+                    if (workout_page == workout_max)
+                        btn_workout_right.setVisibility(View.INVISIBLE);
+                    else
+                        btn_workout_right.setVisibility(View.VISIBLE);
                     adapter_workout.setPage(workout_page);
                     adapter_workout.notifyDataSetChanged();
                 }
@@ -154,8 +210,18 @@ public class SelectWorkOut extends DCfragment {
             btn_plan_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(plan_page<3)
+                    if (plan_page < 3)
                         plan_page++;
+
+                    if (plan_page != 1)
+                        btn_plan_left.setVisibility(View.VISIBLE);
+                    else
+                        btn_plan_left.setVisibility(View.INVISIBLE);
+
+                    if (plan_page == plan_max)
+                        btn_plan_right.setVisibility(View.INVISIBLE);
+                    else
+                        btn_plan_right.setVisibility(View.VISIBLE);
                     adapter_plan.setPage(plan_page);
                     adapter_plan.notifyDataSetChanged();
                 }
@@ -163,8 +229,19 @@ public class SelectWorkOut extends DCfragment {
             btn_plan_left.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(plan_page>1)
+                    if (plan_page > 1)
                         plan_page--;
+
+                    if (plan_page != 1)
+                        btn_plan_left.setVisibility(View.VISIBLE);
+                    else
+                        btn_plan_left.setVisibility(View.INVISIBLE);
+
+                    if (plan_page == plan_max)
+                        btn_plan_right.setVisibility(View.INVISIBLE);
+                    else
+                        btn_plan_right.setVisibility(View.VISIBLE);
+
                     adapter_plan.setPage(plan_page);
                     adapter_plan.notifyDataSetChanged();
                 }
@@ -297,9 +374,8 @@ class ListViewAdapter extends BaseAdapter {
         itemContainer.add(item);
     }
 
-    public void NextPage() {
-        listViewItemList.clear();
-
+    public int getSize() {
+        return itemContainer.size();
     }
 
     public void setPage(int page) {
