@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Common.Util;
+package com.example.dynamiccare_kisok.Common.Object;
 
 public class ACK {
     String CommandCode,mTension,time,data,checksums,Full;
