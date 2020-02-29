@@ -308,9 +308,9 @@ public class ExcerciseMode extends DCfragment {
 
             if(workout != null)
             {
-                edt_count.getSource().setText(workout.getReps());
-                edt_weight.getSource().setText(workout.getWeight());
-                edt_set.getSource().setText(workout.getSet());
+                edt_count.getSource().setText(String.valueOf(workout.getReps()));
+                edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
+                edt_set.getSource().setText(String.valueOf(workout.getSet()));
             }
 
             bench.setButton(view.findViewById(R.id.exc_tab_btn_bench),
