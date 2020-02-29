@@ -88,11 +88,9 @@ public class Login extends AppCompatActivity {
                     if(event.getAction() == MotionEvent.ACTION_DOWN)
                     {
                         mcountDownTimer.start();
-                        Toast.makeText(getApplicationContext(),"timer started",Toast.LENGTH_SHORT).show();
                     }
                     else if(event.getAction() == MotionEvent.ACTION_UP)
                         mcountDownTimer.cancel();
-                    Toast.makeText(getApplicationContext(),"timer canceled",Toast.LENGTH_SHORT).show();
                     return true;
                 }
             });
@@ -106,17 +104,6 @@ public class Login extends AppCompatActivity {
                     return true;
                 }
             });
-//
-//            dclogo.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    Intent intent = new Intent(getApplicationContext(), Administrator.class);
-//                    startActivity(intent);
-//                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
-//                    finish();
-//                    return false;
-//                }
-//            });
 
             btn_download.setOnClickListener(new View.OnClickListener() {
                 @Override

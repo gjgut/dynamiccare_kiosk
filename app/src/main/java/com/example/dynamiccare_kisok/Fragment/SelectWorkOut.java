@@ -19,9 +19,12 @@ import androidx.annotation.Nullable;
 import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Excercise.Squat;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
+import com.example.dynamiccare_kisok.Common.Object.Workout;
 import com.example.dynamiccare_kisok.R;
 
+import java.lang.invoke.WrongMethodTypeException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,43 +59,21 @@ public class SelectWorkOut extends DCfragment {
         try {
 
             Date currentTime = Calendar.getInstance().getTime();
-            String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일", Locale.getDefault()).format(currentTime);
+            String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
 
             txt_today = view.findViewById(R.id.txt_today);
             txt_today.setText(date_text);
-//        ListView plan, workout;
-//        ListViewAdapter adapter_plan, adapter_workout;
-//
-//        // 리스트뷰 참조 및 Adapter 달기
-//        plan = (ListView) view.findViewById(R.id.list_plan);
-//        workout = view.findViewById(R.id.list_workout);
-//
-//        adapter_plan = new ListViewAdapter(R.layout.list_plan_item);
-//        adapter_workout = new ListViewAdapter(R.layout.list_workout_item);
-//
-//        plan.setAdapter(adapter_plan);
-//        workout.setAdapter(adapter_workout);
-//
-//        AdapterView.OnItemClickListener listener= new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(main,"Hello", Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//
-//        plan.setOnItemClickListener(listener);
-//        workout.setOnItemClickListener(listener);
-//
-//        adapter_plan.addItem("스쿼트", "20kg 3회");
-//        adapter_plan.addItem("벤치프레스", "20kg 3회");
-//        adapter_plan.addItem("데드리프트", "20kg 3회");
-//
-//        adapter_workout.addItem("스쿼트", "20kg 3회");
-//        adapter_workout.addItem("벤치프레스", "20kg 3회");
-//        adapter_workout.addItem("데드리프트", "20kg 3회");
-
             ListView plan, workout;
             ListViewAdapter adapter_plan, adapter_workout;
+
+            Workout workoutlist[] = {
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3)
+            };
 
             // 리스트뷰 참조 및 Adapter 달기
             plan = view.findViewById(R.id.list_plan);
@@ -101,9 +82,14 @@ public class SelectWorkOut extends DCfragment {
             adapter_plan = new ListViewAdapter(R.layout.list_plan_item, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("Hello","Hello");
-//                    Toast.makeText(main, "Hello", Toast.LENGTH_SHORT).show();
-                    main.ReplaceFragment(new ExcerciseMode(main),true);
+                    main.ReplaceFragment(new ExcerciseMode(main), true);
+                }
+            });
+
+            adapter_workout = new ListViewAdapter(R.layout.list_workout_item, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    main.ReplaceFragment(new ExcerciseMode(main), true);
                 }
             });
 
@@ -115,12 +101,15 @@ public class SelectWorkOut extends DCfragment {
                 }
             });
 
-            adapter_plan.addItem("스쿼트", "20kg 3회");
-            adapter_plan.addItem("벤치프레스", "20kg 3회");
-            adapter_plan.addItem("데드리프트", "20kg 3회");
+            for (Workout work : workoutlist) {
+                if (work.isWorkout())
+                    adapter_workout.addItem(work.getExcercise().getSimpleName() + " " + work.getExcercise().getMuscleName(), work.isKinetic() + ", " + work.getWeight() + "kg " + work.getReps() + "회 " + work.getSet() + "세트");
+                else
+                    adapter_plan.addItem(work.getExcercise().getSimpleName() + " " + work.getExcercise().getMuscleName(), work.isKinetic() + ", " + work.getWeight() + "kg " + work.getReps() + "회 " + work.getSet() + "세트");
+            }
 
-        }catch (Exception e)
-        {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return view;
@@ -180,7 +169,7 @@ class ListViewAdapter extends BaseAdapter {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter(int layout,View.OnClickListener buttonlistener) {
+    public ListViewAdapter(int layout, View.OnClickListener buttonlistener) {
         ListViewItem = layout;
         this.buttonlistener = buttonlistener;
     }

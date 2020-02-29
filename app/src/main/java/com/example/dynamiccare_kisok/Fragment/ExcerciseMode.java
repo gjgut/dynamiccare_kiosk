@@ -9,14 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +27,8 @@ import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
 import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
+import com.example.dynamiccare_kisok.Common.Object.Workout;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
@@ -38,16 +36,14 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
-import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ExcerciseMode extends DCfragment {
 
+    Workout workout;
     DCButton bench, squat, deadlift, press, curl, extension, latpull, carf;
     TableLayout exc_table;
     LinearLayout exc_rest;
@@ -68,6 +64,14 @@ public class ExcerciseMode extends DCfragment {
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
     }
 
+    public ExcerciseMode(Main main, Workout workout)
+    {
+        super(main);
+        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
+        main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
+        this.workout = workout;
+
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -293,6 +297,13 @@ public class ExcerciseMode extends DCfragment {
             edt_weight = new DCEditText(view.findViewById(R.id.et_weight));
             edt_rest = new DCEditText(view.findViewById(R.id.et_rest));
             edt_set = new DCEditText(view.findViewById(R.id.et_set));
+
+            if(workout != null)
+            {
+                edt_count.getSource().setText(workout.getReps());
+                edt_weight.getSource().setText(workout.getWeight());
+                edt_set.getSource().setText(workout.getSet());
+            }
 
             bench.setButton(view.findViewById(R.id.exc_tab_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
