@@ -79,33 +79,29 @@ public class SelectWorkOut extends DCfragment {
             plan = view.findViewById(R.id.list_plan);
             workout = view.findViewById(R.id.list_workout);
 
-            adapter_plan = new ListViewAdapter(R.layout.list_plan_item, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    main.ReplaceFragment(new ExcerciseMode(main), true);
-                }
-            });
-
-            adapter_workout = new ListViewAdapter(R.layout.list_workout_item, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    main.ReplaceFragment(new ExcerciseMode(main), true);
-                }
-            });
+            adapter_plan = new ListViewAdapter(R.layout.list_plan_item);
+            adapter_workout = new ListViewAdapter(R.layout.list_workout_item);
 
             plan.setAdapter(adapter_plan);
+            workout.setAdapter(adapter_workout);
             plan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(main, "Hello", Toast.LENGTH_SHORT).show();
+                    main.ReplaceFragment(new ExcerciseMode(main),true);
+                }
+            });
+            workout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    main.ReplaceFragment(new ExcerciseMode(main),true);
                 }
             });
 
             for (Workout work : workoutlist) {
                 if (work.isWorkout())
-                    adapter_workout.addItem(work.getExcercise().getSimpleName() + " " + work.getExcercise().getMuscleName(), work.isKinetic() + ", " + work.getWeight() + "kg " + work.getReps() + "회 " + work.getSet() + "세트");
+                    adapter_workout.addItem(work);
                 else
-                    adapter_plan.addItem(work.getExcercise().getSimpleName() + " " + work.getExcercise().getMuscleName(), work.isKinetic() + ", " + work.getWeight() + "kg " + work.getReps() + "회 " + work.getSet() + "세트");
+                    adapter_plan.addItem(work);
             }
 
 
@@ -144,6 +140,15 @@ public class SelectWorkOut extends DCfragment {
 
 class ListViewItem {
     String exc_title, exc_content;
+    Workout workout;
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
 
     public String getExc_title() {
         return exc_title;
@@ -164,14 +169,12 @@ class ListViewItem {
 
 class ListViewAdapter extends BaseAdapter {
     private int ListViewItem;
-    View.OnClickListener buttonlistener;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter(int layout, View.OnClickListener buttonlistener) {
+    public ListViewAdapter(int layout) {
         ListViewItem = layout;
-        this.buttonlistener = buttonlistener;
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -195,12 +198,12 @@ class ListViewAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView title = convertView.findViewById(R.id.item_exc_title);
         TextView content = convertView.findViewById(R.id.item_exc_content);
-        ImageButton button = convertView.findViewById(R.id.item_btn_ok);
-
-        button.setOnClickListener(buttonlistener);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
+
+//        title.setText(listViewItem.getExc_title());
+//        content.setText(listViewItem.getExc_content());
 
         title.setText(listViewItem.getExc_title());
         content.setText(listViewItem.getExc_content());
@@ -221,11 +224,13 @@ class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String title, String content) {
+    public void addItem(Workout workout) {
         ListViewItem item = new ListViewItem();
+        item.setWorkout(workout);
 
-        item.setExc_title(title);
-        item.setExc_content(content);
+
+        item.setExc_title(item.getWorkout().getExcercise().getSimpleName() + " " + item.getWorkout().getExcercise().getMuscleName());
+        item.setExc_content(item.getWorkout().isKinetic() + ", " + item.getWorkout().getWeight() + "kg " + item.getWorkout().getReps() + "회 " + item.getWorkout().getSet() + "세트");
 
         listViewItemList.add(item);
     }
