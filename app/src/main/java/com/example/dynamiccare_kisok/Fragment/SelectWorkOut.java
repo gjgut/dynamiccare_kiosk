@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Object.Workout;
@@ -30,11 +31,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class SelectWorkOut extends DCfragment {
     TextView txt_today;
-    ConstraintLayout planlayout,worklayout;
+    ConstraintLayout planlayout, worklayout;
+    ImageButton btn_workout_right, btn_workout_left, btn_plan_right, btn_plan_left;
+    int plan_page,workout_page;
 
     public SelectWorkOut() {
         super();
@@ -64,8 +68,8 @@ public class SelectWorkOut extends DCfragment {
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
 
 
-            worklayout = (ConstraintLayout)view.findViewById(R.id.Workout);
-            planlayout = (ConstraintLayout)view.findViewById(R.id.Plan);
+            worklayout = (ConstraintLayout) view.findViewById(R.id.Workout);
+            planlayout = (ConstraintLayout) view.findViewById(R.id.Plan);
 
             txt_today = view.findViewById(R.id.txt_today);
             txt_today.setText(date_text);
@@ -73,8 +77,21 @@ public class SelectWorkOut extends DCfragment {
             ListViewAdapter adapter_plan, adapter_workout;
 
             Workout workoutlist[] = {
-                    new Workout(true, false, new Squat(main), 20, 20, 3)
+                    new Workout(true, false, new Squat(main), 20, 20, 3),
+                    new Workout(true, false, new Squat(main), 20, 20, 3),
+                    new Workout(true, false, new Squat(main), 20, 20, 3),
+                    new Workout(true, false, new BenchPress(main), 20, 20, 3),
+                    new Workout(true, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(false, false, new Squat(main), 20, 20, 3),
+                    new Workout(true, false, new Squat(main), 20, 20, 3),
             };
+
+            btn_plan_left = view.findViewById(R.id.btn_plan_left);
+            btn_plan_right = view.findViewById(R.id.btn_plan_right);
+            btn_workout_left = view.findViewById(R.id.btn_workout_left);
+            btn_workout_right = view.findViewById(R.id.btn_workout_right);
+
 
             // 리스트뷰 참조 및 Adapter 달기
             plan = view.findViewById(R.id.list_plan);
@@ -91,8 +108,7 @@ public class SelectWorkOut extends DCfragment {
                     try {
                         ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
                         main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -105,13 +121,54 @@ public class SelectWorkOut extends DCfragment {
             for (Workout work : workoutlist) {
                 if (work.isWorkout()) {
                     worklayout.setVisibility(View.VISIBLE);
-                    adapter_workout.addItem(work);
-                }
-                else {
+                    adapter_workout.Fillitem(work);
+                } else {
                     planlayout.setVisibility(View.VISIBLE);
-                    adapter_plan.addItem(work);
+                    adapter_plan.Fillitem(work);
                 }
             }
+
+            adapter_plan.setPage(1);
+            adapter_workout.setPage(1);
+
+
+            btn_workout_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(workout_page<3)
+                        workout_page++;
+                    adapter_workout.setPage(workout_page);
+                    adapter_workout.notifyDataSetChanged();
+                }
+            });
+            btn_workout_left.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(workout_page>1)
+                        workout_page--;
+                    adapter_workout.setPage(workout_page);
+                    adapter_workout.notifyDataSetChanged();
+                }
+            });
+
+            btn_plan_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(plan_page<3)
+                        plan_page++;
+                    adapter_plan.setPage(plan_page);
+                    adapter_plan.notifyDataSetChanged();
+                }
+            });
+            btn_plan_left.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(plan_page>1)
+                        plan_page--;
+                    adapter_plan.setPage(plan_page);
+                    adapter_plan.notifyDataSetChanged();
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,6 +234,9 @@ class ListViewItem {
 
 class ListViewAdapter extends BaseAdapter {
     private int ListViewItem;
+    private ArrayList<ListViewItem> itemContainer = new ArrayList<ListViewItem>();
+
+
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
@@ -197,21 +257,16 @@ class ListViewAdapter extends BaseAdapter {
         final int pos = position;
         final Context context = parent.getContext();
 
-        // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(ListViewItem, parent, false);
         }
 
-        // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView title = convertView.findViewById(R.id.item_exc_title);
         TextView content = convertView.findViewById(R.id.item_exc_content);
 
-        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
 
-//        title.setText(listViewItem.getExc_title());
-//        content.setText(listViewItem.getExc_content());
 
         title.setText(listViewItem.getExc_title());
         content.setText(listViewItem.getExc_content());
@@ -229,6 +284,46 @@ class ListViewAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         return listViewItemList.get(position);
+    }
+
+    public void Fillitem(Workout workout) {
+        ListViewItem item = new ListViewItem();
+        item.setWorkout(workout);
+
+
+        item.setExc_title(item.getWorkout().getExcercise().getSimpleName() + " " + item.getWorkout().getExcercise().getMuscleName());
+        item.setExc_content(item.getWorkout().isKinetic() + ", " + item.getWorkout().getWeight() + "kg " + item.getWorkout().getReps() + "회 " + item.getWorkout().getSet() + "세트");
+
+        itemContainer.add(item);
+    }
+
+    public void NextPage() {
+        listViewItemList.clear();
+
+    }
+
+    public void setPage(int page) {
+        try {
+            listViewItemList.clear();
+            switch (page) {
+                case 1:
+                    listViewItemList.add(itemContainer.get(0));
+                    listViewItemList.add(itemContainer.get(1));
+                    listViewItemList.add(itemContainer.get(2));
+                    break;
+                case 2:
+                    listViewItemList.add(itemContainer.get(3));
+                    listViewItemList.add(itemContainer.get(4));
+                    listViewItemList.add(itemContainer.get(5));
+                    break;
+                case 3:
+                    listViewItemList.add(itemContainer.get(6));
+                    listViewItemList.add(itemContainer.get(7));
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
