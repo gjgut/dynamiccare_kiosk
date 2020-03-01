@@ -147,15 +147,14 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case R.id.btn_ready:
                 ready.setPressed();
                 if (ready.getButton().isPressed()) {
-                    main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound,R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
+                    main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
                 break;
             case R.id.btn_start:
                 go.setPressed();
-                if (go.IsPressed())
-                {
+                if (go.IsPressed()) {
                     main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                     if (resCalculator != null)
                         main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
@@ -163,7 +162,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            CountDownTimer timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime())*1000,1000) {
+                            CountDownTimer timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
                                 @Override
                                 public void onTick(long millisUntilFinished) {
                                 }
@@ -183,8 +182,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                             timer.start();
                         }
                     });
-                }
-                else
+                } else
                     main.getusbService().write("$CSP0#".getBytes());
                 setBottomBar();
                 break;
@@ -226,7 +224,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     public void HandleACK(ACK ack) {
         switch (ack.getCommandCode()) {
             case "AME":
-                if (Integer.parseInt(ack.getTime()) % 120 == 0) {
+                if (Integer.parseInt(ack.getTime()) % 120 == 0 && Integer.parseInt(ack.getTime()) > 1000) {
                     resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
                     power.setMax(resCalculator.getStart() + 300000);
                     power.setProgress(Integer.parseInt(ack.getmTension()));

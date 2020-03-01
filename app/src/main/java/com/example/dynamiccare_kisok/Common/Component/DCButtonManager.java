@@ -12,7 +12,7 @@ public class DCButtonManager {
         return DCState;
     }
 
-    public enum State {Clear, StartSetting, Setted, Excercise,onRest, Paused, Stop}
+    public enum State {Clear, StartSetting, Setted,Ready, Excercise,onRest, Paused, Stop}
 
     public DCButtonManager(DCButton Bench,
                            DCButton Squat,
@@ -80,20 +80,24 @@ public class DCButtonManager {
                     }
                     DCState = State.Setted;
                     Ready.Activate();
-                    Start.Activate();
+                    Start.Deactivate();
                     break;
                 }
-                case Excercise: {
+                case Ready:
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
                             i.Deactivate();
                         }
                     }
                     Ready.Activate();
+                    Start.Deactivate();
+                    DCState = State.Ready;
+                    break;
+                case Excercise:
+                    Ready.Activate();
                     Start.Activate();
                     DCState = State.Excercise;
                     break;
-                }
                 case onRest:
                     Ready.Deactivate();
                     Start.Deactivate();

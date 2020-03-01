@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -105,21 +106,6 @@ public class ExcerciseMode extends DCfragment {
                 break;
             }
             case R.id.exc_btn_stop: {
-                stop.setPressed();
-                dcButtonManager.setDCState(DCButtonManager.State.Stop);
-                main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                        edt_weight.getSource().getText().toString(),
-                        txt_count.getText().toString(),
-                        txt_set.getText().toString()).getBytes());
-                txt_count.setText("0");
-                txt_set.setText("0");
-//                handler.postDelayed(new Runnable() {
-//                    public void run() {
-//                        stop.setPressed();
-//                        main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
-//                    }
-//                }, 5000);
                 break;
             }
             case R.id.exc_btn_ready: {
@@ -127,14 +113,13 @@ public class ExcerciseMode extends DCfragment {
                 ready.setPressed();
                 txt_set.setText(edt_set.getSource().getText().toString());
                 if (ready.getButton().isPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+                    dcButtonManager.setDCState(DCButtonManager.State.Ready);
                     main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
                             edt_weight.getSource().getText().toString(),
                             txt_count.getText().toString(),
                             txt_set.getText().toString()).getBytes());
-                }
-                else
-                {
+                } else {
+                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
                     main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                             edt_weight.getSource().getText().toString(),
                             txt_count.getText().toString(),
@@ -197,6 +182,12 @@ public class ExcerciseMode extends DCfragment {
                 }
                 break;
             case "ACB":
+                switch (ack.getData())
+                {
+                    case "1":
+                        DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+
+                }
         }
     }
 
@@ -354,7 +345,47 @@ public class ExcerciseMode extends DCfragment {
             curl.getButton().setOnClickListener(this);
             extension.getButton().setOnClickListener(this);
             start.getButton().setOnClickListener(this);
-            stop.getButton().setOnClickListener(this);
+//            start.getButton().setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    switch (event.getAction())
+//                    {
+//                        case MotionEvent.ACTION_DOWN:
+//                            start.setPressed();
+//                            if(!start.IsPressed())
+//                            {
+//
+//                            }
+//                            break;
+//                        case MotionEvent.ACTION_UP:
+//                            start.setPressed();
+//                            break;
+//                    }
+//                    return false;
+//                }
+//            });
+//            stop.getButton().setOnClickListener(this);
+            stop.getButton().setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        stop.setPressed();
+                        dcButtonManager.setDCState(DCButtonManager.State.Stop);
+                        main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+                        main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                                edt_weight.getSource().getText().toString(),
+                                txt_count.getText().toString(),
+                                txt_set.getText().toString()).getBytes());
+                        txt_count.setText("0");
+                        txt_set.setText("0");
+                    }
+                    else if(event.getAction() == MotionEvent.ACTION_DOWN)
+                    {
+                        stop.setPressed();
+                    }
+                    return false;
+                }
+            });
             ready.getButton().setOnClickListener(this);
             txt_count.setOnClickListener(this);
             txt_set.setOnClickListener(this);
