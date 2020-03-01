@@ -8,9 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
+import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
 import com.example.dynamiccare_kisok.R;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
@@ -53,15 +60,35 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-//                startActivity(new Intent(getApplicationContext(),SelectMode.class));
-                startActivity(new Intent(getApplicationContext(), Main.class));
-                overridePendingTransition(R.anim.right_in,R.anim.left_out);
-                finish();
+               if( Httplogin(edt_code.getSource().getText().toString())!="")
+               {
+                   startActivity(new Intent(getApplicationContext(), Main.class));
+                   overridePendingTransition(R.anim.right_in,R.anim.left_out);
+                   finish();
+               }
+               else
+               {
+                   Toast.makeText(getApplicationContext(),"고유번호에 해당하는 사용자가 없습니다.",Toast.LENGTH_SHORT).show();
+               }
             }
         });
         }catch (Exception e)
         {
             e.printStackTrace();
+        }
+
+    }
+    public String Httplogin(String code)
+    {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("uid", code);
+            String json = jsonObject.toString();
+            return new HttpUtil().execute(json).get();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -7,6 +7,15 @@ import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 
 public class DynamicCare extends Application {
     public  static DCSoundPlayer dcSoundPlayer;
+    public static String CurrentUser;
+
+    public static String getCurrentUser() {
+        return CurrentUser;
+    }
+
+    public static void setCurrentUser(String currentUser) {
+        CurrentUser = currentUser;
+    }
 
     public DCSoundPlayer getDcSoundPlayer() {
         return dcSoundPlayer;
