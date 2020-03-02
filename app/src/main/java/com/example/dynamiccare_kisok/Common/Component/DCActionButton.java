@@ -11,8 +11,17 @@ import com.example.dynamiccare_kisok.R;
 public class DCActionButton {
     ImageButton button;
     boolean isPressed;
+    boolean isPause=true;
     Drawable Pressed,UnPressed;
     Main main;
+
+    public boolean isPause() {
+        return isPause;
+    }
+
+    public void setPause() {
+        isPause = !isPause;
+    }
 
     public DCActionButton(){}
     public DCActionButton(Main main)
@@ -29,6 +38,14 @@ public class DCActionButton {
     public void setPressed()
     {
         main.PlaySound(R.raw.normal_button);
+        isPressed = !isPressed;
+        if(isPressed)
+            this.button.setImageDrawable(Pressed);
+        else
+            this.button.setImageDrawable(UnPressed);
+    }
+    public void setPressedwithNoSound()
+    {
         isPressed = !isPressed;
         if(isPressed)
             this.button.setImageDrawable(Pressed);

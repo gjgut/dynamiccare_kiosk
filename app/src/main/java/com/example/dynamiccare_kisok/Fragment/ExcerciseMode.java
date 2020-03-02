@@ -97,15 +97,14 @@ public class ExcerciseMode extends DCfragment {
             case R.id.exc_tab_btn_armextension:
                 setExcercise(extension, new ArmExtension(main));
                 break;
-            case R.id.exc_btn_start: {
-                start.setPressed();
-                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                        edt_weight.getSource().getText().toString(),
-                        txt_count.getText().toString(),
-                        txt_set.getText().toString()).getBytes());
+            case R.id.exc_btn_start:
+//                start.setPressed();
+//                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+//                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+//                        edt_weight.getSource().getText().toString(),
+//                        txt_count.getText().toString(),
+//                        txt_set.getText().toString()).getBytes());
                 break;
-            }
             case R.id.exc_btn_stop: {
                 break;
             }
@@ -312,7 +311,7 @@ public class ExcerciseMode extends DCfragment {
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.body_triceps));
             start.setButton(view.findViewById(R.id.exc_btn_start),
-                    getResources().getDrawable(R.drawable.pressed_btn_start));
+                    getResources().getDrawable(R.drawable.btn_pause_pressed));
             stop.setButton(view.findViewById(R.id.exc_btn_stop),
                     getResources().getDrawable(R.drawable.pressed_btn_stop));
             ready.setButton(view.findViewById(R.id.exc_btn_ready),
@@ -346,26 +345,43 @@ public class ExcerciseMode extends DCfragment {
             carf.getButton().setOnClickListener(this);
             curl.getButton().setOnClickListener(this);
             extension.getButton().setOnClickListener(this);
-            start.getButton().setOnClickListener(this);
-//            start.getButton().setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    switch (event.getAction())
-//                    {
-//                        case MotionEvent.ACTION_DOWN:
-//                            start.setPressed();
-//                            if(!start.IsPressed())
-//                            {
-//
-//                            }
-//                            break;
-//                        case MotionEvent.ACTION_UP:
-//                            start.setPressed();
-//                            break;
-//                    }
-//                    return false;
-//                }
-//            });
+//            start.getButton().setOnClickListener(this);
+            start.getButton().setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction())
+                    {
+                        case MotionEvent.ACTION_DOWN:
+                            start.setPressedwithNoSound();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            start.setPressed();
+                            start.setPause();
+                            if(start.isPause())
+                            {
+                                dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+                                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                                        edt_weight.getSource().getText().toString(),
+                                        txt_count.getText().toString(),
+                                        txt_set.getText().toString()).getBytes());
+                                main.PlaySound(new int[] {R.raw.start_excercise,R.raw.start_excercise_english});
+                                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
+                                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
+                            }
+                            else {
+                                dcButtonManager.setDCState(DCButtonManager.State.Paused);
+                                main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
+                                        edt_weight.getSource().getText().toString(),
+                                        txt_count.getText().toString(),
+                                        txt_set.getText().toString()).getBytes());
+                                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                            }
+                            break;
+                    }
+                    return false;
+                }
+            });
 //            stop.getButton().setOnClickListener(this);
             stop.getButton().setOnTouchListener(new View.OnTouchListener() {
                 @Override

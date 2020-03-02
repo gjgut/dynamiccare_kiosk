@@ -582,7 +582,7 @@
             android:padding="0dp"
             android:scaleType="fitCenter"
             android:tint="#00000000"
-            app:srcCompat="@drawable/btn_start" />
+            app:srcCompat="@drawable/btn_pause" />
 
         <ImageButton
             android:id="@+id/exc_btn_ready"
