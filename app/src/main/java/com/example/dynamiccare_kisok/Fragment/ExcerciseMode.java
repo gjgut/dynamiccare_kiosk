@@ -42,6 +42,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
+import com.example.dynamiccare_kisok.Test.Runnable.Excercise1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +126,7 @@ public class ExcerciseMode extends DCfragment {
                             txt_count.getText().toString(),
                             txt_set.getText().toString()).getBytes());
                 }
+                handler.post(new Excercise1(main));
                 break;
             }
 
