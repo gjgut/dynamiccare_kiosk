@@ -87,7 +87,7 @@
                 android:max="350"
                 android:progress="350"
                 android:progressBackgroundTint="#1d1f21"
-                android:progressDrawable="@drawable/custom_progressbar"
+                android:progressDrawable="@drawable/gradient_progressbar"
                 android:progressTintMode="src_in"
                 android:visibility="visible" />
         </LinearLayout>

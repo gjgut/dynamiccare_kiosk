@@ -56,8 +56,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     }
 
 
-    public void setBottomBar() {
-        if (resCalculator == null)
+    public void setBottomBar(boolean isShow) {
+        if (!isShow)
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
         else
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
@@ -178,6 +178,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                                             R.raw.thank_you_for_your_efforts_english,
                                             R.raw.please_check_the_results_english,
                                             R.raw.dynamic_care});
+                                    main.getusbService().write("$CSP0#".getBytes());
+                                    setBottomBar(true);
+                                    go.setPressed();
+                                    ready.setPressed();
                                 }
                             };
                             timer.start();
@@ -185,7 +189,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     });
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
-                setBottomBar();
                 break;
 
             case R.id.btn_low: {
@@ -217,7 +220,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         try{
         View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
         setViews(view);
-        setBottomBar();
+        setBottomBar(false);
             return view;
         }catch (Exception e)
         {
@@ -233,7 +236,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case "AME":
                 if (Integer.parseInt(ack.getTime()) % 120 == 0 && Integer.parseInt(ack.getTime()) > 1000) {
                     resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
-                    power.setMax(resCalculator.getStart() + 300000);
+                    power.setMax(resCalculator.getStart() + 3000000);
                     power.setProgress(Integer.parseInt(ack.getmTension()));
                 }
                 break;
