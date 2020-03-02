@@ -5,9 +5,9 @@ import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Util.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 
-public class Excercise1 implements Runnable {
+public class ExcerciseReady1 implements Runnable {
     public Main main;
-    public Excercise1(Main main)
+    public ExcerciseReady1(Main main)
     {
      this.main = main;
     }
@@ -42,8 +42,7 @@ public class Excercise1 implements Runnable {
             main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS01#"));
             Thread.sleep(1500);
             main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB3#"));
-            Thread.sleep(1500);
-            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB1#"));
+
 
         }catch (Exception e)
         {

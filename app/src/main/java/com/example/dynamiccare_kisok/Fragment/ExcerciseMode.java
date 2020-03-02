@@ -10,14 +10,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,14 +36,12 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
-import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
-import com.example.dynamiccare_kisok.Test.Runnable.Excercise1;
+import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseReady1;
+import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseStart;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ExcerciseMode extends DCfragment {
 
@@ -113,24 +108,39 @@ public class ExcerciseMode extends DCfragment {
                 ready.setPressed();
                 txt_set.setText(edt_set.getSource().getText().toString());
                 if (ready.getButton().isPressed()) {
+                    setPropertiesFocusable(false);
+
                     dcButtonManager.setDCState(DCButtonManager.State.Ready);
                     main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
                             edt_weight.getSource().getText().toString(),
                             txt_count.getText().toString(),
                             txt_set.getText().toString()).getBytes());
                 } else {
+                    setPropertiesFocusable(true);
+
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                     main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                             edt_weight.getSource().getText().toString(),
                             txt_count.getText().toString(),
                             txt_set.getText().toString()).getBytes());
                 }
-                handler.post(new Excercise1(main));
+                main.HandleACK(ACKListener.ACKParser.ParseACK("$ACB1#"));
+//                Thread thread = new Thread(new ExcerciseStart(main));
+//                thread.start();
                 break;
             }
 
 
         }
+    }
+
+    public void setPropertiesFocusable(boolean value)
+    {
+        edt_count.getSource().setEnabled(value);
+        edt_set.getSource().setEnabled(value);
+        edt_weight.getSource().setEnabled(value);
+        edt_rest.getSource().setEnabled(value);
+        spin_level.setEnabled(value);
     }
 
     public void setExcercise(DCButton button, Excercise excercise) {
@@ -387,8 +397,16 @@ public class ExcerciseMode extends DCfragment {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_UP) {
+                        setPropertiesFocusable(true);
+                        exc_rest.setVisibility(View.INVISIBLE);
+                        exc_table.setVisibility(View.VISIBLE);
+                        if(countDownTimer!=null)
+                            countDownTimer.cancel();
+
                         stop.setPressed();
                         dcButtonManager.setDCState(DCButtonManager.State.Stop);
+                        dcButtonManager.setDCState(DCButtonManager.State.Setted);
+
                         main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                         main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                                 edt_weight.getSource().getText().toString(),
