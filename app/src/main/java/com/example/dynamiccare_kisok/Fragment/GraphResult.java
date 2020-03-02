@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
+import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.ACK;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
@@ -35,6 +36,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     DCActionButton ready, go;
     ProgressBar power;
     ResCalculator resCalculator;
+    CountDownTimer timer;
 
     Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
 
@@ -88,7 +90,70 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         Down.setOnTouchListener(this);
 
         ready.getButton().setOnClickListener(this);
-        go.getButton().setOnClickListener(this);
+//        go.getButton().setOnClickListener(this);
+        go.getButton().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        go.setPressedwithNoSound();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        go.setPressed();
+                        go.setPause();
+                        if(!go.isPause())
+                        {
+                            main.PlaySound(new int[]{R.raw.bee_measurement_begin});
+                            if (resCalculator != null)
+                                main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
+                            resCalculator = new ResCalculator();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
+                                        @Override
+                                        public void onTick(long millisUntilFinished) {
+                                        }
+
+                                        @Override
+                                        public void onFinish() {
+                                            ready.setPressed();
+                                            go.setPressed();
+                                            go.setPause();
+                                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                                            main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                                                    R.raw.stopping_measurement,
+                                                    R.raw.thank_you_for_your_efforts,
+                                                    R.raw.show_your_result,
+                                                    R.raw.the_measurement_is_going_to_stop_english,
+                                                    R.raw.thank_you_for_your_efforts_english,
+                                                    R.raw.please_check_the_results_english,
+                                                    R.raw.dynamic_care});
+                                            setBottomBar(true);
+                                        }
+                                    };
+                                    timer.start();
+                                }
+                            });
+                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
+                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
+                        }
+                        else {
+                            if(timer !=null)
+                                timer.cancel();
+                            main.getusbService().write("$CSP0#".getBytes());
+
+                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+
 
 
         go.getButton().setClickable(false);
@@ -163,40 +228,40 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     main.getusbService().write("$CSP0#".getBytes());
                 break;
             case R.id.btn_start:
-                go.setPressed();
-                if (go.IsPressed()) {
-                    main.PlaySound(new int[]{R.raw.bee_measurement_begin});
-                    if (resCalculator != null)
-                        main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
-                    resCalculator = new ResCalculator();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            CountDownTimer timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
-                                @Override
-                                public void onTick(long millisUntilFinished) {
-                                }
-
-                                @Override
-                                public void onFinish() {
-                                    ready.setPressed();
-                                    go.setPressed();
-                                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-                                            R.raw.stopping_measurement,
-                                            R.raw.thank_you_for_your_efforts,
-                                            R.raw.show_your_result,
-                                            R.raw.the_measurement_is_going_to_stop_english,
-                                            R.raw.thank_you_for_your_efforts_english,
-                                            R.raw.please_check_the_results_english,
-                                            R.raw.dynamic_care});
-                                    setBottomBar(true);
-                                }
-                            };
-                            timer.start();
-                        }
-                    });
-                } else
-                    main.getusbService().write("$CSP0#".getBytes());
+//                go.setPressed();
+//                if (go.IsPressed()) {
+//                    main.PlaySound(new int[]{R.raw.bee_measurement_begin});
+//                    if (resCalculator != null)
+//                        main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
+//                    resCalculator = new ResCalculator();
+//                    handler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            CountDownTimer timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
+//                                @Override
+//                                public void onTick(long millisUntilFinished) {
+//                                }
+//
+//                                @Override
+//                                public void onFinish() {
+//                                    ready.setPressed();
+//                                    go.setPressed();
+//                                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+//                                            R.raw.stopping_measurement,
+//                                            R.raw.thank_you_for_your_efforts,
+//                                            R.raw.show_your_result,
+//                                            R.raw.the_measurement_is_going_to_stop_english,
+//                                            R.raw.thank_you_for_your_efforts_english,
+//                                            R.raw.please_check_the_results_english,
+//                                            R.raw.dynamic_care});
+//                                    setBottomBar(true);
+//                                }
+//                            };
+//                            timer.start();
+//                        }
+//                    });
+//                } else
+//                    main.getusbService().write("$CSP0#".getBytes());
                 break;
 
             case R.id.btn_low: {

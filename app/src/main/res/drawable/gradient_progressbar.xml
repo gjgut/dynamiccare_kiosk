@@ -2,7 +2,6 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="12dp" />
             <solid android:color="#3993de"/>
         </shape>
     </item>
@@ -16,14 +15,6 @@
                     android:centerColor="#ffee00"
                     android:startColor="#3993de"
                     />
-            </shape>
-        </clip>
-    </item>
-    <item android:id="@android:id/secondaryProgress">
-        <clip>
-            <shape>
-                <corners android:radius="9dp" />
-                <solid android:color="#B2CCFF" />
             </shape>
         </clip>
     </item>

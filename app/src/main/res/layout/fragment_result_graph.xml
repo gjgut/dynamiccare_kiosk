@@ -82,11 +82,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
                 android:layout_weight="10"
-                android:background="#00FFFFFF"
+                android:background="#007A7A7A"
                 android:backgroundTint="#8A8A8A"
                 android:max="300"
                 android:progress="0"
-                android:progressBackgroundTint="#1d1f21"
+                android:progressBackgroundTint="#393939"
                 android:progressDrawable="@drawable/gradient_progressbar"
                 android:progressTintMode="src_in"
                 android:visibility="visible" />
