@@ -3,6 +3,7 @@ package com.example.dynamiccare_kisok.Common.Util;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
@@ -12,10 +13,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpUtil extends AsyncTask<String, Void, String> {
+public class HttpUtil extends AsyncTask<String, Void, org.json.simple.JSONObject> {
     @Override
-    public String doInBackground(String... params) {
-        String result="";
+    public org.json.simple.JSONObject doInBackground(String... params) {
+        org.json.simple.JSONObject result=null;
         try {
             String url = "http://powerlogmobile.com/kiosk/uidlogin";
             URL obj = new URL(url);
@@ -51,8 +52,7 @@ public class HttpUtil extends AsyncTask<String, Void, String> {
             org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject)Obj;
 
             Log.i("response",res.toString());
-            Log.i("response",jsonObject.get("name").toString());
-            result = jsonObject.get("name").toString();
+            result = jsonObject;
 
 
         } catch (Exception e) {
