@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
+import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
 import com.example.dynamiccare_kisok.R;
 
@@ -60,16 +61,21 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-               if( Httplogin(edt_code.getSource().getText().toString())!="")
-               {
-                   startActivity(new Intent(getApplicationContext(), Main.class));
-                   overridePendingTransition(R.anim.right_in,R.anim.left_out);
-                   finish();
-               }
-               else
-               {
-                   Toast.makeText(getApplicationContext(),"고유번호에 해당하는 사용자가 없습니다.",Toast.LENGTH_SHORT).show();
-               }
+                try {
+                    org.json.simple.JSONObject response = Httplogin(edt_code.getSource().getText().toString());
+                    if (response.get("name") != null) {
+                        DynamicCare care = (DynamicCare)getApplication();
+                        care.setCurrentUser(response.get("name").toString());
+                        startActivity(new Intent(getApplicationContext(), Main.class));
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
         }catch (Exception e)
@@ -78,7 +84,7 @@ public class Login extends AppCompatActivity {
         }
 
     }
-    public String Httplogin(String code)
+    public org.json.simple.JSONObject Httplogin(String code)
     {
         try {
             JSONObject jsonObject = new JSONObject();
