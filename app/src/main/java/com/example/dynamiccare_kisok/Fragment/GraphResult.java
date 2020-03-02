@@ -1,5 +1,7 @@
 package com.example.dynamiccare_kisok.Fragment;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -56,8 +58,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     }
 
 
-    public void setBottomBar() {
-        if (resCalculator == null)
+    public void setBottomBar(boolean isShow) {
+        if (!isShow)
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
         else
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
@@ -88,6 +90,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         ready.getButton().setOnClickListener(this);
         go.getButton().setOnClickListener(this);
 
+
+        go.getButton().setClickable(false);
+        go.getButton().setColorFilter(Color.parseColor("#28FFFFFF"),
+                PorterDuff.Mode.SRC_ATOP);
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -150,6 +156,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 if (ready.getButton().isPressed()) {
                     main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
+                    go.getButton().setClickable(true);
+                    go.getButton().setColorFilter(Color.parseColor("#00000000"),
+                            PorterDuff.Mode.SRC_ATOP);
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
                 break;
@@ -170,6 +179,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
                                 @Override
                                 public void onFinish() {
+                                    ready.setPressed();
+                                    go.setPressed();
                                     main.PlaySound(new int[]{R.raw.measurement_complete_sound,
                                             R.raw.stopping_measurement,
                                             R.raw.thank_you_for_your_efforts,
@@ -178,6 +189,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                                             R.raw.thank_you_for_your_efforts_english,
                                             R.raw.please_check_the_results_english,
                                             R.raw.dynamic_care});
+                                    setBottomBar(true);
                                 }
                             };
                             timer.start();
@@ -185,7 +197,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     });
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
-                setBottomBar();
                 break;
 
             case R.id.btn_low: {
@@ -216,8 +227,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try{
         View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
+
         setViews(view);
-        setBottomBar();
+        setBottomBar(false);
             return view;
         }catch (Exception e)
         {

@@ -60,7 +60,7 @@ public class Explain extends DCfragment {
                 setExcercise(squat, new Squat(main));
                 break;
             case R.id.mes_btn_deadlift:
-                setExcercise(deadlift, new BenchPress(main));
+                setExcercise(deadlift, new DeadLift(main));
                 break;
             case R.id.mes_btn_shoulderpress:
                 setExcercise(press, new ShoulderPress(main));
