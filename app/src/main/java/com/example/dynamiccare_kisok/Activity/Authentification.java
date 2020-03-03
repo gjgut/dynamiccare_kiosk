@@ -23,8 +23,8 @@ public class Authentification extends AppCompatActivity {
         setContentView(R.layout.activity_etc_authentification);
         try{
         code = new DCEditText((EditText)findViewById(R.id.et_code));
-        confirm = (Button)findViewById(R.id.bt_confirm);
-        modify = (Button)findViewById(R.id.bt_modify);
+//        confirm = (Button)findViewById(R.id.bt_confirm);
+//        modify = (Button)findViewById(R.id.bt_modify);
         back = (ImageButton)findViewById(R.id.btn_back);
 
         confirm.setOnClickListener(new View.OnClickListener(){
