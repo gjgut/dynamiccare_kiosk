@@ -70,9 +70,6 @@ public class Login extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
                         }
-//                    startActivity(new Intent(getApplicationContext(), Main.class));
-//                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
-//                    finish();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
