@@ -44,6 +44,6 @@ public class ShoulderPress extends Excercise {
 
     @Override
     public String getMode() {
-        return "02";
+        return "03";
     }
 }

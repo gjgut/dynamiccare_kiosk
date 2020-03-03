@@ -44,6 +44,6 @@ public class Squat extends Excercise {
 
     @Override
     public String getMode() {
-        return "00";
+        return "01";
     }
 }

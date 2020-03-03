@@ -44,6 +44,6 @@ public class BenchPress extends Excercise {
 
     @Override
     public String getMode() {
-        return "04";
+        return "00";
     }
 }

@@ -24,6 +24,7 @@ import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
 import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
 import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
+import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
 import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
@@ -156,7 +157,6 @@ public class ExcerciseMode extends DCfragment {
     public void setExcercise(DCButton button, Excercise excercise) {
         button.setPressed();
         if (button.IsPressed()) {
-            main.PlaySound(new int[]{R.raw.normal_button});
             main.setCurrentExcercise(excercise);
             dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
             Main.getusbService().write(
@@ -169,7 +169,7 @@ public class ExcerciseMode extends DCfragment {
                 public void run() {
                     main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
                 }
-            }, 2000);
+            }, 3000);
         } else {
             dcButtonManager.setDCState(DCButtonManager.State.Clear);
             main.setCurrentExcercise(null);
@@ -276,6 +276,10 @@ public class ExcerciseMode extends DCfragment {
         exc_table.setVisibility(View.VISIBLE);
         main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
         DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+        main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                edt_weight.getSource().getText().toString(),
+                txt_count.getText().toString(),
+                txt_set.getText().toString()).getBytes());
     }
 
 
@@ -306,12 +310,6 @@ public class ExcerciseMode extends DCfragment {
             edt_rest = new DCEditText(view.findViewById(R.id.et_rest));
             edt_set = new DCEditText(view.findViewById(R.id.et_set));
 
-            if(workout != null)
-            {
-                edt_count.getSource().setText(String.valueOf(workout.getReps()));
-                edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
-                edt_set.getSource().setText(String.valueOf(workout.getSet()));
-            }
 
             bench.setButton(view.findViewById(R.id.exc_tab_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
@@ -445,6 +443,41 @@ public class ExcerciseMode extends DCfragment {
 
             dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf, start, ready, stop);
 
+
+            if(workout != null)
+            {
+                edt_count.getSource().setText(String.valueOf(workout.getReps()));
+                edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
+                edt_set.getSource().setText(String.valueOf(workout.getSet()));
+                switch (workout.getExcercise().getSimpleName())
+                {
+                    case "벤치 프레스":
+                        setExcercise(bench, new BenchPress(main));
+                        break;
+                    case "스쿼트":
+                        setExcercise(squat, new Squat(main));
+                        break;
+                    case "데드 리프트":
+                        setExcercise(deadlift, new DeadLift(main));
+                        break;
+                    case "숄더 프레스":
+                        setExcercise(press, new ShoulderPress(main));
+                        break;
+                    case "랫 풀 다운":
+                        setExcercise(latpull, new LatPullDown(main));
+                        break;
+                    case "카프 레이즈":
+                        setExcercise(carf, new CarfRaise(main));
+                        break;
+                    case "암 컬":
+                        setExcercise(curl, new ArmCurl(main));
+                        break;
+                    case "암 익스텐션":
+                        setExcercise(extension, new ArmExtension(main));
+                        break;
+
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -45,6 +45,6 @@ public class CarfRaise extends Excercise {
 
     @Override
     public String getMode() {
-        return "03";
+        return "04";
     }
 }

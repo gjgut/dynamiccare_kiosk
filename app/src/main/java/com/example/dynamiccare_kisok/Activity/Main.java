@@ -16,6 +16,7 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -23,6 +24,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
@@ -33,6 +35,7 @@ import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
@@ -47,6 +50,7 @@ import java.util.Set;
 public class Main extends AppCompatActivity implements View.OnClickListener {
     DCfragment currentFragment;
     ImageButton btn_back, btn_next;
+    TextView BottomRestTime;
     DCActionBar customActionBar;
     static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
@@ -57,8 +61,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
     int MeasureTime = 10;
-    int MeasureWeight = 500;
+    int MeasureWeight = 300;
     Handler handler;
+    int count;
+    CountDownTimer countDownTimer;
 
     public String getMeasureTime() {
         return String.valueOf(MeasureTime);
@@ -94,8 +100,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void HandleACK(ACK ack) {
         try {
-            Toast.makeText(this,"Command:"+ack.getCommandCode(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
             switch (ack.getCommandCode()) {
+                case "CHM":
+                    PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+                    usbService.write(Commands.Home(true).getBytes());
+                    Intent intent = new Intent(this, Login.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    finish();
+                    break;
                 case "AME":
                     break;
                 case "ASP":
@@ -325,7 +339,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             currentFragment.HandleACK(ack);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this,"ACK:"+e.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "ACK:" + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -398,11 +412,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         currentExcercise = excercise;
     }
 
-    public void LoadSound()
-    {
-
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -412,8 +421,23 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         ackListener = new ACKListener(this);
         handler = new Handler();
 
-        DynamicCare care = (DynamicCare)getApplicationContext();
+        DynamicCare care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
+        count = care.getLimit();
+        countDownTimer = new CountDownTimer(count * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                BottomRestTime.setText("00:" + String.valueOf(count));
+                count--;
+            }
+
+            @Override
+            public void onFinish() {
+                HandleACK(ACKListener.ACKParser.ParseACK("$CHM08#"));
+                finish();
+            }
+        };
+        countDownTimer.start();
 
         dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
@@ -421,6 +445,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
         bottombar = findViewById(R.id.Bottom);
+        BottomRestTime = (TextView) findViewById(R.id.usertimer);
 
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);

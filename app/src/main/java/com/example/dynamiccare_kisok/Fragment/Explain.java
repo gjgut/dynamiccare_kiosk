@@ -23,36 +23,43 @@ import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
 import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 public class Explain extends DCfragment {
-    DCButton bench,squat,deadlift,press,curl,extension,latpull,carf;
+    DCButton bench, squat, deadlift, press, curl, extension, latpull, carf;
     ImageView Body;
 
-    public Explain(Main main)
-    {
+    public Explain(Main main) {
         super(main);
         main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()).getBytes());
-        if(main.getisIsoTonic())
-            main.PlaySound(new int[]{R.raw.sotonic_log_mode,R.raw.sotonic_log_mode_english});
+        if (main.getisIsoTonic())
+            main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.sotonic_log_mode_english});
         else
-            main.PlaySound(new int[]{R.raw.metric_log_mode,R.raw.metric_log_mode_english});
+            main.PlaySound(new int[]{R.raw.metric_log_mode, R.raw.metric_log_mode_english});
     }
 
-    public void setBottomBar()
-    {
-        if(DCButton.getPressedButton()==null)
-            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
-        else
+    public void setBottomBar(boolean value) {
+        if (value)
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+        else
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    public void HandleACK(ACK ack) {
+        switch (ack.getCommandCode()) {
+            case "PCA":
+                setBottomBar(true);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.mes_btn_bench:
                 setExcercise(bench, new BenchPress(main));
                 break;
@@ -78,7 +85,6 @@ public class Explain extends DCfragment {
                 setExcercise(extension, new ArmExtension(main));
                 break;
         }
-        setBottomBar();
     }
 
     public void setExcercise(DCButton button, Excercise excercise) {
@@ -91,43 +97,44 @@ public class Explain extends DCfragment {
                             "000", String.valueOf(main.getMeasureTime()),
                             "1",
                             "0").getBytes());
+            main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
         } else {
-
+            setBottomBar(false);
         }
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_explain,container, false);
+        View view = inflater.inflate(R.layout.fragment_explain, container, false);
         setViews(view);
         return view;
     }
 
-    public void setViews(View view)
-    {
+    public void setViews(View view) {
         try {
-            bench = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_bench),
+            bench = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));
-            squat = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_squat),
+            squat = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_squat),
                     getResources().getDrawable(R.drawable.pressed_btn_squat),
                     getResources().getDrawable(R.drawable.exp_quad));
-            deadlift = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_deadlift),
+            deadlift = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_deadlift),
                     getResources().getDrawable(R.drawable.pressed_btn_deadlift),
                     getResources().getDrawable(R.drawable.exp_spine));
-            press = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_shoulderpress),
+            press = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.pressed_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.exp_shoulder));
-            latpull = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_latpulldown),
+            latpull = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_latpulldown),
                     getResources().getDrawable(R.drawable.pressed_btn_latpulldown),
                     getResources().getDrawable(R.drawable.exp_lat));
-            carf = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_carfraise),
+            carf = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_carfraise),
                     getResources().getDrawable(R.drawable.pressed_btn_carfraise),
                     getResources().getDrawable(R.drawable.exp_lower_leg));
-            curl = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_armcurl),
+            curl = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_armcurl),
                     getResources().getDrawable(R.drawable.pressed_btn_amrcurl),
                     getResources().getDrawable(R.drawable.exp_biceps));
-            extension = new DCButton(main,(ImageButton) view.findViewById(R.id.mes_btn_armextension),
+            extension = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_armextension),
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.exp_triceps));
             Body = view.findViewById(R.id.exp_body);
@@ -142,15 +149,14 @@ public class Explain extends DCfragment {
             curl.getButton().setOnClickListener(this);
             extension.getButton().setOnClickListener(this);
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public String getTitle() {
-        if(Main.getisIsoTonic())
+        if (Main.getisIsoTonic())
             return "등척성 측정 모드";
         else
             return "등장성 측정 모드";
@@ -158,18 +164,16 @@ public class Explain extends DCfragment {
 
     @Override
     public int isHomeVisible() {
-        return  View.INVISIBLE;
+        return View.INVISIBLE;
     }
 
     @Override
-    public DCfragment getBackFragment()
-    {
+    public DCfragment getBackFragment() {
         return new SelectMode(main);
     }
 
     @Override
-    public DCfragment getNextFragment()
-    {
+    public DCfragment getNextFragment() {
         return new Instruction(main);
     }
 }

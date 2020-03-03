@@ -52,6 +52,10 @@ public class ACKListener extends Handler{
                 ack = ack.substring(1, ack.length() - 1);
                 ACK result = new ACK();
                 switch (ack.substring(0, 3)) {
+                    case "CHM":
+                        result.setCommandCode(ack.substring(0,3));
+                        result.setData(ack.substring(3,5));
+                        break;
                     case "AME": {
                         result.setCommandCode(ack.substring(0, 3));
                         result.setTime(ack.substring(3, 9));

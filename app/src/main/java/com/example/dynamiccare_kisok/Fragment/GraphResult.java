@@ -102,6 +102,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         {
                             main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
+                                main.getusbService().write("$CSP0#".getBytes());
                                 main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
                             resCalculator = new ResCalculator();
                             handler.post(new Runnable() {

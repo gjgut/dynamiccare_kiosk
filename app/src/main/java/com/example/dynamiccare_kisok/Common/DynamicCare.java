@@ -11,6 +11,15 @@ public class DynamicCare extends Application {
     public  static DCSoundPlayer dcSoundPlayer;
     public static String CurrentUser;
     public static JSONObject CurrentUserJson;
+    public static int limit=600;
+
+    public static int getLimit() {
+        return limit;
+    }
+
+    public static void setLimit(int limit) {
+        DynamicCare.limit = limit;
+    }
 
     public static JSONObject getCurrentUserJson() {
         return CurrentUserJson;
