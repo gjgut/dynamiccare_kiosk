@@ -17,34 +17,50 @@ import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
+import com.example.dynamiccare_kisok.Dialog.LoadPlan;
 import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
 
 public class SelectMode extends DCfragment {
-    ImageButton selectExec,isokinetic,isometronic,isotonic;
+    ImageButton selectExec, isokinetic, isometronic, isotonic;
+    LoadPlan loadPlandialog;
 
-
-    public SelectMode(Main main)
-    {
+    public SelectMode(Main main) {
         super(main);
-        main.PlaySound(new int[]{R.raw.select_the_mode,R.raw.select_the_mode_english});
+        main.PlaySound(new int[]{R.raw.select_the_mode, R.raw.select_the_mode_english});
         Main.setCurrentExcercise(null);
         DCButton.PressedOff();
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         try {
 
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
-                    DynamicCare care = (DynamicCare)main.getApplication();
-                    JSONObject jsonObject= care.getCurrentUserJson();
-                    JSONObject resultData = (JSONObject)jsonObject.get("resultData");
+                    DynamicCare care = (DynamicCare) main.getApplication();
+                    JSONObject jsonObject = care.getCurrentUserJson();
+                    JSONObject resultData = (JSONObject) jsonObject.get("resultData");
                     if (resultData != null) {
-                        ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main,resultData), true);
+                        loadPlandialog = new LoadPlan(main,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        loadPlandialog.dismiss();
+                                        ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                                    }
+                                },
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Main.setisIsoKinetic(false);
+                                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                                        Commands.ExcerciseMode(false);
+                                        loadPlandialog.dismiss();
+                                    }
+                                });
+                        loadPlandialog.show();
                     } else {
                         Main.setisIsoKinetic(false);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
@@ -53,9 +69,33 @@ public class SelectMode extends DCfragment {
                     break;
                 }
                 case R.id.btn_select_exec_isokinetic: {
-                    Main.setisIsoKinetic(true);
-                    ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                    Commands.ExcerciseMode(true);
+                    DynamicCare care = (DynamicCare) main.getApplication();
+                    JSONObject jsonObject = care.getCurrentUserJson();
+                    JSONObject resultData = (JSONObject) jsonObject.get("resultData");
+                    if (resultData != null) {
+                        loadPlandialog = new LoadPlan(main,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        loadPlandialog.dismiss();
+                                        ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                                    }
+                                },
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Main.setisIsoKinetic(true);
+                                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                                        Commands.ExcerciseMode(false);
+                                        loadPlandialog.dismiss();
+                                    }
+                                });
+                        loadPlandialog.show();
+                    } else {
+                        Main.setisIsoKinetic(true);
+                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                        Commands.ExcerciseMode(false);
+                    }
                     break;
                 }
                 case R.id.btn_sel_mes_isometric: {
@@ -71,8 +111,7 @@ public class SelectMode extends DCfragment {
                     break;
                 }
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -81,7 +120,7 @@ public class SelectMode extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_mode,container, false);
+        View view = inflater.inflate(R.layout.fragment_select_mode, container, false);
         selectExec = view.findViewById(R.id.btn_select_exec);
         isokinetic = view.findViewById(R.id.btn_select_exec_isokinetic);
         isometronic = view.findViewById(R.id.btn_sel_mes_isometric);
@@ -95,17 +134,15 @@ public class SelectMode extends DCfragment {
         return view;
     }
 
-    public org.json.JSONObject isTherePlan()
-    {
+    public org.json.JSONObject isTherePlan() {
         try {
-            DynamicCare care = (DynamicCare)main.getApplication();
+            DynamicCare care = (DynamicCare) main.getApplication();
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("uid", care.getCurrentUser());
             String json = jsonObject.toString();
             return new HttpUtil().execute(json).get();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -122,14 +159,12 @@ public class SelectMode extends DCfragment {
     }
 
     @Override
-    public DCfragment getBackFragment()
-    {
+    public DCfragment getBackFragment() {
         return null;
     }
 
     @Override
-    public DCfragment getNextFragment()
-    {
+    public DCfragment getNextFragment() {
         return null;
     }
 }

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
@@ -57,12 +58,18 @@ public class SelectWorkOut extends DCfragment {
         super();
     }
 
-    public SelectWorkOut(Main main,JSONObject WorkoutJson) {
+    public SelectWorkOut(Main main, JSONObject WorkoutJson) {
         super(main);
         this.WorkoutJson = WorkoutJson;
 
     }
 
+    public void setBottomBar() {
+        if (DCButton.getPressedButton() == null)
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+        else
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onClick(View v) {
@@ -75,6 +82,7 @@ public class SelectWorkOut extends DCfragment {
         View view = inflater.inflate(R.layout.fragment_select_workout, container, false);
 
         try {
+            setBottomBar();
 
             Date currentTime = Calendar.getInstance().getTime();
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
@@ -96,13 +104,11 @@ public class SelectWorkOut extends DCfragment {
             JSONArray programlistArray = (JSONArray) WorkoutJson.get("programList");
 
             Workout programlist[] = new Workout[8];
-            for(int i=0;i<programlistArray.length();i++)
-            {
+            for (int i = 0; i < programlistArray.length(); i++) {
                 JSONObject program = programlistArray.getJSONObject(i);
-                boolean isKinetic=false;
-                Excercise excercise= new BenchPress(main);
-                switch(program.get("plnVwCommonCode").toString().substring(0,1))
-                {
+                boolean isKinetic = false;
+                Excercise excercise = new BenchPress(main);
+                switch (program.get("plnVwCommonCode").toString().substring(0, 1)) {
                     case "A":
                         excercise = new BenchPress(main);
                         break;
@@ -128,21 +134,20 @@ public class SelectWorkOut extends DCfragment {
                         excercise = new LatPullDown(main);
                         break;
                 }
-                switch (program.get("plnVwCommonCode").toString().substring(2))
-                {
+                switch (program.get("plnVwCommonCode").toString().substring(2)) {
                     case "1":
-                        isKinetic=false;
+                        isKinetic = false;
+                        break;
                     default:
-                        isKinetic=true;
+                        isKinetic = true;
                         break;
                 }
-                programlist[i] =  new Workout(false,
+                programlist[i] = new Workout(false,
                         false, excercise,
                         Integer.valueOf(program.get("plnVwWeight").toString()),
                         Integer.valueOf(program.get("plnVwCount").toString()),
                         Integer.valueOf(program.get("plnVwSet").toString()));
             }
-
 
 
             btn_plan_left = view.findViewById(R.id.btn_plan_left);
@@ -165,13 +170,10 @@ public class SelectWorkOut extends DCfragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-                        if(item.getWorkout().getIsKinetic())
-                        {
+                        if (item.getWorkout().getIsKinetic()) {
                             main.setisIsoKinetic(true);
                             main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
-                        }
-                        else
-                        {
+                        } else {
                             main.setisIsoKinetic(false);
                             main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
                         }
@@ -195,9 +197,8 @@ public class SelectWorkOut extends DCfragment {
 //                }
 //            }
 
-            for(Workout work:programlist)
-            {
-                if(work==null)
+            for (Workout work : programlist) {
+                if (work == null)
                     break;
                 planlayout.setVisibility(View.VISIBLE);
                 adapter_plan.Fillitem(work);
@@ -329,7 +330,7 @@ public class SelectWorkOut extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
-        return null;
+        return new SelectMode(main);
     }
 
     @Override
