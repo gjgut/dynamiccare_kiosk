@@ -289,7 +289,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try{
         View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
-
         setViews(view);
         setBottomBar(false);
             return view;
