@@ -68,13 +68,13 @@ public class DCActionButton {
     }
     public void Activate()
     {
-        this.button.setClickable(true);
+        this.button.setEnabled(true);
         this.button.setColorFilter(Color.parseColor("#00000000"),
                 PorterDuff.Mode.SRC_ATOP);
     }
     public void Deactivate()
     {
-        this.button.setClickable(false);
+        this.button.setEnabled(false);
         this.button.setColorFilter(Color.parseColor("#28FFFFFF"),
                 PorterDuff.Mode.SRC_ATOP);
     }

@@ -593,6 +593,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        dcSoundThread.stopstream();
+    }
     private void setFilters() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);

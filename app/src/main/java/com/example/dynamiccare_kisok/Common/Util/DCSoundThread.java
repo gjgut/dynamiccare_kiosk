@@ -11,6 +11,11 @@ public class DCSoundThread {
         this.main = main;
     }
 
+    public void stopstream()
+    {
+        soundstream.interrupt();
+    }
+
     public void playstream(int[] stream) {
         try {
             if (soundstream != null)

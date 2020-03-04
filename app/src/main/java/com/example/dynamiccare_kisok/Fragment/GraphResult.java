@@ -33,7 +33,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     DCActionButton ready, go;
     ProgressBar power;
     ResCalculator resCalculator;
-    CountDownTimer timer;
 
     Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
 

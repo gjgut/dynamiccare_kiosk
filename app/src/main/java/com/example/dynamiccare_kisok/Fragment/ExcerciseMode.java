@@ -61,8 +61,7 @@ public class ExcerciseMode extends DCfragment {
     TextView txt_count, txt_set, rest_time;
     ImageView Body;
     LinearLayout container;
-    Spinner spin_level;
-    CountDownTimer countDownTimer;
+    Spinner spin_level;;
     int count;
     Handler handler = new Handler();
 
@@ -213,7 +212,7 @@ public class ExcerciseMode extends DCfragment {
             exc_rest.setVisibility(View.VISIBLE);
             count = Integer.parseInt(edt_rest.getSource().getText().toString());
 
-            countDownTimer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString()) * 1000, 1000) {
+            timer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString()) * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     rest_time.setText(String.valueOf(count));
@@ -228,7 +227,7 @@ public class ExcerciseMode extends DCfragment {
                     ResumeWorkout();
                 }
             };
-            countDownTimer.start();
+            timer.start();
         } catch (Exception e) {
             Log.i("Dynamic", e.toString());
         }
@@ -376,10 +375,10 @@ public class ExcerciseMode extends DCfragment {
                         setPropertiesFocusable(true);
                         exc_rest.setVisibility(View.INVISIBLE);
                         exc_table.setVisibility(View.VISIBLE);
-                        if(countDownTimer!=null)
-                            countDownTimer.cancel();
+                        if(timer!=null)
+                            timer.cancel();
 
-                        stop.setPressed();
+                        stop.setPressedwithNoSound();
                         dcButtonManager.setDCState(DCButtonManager.State.Stop);
                         dcButtonManager.setDCState(DCButtonManager.State.Setted);
 
@@ -447,8 +446,8 @@ public class ExcerciseMode extends DCfragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (countDownTimer != null)
-            countDownTimer.cancel();
+        if (timer != null)
+            timer.cancel();
     }
 
     @Override

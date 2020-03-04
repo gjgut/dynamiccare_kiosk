@@ -35,13 +35,13 @@ public class DCButton  {
     }
     public void Deactivate()
     {
-        this.button.setClickable(false);
+        this.button.setEnabled(false);
         this.button.setColorFilter(Color.parseColor("#28FFFFFF"),
                 PorterDuff.Mode.SRC_ATOP);
     }
     public void Activate()
     {
-        this.button.setClickable(true);
+        this.button.setEnabled(true);
         this.button.setColorFilter(Color.parseColor("#00000000"),
                 PorterDuff.Mode.SRC_ATOP);
     }
@@ -100,7 +100,7 @@ public class DCButton  {
     public void setPressed()
     {
         try {
-            main.PlaySound(new int[]{R.raw.normal_button});
+            main.PlaySound(R.raw.normal_button);
             isPressed = !isPressed;
             ToggleButton();
             if(getMappingBody()!=null)

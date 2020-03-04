@@ -193,7 +193,7 @@ public class DCSoundPlayer {
 
     public void initSounds(Context context) {
         try {
-            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
             back_button = soundPool.load(context, R.raw.back_button, 1);
             bee_measurement_begin = soundPool.load(context, R.raw.bee_measurement_begin, 1);
             delay_sound = soundPool.load(context, R.raw.delay_sound, 1);
