@@ -103,7 +103,8 @@ public class DCButton  {
             main.PlaySound(new int[]{R.raw.normal_button});
             isPressed = !isPressed;
             ToggleButton();
-            UpdateBody();
+            if(getMappingBody()!=null)
+                UpdateBody();
             if (isPressed)
                 this.button.setImageDrawable(Pressed);
             else

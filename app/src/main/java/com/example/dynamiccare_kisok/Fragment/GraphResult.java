@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -90,55 +91,52 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         go.getButton().setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         go.setPressedwithNoSound();
                         break;
                     case MotionEvent.ACTION_UP:
                         go.setPressed();
                         go.setPause();
-                        if(!go.isPause())
-                        {
+                        if (!go.isPause()) {
                             main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
-                                main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
+                            main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
                             resCalculator = new ResCalculator();
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
-                                        @Override
-                                        public void onTick(long millisUntilFinished) {
-                                        }
-
-                                        @Override
-                                        public void onFinish() {
-                                            ready.setPressed();
-                                            go.setPressed();
-                                            go.setPause();
-                                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-                                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-                                            main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-                                                    R.raw.stopping_measurement,
-                                                    R.raw.thank_you_for_your_efforts,
-                                                    R.raw.show_your_result,
-                                                    R.raw.the_measurement_is_going_to_stop_english,
-                                                    R.raw.thank_you_for_your_efforts_english,
-                                                    R.raw.please_check_the_results_english,
-                                                    R.raw.dynamic_care});
-                                            setBottomBar(true);
-                                        }
-                                    };
-                                    timer.start();
-                                }
-                            });
+//                            handler.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
+//                                        @Override
+//                                        public void onTick(long millisUntilFinished) {
+//                                        }
+//
+//                                        @Override
+//                                        public void onFinish() {
+//                                            ready.setPressed();
+//                                            go.setPressed();
+//                                            go.setPause();
+//                                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+//                                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+//                                            main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+//                                                    R.raw.stopping_measurement,
+//                                                    R.raw.thank_you_for_your_efforts,
+//                                                    R.raw.show_your_result,
+//                                                    R.raw.the_measurement_is_going_to_stop_english,
+//                                                    R.raw.thank_you_for_your_efforts_english,
+//                                                    R.raw.please_check_the_results_english,
+//                                                    R.raw.dynamic_care});
+//                                            setBottomBar(true);
+//                                        }
+//                                    };
+//                                    timer.start();
+//                                }
+//                            });
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
-                        }
-                        else {
-                            if(timer !=null)
+                        } else {
+                            if (timer != null)
                                 timer.cancel();
                             main.getusbService().write("$CSP0#".getBytes());
 
@@ -150,7 +148,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 return false;
             }
         });
-
 
 
         go.getButton().setClickable(false);
@@ -225,40 +222,35 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     main.getusbService().write("$CSP0#".getBytes());
                 break;
             case R.id.btn_start:
-//                go.setPressed();
-//                if (go.IsPressed()) {
-//                    main.PlaySound(new int[]{R.raw.bee_measurement_begin});
-//                    if (resCalculator != null)
-//                        main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
-//                    resCalculator = new ResCalculator();
-//                    handler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            CountDownTimer timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
-//                                @Override
-//                                public void onTick(long millisUntilFinished) {
-//                                }
-//
-//                                @Override
-//                                public void onFinish() {
-//                                    ready.setPressed();
-//                                    go.setPressed();
-//                                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-//                                            R.raw.stopping_measurement,
-//                                            R.raw.thank_you_for_your_efforts,
-//                                            R.raw.show_your_result,
-//                                            R.raw.the_measurement_is_going_to_stop_english,
-//                                            R.raw.thank_you_for_your_efforts_english,
-//                                            R.raw.please_check_the_results_english,
-//                                            R.raw.dynamic_care});
-//                                    setBottomBar(true);
-//                                }
-//                            };
-//                            timer.start();
-//                        }
-//                    });
-//                } else
-//                    main.getusbService().write("$CSP0#".getBytes());
+                go.setPressed();
+                if (go.IsPressed()) {
+                    main.PlaySound(new int[]{R.raw.bee_measurement_begin});
+                    if (resCalculator != null)
+                        main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
+                    resCalculator = new ResCalculator();
+                    timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                        }
+                        @Override
+                        public void onFinish() {
+                            main.getusbService().write("$CSP0#".getBytes());
+                            ready.setPressed();
+                            go.setPressed();
+                            main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                                    R.raw.stopping_measurement,
+                                    R.raw.thank_you_for_your_efforts,
+                                    R.raw.show_your_result,
+                                    R.raw.the_measurement_is_going_to_stop_english,
+                                    R.raw.thank_you_for_your_efforts_english,
+                                    R.raw.please_check_the_results_english,
+                                    R.raw.dynamic_care});
+                            setBottomBar(true);
+                        }
+                    };
+                    timer.start();
+                } else
+                    main.getusbService().write("$CSP0#".getBytes());
                 break;
 
             case R.id.btn_low: {
@@ -287,10 +279,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        try{
-        View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
-        setViews(view);
-        setBottomBar(false);
+        try {
+            View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
+            setViews(view);
+            setBottomBar(false);
             return view;
         } catch (Exception e) {
             Toast.makeText(main, e.toString(), Toast.LENGTH_LONG).show();
@@ -301,20 +293,59 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     @Override
     public void HandleACK(ACK ack) {
-        switch (ack.getCommandCode()) {
-            case "AME":
-                if (Integer.parseInt(ack.getTime()) % 120 == 0 && Integer.parseInt(ack.getTime()) > 1000) {
-                    resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
-                    power.setMax(resCalculator.getStart() + 300000);
-                    power.setProgress(Integer.parseInt(ack.getmTension()));
-                }
-                break;
+        try {
+            Log.i("ParseACK", ack.getCommandCode());
+            switch (ack.getCommandCode()) {
+                case "AME":
+                    if (Integer.parseInt(ack.getTime()) % 120 == 0 && Integer.parseInt(ack.getTime()) > 1000) {
+                        resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
+                        power.setMax(resCalculator.getStart() + 300000);
+                        power.setProgress(Integer.parseInt(ack.getmTension()));
+                    } else if (ack.getTime().equals(Integer.valueOf(main.getMeasureTime()) * 1000)) {
+                        Log.i("Measure ended:", "");
+                        ready.setPressed();
+                        go.setPressed();
+                        go.setPause();
+                        go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                        go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                        main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                                R.raw.stopping_measurement,
+                                R.raw.thank_you_for_your_efforts,
+                                R.raw.show_your_result,
+                                R.raw.the_measurement_is_going_to_stop_english,
+                                R.raw.thank_you_for_your_efforts_english,
+                                R.raw.please_check_the_results_english,
+                                R.raw.dynamic_care});
+                        setBottomBar(true);
+                    }
+                    break;
+                case "ASP":
+                    Log.i("Measure ended:", "");
+                    ready.setPressed();
+                    go.setPressed();
+                    go.setPause();
+                    go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                    go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                            R.raw.stopping_measurement,
+                            R.raw.thank_you_for_your_efforts,
+                            R.raw.show_your_result,
+                            R.raw.the_measurement_is_going_to_stop_english,
+                            R.raw.thank_you_for_your_efforts_english,
+                            R.raw.please_check_the_results_english,
+                            R.raw.dynamic_care});
+                    setBottomBar(true);
+                    break;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public String getTitle() {
-        if (Main.getisIsoTonic())
+        if (main.getisIsoTonic())
             return "등척성 측정 모드";
         else
             return "등장성 측정 모드";

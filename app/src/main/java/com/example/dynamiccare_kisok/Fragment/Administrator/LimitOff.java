@@ -13,12 +13,14 @@ import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.DynamicCare;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.R;
 
 public class LimitOff extends DCfragment {
     DCEditText edt_adminpw;
     Button limit_off;
+    DynamicCare care;
 
     public LimitOff() {
         super();
@@ -30,10 +32,10 @@ public class LimitOff extends DCfragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.btn_limit_deactivate:
-                admin.ReplaceFragment(new Authentification(admin),false);
+                if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword().toString()))
+                    admin.ReplaceFragment(new Authentification(admin), false);
         }
 
     }
@@ -41,18 +43,17 @@ public class LimitOff extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_auth_limit_off,container, false);
+        View view = inflater.inflate(R.layout.fragment_auth_limit_off, container, false);
         super.onCreate(savedInstanceState);
+        care = (DynamicCare) admin.getApplication();
 
-        try{
+        try {
             edt_adminpw = new DCEditText(view.findViewById(R.id.et_adminpw));
             limit_off = view.findViewById(R.id.btn_limit_deactivate);
 
             limit_off.setOnClickListener(this);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -18,7 +18,7 @@ import com.example.dynamiccare_kisok.Activity.Login;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.R;
 
 public class Authentification extends DCfragment {

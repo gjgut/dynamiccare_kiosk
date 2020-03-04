@@ -20,15 +20,16 @@ import com.example.dynamiccare_kisok.Activity.Login;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.ACK;
+import com.example.dynamiccare_kisok.Common.DynamicCare;
+import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Fragment.Administrator.Authentification;
 import com.example.dynamiccare_kisok.R;
 
 public class ModifyAdmin extends DCfragment {
 
-    ImageButton back,newpwvisible;
+    ImageButton back, newpwvisible;
     Button ok;
-    DCEditText prev,New,correct;
+    DCEditText prev, New, correct;
     boolean isVisible;
 
     public ModifyAdmin() {
@@ -67,27 +68,28 @@ public class ModifyAdmin extends DCfragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.btn_set_admin_ok:
-                admin.ReplaceFragment(new Authentification(admin),false);
+                DynamicCare care = (DynamicCare) admin.getApplication();
+                if (prev.getSource().getText().toString().equals(care.getAdminPassword())) {
+                    care.setAdminPassword(New.getSource().getText().toString());
+                    if (New.getSource().getText().toString().equals(correct.getSource().getText().toString()))
+                        admin.ReplaceFragment(new Authentification(admin), false);
+                }
                 break;
             case R.id.btn_newpw_visible:
-                if(isVisible)
-                {
+                if (isVisible) {
                     newpwvisible.setImageDrawable(admin.getDrawable(R.drawable.ic_visibility_off));
-                    newpwvisible.setPadding(30,30,30,30);
+                    newpwvisible.setPadding(30, 30, 30, 30);
                     New.getSource().setTransformationMethod(PasswordTransformationMethod.getInstance());
                     New.getSource().setSelection(New.getSource().length());
-                    isVisible=false;
-                }
-                else
-                {
+                    isVisible = false;
+                } else {
                     newpwvisible.setImageDrawable(admin.getDrawable(R.drawable.ic_visibility_on));
-                    newpwvisible.setPadding(40,35,31,38);
+                    newpwvisible.setPadding(40, 35, 31, 38);
                     New.getSource().setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     New.getSource().setSelection(New.getSource().length());
-                    isVisible=true;
+                    isVisible = true;
                 }
                 break;
         }
@@ -96,9 +98,9 @@ public class ModifyAdmin extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_auth_set_admin,container, false);
+        View view = inflater.inflate(R.layout.fragment_auth_set_admin, container, false);
         super.onCreate(savedInstanceState);
-        try{
+        try {
 
             back = view.findViewById(R.id.btn_back);
             newpwvisible = view.findViewById(R.id.btn_newpw_visible);
@@ -111,8 +113,7 @@ public class ModifyAdmin extends DCfragment {
             ok.setOnClickListener(this);
             newpwvisible.setOnClickListener(this);
 
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return view;

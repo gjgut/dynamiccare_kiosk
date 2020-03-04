@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import com.example.dynamiccare_kisok.R;
 
 public class Explain extends DCfragment {
     DCButton bench, squat, deadlift, press, curl, extension, latpull, carf;
+    DCButtonManager dcButtonManager;
+    Handler handler;
     ImageView Body;
 
     public Explain(Main main) {
@@ -90,6 +93,7 @@ public class Explain extends DCfragment {
     public void setExcercise(DCButton button, Excercise excercise) {
         button.setPressed();
         if (button.IsPressed()) {
+            dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
             Main.setCurrentExcercise(excercise);
             Main.getusbService().write(
                     Commands.MeasureSet(excercise.getMode(),
@@ -97,8 +101,13 @@ public class Explain extends DCfragment {
                             "000", String.valueOf(main.getMeasureTime()),
                             "1",
                             "0").getBytes());
-            main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+                }
+            }, 3000);
         } else {
+            dcButtonManager.setDCState(DCButtonManager.State.Clear);
             setBottomBar(false);
         }
     }
@@ -140,6 +149,9 @@ public class Explain extends DCfragment {
             Body = view.findViewById(R.id.exp_body);
             DCButton.setBody(Body);
 
+            dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf);
+            handler = new Handler();
+
             bench.getButton().setOnClickListener(this);
             squat.getButton().setOnClickListener(this);
             deadlift.getButton().setOnClickListener(this);
@@ -156,7 +168,7 @@ public class Explain extends DCfragment {
 
     @Override
     public String getTitle() {
-        if (Main.getisIsoTonic())
+        if (main.getisIsoTonic())
             return "등척성 측정 모드";
         else
             return "등장성 측정 모드";

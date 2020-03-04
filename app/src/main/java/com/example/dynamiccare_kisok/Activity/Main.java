@@ -103,6 +103,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void HandleACK(ACK ack) {
         try {
             Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
+            Log.i("Main-HandleACK",ack.getCommandCode());
             switch (ack.getCommandCode()) {
                 case "CHM":
                     PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
@@ -303,34 +304,34 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             PlaySound(new int[]{R.raw.thank_you_for_your_efforts, R.raw.thank_you_for_your_efforts_english});
                             break;
                         case "01":
-                            PlaySound(new int[]{R.raw.one_set_complete, R.raw.one_set_complete_english});
+                            PlaySound(new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
                             break;
                         case "02":
-                            PlaySound(new int[]{R.raw.two_set_complete, R.raw.two_set_complete_english});
+                            PlaySound(new int[]{R.raw.two_set_complete, R.raw.take_a_break, R.raw.two_set_complete_english, R.raw.take_a_break_english});
                             break;
                         case "03":
-                            PlaySound(new int[]{R.raw.three_set_complete, R.raw.two_set_complete_english});
+                            PlaySound(new int[]{R.raw.three_set_complete, R.raw.take_a_break, R.raw.three_set_complete_english, R.raw.take_a_break_english});
                             break;
                         case "04":
-                            PlaySound(new int[]{R.raw.four_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.four_sets_completed_english, R.raw.take_a_break_english});
                             break;
                         case "05":
-                            PlaySound(new int[]{R.raw.five_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.five_sets_completed_english, R.raw.take_a_break_english});
                             break;
                         case "06":
-                            PlaySound(new int[]{R.raw.six_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.six_sets_completed_english, R.raw.take_a_break_english});
                             break;
                         case "07":
-                            PlaySound(new int[]{R.raw.seven_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.seven_sets_completed_english, R.raw.take_a_break_english});
                             break;
                         case "08":
-                            PlaySound(new int[]{R.raw.eight_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.eight_sets_completed_english, R.raw.take_a_break_english});
                             break;
                         case "09":
-                            PlaySound(new int[]{R.raw.nine_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.nine_sets_completed_english, R.raw.take_a_break_english});
                             break;
                         case "10":
-                            PlaySound(new int[]{R.raw.ten_sets_completed_english});
+                            PlaySound(new int[]{R.raw.take_a_break, R.raw.ten_sets_completed_english, R.raw.take_a_break_english});
                             break;
                     }
                     break;
@@ -339,9 +340,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     break;
             }
             currentFragment.HandleACK(ack);
+            Log.i("Main-Broadcasted",ack.getCommandCode());
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "ACK:" + e.toString(), Toast.LENGTH_SHORT).show();
+            Log.i("Main-Broadcasted",ack.getCommandCode()+e.toString());
+            Toast.makeText(this, "ACK:" +ack.getCommandCode()+ e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -390,19 +393,19 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         }
     };
 
-    public static void setisIsoKinetic(boolean value) {
+    public void setisIsoKinetic(boolean value) {
         isIsoKinetic = value;
     }
 
-    public static void setIsIsoTonic(boolean value) {
+    public void setIsIsoTonic(boolean value) {
         isIsoTonic = value;
     }
 
-    public static boolean getisIsoKinetic() {
+    public boolean getisIsoKinetic() {
         return isIsoKinetic;
     }
 
-    public static boolean getisIsoTonic() {
+    public boolean getisIsoTonic() {
         return isIsoTonic;
     }
 
@@ -419,13 +422,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Dialog dialog = new Dialog(this);
-
-        dialog.setContentView(R.layout.dialog_isload_workout_plan);
-
-        dialog.setTitle("Custom Dialog");
-        dialog.show();
 
         ackListener = new ACKListener(this);
         handler = new Handler();

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
+import com.example.dynamiccare_kisok.Fragment.Administrator.Authentification;
 import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
@@ -39,7 +40,7 @@ public class Login extends AppCompatActivity {
             dclogo.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), Authentification.class);
+                    Intent intent = new Intent(getApplicationContext(), Administrator.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);
                     finish();

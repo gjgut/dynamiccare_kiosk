@@ -13,6 +13,31 @@ public class DCButtonManager {
     }
 
     public enum State {Clear, StartSetting, Setted,Ready, Excercise,onRest, Paused, Stop}
+    public DCButtonManager(DCButton Bench,
+                           DCButton Squat,
+                           DCButton Deadlift,
+                           DCButton Press,
+                           DCButton Carf,
+                           DCButton Curl,
+                           DCButton Extension,
+                           DCButton Lat) {
+        try {
+            this.Bench = Bench;
+            this.Squat = Squat;
+            this.Deadlift = Deadlift;
+            this.Press = Press;
+            this.Carf = Carf;
+            this.Curl = Curl;
+            this.Extension = Extension;
+            this.Lat = Lat;
+
+            Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
+            setDCState(State.Clear);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public DCButtonManager(DCButton Bench,
                            DCButton Squat,

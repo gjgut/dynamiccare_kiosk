@@ -54,7 +54,7 @@ public class SelectMode extends DCfragment {
                                 new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Main.setisIsoKinetic(false);
+                                        main.setisIsoKinetic(false);
                                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                                         Commands.ExcerciseMode(false);
                                         loadPlandialog.dismiss();
@@ -62,7 +62,7 @@ public class SelectMode extends DCfragment {
                                 });
                         loadPlandialog.show();
                     } else {
-                        Main.setisIsoKinetic(false);
+                        main.setisIsoKinetic(false);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                         Commands.ExcerciseMode(false);
                     }
@@ -84,7 +84,7 @@ public class SelectMode extends DCfragment {
                                 new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Main.setisIsoKinetic(true);
+                                        main.setisIsoKinetic(true);
                                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                                         Commands.ExcerciseMode(false);
                                         loadPlandialog.dismiss();
@@ -92,20 +92,20 @@ public class SelectMode extends DCfragment {
                                 });
                         loadPlandialog.show();
                     } else {
-                        Main.setisIsoKinetic(true);
+                        main.setisIsoKinetic(true);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                         Commands.ExcerciseMode(false);
                     }
                     break;
                 }
                 case R.id.btn_sel_mes_isometric: {
-                    Main.setIsIsoTonic(false);
+                    main.setIsIsoTonic(false);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
                     Commands.MeasureMode(false);
                     break;
                 }
                 case R.id.btn_sel_mes_isotonic: {
-                    Main.setIsIsoTonic(true);
+                    main.setIsIsoTonic(true);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
                     Commands.MeasureMode(true);
                     break;

@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Common;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
@@ -12,6 +13,18 @@ public class DynamicCare extends Application {
     public static String CurrentUser;
     public static JSONObject CurrentUserJson;
     public static int limit=600;
+    public SharedPreferences Admin;
+
+    public String getAdminPassword() {
+        return Admin.getString("password","");
+    }
+
+    public void setAdminPassword(String password) {
+        SharedPreferences.Editor editor = Admin.edit();
+        editor.putString("password",password);
+
+        editor.commit();
+    }
 
     public static int getLimit() {
         return limit;
@@ -53,5 +66,7 @@ public class DynamicCare extends Application {
     public void onCreate() {
         super.onCreate();
         dcSoundPlayer = new DCSoundPlayer();
+        Admin = getSharedPreferences("password",MODE_PRIVATE);
+//        setAdminPassword("0000");
     }
 }
