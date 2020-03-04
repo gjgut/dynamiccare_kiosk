@@ -163,7 +163,7 @@
 
         <LinearLayout
             android:id="@+id/IconGroup"
-            android:layout_width="719dp"
+            android:layout_width="0dp"
             android:layout_height="224dp"
             android:layout_gravity="center"
             android:layout_marginBottom="35dp"

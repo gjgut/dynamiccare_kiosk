@@ -103,7 +103,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void HandleACK(ACK ack) {
         try {
             Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
-            Log.i("Main-HandleACK",ack.getCommandCode());
             switch (ack.getCommandCode()) {
                 case "CHM":
                     PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});

@@ -23,6 +23,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
+import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
@@ -95,6 +96,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         go.setPressedwithNoSound();
                         break;
                     case MotionEvent.ACTION_UP:
+                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ASP014#"));
                         go.setPressed();
                         go.setPause();
                         if (!go.isPause()) {
@@ -149,9 +151,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         });
 
 
-        go.getButton().setClickable(false);
-        go.getButton().setColorFilter(Color.parseColor("#28FFFFFF"),
-                PorterDuff.Mode.SRC_ATOP);
+        go.Deactivate();
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -214,44 +214,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 if (ready.getButton().isPressed()) {
                     main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
-                    go.getButton().setClickable(true);
-                    go.getButton().setColorFilter(Color.parseColor("#00000000"),
-                            PorterDuff.Mode.SRC_ATOP);
+                    go.Activate();
                 } else
                     main.getusbService().write("$CSP0#".getBytes());
                 break;
-            case R.id.btn_start:
-                go.setPressed();
-                if (go.IsPressed()) {
-                    main.PlaySound(new int[]{R.raw.bee_measurement_begin});
-                    if (resCalculator != null)
-                        main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
-                    resCalculator = new ResCalculator();
-                    timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                        }
-                        @Override
-                        public void onFinish() {
-                            main.getusbService().write("$CSP0#".getBytes());
-                            ready.setPressed();
-                            go.setPressed();
-                            main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-                                    R.raw.stopping_measurement,
-                                    R.raw.thank_you_for_your_efforts,
-                                    R.raw.show_your_result,
-                                    R.raw.the_measurement_is_going_to_stop_english,
-                                    R.raw.thank_you_for_your_efforts_english,
-                                    R.raw.please_check_the_results_english,
-                                    R.raw.dynamic_care});
-                            setBottomBar(true);
-                        }
-                    };
-                    timer.start();
-                } else
-                    main.getusbService().write("$CSP0#".getBytes());
-                break;
-
             case R.id.btn_low: {
                 Low.setPressed();
                 if (Low.IsPressed())

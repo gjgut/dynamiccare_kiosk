@@ -67,6 +67,7 @@ public class ACKListener extends Handler{
                         break;
                     }
                     case "ASP": {
+                        result.setCommandCode(ack.substring(0, 3));
                         Log.i("Parsing ASP","");
                         result.setData(ack.substring(3, 4));
                         result.setChecksums(ack.substring(4, 6));
