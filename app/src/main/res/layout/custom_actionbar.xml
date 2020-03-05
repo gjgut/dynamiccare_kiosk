@@ -31,7 +31,7 @@
         android:padding="0dp"
         android:text="모드 선택"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="30sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"

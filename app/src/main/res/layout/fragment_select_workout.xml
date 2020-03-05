@@ -11,6 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +24,6 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
-            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="현재 날짜"
                 android:textColor="#3993de"
-                android:textSize="18sp"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +45,7 @@
                 android:layout_marginTop="8dp"
                 android:text="어떤 운동을 하시겠습니까?"
                 android:textColor="#3993de"
-                android:textSize="18sp"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_today" />
 
@@ -108,7 +109,7 @@
                 <ListView
                     android:id="@+id/list_plan"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="510dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="#1d1f21"
@@ -131,7 +132,7 @@
                 android:layout_marginTop="44dp"
                 android:text="플랜"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="36sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -186,7 +187,7 @@
                 <ListView
                     android:id="@+id/list_workout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="510dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="#1d1f21"
@@ -208,7 +209,7 @@
                 android:layout_marginTop="40dp"
                 android:text="일정"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="36sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

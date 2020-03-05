@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:id="@+id/icon_blue"
-                android:layout_width="96dp"
+                android:layout_width="110dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
@@ -46,7 +46,7 @@
                 android:gravity="center|left"
                 android:text="   관리자 번호 변경"
                 android:textColor="#FFFFFF"
-                android:textSize="24sp"
+                android:textSize="36sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
 
@@ -65,7 +65,7 @@
                 android:id="@+id/et_prevpw"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="80dp"
                 android:backgroundTint=" #33ffffff"
                 android:ems="10"
                 android:hint="기존 관리자 번호 입력"
@@ -73,7 +73,7 @@
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#00BB3636"
                 android:textColorHint="#33ffffff"
-                android:textSize="18sp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                 android:id="@+id/constraintLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="80dp"
                 app:layout_constraintEnd_toEndOf="@+id/et_pwconfirm"
                 app:layout_constraintStart_toStartOf="@+id/et_pwconfirm"
                 app:layout_constraintTop_toBottomOf="@+id/et_prevpw">
@@ -98,7 +98,7 @@
                     android:inputType="numberPassword"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#33ffffff"
-                    android:textSize="18sp"
+                    android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -123,14 +123,14 @@
                 android:id="@+id/et_pwconfirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="80dp"
                 android:backgroundTint=" #33ffffff"
                 android:ems="10"
                 android:hint="새로운 관리자 번호 확인"
                 android:inputType="numberPassword"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#33ffffff"
-                android:textSize="18sp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,10 +140,10 @@
                 android:id="@+id/password_reject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="36dp"
                 android:text="관리자 비밀번호가 틀립니다."
                 android:textColor="#8F1B1B"
-                android:textSize="14sp"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_pwconfirm" />
 
@@ -151,12 +151,13 @@
                 android:id="@+id/btn_set_admin_ok"
                 android:layout_width="0dp"
                 android:layout_height="90dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="180dp"
                 android:background="#3993de"
                 android:text="완료"
                 android:textColor="#ffffff"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_pwconfirm" />
         </androidx.constraintlayout.widget.ConstraintLayout>
