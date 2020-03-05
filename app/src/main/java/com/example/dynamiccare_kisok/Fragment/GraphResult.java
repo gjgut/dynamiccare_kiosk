@@ -44,6 +44,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     final int MSG_PROGRESS = 10;
 
+    Thread moveAction;
+
     public GraphResult(Main main) {
         super(main);
         main.PlaySound(
@@ -73,6 +75,19 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
         else
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+    }
+
+    public void moveBar(String direction) {
+        moveAction = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    main.getusbService().write(Commands.Position(direction).getBytes());
+                    Log.i("Sent Command", "Position");
+                }
+            }
+        });
+        moveAction.start();
     }
 
     public void setViews(View v) {
@@ -176,17 +191,22 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 if (v.getId() == R.id.btn_up) {
                     Up.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_up));
-                        main.getusbService().write(Commands.Position("U").getBytes());
+                    if (moveAction == null)
+                        moveBar("U");
                 } else {
                     Down.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_down));
-                        main.getusbService().write(Commands.Position("D").getBytes());
+                    if (moveAction == null)
+                        moveBar("D");
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (v.getId() == R.id.btn_up) {
                     Up.setImageDrawable(getResources().getDrawable(R.drawable.btn_up));
+                    moveAction.interrupt();
+                    Log.i("Sent Command", "stop");
                 } else {
                     Down.setImageDrawable(getResources().getDrawable(R.drawable.btn_down));
+                    moveAction.interrupt();
                 }
                 break;
         }
