@@ -62,8 +62,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     }
 
 
-    public void setPropertiesFocusable(boolean value)
-    {
+    public void setPropertiesFocusable(boolean value) {
         edt_time.getSource().setEnabled(value);
         edt_weight.getSource().setEnabled(value);
     }
@@ -133,7 +132,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         Down.setOnTouchListener(this);
 
         ready.getButton().setOnClickListener(this);
-//        go.getButton().setOnClickListener(this);
         go.getButton().setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -142,44 +140,16 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         go.setPressedwithNoSound();
                         break;
                     case MotionEvent.ACTION_UP:
-                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ASP014#"));
+//                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ASP014#"));
                         go.setPressed();
                         go.setPause();
                         if (!go.isPause()) {
                             main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
-                            main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
+                            main.getusbService().write(Commands.MeasureStart("300", "010").getBytes());
                             resCalculator = new ResCalculator();
-//                            handler.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    timer = new CountDownTimer(Integer.parseInt(main.getMeasureTime()) * 1000, 1000) {
-//                                        @Override
-//                                        public void onTick(long millisUntilFinished) {
-//                                        }
-//
-//                                        @Override
-//                                        public void onFinish() {
-//                                            ready.setPressed();
-//                                            go.setPressed();
-//                                            go.setPause();
-//                                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-//                                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-//                                            main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-//                                                    R.raw.stopping_measurement,
-//                                                    R.raw.thank_you_for_your_efforts,
-//                                                    R.raw.show_your_result,
-//                                                    R.raw.the_measurement_is_going_to_stop_english,
-//                                                    R.raw.thank_you_for_your_efforts_english,
-//                                                    R.raw.please_check_the_results_english,
-//                                                    R.raw.dynamic_care});
-//                                            setBottomBar(true);
-//                                        }
-//                                    };
-//                                    timer.start();
-//                                }
-//                            });
+
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
                         } else {
@@ -206,10 +176,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 if (v.getId() == R.id.btn_up) {
                     Up.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_up));
-                    main.getusbService().write(Commands.Position("U").getBytes());
+                        main.getusbService().write(Commands.Position("U").getBytes());
                 } else {
                     Down.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_down));
-                    main.getusbService().write(Commands.Position("D").getBytes());
+                        main.getusbService().write(Commands.Position("D").getBytes());
                 }
                 break;
             case MotionEvent.ACTION_UP:

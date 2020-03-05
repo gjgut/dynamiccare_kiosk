@@ -3,6 +3,7 @@ package com.example.dynamiccare_kisok.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,11 +75,6 @@ public class DetailResult extends DCfragment{
             max = (ProgressBar) v.findViewById(R.id.progressBar_max);
             min = (ProgressBar) v.findViewById(R.id.progressBar_min);
 
-//            start.setMax(value_start + 150000);
-//            average.setMax(value_start + 150000);
-//            max.setMax(value_start + 150000);
-//            min.setMax(value_start + 150000);
-
 
             uppertitle = v.findViewById(R.id.txt_detail_title);
             lowertitle = v.findViewById(R.id.txt_detail_cont_title);
@@ -88,16 +84,14 @@ public class DetailResult extends DCfragment{
             lowertitle.setText(main.getCurrentExcercise().getSimpleName() + " " + main.getCurrentExcercise().getMuscleName());
             body.setImageDrawable(main.getCurrentExcercise().getMappingBody());
 
+            Log.i("value_max",String.valueOf(value_max));
+
             Thread th_start =  new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    int value = 0;
-                    while (true) {
-                        value++;
-                        if (value >= value_start) {
-                            break;
-                        }
-                        final int value2 = value;
+                    for(int i=0;i>=value_start;i+=5)
+                    {
+                        final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
                             public void run() { // 화면에 변경하는 작업을 구현
@@ -115,13 +109,9 @@ public class DetailResult extends DCfragment{
             Thread th_max = new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    int value = 0;
-                    while (true) {
-                        value++;
-                        if (value >= value_max) {
-                            break;
-                        }
-                        final int value2 = value;
+                    for(int i=0;i>=value_max;i+=5)
+                    {
+                        final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
                             public void run() { // 화면에 변경하는 작업을 구현
@@ -139,13 +129,9 @@ public class DetailResult extends DCfragment{
             Thread th_min =  new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    int value = 0;
-                    while (true) {
-                        value++;
-                        if (value >= value_min) {
-                            break;
-                        }
-                        final int value2 = value;
+                    for(int i=0;i>=value_min;i+=5)
+                    {
+                        final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
                             public void run() { // 화면에 변경하는 작업을 구현
@@ -163,13 +149,9 @@ public class DetailResult extends DCfragment{
             Thread th_average =  new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    int value = 0;
-                    while (true) {
-                        value++;
-                        if (value >= value_average) {
-                            break;
-                        }
-                        final int value2 = value;
+                    for(int i=0;i>=value_average;i+=5)
+                    {
+                        final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
                             public void run() { // 화면에 변경하는 작업을 구현

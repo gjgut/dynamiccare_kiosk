@@ -101,13 +101,13 @@ public class SelectMode extends DCfragment {
                 case R.id.btn_sel_mes_isometric: {
                     main.setIsIsoTonic(false);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
-                    Commands.MeasureMode(false);
+                    main.getusbService().write(Commands.MeasureMode(false).getBytes());
                     break;
                 }
                 case R.id.btn_sel_mes_isotonic: {
                     main.setIsIsoTonic(true);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
-                    Commands.MeasureMode(true);
+                    main.getusbService().write(Commands.MeasureMode(true).getBytes());
                     break;
                 }
             }

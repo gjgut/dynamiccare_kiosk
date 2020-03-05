@@ -95,11 +95,6 @@ public class SelectWorkOut extends DCfragment {
             txt_today.setText(date_text);
             ListView plan, workout;
             ListViewAdapter adapter_plan, adapter_workout;
-//
-//            Workout workoutlist[] = {
-//                    new Workout(true, false, new Squat(main), 20, 20, 3),
-//                    new Workout(true, false, new Squat(main), 20, 20, 3),
-//            };
             JSONArray programlistArray=null;
             JSONArray workoutlistArray=null;
 

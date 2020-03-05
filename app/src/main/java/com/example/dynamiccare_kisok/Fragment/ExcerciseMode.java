@@ -158,11 +158,11 @@ public class ExcerciseMode extends DCfragment {
                             "000", String.valueOf(main.getMeasureTime()),
                             "1",
                             "0").getBytes());
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
-                }
-            }, 3000);
+//            handler.postDelayed(new Runnable() {
+//                public void run() {
+//                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+//                }
+//            }, 3000);
         } else {
             dcButtonManager.setDCState(DCButtonManager.State.Clear);
             main.setCurrentExcercise(null);
@@ -220,6 +220,8 @@ public class ExcerciseMode extends DCfragment {
                     rest_time.setText(String.valueOf(count));
                     if (count == 15)
                         main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
+                    else if(count<10)
+                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS0"+count+"#"));
                     count--;
                 }
 
@@ -242,8 +244,8 @@ public class ExcerciseMode extends DCfragment {
         DCButtonManager.setDCState(DCButtonManager.State.Excercise);
         main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
                 edt_weight.getSource().getText().toString(),
-                "3",
-                txt_set.getText().toString()).getBytes());
+                edt_count.getSource().getText().toString(),
+                edt_set.getSource().getText().toString()).getBytes());
     }
 
 
