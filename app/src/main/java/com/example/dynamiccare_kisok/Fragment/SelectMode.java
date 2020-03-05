@@ -72,7 +72,7 @@ public class SelectMode extends DCfragment {
                     DynamicCare care = (DynamicCare) main.getApplication();
                     JSONObject jsonObject = care.getCurrentUserJson();
                     JSONObject resultData = (JSONObject) jsonObject.get("resultData");
-                    if (resultData.get("programList") != null && resultData.get("privateList")!=null) {
+                    if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
                         loadPlandialog = new LoadPlan(main,
                                 new View.OnClickListener() {
                                     @Override
