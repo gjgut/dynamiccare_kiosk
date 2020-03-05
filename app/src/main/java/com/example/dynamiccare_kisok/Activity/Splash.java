@@ -14,10 +14,8 @@ public class Splash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
         DynamicCare care = (DynamicCare)getApplicationContext();
         care.initSounds();
-
         Handler hd = new Handler();
         hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
 
