@@ -145,6 +145,8 @@ public class ExcerciseMode extends DCfragment {
         spin_level.setEnabled(value);
     }
 
+
+
     public void setExcercise(DCButton button, Excercise excercise) {
         button.setPressed();
         if (button.IsPressed()) {

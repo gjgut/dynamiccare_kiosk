@@ -5,11 +5,14 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
+import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
@@ -34,6 +38,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     DCActionButton ready, go;
     ProgressBar power;
     ResCalculator resCalculator;
+    DCEditText edt_time, edt_weight;
 
     Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
 
@@ -57,6 +62,13 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     }
 
 
+    public void setPropertiesFocusable(boolean value)
+    {
+        edt_time.getSource().setEnabled(value);
+        edt_weight.getSource().setEnabled(value);
+    }
+
+
     public void setBottomBar(boolean isShow) {
         if (!isShow)
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
@@ -77,6 +89,40 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         go = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_start), getResources().getDrawable(R.drawable.pressed_btn_start));
 
         power = (ProgressBar) v.findViewById(R.id.progressBar_power);
+
+        edt_time = new DCEditText(v.findViewById(R.id.edt_time));
+        edt_weight = new DCEditText(v.findViewById(R.id.edt_weight));
+
+        edt_time.getSource().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
+
+            }
+        });
+        edt_weight.getSource().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
+            }
+        });
 
 
         Low.getButton().setOnClickListener(this);
@@ -149,36 +195,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 return false;
             }
         });
-
-
         go.Deactivate();
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() { // Thread 로 작업할 내용을 구현
-                int value = 0;
-                int add = 1;
-                while (true) {
-                    value = value + add;
-                    if (value >= 100) {
-                        break;
-                    }
-                    final int value2 = value;
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() { // 화면에 변경하는 작업을 구현
-                            power.setProgress(value2);
-                        }
-                    });
-
-                    try {
-                        Thread.sleep(50); // 시간지연
-                    } catch (InterruptedException e) {
-                    }
-                } // end of while
-            }
-        });
-//        t.start(); // 쓰레드 시작
 
 
     }
@@ -212,11 +229,14 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case R.id.btn_ready:
                 ready.setPressed();
                 if (ready.getButton().isPressed()) {
+                    setPropertiesFocusable(false);
                     main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
                     go.Activate();
-                } else
+                } else {
+                    setPropertiesFocusable(true);
                     main.getusbService().write("$CSP0#".getBytes());
+                }
                 break;
             case R.id.btn_low: {
                 Low.setPressed();

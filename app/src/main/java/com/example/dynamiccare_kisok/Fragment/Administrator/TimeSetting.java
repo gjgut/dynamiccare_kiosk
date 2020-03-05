@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.example.dynamiccare_kisok.R;
 public class TimeSetting extends DCfragment {
     DCButton btn_minutes, btn_hour;
     EditText edt_adminpw;
+    TextView reject;
     Button btn_ok;
     DynamicCare care;
 
@@ -43,8 +46,10 @@ public class TimeSetting extends DCfragment {
         switch (v.getId()) {
 
             case R.id.btn_ok:
-                if(edt_adminpw.getText().toString().equals(care.getAdminPassword()))
+                if (edt_adminpw.getText().toString().equals(care.getAdminPassword()))
                     main.ReplaceFragment(new SelectMode(main));
+                else
+                    reject.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_minutes:
                 btn_minutes.setPressed();
@@ -73,11 +78,32 @@ public class TimeSetting extends DCfragment {
             btn_ok = view.findViewById(R.id.btn_ok);
             edt_adminpw = view.findViewById(R.id.et_adminpw);
 
+            edt_adminpw.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    reject.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
             btn_minutes.getButton().setOnClickListener(this);
             btn_hour.getButton().setOnClickListener(this);
             btn_ok.setOnClickListener(this);
 
-             care = (DynamicCare)main.getApplication();
+            reject = view.findViewById(R.id.password_reject);
+            reject.setVisibility(View.INVISIBLE);
+
+
+            care = (DynamicCare) main.getApplication();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -67,21 +67,26 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     Handler handler;
     int count;
     CountDownTimer countDownTimer;
+    DynamicCare care;
+
+    public DynamicCare getCare() {
+        return care;
+    }
 
     public String getMeasureTime() {
-        return String.valueOf(MeasureTime);
+        return care.getMeasureTime();
     }
 
     public void setMeasureTime(int measureTime) {
-        MeasureTime = measureTime;
+        care.setMeasureWeight(String.valueOf(measureTime));
     }
 
     public String getMeasureWeight() {
-        return String.valueOf(MeasureWeight);
+        return care.getMeasureWeight();
     }
 
     public void setMeasureWeight(int measureWeight) {
-        MeasureWeight = measureWeight;
+        care.setMeasureWeight(String.valueOf(measureWeight));
     }
 
     public static UsbService getusbService() {
@@ -425,7 +430,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         ackListener = new ACKListener(this);
         handler = new Handler();
 
-        DynamicCare care = (DynamicCare) getApplicationContext();
+        care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
         count = care.getLimit();
         countDownTimer = new CountDownTimer(count * 1000, 1000) {

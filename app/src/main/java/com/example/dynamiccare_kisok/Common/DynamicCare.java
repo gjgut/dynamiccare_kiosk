@@ -18,10 +18,24 @@ public class DynamicCare extends Application {
     public String getAdminPassword() {
         return Admin.getString("password","");
     }
+    public String getMeasureTime(){return Admin.getString("mTime","");}
+    public String getMeasureWeight(){return Admin.getString("mWeight","");}
 
     public void setAdminPassword(String password) {
         SharedPreferences.Editor editor = Admin.edit();
         editor.putString("password",password);
+
+        editor.commit();
+    }
+    public void setMeasureTime(String time) {
+        SharedPreferences.Editor editor = Admin.edit();
+        editor.putString("mTime",time);
+
+        editor.commit();
+    }
+    public void setMeasureWeight(String weight) {
+        SharedPreferences.Editor editor = Admin.edit();
+        editor.putString("mWeight",weight);
 
         editor.commit();
     }

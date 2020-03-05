@@ -1,10 +1,13 @@
 package com.example.dynamiccare_kisok.Fragment.Administrator;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +22,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class LimitOff extends DCfragment {
     DCEditText edt_adminpw;
+    TextView reject;
     Button limit_off;
     DynamicCare care;
 
@@ -36,6 +40,8 @@ public class LimitOff extends DCfragment {
             case R.id.btn_limit_deactivate:
                 if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword().toString()))
                     admin.ReplaceFragment(new Authentification(admin), false);
+                else
+                    reject.setVisibility(View.VISIBLE);
         }
 
     }
@@ -52,6 +58,26 @@ public class LimitOff extends DCfragment {
             limit_off = view.findViewById(R.id.btn_limit_deactivate);
 
             limit_off.setOnClickListener(this);
+
+            reject = view.findViewById(R.id.password_reject);
+            reject.setVisibility(View.INVISIBLE);
+
+            edt_adminpw.getSource().addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    reject.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();

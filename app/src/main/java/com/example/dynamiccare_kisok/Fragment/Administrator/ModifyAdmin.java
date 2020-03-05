@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Login;
@@ -30,6 +33,7 @@ public class ModifyAdmin extends DCfragment {
     ImageButton back, newpwvisible;
     Button ok;
     DCEditText prev, New, correct;
+    TextView reject;
     boolean isVisible;
 
     public ModifyAdmin() {
@@ -76,6 +80,16 @@ public class ModifyAdmin extends DCfragment {
                     if (New.getSource().getText().toString().equals(correct.getSource().getText().toString()))
                         admin.ReplaceFragment(new Authentification(admin), false);
                 }
+                else if(!New.getSource().getText().toString().equals(correct.getSource().getText().toString()))
+                {
+                    reject.setVisibility(View.VISIBLE);
+                    reject.setText("새로운 비밀번호를 다시 입력해주십시오.");
+                }
+                else if(!prev.getSource().getText().toString().equals(care.getAdminPassword()))
+                {
+                    reject.setVisibility(View.VISIBLE);
+                    reject.setText("관리자 비밀번호가 틀립니다.");
+                }
                 break;
             case R.id.btn_newpw_visible:
                 if (isVisible) {
@@ -109,6 +123,59 @@ public class ModifyAdmin extends DCfragment {
             prev = new DCEditText(view.findViewById(R.id.et_prevpw));
             New = new DCEditText(view.findViewById(R.id.et_newpw));
             correct = new DCEditText(view.findViewById(R.id.et_pwconfirm));
+
+
+            reject = view.findViewById(R.id.password_reject);
+            reject.setVisibility(View.INVISIBLE);
+
+            prev.getSource().addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    reject.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            New.getSource().addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    reject.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            correct.getSource().addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    reject.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
             ok.setOnClickListener(this);
             newpwvisible.setOnClickListener(this);

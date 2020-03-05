@@ -28,7 +28,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class Administrator extends AppCompatActivity implements View.OnClickListener {
     DCfragment currentFragment;
-    ImageButton btn_back, btn_next;
+    ImageButton btn_back;
     FragmentManager fragmentManager;
     DCSoundThread dcSoundThread;
     DCSoundPlayer dcSoundPlayer;
@@ -45,13 +45,11 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
         DynamicCare care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
 
-//        dcSoundThread = new DCSoundThread(this);
+        dcSoundThread = new DCSoundThread(this);
 
         btn_back = findViewById(R.id.btn_back);
-        btn_next = findViewById(R.id.btn_next);
 
         btn_back.setOnClickListener(this);
-        btn_next.setOnClickListener(this);
 
         ReplaceFragment(new Authentification(this),true);
 
@@ -59,10 +57,13 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        dcSoundPlayer.play(R.raw.back_button);
         switch (v.getId()) {
             case R.id.btn_back: {
                 if (currentFragment.getBackFragment()!=null)
+                {
                     ReplaceFragment(currentFragment.getBackFragment(), false);
+                }
                 else {
                     startActivity(new Intent(this, Login.class));
                     finish();

@@ -136,6 +136,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
+            <TextView
+                android:id="@+id/password_reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="관리자 비밀번호가 틀립니다."
+                android:textColor="#8F1B1B"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_pwconfirm" />
+
             <Button
                 android:id="@+id/btn_set_admin_ok"
                 android:layout_width="0dp"

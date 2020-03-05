@@ -1,18 +1,24 @@
 package com.example.dynamiccare_kisok.Common.Util;
 
+import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.R;
 
 public class DCSoundThread {
     Thread soundstream;
+    Administrator admin;
     Main main;
 
     public DCSoundThread(Main main) {
         this.main = main;
     }
+    public DCSoundThread(Administrator admin) {
+        this.admin = admin;
+    }
 
     public void stopstream()
     {
+        if (soundstream != null)
         soundstream.interrupt();
     }
 
