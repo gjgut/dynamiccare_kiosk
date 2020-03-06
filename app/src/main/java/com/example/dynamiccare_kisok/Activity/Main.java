@@ -41,7 +41,8 @@ import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
-import com.example.dynamiccare_kisok.Dialog.ExcerciseFinish;
+import com.example.dynamiccare_kisok.Dialog.ExcerciseFinished;
+import com.example.dynamiccare_kisok.Dialog.FinishAlert;
 import com.example.dynamiccare_kisok.Dialog.LoadPlan;
 import com.example.dynamiccare_kisok.Fragment.Administrator.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
@@ -54,7 +55,7 @@ import java.lang.ref.WeakReference;
 import java.util.Set;
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
-    ExcerciseFinish excerciseFinish;
+    FinishAlert FinishAlert;
     Main main;
     DCfragment currentFragment;
     ImageButton btn_back, btn_next;
@@ -75,8 +76,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     CountDownTimer countDownTimer;
     DynamicCare care;
 
-    public DCSoundPlayer getDcSoundPlayer()
-    {
+    public DCSoundPlayer getDcSoundPlayer() {
         return dcSoundPlayer;
     }
 
@@ -118,25 +118,39 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void setTimer(int time) {
         countDownTimer.cancel();
+        count = time;
+        BottomRestTime.setTextColor(Color.WHITE);
         countDownTimer = new CountDownTimer(time * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (count == 30) {
-                    excerciseFinish.show();
+                    FinishAlert.show();
                     BottomRestTime.setTextColor(Color.RED);
 
                 }
-                BottomRestTime.setText("00:" + String.valueOf(count));
+                if (count < 10) {
+                    BottomRestTime.setText("00:0" + String.valueOf(count));
+                } else
+                    BottomRestTime.setText("0"+String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
                 count--;
             }
 
             @Override
             public void onFinish() {
                 getusbService().write("$CHM08".getBytes());
-                Intent intent = new Intent(main, Login.class);
-                startActivity(intent);
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                finish();
+                ExcerciseFinished finished = new ExcerciseFinished(main,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        },
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
+                finished.show();
             }
         };
         countDownTimer.start();
@@ -472,7 +486,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         dcSoundPlayer = care.getDcSoundPlayer();
         count = care.getLimit();
 
-        excerciseFinish = new ExcerciseFinish(this,
+        FinishAlert = new FinishAlert(this,
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -490,7 +504,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 count--;
 
                 if (count == 30) {
-                    excerciseFinish.show();
+                    FinishAlert.show();
                     BottomRestTime.setTextColor(Color.RED);
 
                 }
@@ -503,7 +517,18 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(main, Login.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                finish();
+                ExcerciseFinished finished = new ExcerciseFinished(main,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        },
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
+                finished.show();
             }
         };
         countDownTimer.start();
@@ -531,10 +556,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_back: {
                 PlaySound(R.raw.back_button);
-                if(currentFragment.getClass().getSimpleName()=="Explain")
+                if (currentFragment.getClass().getSimpleName() == "Explain")
                     main.getusbService().write(Commands.Home(true).getBytes());
-                if(currentFragment.getClass().getSimpleName().equals("SelectMode"))
-                {
+                if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
                     Intent intent = new Intent(main, Login.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.left_in, R.anim.right_out);
