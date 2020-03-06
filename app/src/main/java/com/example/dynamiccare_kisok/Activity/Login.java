@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
+import com.example.dynamiccare_kisok.Common.Util.DCHttp;
 import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
 import com.example.dynamiccare_kisok.Fragment.Administrator.Authentification;
 import com.example.dynamiccare_kisok.R;
@@ -62,17 +63,18 @@ public class Login extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         JSONObject response = Httplogin(edt_code.getSource().getText().toString());
-                        if ((Boolean) response.get("isPresent") != false && (Boolean) response.get("isError") != true) {
-                            DynamicCare care = (DynamicCare) getApplication();
-                            care.setCurrentUserJson(response);
+//                        if ((Boolean) response.get("isPresent") != false && (Boolean) response.get("isError") != true) {
+//                            DynamicCare care = (DynamicCare) getApplication();
+//                            care.setCurrentUserJson(response);
                             startActivity(new Intent(getApplicationContext(), Main.class));
                             overridePendingTransition(R.anim.right_in, R.anim.left_out);
                             finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
-                        }
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+//                        }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -87,7 +89,7 @@ public class Login extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("uid", code);
             String json = jsonObject.toString();
-            return new HttpUtil().execute(json).get();
+            return new DCHttp().Login(json);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Common.Component;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ public abstract class DCfragment extends Fragment implements View.OnClickListene
     public abstract DCfragment getNextFragment();
     public abstract String getTitle();
     public abstract int isHomeVisible();
+
     @Override
     public void onDestroy()
     {

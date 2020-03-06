@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -40,16 +41,21 @@ import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
+import com.example.dynamiccare_kisok.Dialog.ExcerciseFinish;
+import com.example.dynamiccare_kisok.Dialog.LoadPlan;
 import com.example.dynamiccare_kisok.Fragment.Administrator.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
 import com.example.dynamiccare_kisok.Fragment.SelectMode;
+import com.example.dynamiccare_kisok.Fragment.SelectWorkOut;
 import com.example.dynamiccare_kisok.R;
 
 import java.lang.ref.WeakReference;
 import java.util.Set;
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
+    ExcerciseFinish excerciseFinish;
+    Main main;
     DCfragment currentFragment;
     ImageButton btn_back, btn_next;
     TextView BottomRestTime;
@@ -103,6 +109,32 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void PlaySound(int[] stream) {
         dcSoundThread.playstream(stream);
+    }
+
+    public void setTimer(int time) {
+        countDownTimer.cancel();
+        countDownTimer = new CountDownTimer(time * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (count == 30) {
+                    excerciseFinish.show();
+                    BottomRestTime.setTextColor(Color.RED);
+
+                }
+                BottomRestTime.setText("00:" + String.valueOf(count));
+                count--;
+            }
+
+            @Override
+            public void onFinish() {
+                getusbService().write("$CHM08".getBytes());
+                Intent intent = new Intent(main, Login.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                finish();
+            }
+        };
+        countDownTimer.start();
     }
 
     public void HandleACK(ACK ack) {
@@ -344,11 +376,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     break;
             }
             currentFragment.HandleACK(ack);
-            Log.i("Main-Broadcasted",ack.getCommandCode());
+            Log.i("Main-Broadcasted", ack.getCommandCode());
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("Main-Broadcasted",ack.getCommandCode()+e.toString());
-            Toast.makeText(this, "ACK:" +ack.getCommandCode()+ e.toString(), Toast.LENGTH_SHORT).show();
+            Log.i("Main-Broadcasted", ack.getCommandCode() + e.toString());
+            Toast.makeText(this, "ACK:" + ack.getCommandCode() + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -426,6 +458,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        main = this;
 
         ackListener = new ACKListener(this);
         handler = new Handler();
@@ -433,16 +466,38 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
         count = care.getLimit();
+
+        excerciseFinish = new ExcerciseFinish(this,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         countDownTimer = new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 BottomRestTime.setText("00:" + String.valueOf(count));
                 count--;
+
+                if (count == 30) {
+                    excerciseFinish.show();
+                    BottomRestTime.setTextColor(Color.RED);
+
+                }
+
             }
 
             @Override
             public void onFinish() {
-                HandleACK(ACKListener.ACKParser.ParseACK("$CHM08#"));
+                getusbService().write("$CHM08".getBytes());
+                Intent intent = new Intent(main, Login.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 finish();
             }
         };
@@ -459,7 +514,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
 
-        if (care.getLimit()!=0)
+        if (care.getLimit() != 0)
             ReplaceFragment(new TimeSetting(this));
         else
             ReplaceFragment(new SelectMode(this));
@@ -489,20 +544,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             currentFragment = fragment;
 
-            if (fragment.getClass() != SelectMode.class && fragment.getClass() != TimeSetting.class) {
+            if (fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
             } else {
                 bottombar.setVisibility(View.INVISIBLE);
             }
 
-            if (isRight && fragment.getClass() != SelectMode.class) {
+            if (isRight) {
                 bottombar.setVisibility(View.VISIBLE);
                 fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-            } else if (!isRight && fragment.getClass() != SelectMode.class) {
+            } else if (!isRight) {
                 bottombar.setVisibility(View.VISIBLE);
-                fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-            } else {
-                bottombar.setVisibility(View.INVISIBLE);
                 fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
             }
 
@@ -513,6 +565,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 btn_next.setVisibility(View.VISIBLE);
 
             switch (fragment.getClass().getSimpleName()) {
+                case "SelectMode":
+                    btn_next.setVisibility(View.INVISIBLE);
+                    break;
                 case "Explain": {
                     btn_next.setVisibility(View.INVISIBLE);
                     btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
@@ -544,7 +599,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             currentFragment = fragment;
 
-            if (fragment.getClass() != SelectMode.class && fragment.getClass() != TimeSetting.class) {
+            if (fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
             } else {
                 bottombar.setVisibility(View.INVISIBLE);
@@ -598,11 +653,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         dcSoundThread.stopstream();
     }
+
     private void setFilters() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);

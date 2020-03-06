@@ -447,11 +447,15 @@ public class ExcerciseMode extends DCfragment {
         }
     }
 
+
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
-        if (timer != null)
-            timer.cancel();
+
+        main.getusbService().write(Commands.Home(true).getBytes());
+        Log.i("Command","CHM08");
+
     }
 
     @Override

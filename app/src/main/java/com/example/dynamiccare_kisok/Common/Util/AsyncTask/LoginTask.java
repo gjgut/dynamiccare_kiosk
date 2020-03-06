@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Common.Util;
+package com.example.dynamiccare_kisok.Common.Util.AsyncTask;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,12 +13,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpUtil extends AsyncTask<String, Void, JSONObject> {
+public class LoginTask extends AsyncTask<String, Void, JSONObject> {
     @Override
     public JSONObject doInBackground(String... params) {
         JSONObject result=null;
         try {
-            String url = params[0];
+            String url = "http://www.powerlogmobile.com/kiosk/uidlogin";
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 
@@ -29,7 +29,7 @@ public class HttpUtil extends AsyncTask<String, Void, JSONObject> {
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-Type","application/json");
 
-            byte[] outputInBytes = params[1].getBytes("UTF-8");
+            byte[] outputInBytes = params[0].getBytes("UTF-8");
             OutputStream os = conn.getOutputStream();
             os.write( outputInBytes );
             os.close();

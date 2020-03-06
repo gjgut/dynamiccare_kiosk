@@ -39,29 +39,35 @@ public class SelectMode extends DCfragment {
 
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
+                    try {
                     DynamicCare care = (DynamicCare) main.getApplication();
                     JSONObject jsonObject = care.getCurrentUserJson();
                     JSONObject resultData = (JSONObject) jsonObject.get("resultData");
-                    if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
-                        loadPlandialog = new LoadPlan(main,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        loadPlandialog.dismiss();
-                                        ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
-                                    }
-                                },
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        main.setisIsoKinetic(false);
-                                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                        Commands.ExcerciseMode(false);
-                                        loadPlandialog.dismiss();
-                                    }
-                                });
-                        loadPlandialog.show();
-                    } else {
+                        if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
+                            loadPlandialog = new LoadPlan(main,
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            loadPlandialog.dismiss();
+                                            ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                                        }
+                                    },
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            main.setisIsoKinetic(false);
+                                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                                            Commands.ExcerciseMode(false);
+                                            loadPlandialog.dismiss();
+                                        }
+                                    });
+                            loadPlandialog.show();
+                        } else {
+                            main.setisIsoKinetic(false);
+                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                            Commands.ExcerciseMode(false);
+                        }
+                    } catch (NullPointerException e) {
                         main.setisIsoKinetic(false);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                         Commands.ExcerciseMode(false);
@@ -69,29 +75,35 @@ public class SelectMode extends DCfragment {
                     break;
                 }
                 case R.id.btn_select_exec_isokinetic: {
+                    try {
                     DynamicCare care = (DynamicCare) main.getApplication();
                     JSONObject jsonObject = care.getCurrentUserJson();
                     JSONObject resultData = (JSONObject) jsonObject.get("resultData");
-                    if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
-                        loadPlandialog = new LoadPlan(main,
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        loadPlandialog.dismiss();
-                                        ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
-                                    }
-                                },
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        main.setisIsoKinetic(true);
-                                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                        Commands.ExcerciseMode(false);
-                                        loadPlandialog.dismiss();
-                                    }
-                                });
-                        loadPlandialog.show();
-                    } else {
+                        if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
+                            loadPlandialog = new LoadPlan(main,
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            loadPlandialog.dismiss();
+                                            ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                                        }
+                                    },
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            main.setisIsoKinetic(true);
+                                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                                            Commands.ExcerciseMode(false);
+                                            loadPlandialog.dismiss();
+                                        }
+                                    });
+                            loadPlandialog.show();
+                        } else {
+                            main.setisIsoKinetic(true);
+                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                            Commands.ExcerciseMode(false);
+                        }
+                    } catch (NullPointerException e) {
                         main.setisIsoKinetic(true);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
                         Commands.ExcerciseMode(false);

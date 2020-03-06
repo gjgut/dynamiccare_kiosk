@@ -29,6 +29,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
+import com.example.dynamiccare_kisok.Common.Util.DCRepeatListener;
 import com.example.dynamiccare_kisok.R;
 
 public class GraphResult extends DCfragment implements View.OnTouchListener {
@@ -144,6 +145,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         High.getButton().setOnClickListener(this);
 
         Up.setOnTouchListener(this);
+
         Down.setOnTouchListener(this);
 
         ready.getButton().setOnClickListener(this);
@@ -191,22 +193,45 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 if (v.getId() == R.id.btn_up) {
                     Up.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_up));
-                    if (moveAction == null)
-                        moveBar("U");
+                    timer = new CountDownTimer(1000000,1) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            main.getusbService().write(Commands.Position("U").getBytes());
+                            Log.i("Position","U");
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+                    };
+                    timer.start();
                 } else {
                     Down.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_down));
-                    if (moveAction == null)
-                        moveBar("D");
+                    timer = new CountDownTimer(1000000,1) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            main.getusbService().write(Commands.Position("D").getBytes());
+                            Log.i("Position","D");
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+                    };
+                    timer.start();
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 if (v.getId() == R.id.btn_up) {
                     Up.setImageDrawable(getResources().getDrawable(R.drawable.btn_up));
-                    moveAction.interrupt();
+                    timer.cancel();
                     Log.i("Sent Command", "stop");
                 } else {
                     Down.setImageDrawable(getResources().getDrawable(R.drawable.btn_down));
-                    moveAction.interrupt();
+                    timer.cancel();
+                    Log.i("Sent Command", "stop");
                 }
                 break;
         }
@@ -272,9 +297,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             Log.i("ParseACK", ack.getCommandCode());
             switch (ack.getCommandCode()) {
                 case "AME":
-                    if (Integer.parseInt(ack.getTime()) % 120 == 0 && Integer.parseInt(ack.getTime()) > 1000) {
+                    if (Integer.parseInt(ack.getTime()) > 1000) {
                         resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
-                        power.setMax(resCalculator.getStart() + 300000);
                         power.setProgress(Integer.parseInt(ack.getmTension()));
                     } else if (ack.getTime().equals(Integer.valueOf(main.getMeasureTime()) * 1000)) {
                         Log.i("Measure ended:", "");
@@ -347,7 +371,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
         public void putNumber(int entry) {
             count++;
-            start = start == -1 ? entry : 0;
+            if(start == -1)
+                start = min = entry;
             sum += entry;
             average = sum / count;
             if (entry > max)
@@ -371,6 +396,16 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         public int getMin() {
             return min;
         }
+
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+
+        main.getusbService().write("$CHM08#".getBytes());
+        Log.i("Command","CHM08");
 
     }
 }

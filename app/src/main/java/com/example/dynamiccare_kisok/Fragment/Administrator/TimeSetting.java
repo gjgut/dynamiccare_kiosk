@@ -46,8 +46,10 @@ public class TimeSetting extends DCfragment {
         switch (v.getId()) {
 
             case R.id.btn_ok:
-                if (edt_adminpw.getText().toString().equals(care.getAdminPassword()))
+                if (edt_adminpw.getText().toString().equals(care.getAdminPassword())) {
                     main.ReplaceFragment(new SelectMode(main));
+                    main.setTimer(care.getLimit());
+                }
                 else
                     reject.setVisibility(View.VISIBLE);
                 break;

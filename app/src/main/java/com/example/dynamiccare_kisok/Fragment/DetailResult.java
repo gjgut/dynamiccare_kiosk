@@ -65,10 +65,17 @@ public class DetailResult extends DCfragment{
             txt_min = (TextView) v.findViewById(R.id.txt_min);
             txt_average = (TextView) v.findViewById(R.id.txt_average);
 
+
+
             txt_start.setText(value_start/1000 + "kg");
             txt_max.setText(value_max/1000 + "kg");
             txt_min.setText(value_min/1000 + "kg");
             txt_average.setText(value_average/1000 + "kg");
+
+            Log.i("Value_start",String.valueOf(value_start));
+            Log.i("Value_max",String.valueOf(value_max));
+            Log.i("Value_min",String.valueOf(value_min));
+            Log.i("Value_average",String.valueOf(value_average));
 
             start = (ProgressBar) v.findViewById(R.id.progressBar_start);
             average = (ProgressBar) v.findViewById(R.id.progressBar_average);
@@ -89,7 +96,7 @@ public class DetailResult extends DCfragment{
             Thread th_start =  new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i>=value_start;i+=5)
+                    for(int i=0;i<=value_start;i+=5000)
                     {
                         final int value2 = i;
                         handler.post(new Runnable() {
@@ -98,6 +105,8 @@ public class DetailResult extends DCfragment{
                                 start.setProgress(value2);
                             }
                         });
+
+                        Log.i("start_i",String.valueOf(i));
 
                         try {
                             Thread.sleep(50); // 시간지연
@@ -109,7 +118,7 @@ public class DetailResult extends DCfragment{
             Thread th_max = new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i>=value_max;i+=5)
+                    for(int i=0;i<=value_max;i+=5000)
                     {
                         final int value2 = i;
                         handler.post(new Runnable() {
@@ -118,6 +127,7 @@ public class DetailResult extends DCfragment{
                                 max.setProgress(value2);
                             }
                         });
+                        Log.i("max_i",String.valueOf(i));
 
                         try {
                             Thread.sleep(50); // 시간지연
@@ -129,7 +139,7 @@ public class DetailResult extends DCfragment{
             Thread th_min =  new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i>=value_min;i+=5)
+                    for(int i=0;i<=value_min;i+=5000)
                     {
                         final int value2 = i;
                         handler.post(new Runnable() {
@@ -139,6 +149,7 @@ public class DetailResult extends DCfragment{
                             }
                         });
 
+                        Log.i("min_i",String.valueOf(i));
                         try {
                             Thread.sleep(50); // 시간지연
                         } catch (InterruptedException e) {
@@ -149,7 +160,7 @@ public class DetailResult extends DCfragment{
             Thread th_average =  new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i>=value_average;i+=5)
+                    for(int i=0;i<=value_average;i+=5000)
                     {
                         final int value2 = i;
                         handler.post(new Runnable() {
@@ -159,6 +170,7 @@ public class DetailResult extends DCfragment{
                             }
                         });
 
+                        Log.i("average_i",String.valueOf(i));
                         try {
                             Thread.sleep(50); // 시간지연
                         } catch (InterruptedException e) {
