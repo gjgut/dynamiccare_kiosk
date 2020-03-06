@@ -78,7 +78,7 @@ public class Commands {
          return getFullCommand(true,"CSE"+TrimParameter(Mode,"00")+
             TrimParameter(iTension,"000")+
             TrimParameter(tTension,"000")+
-            TrimParameter(time,"000")+TrimParameter(man,"1")+TrimParameter(old,"0"));}
+            TrimParameter(time,"000")+TrimParameter(man,"2")+TrimParameter(old,"0"));}
     public static String MeasureReady(String max, String time){ return getFullCommand(true,"CRY"+TrimParameter(max,"005")+TrimParameter(time,"005"));}
     public static String MeasureStart(String max, String time){
 

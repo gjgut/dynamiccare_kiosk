@@ -1,19 +1,24 @@
 package com.example.dynamiccare_kisok.Common.Util;
 
+import android.util.Log;
+
 import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.R;
 
 public class DCSoundThread {
     Thread soundstream;
+    DCSoundPlayer dcSoundPlayer;
     Administrator admin;
     Main main;
 
     public DCSoundThread(Main main) {
         this.main = main;
+        dcSoundPlayer = main.getDcSoundPlayer();
     }
     public DCSoundThread(Administrator admin) {
         this.admin = admin;
+        dcSoundPlayer = main.getDcSoundPlayer();
     }
 
     public void stopstream()
@@ -25,13 +30,16 @@ public class DCSoundThread {
     public void playstream(int[] stream) {
         try {
             if (soundstream != null)
+            {
                 soundstream.interrupt();
+                Log.i("Sound","Sound interrupted");
+            }
             soundstream = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         for (int i : stream) {
-                            main.PlaySound(i);
+                            dcSoundPlayer.play(i);
                             Thread.sleep(getSleeptime(i));
                         }
                     } catch (Exception e) {

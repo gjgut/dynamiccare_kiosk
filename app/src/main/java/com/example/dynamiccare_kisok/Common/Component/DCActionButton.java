@@ -19,6 +19,7 @@ public class DCActionButton {
         return isPause;
     }
 
+
     public void setPause() {
         isPause = !isPause;
     }

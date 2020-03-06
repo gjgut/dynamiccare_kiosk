@@ -75,6 +75,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     CountDownTimer countDownTimer;
     DynamicCare care;
 
+    public DCSoundPlayer getDcSoundPlayer()
+    {
+        return dcSoundPlayer;
+    }
+
     public DynamicCare getCare() {
         return care;
     }
@@ -84,7 +89,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void setMeasureTime(int measureTime) {
-        care.setMeasureWeight(String.valueOf(measureTime));
+        care.setMeasureTime(String.valueOf(measureTime));
     }
 
     public String getMeasureWeight() {
@@ -104,7 +109,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void PlaySound(int soundId) {
-        dcSoundPlayer.play(soundId);
+        dcSoundPlayer.playwithNoInterrept(soundId);
     }
 
     public void PlaySound(int[] stream) {
@@ -526,6 +531,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_back: {
                 PlaySound(R.raw.back_button);
+                if(currentFragment.getClass().getSimpleName()=="Explain")
+                    main.getusbService().write(Commands.Home(true).getBytes());
+                if(currentFragment.getClass().getSimpleName().equals("SelectMode"))
+                {
+                    Intent intent = new Intent(main, Login.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    finish();
+                }
                 ReplaceFragment(currentFragment.getBackFragment(), false);
                 break;
             }
@@ -588,7 +602,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             fragmentTransaction.replace(R.id.main_container, fragment);
             fragmentTransaction.commit();
         } catch (Exception e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -608,16 +622,19 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             customActionBar.setHome(fragment.isHomeVisible());
             customActionBar.setTitle(fragment.getTitle());
 
-            if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
+            if (currentFragment.getClass() == ExcerciseMode.class
+                    || currentFragment.getClass() == DetailResult.class
+                    || currentFragment.getClass() == SelectMode.class)
                 btn_next.setVisibility(View.INVISIBLE);
             else
                 btn_next.setVisibility(View.VISIBLE);
+
 
             fragmentTransaction.replace(R.id.main_container, fragment);
             fragmentTransaction.commit();
 
         } catch (Exception e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
     }
 

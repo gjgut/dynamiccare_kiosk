@@ -108,34 +108,23 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         edt_time = new DCEditText(v.findViewById(R.id.edt_time));
         edt_weight = new DCEditText(v.findViewById(R.id.edt_weight));
 
-        edt_time.getSource().addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        edt_time.getSource().setText(main.getMeasureTime());
+        edt_weight.getSource().setText(main.getMeasureWeight());
 
+        edt_time.getSource().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
 
             }
         });
-        edt_weight.getSource().addTextChangedListener(new TextWatcher() {
+        edt_weight.getSource().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
             }
         });
 
@@ -157,10 +146,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         go.setPressedwithNoSound();
                         break;
                     case MotionEvent.ACTION_UP:
-//                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ASP014#"));
                         go.setPressed();
                         go.setPause();
                         if (!go.isPause()) {
+                            DCButtonManager.setDCState(DCButtonManager.State.Excercise);
                             main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
@@ -170,9 +159,11 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
                         } else {
+                            DCButtonManager.setDCState(DCButtonManager.State.Clear);
                             if (timer != null)
                                 timer.cancel();
-                            main.getusbService().write("$CSP0#".getBytes());
+                            main.getusbService().write(Commands.Home(true).getBytes());
+                            main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop,R.raw.thank_you_for_your_efforts,R.raw.excercise_is_going_to_stop_english,R.raw.thank_you_for_your_efforts_english});
 
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
@@ -243,14 +234,16 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         switch (v.getId()) {
             case R.id.btn_ready:
                 ready.setPressed();
-                if (ready.getButton().isPressed()) {
+                if (ready.IsPressed()) {
                     setPropertiesFocusable(false);
                     main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                     main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
                     go.Activate();
                 } else {
                     setPropertiesFocusable(true);
-                    main.getusbService().write("$CSP0#".getBytes());
+                    main.getusbService().write(Commands.Home(true).getBytes());
+                    main.PlaySound(new int[]{R.raw.stopping_measurement,R.raw.thank_you_for_your_efforts,R.raw.the_measurement_is_going_to_stop_english,R.raw.thank_you_for_your_efforts_english});
+                    go.Deactivate();
                 }
                 break;
             case R.id.btn_low: {
@@ -300,25 +293,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     if (Integer.parseInt(ack.getTime()) > 1000) {
                         resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
                         power.setProgress(Integer.parseInt(ack.getmTension()));
-                    } else if (ack.getTime().equals(Integer.valueOf(main.getMeasureTime()) * 1000)) {
-                        Log.i("Measure ended:", "");
-                        ready.setPressed();
-                        go.setPressed();
-                        go.setPause();
-                        go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-                        go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-                        main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-                                R.raw.stopping_measurement,
-                                R.raw.thank_you_for_your_efforts,
-                                R.raw.show_your_result,
-                                R.raw.the_measurement_is_going_to_stop_english,
-                                R.raw.thank_you_for_your_efforts_english,
-                                R.raw.please_check_the_results_english,
-                                R.raw.dynamic_care});
-                        setBottomBar(true);
                     }
-                    break;
                 case "ASP":
+                    if(DCButtonManager.getDCState()== DCButtonManager.State.Clear)
+                        break;
                     Log.i("Measure ended:", "");
                     ready.setPressed();
                     go.setPressed();

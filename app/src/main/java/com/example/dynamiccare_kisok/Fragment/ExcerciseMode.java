@@ -155,8 +155,9 @@ public class ExcerciseMode extends DCfragment {
             Main.getusbService().write(
                     Commands.MeasureSet(excercise.getMode(),
                             String.valueOf(main.getMeasureWeight()),
-                            "000", String.valueOf(main.getMeasureTime()),
-                            "1",
+                            "000",
+                            String.valueOf(main.getMeasureTime()),
+                            "2",
                             "0").getBytes());
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
@@ -318,13 +319,20 @@ public class ExcerciseMode extends DCfragment {
             DCButton.setBody(Body);
 
             List<String> data = new ArrayList<String>();
+            data.add("1(2cm/sec)");
+            data.add("2(3cm/sec)");
+            data.add("3(4.5cm/sec)");
+            data.add("4(6cm/sec)");
+            data.add("5(8.5cm/sec)");
+
+            List<String> number = new ArrayList<String>();
             data.add("1");
             data.add("2");
             data.add("3");
             data.add("4");
             data.add("5");
 
-            spinnerAdapter spinnerAdapter = new spinnerAdapter(main, data);
+            spinnerAdapter spinnerAdapter = new spinnerAdapter(main, data,number);
             spin_level.setAdapter(spinnerAdapter);
 
             bench.getButton().setOnClickListener(this);
@@ -371,7 +379,6 @@ public class ExcerciseMode extends DCfragment {
                     return false;
                 }
             });
-//            stop.getButton().setOnClickListener(this);
             stop.getButton().setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -382,7 +389,7 @@ public class ExcerciseMode extends DCfragment {
                         if(timer!=null)
                             timer.cancel();
 
-                        stop.setPressedwithNoSound();
+                        stop.setPressed();
                         dcButtonManager.setDCState(DCButtonManager.State.Stop);
                         dcButtonManager.setDCState(DCButtonManager.State.Setted);
 
@@ -396,7 +403,7 @@ public class ExcerciseMode extends DCfragment {
                     }
                     else if(event.getAction() == MotionEvent.ACTION_DOWN)
                     {
-                        stop.setPressed();
+                        stop.setPressedwithNoSound();
                     }
                     return false;
                 }
@@ -486,11 +493,12 @@ public class ExcerciseMode extends DCfragment {
 class spinnerAdapter extends BaseAdapter {
     Context context;
     List<String> data;
+    List<String> number;
     LayoutInflater inflater;
     static TextView spinnerText;
 
 
-    public spinnerAdapter(Context context, List<String> data) {
+    public spinnerAdapter(Context context,List<String>number, List<String> data) {
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -531,7 +539,7 @@ class spinnerAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.spinner_drop_down, parent, false);
         }
 
-        spinnerText = (TextView)convertView.findViewById(R.id.spinnerText);
+        spinnerText = convertView.findViewById(R.id.spinnerText);
         //데이터세팅
         String text = data.get(position);
         spinnerText.setText(text);
@@ -541,8 +549,8 @@ class spinnerAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return data.get(position);
+    public String getItem(int position) {
+        return number.get(position);
     }
 
     @Override

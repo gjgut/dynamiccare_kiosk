@@ -75,7 +75,7 @@ public class DCButton  {
     public void ToggleButton()
     {
         if(PressedButton != null && PressedButton.button != button)
-            PressedButton.setPressed();
+            PressedButton.setPressedWithNoSound();
         if(IsPressed())
             PressedButton = this;
         else
@@ -101,6 +101,23 @@ public class DCButton  {
     {
         try {
             main.PlaySound(R.raw.normal_button);
+            isPressed = !isPressed;
+            ToggleButton();
+            if(getMappingBody()!=null)
+                UpdateBody();
+            if (isPressed)
+                this.button.setImageDrawable(Pressed);
+            else
+                this.button.setImageDrawable(UnPressed);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void setPressedWithNoSound()
+    {
+        try {
             isPressed = !isPressed;
             ToggleButton();
             if(getMappingBody()!=null)

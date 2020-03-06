@@ -133,9 +133,9 @@ public class DCButtonManager {
                 }
                 case Stop: {
                     if (Ready.isPressed)
-                        Ready.setPressed();
+                        Ready.setPressedwithNoSound();
                     if (Start.isPressed)
-                        Start.setPressed();
+                        Start.setPressedwithNoSound();
                     DCState = State.Stop;
                     break;
                 }

@@ -193,7 +193,7 @@ public class DCSoundPlayer {
 
     public void initSounds(Context context) {
         try {
-            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
             back_button = soundPool.load(context, R.raw.back_button, 1);
             bee_measurement_begin = soundPool.load(context, R.raw.bee_measurement_begin, 1);
             delay_sound = soundPool.load(context, R.raw.delay_sound, 1);
@@ -322,7 +322,7 @@ public class DCSoundPlayer {
         }
     }
 
-    public void play(int raw_id) {
+    public void playwithNoInterrept(int raw_id) {
         try {
             switch (raw_id) {
                 case R.raw.back_button:
@@ -685,6 +685,15 @@ public class DCSoundPlayer {
                     soundPool.play(fifty, 1, 1, 0, 0, 1);
                     break;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void play(int raw_id) {
+        try {
+            soundPool.autoPause();
+            playwithNoInterrept(raw_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
