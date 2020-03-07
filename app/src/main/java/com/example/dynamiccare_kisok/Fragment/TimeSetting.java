@@ -32,6 +32,8 @@ public class TimeSetting extends DCfragment {
     TextView reject;
     Button btn_ok;
     DynamicCare care;
+    DCfragment prev;
+
 
     public TimeSetting() {
         super();
@@ -40,6 +42,10 @@ public class TimeSetting extends DCfragment {
     public TimeSetting(Main main) {
         super(main);
     }
+    public TimeSetting(Main main,DCfragment prev) {
+        super(main);
+        this.prev = prev;
+    }
 
     @Override
     public void onClick(View v) {
@@ -47,7 +53,7 @@ public class TimeSetting extends DCfragment {
 
             case R.id.btn_ok:
                 if (edt_adminpw.getText().toString().equals(care.getAdminPassword())) {
-                    main.ReplaceFragment(new SelectMode(main));
+                    main.ReplaceFragment(prev);
                     main.setTimer(care.getLimit());
                 }
                 else
@@ -74,6 +80,7 @@ public class TimeSetting extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_time_setting, container, false);
+        prev = new SelectMode(main);
         super.onCreate(savedInstanceState);
         try {
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));
@@ -116,7 +123,7 @@ public class TimeSetting extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
-        return new SelectMode(main);
+        return prev;
     }
 
     @Override
@@ -126,12 +133,12 @@ public class TimeSetting extends DCfragment {
 
     @Override
     public String getTitle() {
-        return null;
+        return "사용 시간 설정";
     }
 
     @Override
     public int isHomeVisible() {
-        return 0;
+        return View.INVISIBLE;
     }
 
     @Override

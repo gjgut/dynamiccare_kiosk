@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public class DynamicCare extends Application {
     public  static DCSoundPlayer dcSoundPlayer;
-    public static String CurrentUser;
+    public static String CurrentUser,DeviceID;
     public static JSONObject CurrentUserJson;
     public static int limit=600;
     public SharedPreferences Admin;
@@ -20,6 +20,14 @@ public class DynamicCare extends Application {
     }
     public String getMeasureTime(){return Admin.getString("mTime","");}
     public String getMeasureWeight(){return Admin.getString("mWeight","");}
+
+    public static String getDeviceID() {
+        return DeviceID;
+    }
+
+    public static void setDeviceID(String deviceID) {
+        DeviceID = deviceID;
+    }
 
     public void setAdminPassword(String password) {
         SharedPreferences.Editor editor = Admin.edit();

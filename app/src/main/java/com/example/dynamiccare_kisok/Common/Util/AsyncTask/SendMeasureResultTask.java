@@ -18,7 +18,7 @@ public class SendMeasureResultTask extends AsyncTask<String, Void, JSONObject> {
     public JSONObject doInBackground(String... params) {
         JSONObject result = null;
         try {
-            String url = params[0];
+            String url = "www.powerlogmobile.com/kiosk/save/workout";
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 

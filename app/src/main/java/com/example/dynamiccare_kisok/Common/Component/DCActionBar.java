@@ -15,11 +15,13 @@ import com.example.dynamiccare_kisok.R;
 
 import com.example.dynamiccare_kisok.Fragment.*;
 
+import java.sql.Time;
+
 public class DCActionBar {
 
     private Main main;
     private ActionBar actionBar;
-    private ImageButton Home,LogOut;
+    private ImageButton Home,LogOut,TimeSet;
     private TextView title;
 
     public DCActionBar(Main _main, ActionBar _actionBar, String title){
@@ -38,6 +40,8 @@ public class DCActionBar {
     {
         Home.setVisibility(visibility);
     }
+
+    public void setTimeButton(int visibility){TimeSet.setVisibility(visibility);}
 
     public void setActionBar(){
         try {
@@ -59,6 +63,16 @@ public class DCActionBar {
             title = (TextView) mCustomView.findViewById(R.id.action_bar_title);
             Home = mCustomView.findViewById(R.id.action_bar_home);
             LogOut = mCustomView.findViewById(R.id.action_bar_logout);
+            TimeSet = mCustomView.findViewById(R.id.action_bar_timeset);
+
+            TimeSet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    main.PlaySound(R.raw.back_button);
+                    main.ReplaceFragment(new TimeSetting(main,main.getCurrentFragment()),true);
+                    main.overridePendingTransition(R.anim.left_in,R.anim.right_out);
+                }
+            });
 
             Home.setOnClickListener(new View.OnClickListener() {
                 @Override

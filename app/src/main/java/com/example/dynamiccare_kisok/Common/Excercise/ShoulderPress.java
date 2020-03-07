@@ -46,4 +46,9 @@ public class ShoulderPress extends Excercise {
     public String getMode() {
         return "03";
     }
+
+    @Override
+    public String getDBCode() {
+        return "D";
+    }
 }

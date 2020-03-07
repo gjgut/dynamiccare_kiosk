@@ -46,4 +46,9 @@ public class ArmCurl extends Excercise {
     public String getMode() {
         return "15";
     }
+
+    @Override
+    public String getDBCode() {
+        return "F";
+    }
 }

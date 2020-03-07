@@ -46,4 +46,9 @@ public class LatPullDown extends Excercise {
     public String getMode() {
         return "17";
     }
+
+    @Override
+    public String getDBCode() {
+        return "E";
+    }
 }

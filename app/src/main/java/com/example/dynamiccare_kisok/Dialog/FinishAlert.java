@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class FinishAlert extends Dialog {
-    Button yes,no;
+    ImageButton yes,no;
     Main main;
     View.OnClickListener yeslistner,nolistener;
     TextView txt_today;
@@ -51,8 +51,8 @@ public class FinishAlert extends Dialog {
         setContentView(R.layout.dialog_excercise_finished);
 
 
-        yes = (Button)findViewById(R.id.btn_yes);
-        no = (Button)findViewById(R.id.btn_no);
+        yes = findViewById(R.id.btn_yes);
+        no = findViewById(R.id.btn_no);
 
         yes.setOnClickListener( new View.OnClickListener(){
             @Override

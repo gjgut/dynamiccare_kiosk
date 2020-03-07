@@ -46,4 +46,9 @@ public class Squat extends Excercise {
     public String getMode() {
         return "01";
     }
+
+    @Override
+    public String getDBCode() {
+        return "B";
+    }
 }

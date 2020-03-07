@@ -46,4 +46,9 @@ public class BenchPress extends Excercise {
     public String getMode() {
         return "00";
     }
+
+    @Override
+    public String getDBCode() {
+        return "A";
+    }
 }

@@ -1,9 +1,14 @@
 package com.example.dynamiccare_kisok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +42,25 @@ public class Login extends AppCompatActivity {
             btn_download = (Button) findViewById(R.id.bt_dwload);
             btn_login = (Button) findViewById(R.id.bt_login);
             edt_code = new DCEditText((EditText) findViewById(R.id.et_code));
+            TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.READ_PHONE_STATE)) {
+                    Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.READ_PHONE_STATE},
+                            1001);
+                    Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
+
+                }
+            }
+            String device = manager.getDeviceId();
+            DynamicCare care = (DynamicCare)getApplication();
+            care.setDeviceID(device);
 
             dclogo.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

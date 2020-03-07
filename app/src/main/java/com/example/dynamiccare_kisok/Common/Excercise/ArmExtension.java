@@ -46,4 +46,9 @@ public class ArmExtension extends Excercise {
     public String getMode(){
         return "16";
     }
+
+    @Override
+    public String getDBCode() {
+        return "G";
+    }
 }

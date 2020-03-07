@@ -47,4 +47,9 @@ public class CarfRaise extends Excercise {
     public String getMode() {
         return "04";
     }
+
+    @Override
+    public String getDBCode() {
+        return "E";
+    }
 }

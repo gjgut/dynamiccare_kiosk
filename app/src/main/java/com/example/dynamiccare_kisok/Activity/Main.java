@@ -476,6 +476,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         currentExcercise = excercise;
     }
 
+    public DCfragment getCurrentFragment(){
+        return currentFragment;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -588,8 +592,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             if (fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
+                customActionBar.setTimeButton(View.VISIBLE);
             } else {
                 bottombar.setVisibility(View.INVISIBLE);
+                customActionBar.setTimeButton(View.INVISIBLE);
             }
 
             if (isRight) {
@@ -643,8 +649,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             if (fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
+                customActionBar.setTimeButton(View.VISIBLE);
             } else {
                 bottombar.setVisibility(View.INVISIBLE);
+                customActionBar.setTimeButton(View.INVISIBLE);
             }
 
             customActionBar.setHome(fragment.isHomeVisible());

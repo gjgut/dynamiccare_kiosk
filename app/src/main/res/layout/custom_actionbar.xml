@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="4dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="#00FFFFFF"
@@ -53,6 +53,24 @@
         app:layout_constraintBottom_toBottomOf="@+id/action_bar"
         app:layout_constraintEnd_toEndOf="@+id/action_bar"
         app:layout_constraintTop_toTopOf="@+id/action_bar"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/icon_logout" />
+
+    <ImageButton
+        android:id="@+id/action_bar_timeset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#00FFFFFF"
+        android:cropToPadding="true"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/action_bar"
+        app:layout_constraintEnd_toStartOf="@+id/action_bar_logout"
+        app:layout_constraintTop_toTopOf="@+id/action_bar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/alarm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

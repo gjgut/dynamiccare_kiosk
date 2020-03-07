@@ -46,4 +46,9 @@ public class DeadLift extends Excercise {
     public String getMode() {
         return "012";
     }
+
+    @Override
+    public String getDBCode() {
+        return "C";
+    }
 }

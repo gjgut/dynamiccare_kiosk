@@ -1,9 +1,12 @@
 package com.example.dynamiccare_kisok.Fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
@@ -33,6 +37,7 @@ import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Object.Workout;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
+import com.example.dynamiccare_kisok.Common.Util.AsyncTask.SendWorkoutTask;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
@@ -44,6 +49,8 @@ import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
 import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseReady1;
 import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseStart;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +68,8 @@ public class ExcerciseMode extends DCfragment {
     TextView txt_count, txt_set, rest_time;
     ImageView Body;
     LinearLayout container;
-    Spinner spin_level;;
+    Spinner spin_level;
+    boolean isProgram = false, onSchedule = false;
     int count;
     Handler handler = new Handler();
 
@@ -71,14 +79,14 @@ public class ExcerciseMode extends DCfragment {
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
     }
 
-    public ExcerciseMode(Main main, Workout workout)
-    {
+    public ExcerciseMode(Main main, Workout workout) {
         super(main);
         main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
         this.workout = workout;
 
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -113,22 +121,20 @@ public class ExcerciseMode extends DCfragment {
             }
             case R.id.exc_btn_ready:
                 ready.setPressed();
-                if (ready.getButton().isPressed())
-                {
+                if (ready.getButton().isPressed()) {
                     setPropertiesFocusable(false);
                     txt_count.setText(edt_count.getSource().getText().toString());
                     dcButtonManager.setDCState(DCButtonManager.State.Ready);
                     main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
-                            main.getisIsoKinetic()?spinnerAdapter.getCurrentNumber():edt_weight.getSource().getText().toString(),
+                            main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
                             edt_set.getSource().getText().toString()).getBytes());
-                }
-                else {
+                } else {
                     setPropertiesFocusable(true);
 
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                     main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                            main.getisIsoKinetic()?spinnerAdapter.getCurrentNumber():edt_weight.getSource().getText().toString(),
+                            main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
                             edt_set.getSource().getText().toString()).getBytes());
                 }
@@ -136,15 +142,13 @@ public class ExcerciseMode extends DCfragment {
         }
     }
 
-    public void setPropertiesFocusable(boolean value)
-    {
+    public void setPropertiesFocusable(boolean value) {
         edt_count.getSource().setEnabled(value);
         edt_set.getSource().setEnabled(value);
         edt_weight.getSource().setEnabled(value);
         edt_rest.getSource().setEnabled(value);
         spin_level.setEnabled(value);
     }
-
 
 
     public void setExcercise(DCButton button, Excercise excercise) {
@@ -184,7 +188,7 @@ public class ExcerciseMode extends DCfragment {
     public void HandleACK(ACK ack) {
         switch (ack.getCommandCode()) {
             case "ACD":
-                Toast.makeText(main, "Command:" + ack.getCommandCode()+ack.getData()+ack.getmTension()+ack.getTime(), Toast.LENGTH_LONG).show();
+                Toast.makeText(main, "Command:" + ack.getCommandCode() + ack.getData() + ack.getmTension() + ack.getTime(), Toast.LENGTH_LONG).show();
                 String count = String.valueOf(Integer.parseInt(ack.getData().substring(0, 2)));
                 String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
                 String restOn = ack.getData().substring(4, 5);
@@ -198,14 +202,16 @@ public class ExcerciseMode extends DCfragment {
                 }
                 break;
             case "ACB":
-                switch (ack.getData())
-                {
+                switch (ack.getData()) {
                     case "1":
                         exc_rest.setVisibility(View.INVISIBLE);
                         exc_table.setVisibility(View.VISIBLE);
                         DCButtonManager.setDCState(DCButtonManager.State.Excercise);
 
                 }
+                break;
+            case "ASS":
+                SendWorkoutRecord();
         }
     }
 
@@ -221,8 +227,8 @@ public class ExcerciseMode extends DCfragment {
                     rest_time.setText(String.valueOf(count));
                     if (count == 15)
                         main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
-                    else if(count<10)
-                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS0"+count+"#"));
+                    else if (count < 10)
+                        main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS0" + count + "#"));
                     count--;
                 }
 
@@ -332,7 +338,7 @@ public class ExcerciseMode extends DCfragment {
             data.add("4");
             data.add("5");
 
-            spinnerAdapter spinnerAdapter = new spinnerAdapter(main, data,number);
+            spinnerAdapter spinnerAdapter = new spinnerAdapter(main, data, number);
             spin_level.setAdapter(spinnerAdapter);
 
             bench.getButton().setOnClickListener(this);
@@ -346,29 +352,26 @@ public class ExcerciseMode extends DCfragment {
             start.getButton().setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction())
-                    {
+                    switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             start.setPressedwithNoSound();
                             break;
                         case MotionEvent.ACTION_UP:
                             start.setPressed();
                             start.setPause();
-                            if(start.isPause())
-                            {
+                            if (start.isPause()) {
                                 dcButtonManager.setDCState(DCButtonManager.State.Excercise);
                                 main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                                        main.getisIsoKinetic()?spinnerAdapter.getCurrentNumber():edt_weight.getSource().getText().toString(),
+                                        main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
                                         edt_count.getSource().getText().toString(),
                                         edt_set.getSource().getText().toString()).getBytes());
-                                main.PlaySound(new int[] {R.raw.start_excercise,R.raw.start_excercise_english});
+                                main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
                                 start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
                                 start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
-                            }
-                            else {
+                            } else {
                                 dcButtonManager.setDCState(DCButtonManager.State.Paused);
                                 main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
-                                        main.getisIsoKinetic()?spinnerAdapter.getCurrentNumber():edt_weight.getSource().getText().toString(),
+                                        main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
                                         edt_count.getSource().getText().toString(),
                                         edt_set.getSource().getText().toString()).getBytes());
                                 start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
@@ -386,7 +389,7 @@ public class ExcerciseMode extends DCfragment {
                         setPropertiesFocusable(true);
                         exc_rest.setVisibility(View.INVISIBLE);
                         exc_table.setVisibility(View.VISIBLE);
-                        if(timer!=null)
+                        if (timer != null)
                             timer.cancel();
 
                         stop.setPressed();
@@ -395,14 +398,12 @@ public class ExcerciseMode extends DCfragment {
 
                         main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                         main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                                main.getisIsoKinetic()?spinnerAdapter.getCurrentNumber():edt_weight.getSource().getText().toString(),
+                                main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
                                 edt_count.getSource().getText().toString(),
                                 edt_set.getSource().getText().toString()).getBytes());
                         txt_count.setText("0");
                         txt_set.setText("0");
-                    }
-                    else if(event.getAction() == MotionEvent.ACTION_DOWN)
-                    {
+                    } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         stop.setPressedwithNoSound();
                     }
                     return false;
@@ -415,13 +416,11 @@ public class ExcerciseMode extends DCfragment {
             dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf, start, ready, stop);
 
 
-            if(workout != null)
-            {
+            if (workout != null) {
                 edt_count.getSource().setText(String.valueOf(workout.getReps()));
                 edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
                 edt_set.getSource().setText(String.valueOf(workout.getSet()));
-                switch (workout.getExcercise().getSimpleName())
-                {
+                switch (workout.getExcercise().getSimpleName()) {
                     case "벤치 프레스":
                         setExcercise(bench, new BenchPress(main));
                         break;
@@ -456,13 +455,33 @@ public class ExcerciseMode extends DCfragment {
 
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
 
         main.getusbService().write(Commands.Home(true).getBytes());
-        Log.i("Command","CHM08");
+        Log.i("Command", "CHM08");
 
+    }
+
+    public void SendWorkoutRecord() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode()+((main.getisIsoKinetic())?"02":"01"));
+            jsonObject.accumulate("count", edt_count.getSource().getText().toString());
+            jsonObject.accumulate("device",main.getCare().getDeviceID());
+            jsonObject.accumulate("email", null);
+            jsonObject.accumulate("height", 0);
+            jsonObject.accumulate("isProgram",isProgram);
+            jsonObject.accumulate("level",0);
+            jsonObject.accumulate("onSchedule",onSchedule);
+            jsonObject.accumulate("rest", edt_rest.getSource().getText().toString());
+            jsonObject.accumulate("set", edt_set.getSource().getText().toString());
+            jsonObject.accumulate("weight", edt_weight.getSource().getText().toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -498,14 +517,13 @@ class spinnerAdapter extends BaseAdapter {
     static TextView spinnerText;
 
 
-    public spinnerAdapter(Context context,List<String>number, List<String> data) {
+    public spinnerAdapter(Context context, List<String> number, List<String> data) {
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public static String getCurrentNumber()
-    {
+    public static String getCurrentNumber() {
         return spinnerText.getText().toString();
     }
 
@@ -522,7 +540,7 @@ class spinnerAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.spinner_normal, parent, false);
         }
 
-        spinnerText = (TextView)convertView.findViewById(R.id.spinnerText);
+        spinnerText = (TextView) convertView.findViewById(R.id.spinnerText);
         if (data != null) {
             //데이터세팅
             String text = data.get(position);

@@ -143,6 +143,8 @@ public class SelectMode extends DCfragment {
         isometronic.setOnClickListener(this);
         isotonic.setOnClickListener(this);
 
+        main.getusbService().write(Commands.Home(true).getBytes());
+
         return view;
     }
 

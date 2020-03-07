@@ -18,4 +18,5 @@ public abstract class Excercise {
     public abstract Drawable getMappingBody();
     public abstract Uri getVideoUri();
     public abstract String getMode();
+    public abstract String getDBCode();
 }
