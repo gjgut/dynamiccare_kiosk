@@ -29,7 +29,6 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
-import com.example.dynamiccare_kisok.Common.Util.DCRepeatListener;
 import com.example.dynamiccare_kisok.R;
 
 public class GraphResult extends DCfragment implements View.OnTouchListener {
@@ -150,6 +149,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         go.setPause();
                         if (!go.isPause()) {
                             DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+                            setBottomBar(false);
                             main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
@@ -298,6 +298,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     if(DCButtonManager.getDCState()== DCButtonManager.State.Clear)
                         break;
                     Log.i("Measure ended:", "");
+                    DCButtonManager.setDCState(DCButtonManager.State.Clear);
+                    setBottomBar(false);
                     ready.setPressed();
                     go.setPressed();
                     go.setPause();

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,21 +15,18 @@ import com.example.dynamiccare_kisok.Activity.Login;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-public class ExcerciseFinished extends Dialog {
+public class NormalAlert extends Dialog {
     Main main;
     Button yes,no;
     View.OnClickListener yeslistner,nolistener;
-    TextView txt_today;
+    String msg;
+    TextView txt_messsage;
 
-    public ExcerciseFinished(@NonNull Context context, View.OnClickListener yes, View.OnClickListener no) {
+    public NormalAlert(@NonNull Context context, View.OnClickListener yes, View.OnClickListener no,String msg) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.main = (Main)context;
         main = (Main)context;
+        this.msg = msg;
     }
 
     @Override
@@ -44,15 +40,17 @@ public class ExcerciseFinished extends Dialog {
 
 
         yes = findViewById(R.id.btn_yes);
+        txt_messsage = findViewById(R.id.txt_message);
+        txt_messsage.setText(msg);
 
         yes.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                dismiss();
                 Intent intent = new Intent(main, Login.class);
                 main.startActivity(intent);
                 main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 main.finish();
-                dismiss();
             }
         });
     }

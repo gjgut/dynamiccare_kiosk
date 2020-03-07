@@ -35,6 +35,11 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
     Handler handler;
 
 
+    public void PlaySound(int soundId) {
+        dcSoundPlayer.playwithNoInterrept(soundId);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +50,9 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
         DynamicCare care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
 
-        dcSoundThread = new DCSoundThread(this);
+        dcSoundThread = new DCSoundThread(this,dcSoundPlayer);
 
         btn_back = findViewById(R.id.btn_back);
-
         btn_back.setOnClickListener(this);
 
         ReplaceFragment(new Authentification(this),true);

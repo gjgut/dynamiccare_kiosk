@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Fragment.Administrator;
+package com.example.dynamiccare_kisok.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -62,12 +62,13 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_hour:
                 btn_hour.setPressed();
                 if (btn_hour.IsPressed()) {
-                    care.setLimit(60);
+                    care.setLimit(125);
                 }
                 break;
 
         }
     }
+
 
     @Nullable
     @Override
@@ -115,7 +116,7 @@ public class TimeSetting extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
-        return null;
+        return new SelectMode(main);
     }
 
     @Override

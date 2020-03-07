@@ -13,7 +13,12 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 
+import com.example.dynamiccare_kisok.Activity.Login;
+import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Dialog.NormalAlert;
+import com.example.dynamiccare_kisok.R;
 import com.felhr.usbserial.CDCSerialDevice;
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
@@ -45,6 +50,7 @@ public class UsbService extends Service {
 
     private IBinder binder = new UsbBinder();
 
+    private Main main;
     private Context context;
     private Handler mHandler;
     private UsbManager usbManager;
@@ -58,6 +64,16 @@ public class UsbService extends Service {
      *  In this particular example. byte stream is converted to String and send to UI thread to
      *  be treated there.
      */
+
+    public UsbSerialDevice getSerialPort() {
+        return serialPort;
+    }
+
+    public void setMain(Main main)
+    {
+        this.main = main;
+    }
+
     private UsbSerialInterface.UsbReadCallback mCallback = new UsbSerialInterface.UsbReadCallback() {
         @Override
         public void onReceivedData(byte[] arg0) {
@@ -167,8 +183,42 @@ public class UsbService extends Service {
      * This function will be called from MainActivity to write data through Serial Port
      */
     public void write(byte[] data) {
-        if (serialPort != null)
+        if (serialPort != null && serialPort.open() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
             serialPort.write(data);
+        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
+        {
+            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+
+                }
+            },new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+
+                }
+            },"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.");
+            connectUsb.show();
+        }
+        else
+        {
+            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+
+                }
+            },new View.OnClickListener(){
+                @Override
+                public void onClick(View v)
+                {
+
+                }
+            },"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.");
+            connectUsb.show();
+        }
     }
 
     public void setHandler(Handler mHandler) {

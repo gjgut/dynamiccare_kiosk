@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
-import com.example.dynamiccare_kisok.Fragment.Administrator.TimeSetting;
+import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.R;
 
 import java.text.SimpleDateFormat;

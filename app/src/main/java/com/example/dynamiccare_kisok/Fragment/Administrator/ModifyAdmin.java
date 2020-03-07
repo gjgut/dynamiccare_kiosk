@@ -74,6 +74,7 @@ public class ModifyAdmin extends DCfragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_set_admin_ok:
+                admin.PlaySound(R.raw.normal_button);
                 DynamicCare care = (DynamicCare) admin.getApplication();
                 if (prev.getSource().getText().toString().equals(care.getAdminPassword())) {
                     care.setAdminPassword(New.getSource().getText().toString());
@@ -92,6 +93,7 @@ public class ModifyAdmin extends DCfragment {
                 }
                 break;
             case R.id.btn_newpw_visible:
+                admin.PlaySound(R.raw.normal_button);
                 if (isVisible) {
                     newpwvisible.setImageDrawable(admin.getDrawable(R.drawable.ic_visibility_off));
                     newpwvisible.setPadding(30, 30, 30, 30);

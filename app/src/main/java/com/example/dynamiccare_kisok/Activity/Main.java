@@ -44,7 +44,7 @@ import com.example.dynamiccare_kisok.Common.Util.UsbService;
 import com.example.dynamiccare_kisok.Dialog.ExcerciseFinished;
 import com.example.dynamiccare_kisok.Dialog.FinishAlert;
 import com.example.dynamiccare_kisok.Dialog.LoadPlan;
-import com.example.dynamiccare_kisok.Fragment.Administrator.TimeSetting;
+import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
 import com.example.dynamiccare_kisok.Fragment.SelectMode;
@@ -130,7 +130,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 }
                 if (count < 10) {
                     BottomRestTime.setText("00:0" + String.valueOf(count));
-                } else
+                }
+                else if(count>10 && count%60<10)
+                    BottomRestTime.setText("0"+String.valueOf(count / 60) + ":0" + String.valueOf(count % 60));
+                else
                     BottomRestTime.setText("0"+String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
                 count--;
             }
@@ -436,6 +439,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
             try {
                 usbService = ((UsbService.UsbBinder) arg1).getService();
+                usbService.setMain(main);
                 usbService.setHandler(ackListener);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -697,6 +701,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         dcSoundThread.stopstream();
+        countDownTimer.cancel();
     }
 
     private void setFilters() {

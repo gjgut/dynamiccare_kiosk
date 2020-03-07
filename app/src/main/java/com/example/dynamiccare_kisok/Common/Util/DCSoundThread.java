@@ -16,9 +16,9 @@ public class DCSoundThread {
         this.main = main;
         dcSoundPlayer = main.getDcSoundPlayer();
     }
-    public DCSoundThread(Administrator admin) {
+    public DCSoundThread(Administrator admin,DCSoundPlayer player) {
         this.admin = admin;
-        dcSoundPlayer = main.getDcSoundPlayer();
+        dcSoundPlayer = player;
     }
 
     public void stopstream()

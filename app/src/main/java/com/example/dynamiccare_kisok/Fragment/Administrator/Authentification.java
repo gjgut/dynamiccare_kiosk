@@ -50,9 +50,11 @@ public class Authentification extends DCfragment {
         switch (v.getId())
         {
             case R.id.btn_limit_off:
+                admin.PlaySound(R.raw.normal_button);
                 admin.ReplaceFragment(new LimitOff(admin),true);
                 break;
             case R.id.btn_modify_psswd:
+                admin.PlaySound(R.raw.normal_button);
                 admin.ReplaceFragment(new ModifyAdmin(admin),true);
                 break;
         }
