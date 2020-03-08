@@ -116,6 +116,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         dcSoundThread.playstream(stream);
     }
 
+    public void StopSound(){dcSoundThread.stopstream();}
+
     public void setTimer(int time) {
         countDownTimer.cancel();
         count = time;
