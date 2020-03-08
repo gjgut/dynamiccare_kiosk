@@ -1,4 +1,3 @@
-
 package com.example.dynamiccare_kisok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.R;
@@ -16,24 +14,17 @@ public class Splash extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            DynamicCare care = (DynamicCare) getApplicationContext();
-            care.initSounds();
-            Handler hd = new Handler();
-            hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
-        } catch (Exception e) {
-            Log.e("Error", e.toString());
-        }
+        DynamicCare care = (DynamicCare)getApplicationContext();
+        care.initSounds();
+        Handler hd = new Handler();
+        hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
+
     }
 
-    private class splashhandler implements Runnable {
-        public void run() {
-            try {
-                startActivity(new Intent(getApplication(), Login.class)); //로딩이 끝난 후, ChoiceFunction 이동
-                Splash.this.finish(); // 로딩페이지 Activity stack에서 제거
-            } catch (Exception e) {
-                Log.e("Error", e.toString());
-            }
+    private class splashhandler implements Runnable{
+        public void run(){
+            startActivity(new Intent(getApplication(), Login.class)); //로딩이 끝난 후, ChoiceFunction 이동
+            Splash.this.finish(); // 로딩페이지 Activity stack에서 제거
         }
     }
 
@@ -44,4 +35,3 @@ public class Splash extends AppCompatActivity {
 
 
 }
-

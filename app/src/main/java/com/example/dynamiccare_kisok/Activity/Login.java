@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,17 +43,19 @@ public class Login extends AppCompatActivity {
             btn_login = (Button) findViewById(R.id.bt_login);
             edt_code = new DCEditText((EditText) findViewById(R.id.et_code));
             TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
+
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_PHONE_STATE))
-                {
+                        Manifest.permission.READ_PHONE_STATE)) {
                     Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
                 } else {
                     ActivityCompat.requestPermissions(this,
                             new String[]{Manifest.permission.READ_PHONE_STATE},
                             1001);
                     Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
+
                 }
             }
             String device = manager.getDeviceId();
@@ -64,48 +65,34 @@ public class Login extends AppCompatActivity {
             dclogo.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    try {
-                        Intent intent = new Intent(getApplicationContext(), Administrator.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        finish();
-                    } catch (Exception e)
-                    {
-                        Log.e("Error",e.toString());
-                        e.printStackTrace();
-                    }
+                    Intent intent = new Intent(getApplicationContext(), Administrator.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    finish();
                     return false;
                 }
             });
+
             btn_download.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                        Intent intent = new Intent(getApplicationContext(), QRlink.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        finish();
-                    } catch (Exception e)
-                    {
-                        Log.e("Error",e.toString());
-                        e.printStackTrace();
-                    }
+                    Intent intent = new Intent(getApplicationContext(), QRlink.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    finish();
                 }
             });
             btn_login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
-                        startActivity(new Intent(getApplicationContext(), Main.class));
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                        finish();
-//                        JSONObject response = Httplogin(edt_code.getSource().getText().toString());
+                        JSONObject response = Httplogin(edt_code.getSource().getText().toString());
 //                        if ((Boolean) response.get("isPresent") != false && (Boolean) response.get("isError") != true) {
 //                            DynamicCare care = (DynamicCare) getApplication();
 //                            care.setCurrentUserJson(response);
-//                            startActivity(new Intent(getApplicationContext(), Main.class));
-//                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-//                            finish();
+                            startActivity(new Intent(getApplicationContext(), Main.class));
+                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                            finish();
 //                        } else {
 //                            Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
 //                        }
@@ -115,9 +102,7 @@ public class Login extends AppCompatActivity {
                     }
                 }
             });
-        } catch (Exception e)
-        {
-            Log.e("Error",e.toString());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -135,5 +120,3 @@ public class Login extends AppCompatActivity {
         }
     }
 }
-
-
