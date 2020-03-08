@@ -501,25 +501,29 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
 
-                    }
-                }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                BottomRestTime.setText("00:" + String.valueOf(count));
-                count--;
-
-                if (count == 30) {
-                    FinishAlert.show();
-                    BottomRestTime.setTextColor(Color.RED);
-
+                        }
+                    }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                 }
+            });
+            countDownTimer = new CountDownTimer(count * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    try {
+                        BottomRestTime.setText("00:" + String.valueOf(count));
+                        count--;
 
-            }
+                        if (count == 30) {
+                            FinishAlert.show();
+                            BottomRestTime.setTextColor(Color.RED);
+
+                        }
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                        e.printStackTrace();
+                    }
+                }
 
             @Override
             public void onFinish() {
@@ -563,28 +567,34 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back: {
-                PlaySound(R.raw.back_button);
-                if (currentFragment.getClass().getSimpleName() == "Explain" || currentFragment.getClass().getSimpleName() == "ExcerciseMode") {
-                    main.getusbService().write(Commands.Home(true).getBytes());
-                    main.setCurrentExcercise(null);
-                    main.StopSound();
+        try {
+            switch (v.getId()) {
+                case R.id.btn_back: {
+                    PlaySound(R.raw.back_button);
+                    StopSound();
+                    if (currentFragment.getClass().getSimpleName() == "ExcerciseMode")
+                        main.setCurrentExcercise(null);
+                    if (currentFragment.getClass().getSimpleName() == "Explain") {
+                        main.getusbService().write(Commands.Home(true).getBytes());
+                        main.setCurrentExcercise(null);
+                    }
+                    if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
+                        Intent intent = new Intent(main, Login.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                        finish();
+                    }
+                    ReplaceFragment(currentFragment.getBackFragment(), false);
+                    break;
                 }
-                if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
-                    Intent intent = new Intent(main, Login.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                    finish();
+                case R.id.btn_next: {
+                    PlaySound(R.raw.back_button);
+                    ReplaceFragment(currentFragment.getNextFragment(), true);
+                    break;
                 }
-                ReplaceFragment(currentFragment.getBackFragment(), false);
-                break;
             }
-            case R.id.btn_next: {
-                PlaySound(R.raw.back_button);
-                ReplaceFragment(currentFragment.getNextFragment(), true);
-                break;
-            }
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
     }
 
@@ -640,8 +650,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             customActionBar.setTitle(fragment.getTitle());
             fragmentTransaction.replace(R.id.main_container, fragment);
             fragmentTransaction.commit();
+
         } catch (Exception e) {
-//            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("Error", e.toString());
         }
     }
 
@@ -675,7 +686,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             fragmentTransaction.commit();
 
         } catch (Exception e) {
-//            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("Error", e.toString());
         }
     }
 
@@ -683,8 +694,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        setFilters();  // Start listening notifications from UsbService
-        startService(UsbService.class, usbConnection, null); // Start UsbService(if it was not started before) and Bind it
+        try {
+            setFilters();  // Start listening notifications from UsbService
+            startService(UsbService.class, usbConnection, null); // Start UsbService(if it was not started before) and Bind it
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+        }
     }
 
     @Override
@@ -728,3 +743,4 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
 }
+
