@@ -161,6 +161,34 @@ public class Explain extends DCfragment {
             curl.getButton().setOnClickListener(this);
             extension.getButton().setOnClickListener(this);
 
+            switch(main.getCurrentExcercise().getClass().getSimpleName())
+            {
+                case "BenchPress":
+                    bench.setPressed();
+                    break;
+                case "Squat":
+                    squat.setPressed();
+                    break;
+                case "DeadLift":
+                    deadlift.setPressed();
+                    break;
+                case "ShoulderPress":
+                    press.setPressed();
+                    break;
+                case "CarfRaise":
+                    carf.setPressed();
+                    break;
+                case "ArmCurl":
+                    curl.setPressed();
+                    break;
+                case "ArmExtension":
+                    extension.setPressed();
+                    break;
+                case "LatPullDown":
+                    latpull.setPressed();
+                    break;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
