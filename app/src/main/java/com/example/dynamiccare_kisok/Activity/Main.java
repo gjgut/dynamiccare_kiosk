@@ -116,49 +116,55 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         dcSoundThread.playstream(stream);
     }
 
-    public void StopSound(){dcSoundThread.stopstream();}
+    public void StopSound() {
+        dcSoundThread.stopstream();
+    }
 
     public void setTimer(int time) {
-        countDownTimer.cancel();
-        count = time;
-        BottomRestTime.setTextColor(Color.WHITE);
-        countDownTimer = new CountDownTimer(time * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if (count == 30) {
-                    FinishAlert.show();
-                    BottomRestTime.setTextColor(Color.RED);
+        try {
+            countDownTimer.cancel();
+            count = time;
+            BottomRestTime.setTextColor(Color.WHITE);
+            countDownTimer = new CountDownTimer(time * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    if (count == 30) {
+                        FinishAlert.show();
+                        BottomRestTime.setTextColor(Color.RED);
 
+                    }
+                    if (count < 10) {
+                        BottomRestTime.setText("00:0" + String.valueOf(count));
+                    } else if (count > 10 && count % 60 < 10)
+                        BottomRestTime.setText("0" + String.valueOf(count / 60) + ":0" + String.valueOf(count % 60));
+                    else
+                        BottomRestTime.setText("0" + String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
+                    count--;
                 }
-                if (count < 10) {
-                    BottomRestTime.setText("00:0" + String.valueOf(count));
-                }
-                else if(count>10 && count%60<10)
-                    BottomRestTime.setText("0"+String.valueOf(count / 60) + ":0" + String.valueOf(count % 60));
-                else
-                    BottomRestTime.setText("0"+String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
-                count--;
-            }
 
-            @Override
-            public void onFinish() {
-                getusbService().write(Commands.Home(true).getBytes());
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                ExcerciseFinished finished = new ExcerciseFinished(main,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        });
-                finished.show();
-            }
-        };
-        countDownTimer.start();
+                @Override
+                public void onFinish() {
+                    getusbService().write(Commands.Home(true).getBytes());
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    ExcerciseFinished finished = new ExcerciseFinished(main,
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            },
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            });
+                    finished.show();
+                }
+            };
+            countDownTimer.start();
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+            e.printStackTrace();
+        }
     }
 
     public void HandleACK(ACK ack) {
@@ -478,112 +484,132 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         currentExcercise = excercise;
     }
 
-    public DCfragment getCurrentFragment(){
+    public DCfragment getCurrentFragment() {
         return currentFragment;
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        main = this;
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            main = this;
 
-        ackListener = new ACKListener(this);
-        handler = new Handler();
 
-        care = (DynamicCare) getApplicationContext();
-        dcSoundPlayer = care.getDcSoundPlayer();
-        count = care.getLimit();
+            dcSoundThread = new DCSoundThread(this);
+            customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
 
-        FinishAlert = new FinishAlert(this,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            btn_back = findViewById(R.id.btn_back);
+            btn_next = findViewById(R.id.btn_next);
+            bottombar = findViewById(R.id.Bottom);
+            BottomRestTime = (TextView) findViewById(R.id.usertimer);
 
+            btn_back.setOnClickListener(this);
+            btn_next.setOnClickListener(this);
+
+            if (care.getLimit() != 0)
+                ReplaceFragment(new TimeSetting(this));
+            else
+                ReplaceFragment(new SelectMode(this));
+            ackListener = new ACKListener(this);
+            handler = new Handler();
+
+            care = (DynamicCare) getApplicationContext();
+            dcSoundPlayer = care.getDcSoundPlayer();
+            count = care.getLimit();
+
+            FinishAlert = new FinishAlert(this,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+            countDownTimer = new CountDownTimer(count * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    try {
+                        BottomRestTime.setText("00:" + String.valueOf(count));
+                        count--;
+
+                        if (count == 30) {
+                            FinishAlert.show();
+                            BottomRestTime.setTextColor(Color.RED);
+
+                        }
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                        e.printStackTrace();
                     }
-                }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                BottomRestTime.setText("00:" + String.valueOf(count));
-                count--;
-
-                if (count == 30) {
-                    FinishAlert.show();
-                    BottomRestTime.setTextColor(Color.RED);
-
                 }
 
-            }
-
-            @Override
-            public void onFinish() {
-                getusbService().write("$CHM08".getBytes());
-                Intent intent = new Intent(main, Login.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                ExcerciseFinished finished = new ExcerciseFinished(main,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        });
-                finished.show();
-            }
-        };
-        countDownTimer.start();
-
-        dcSoundThread = new DCSoundThread(this);
-        customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
-
-        btn_back = findViewById(R.id.btn_back);
-        btn_next = findViewById(R.id.btn_next);
-        bottombar = findViewById(R.id.Bottom);
-        BottomRestTime = (TextView) findViewById(R.id.usertimer);
-
-        btn_back.setOnClickListener(this);
-        btn_next.setOnClickListener(this);
-
-        if (care.getLimit() != 0)
-            ReplaceFragment(new TimeSetting(this));
-        else
-            ReplaceFragment(new SelectMode(this));
-
+                @Override
+                public void onFinish() {
+                    try {
+                        getusbService().write("$CHM08".getBytes());
+                        Intent intent = new Intent(main, Login.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                        ExcerciseFinished finished = new ExcerciseFinished(main,
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    }
+                                },
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    }
+                                });
+                        finished.show();
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                        e.printStackTrace();
+                    }
+                }
+            };
+            countDownTimer.start();
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back: {
-                PlaySound(R.raw.back_button);
-                if (currentFragment.getClass().getSimpleName() == "Explain" || currentFragment.getClass().getSimpleName() == "ExcerciseMode") {
-                    main.getusbService().write(Commands.Home(true).getBytes());
-                    main.StopSound();
+        try {
+            switch (v.getId()) {
+                case R.id.btn_back: {
+                    PlaySound(R.raw.back_button);
+                    StopSound();
+                    if (currentFragment.getClass().getSimpleName() == "ExcerciseMode")
+                        main.setCurrentExcercise(null);
+                    if (currentFragment.getClass().getSimpleName() == "Explain") {
+                        main.getusbService().write(Commands.Home(true).getBytes());
+                        main.setCurrentExcercise(null);
+                    }
+                    if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
+                        Intent intent = new Intent(main, Login.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                        finish();
+                    }
+                    ReplaceFragment(currentFragment.getBackFragment(), false);
+                    break;
                 }
-                if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
-                    Intent intent = new Intent(main, Login.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                    finish();
+                case R.id.btn_next: {
+                    PlaySound(R.raw.back_button);
+                    ReplaceFragment(currentFragment.getNextFragment(), true);
+                    break;
                 }
-                ReplaceFragment(currentFragment.getBackFragment(), false);
-                break;
             }
-            case R.id.btn_next: {
-                PlaySound(R.raw.back_button);
-                ReplaceFragment(currentFragment.getNextFragment(), true);
-                break;
-            }
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
     }
 
@@ -639,8 +665,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             customActionBar.setTitle(fragment.getTitle());
             fragmentTransaction.replace(R.id.main_container, fragment);
             fragmentTransaction.commit();
+
         } catch (Exception e) {
-//            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("Error", e.toString());
         }
     }
 
@@ -674,7 +701,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             fragmentTransaction.commit();
 
         } catch (Exception e) {
-//            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("Error", e.toString());
         }
     }
 
@@ -682,8 +709,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        setFilters();  // Start listening notifications from UsbService
-        startService(UsbService.class, usbConnection, null); // Start UsbService(if it was not started before) and Bind it
+        try {
+            setFilters();  // Start listening notifications from UsbService
+            startService(UsbService.class, usbConnection, null); // Start UsbService(if it was not started before) and Bind it
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+        }
     }
 
     @Override
@@ -727,3 +758,4 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     }
 
 }
+
