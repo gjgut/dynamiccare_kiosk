@@ -568,6 +568,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 PlaySound(R.raw.back_button);
                 if (currentFragment.getClass().getSimpleName() == "Explain" || currentFragment.getClass().getSimpleName() == "ExcerciseMode") {
                     main.getusbService().write(Commands.Home(true).getBytes());
+                    main.setCurrentExcercise(null);
                     main.StopSound();
                 }
                 if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
