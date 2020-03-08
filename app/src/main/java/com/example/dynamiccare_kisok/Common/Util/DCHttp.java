@@ -48,10 +48,10 @@ public class DCHttp {
             return  null;
         }
     }
-    public JSONObject SendWorkout(Workout workout)
+    public JSONObject SendWorkout(String workout)
     {
         try {
-            return sendWorkoutTask.execute("").get();
+            return sendWorkoutTask.execute(workout).get();
         }catch (Exception e){
             return  null;
         }

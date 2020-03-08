@@ -28,7 +28,6 @@ public class SelectMode extends DCfragment {
 
     public SelectMode(Main main) {
         super(main);
-        main.PlaySound(new int[]{R.raw.select_the_mode, R.raw.select_the_mode_english});
         Main.setCurrentExcercise(null);
         DCButton.PressedOff();
     }
@@ -36,13 +35,14 @@ public class SelectMode extends DCfragment {
     @Override
     public void onClick(View v) {
         try {
-
+            main.getusbService().write(Commands.Home(true).getBytes());
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
                     try {
                     DynamicCare care = (DynamicCare) main.getApplication();
                     JSONObject jsonObject = care.getCurrentUserJson();
                     JSONObject resultData = (JSONObject) jsonObject.get("resultData");
+                        main.getusbService().write(Commands.Home(true).getBytes());
                         if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
                             loadPlandialog = new LoadPlan(main,
                                     new View.OnClickListener() {
@@ -50,6 +50,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             loadPlandialog.dismiss();
                                             ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                                            main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
                                         }
                                     },
                                     new View.OnClickListener() {
@@ -57,7 +58,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             main.setisIsoKinetic(false);
                                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                            Commands.ExcerciseMode(false);
+                                            main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
                                             loadPlandialog.dismiss();
                                         }
                                     });
@@ -65,12 +66,12 @@ public class SelectMode extends DCfragment {
                         } else {
                             main.setisIsoKinetic(false);
                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                            Commands.ExcerciseMode(false);
+                            main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
                         }
                     } catch (NullPointerException e) {
                         main.setisIsoKinetic(false);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                        Commands.ExcerciseMode(false);
+                        main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
                     }
                     break;
                 }
@@ -86,6 +87,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             loadPlandialog.dismiss();
                                             ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                                            main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
                                         }
                                     },
                                     new View.OnClickListener() {
@@ -93,7 +95,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             main.setisIsoKinetic(true);
                                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                            Commands.ExcerciseMode(false);
+                                            main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
                                             loadPlandialog.dismiss();
                                         }
                                     });
@@ -101,12 +103,12 @@ public class SelectMode extends DCfragment {
                         } else {
                             main.setisIsoKinetic(true);
                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                            Commands.ExcerciseMode(false);
+                            main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
                         }
                     } catch (NullPointerException e) {
                         main.setisIsoKinetic(true);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                        Commands.ExcerciseMode(false);
+                        main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
                     }
                     break;
                 }
@@ -133,6 +135,7 @@ public class SelectMode extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_mode, container, false);
+        main.PlaySound(new int[]{R.raw.select_the_mode, R.raw.select_the_mode_english});
         selectExec = view.findViewById(R.id.btn_select_exec);
         isokinetic = view.findViewById(R.id.btn_select_exec_isokinetic);
         isometronic = view.findViewById(R.id.btn_sel_mes_isometric);

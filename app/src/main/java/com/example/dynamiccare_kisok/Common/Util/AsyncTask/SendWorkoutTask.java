@@ -18,7 +18,7 @@ public class SendWorkoutTask extends AsyncTask<String, Void, JSONObject> {
     public JSONObject doInBackground(String... params) {
         JSONObject result = null;
         try {
-            String url = "www.powerlogmobile.com/kiosk/save/workout";
+            String url = "http://www.powerlogmobile.com/kiosk/save/workout";
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 
@@ -29,7 +29,7 @@ public class SendWorkoutTask extends AsyncTask<String, Void, JSONObject> {
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-Type", "application/json");
 
-            byte[] outputInBytes = params[1].getBytes("UTF-8");
+            byte[] outputInBytes = params[0].getBytes("UTF-8");
             OutputStream os = conn.getOutputStream();
             os.write(outputInBytes);
             os.close();

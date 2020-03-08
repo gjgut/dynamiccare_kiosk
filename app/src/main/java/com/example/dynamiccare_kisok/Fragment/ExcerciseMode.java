@@ -44,6 +44,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Util.DCHttp;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
@@ -79,11 +80,15 @@ public class ExcerciseMode extends DCfragment {
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
     }
 
-    public ExcerciseMode(Main main, Workout workout) {
+    public ExcerciseMode(Main main, Workout workout,boolean isProgram) {
         super(main);
         main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
         this.workout = workout;
+        if(isProgram)
+            isProgram = true;
+        else
+            onSchedule = true;
 
     }
 
@@ -97,7 +102,7 @@ public class ExcerciseMode extends DCfragment {
                 setExcercise(squat, new Squat(main));
                 break;
             case R.id.exc_tab_btn_deadlift:
-                setExcercise(deadlift, new BenchPress(main));
+                setExcercise(deadlift, new DeadLift(main));
                 break;
             case R.id.exc_tab_btn_shoulderpress:
                 setExcercise(press, new ShoulderPress(main));
@@ -158,9 +163,9 @@ public class ExcerciseMode extends DCfragment {
             dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
             Main.getusbService().write(
                     Commands.MeasureSet(excercise.getMode(),
-                            String.valueOf(main.getMeasureWeight()),
+                            String.valueOf(300),
                             "000",
-                            String.valueOf(main.getMeasureTime()),
+                            String.valueOf(30),
                             "2",
                             "0").getBytes());
 //            handler.postDelayed(new Runnable() {
@@ -403,6 +408,7 @@ public class ExcerciseMode extends DCfragment {
                                 edt_set.getSource().getText().toString()).getBytes());
                         txt_count.setText("0");
                         txt_set.setText("0");
+                        SendWorkoutRecord();
                     } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         stop.setPressedwithNoSound();
                     }
@@ -468,17 +474,17 @@ public class ExcerciseMode extends DCfragment {
         try {
 
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode()+((main.getisIsoKinetic())?"02":"01"));
-            jsonObject.accumulate("count", edt_count.getSource().getText().toString());
-            jsonObject.accumulate("device",main.getCare().getDeviceID());
-            jsonObject.accumulate("email", null);
+            jsonObject.accumulate("count", Integer.valueOf(edt_count.getSource().getText().toString()));
+            jsonObject.accumulate("device",main.getCare().getDeviceID().toString());
+            jsonObject.accumulate("email", "");
             jsonObject.accumulate("height", 0);
             jsonObject.accumulate("isProgram",isProgram);
             jsonObject.accumulate("level",0);
             jsonObject.accumulate("onSchedule",onSchedule);
-            jsonObject.accumulate("rest", edt_rest.getSource().getText().toString());
-            jsonObject.accumulate("set", edt_set.getSource().getText().toString());
-            jsonObject.accumulate("weight", edt_weight.getSource().getText().toString());
-
+            jsonObject.accumulate("rest", Integer.valueOf(edt_rest.getSource().getText().toString()));
+            jsonObject.accumulate("set", Integer.valueOf(edt_set.getSource().getText().toString()));
+            jsonObject.accumulate("weight", Integer.valueOf(edt_weight.getSource().getText().toString()));
+            new DCHttp().SendWorkout(jsonObject.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

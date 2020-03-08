@@ -69,8 +69,7 @@ public class UsbService extends Service {
         return serialPort;
     }
 
-    public void setMain(Main main)
-    {
+    public void setMain(Main main) {
         this.main = main;
     }
 
@@ -93,7 +92,7 @@ public class UsbService extends Service {
     private UsbSerialInterface.UsbCTSCallback ctsCallback = new UsbSerialInterface.UsbCTSCallback() {
         @Override
         public void onCTSChanged(boolean state) {
-            if(mHandler != null)
+            if (mHandler != null)
                 mHandler.obtainMessage(CTS_CHANGE).sendToTarget();
         }
     };
@@ -104,7 +103,7 @@ public class UsbService extends Service {
     private UsbSerialInterface.UsbDSRCallback dsrCallback = new UsbSerialInterface.UsbDSRCallback() {
         @Override
         public void onDSRChanged(boolean state) {
-            if(mHandler != null)
+            if (mHandler != null)
                 mHandler.obtainMessage(DSR_CHANGE).sendToTarget();
         }
     };
@@ -183,42 +182,43 @@ public class UsbService extends Service {
      * This function will be called from MainActivity to write data through Serial Port
      */
     public void write(byte[] data) {
-        if (serialPort != null && serialPort.open() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
+//        if (serialPort != null && serialPort.open() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
+        if (serialPort != null)
             serialPort.write(data);
-        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
-        {
-            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
-                @Override
-                public void onClick(View v)
-                {
-
-                }
-            },new View.OnClickListener(){
-                @Override
-                public void onClick(View v)
-                {
-
-                }
-            },"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.");
-            connectUsb.show();
-        }
-        else
-        {
-            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
-                @Override
-                public void onClick(View v)
-                {
-
-                }
-            },new View.OnClickListener(){
-                @Override
-                public void onClick(View v)
-                {
-
-                }
-            },"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.");
-            connectUsb.show();
-        }
+//        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
+//        {
+//            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v)
+//                {
+//
+//                }
+//            },new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v)
+//                {
+//
+//                }
+//            },"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.");
+//            connectUsb.show();
+//        }
+//        else
+//        {
+//            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v)
+//                {
+//
+//                }
+//            },new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v)
+//                {
+//
+//                }
+//            },"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.");
+//            connectUsb.show();
+//        }
     }
 
     public void setHandler(Handler mHandler) {
@@ -255,13 +255,13 @@ public class UsbService extends Service {
                     device = null;
                 }
             }
-            if (device==null) {
+            if (device == null) {
                 // There are no USB devices connected (but usb host were listed). Send an intent to MainActivity.
                 Intent intent = new Intent(ACTION_NO_USB);
                 sendBroadcast(intent);
             }
         } else {
-            Log.d(TAG, "findSerialPortDevice() usbManager returned empty device list." );
+            Log.d(TAG, "findSerialPortDevice() usbManager returned empty device list.");
             // There is no USB devices connected. Send an intent to MainActivity
             Intent intent = new Intent(ACTION_NO_USB);
             sendBroadcast(intent);
@@ -280,7 +280,7 @@ public class UsbService extends Service {
      * Request user permission. The response will be received in the BroadcastReceiver
      */
     private void requestUserPermission() {
-        Log.d(TAG, String.format("requestUserPermission(%X:%X)", device.getVendorId(), device.getProductId() ) );
+        Log.d(TAG, String.format("requestUserPermission(%X:%X)", device.getVendorId(), device.getProductId()));
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
         usbManager.requestPermission(device, mPendingIntent);
     }

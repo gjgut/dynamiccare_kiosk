@@ -29,6 +29,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
+import com.example.dynamiccare_kisok.Dialog.NormalAlert;
 import com.example.dynamiccare_kisok.R;
 
 public class GraphResult extends DCfragment implements View.OnTouchListener {
@@ -113,8 +114,27 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         edt_time.getSource().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
+                if (!hasFocus) {
+                    if(Integer.valueOf(edt_time.getSource().getText().toString())>999)
+                    {
+                        NormalAlert alert = new NormalAlert(main,new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {}
+                        }, new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {
+
+                            }
+                        },"입력할 수 있는 시간 범위를 초과하였습니다."
+                        );
+                    }
+                    else
+                        main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
+                }
 
             }
         });
@@ -122,6 +142,24 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus)
+                    if(Integer.valueOf(edt_time.getSource().getText().toString())>500)
+                    {
+                        NormalAlert alert = new NormalAlert(main,new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {}
+                        }, new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View v)
+                            {
+
+                            }
+                        },"입력할 수 있는 무게 범위를 초과하였습니다."
+                        );
+                    }
+                else
                     main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
 
             }
@@ -150,10 +188,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         if (!go.isPause()) {
                             DCButtonManager.setDCState(DCButtonManager.State.Excercise);
                             setBottomBar(false);
-                            main.PlaySound(new int[]{R.raw.bee_measurement_begin});
+//                            main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
-                            main.getusbService().write(Commands.MeasureStart("300", "010").getBytes());
+                            main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
                             resCalculator = new ResCalculator();
 
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
@@ -162,8 +200,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                             DCButtonManager.setDCState(DCButtonManager.State.Clear);
                             if (timer != null)
                                 timer.cancel();
+                            main.getusbService().write("$CSP0#".getBytes());
                             main.getusbService().write(Commands.Home(true).getBytes());
-                            main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop,R.raw.thank_you_for_your_efforts,R.raw.excercise_is_going_to_stop_english,R.raw.thank_you_for_your_efforts_english});
+                            main.PlaySound(new int[]{R.raw.stopping_measurement,R.raw.thank_you_for_your_efforts,R.raw.the_measurement_is_going_to_stop_english,R.raw.thank_you_for_your_efforts_english});
 
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
@@ -294,6 +333,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
                         power.setProgress(Integer.parseInt(ack.getmTension()));
                     }
+                    break;
                 case "ASP":
                     if(DCButtonManager.getDCState()== DCButtonManager.State.Clear)
                         break;

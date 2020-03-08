@@ -42,7 +42,8 @@ public class TimeSetting extends DCfragment {
     public TimeSetting(Main main) {
         super(main);
     }
-    public TimeSetting(Main main,DCfragment prev) {
+
+    public TimeSetting(Main main, DCfragment prev) {
         super(main);
         this.prev = prev;
     }
@@ -55,8 +56,7 @@ public class TimeSetting extends DCfragment {
                 if (edt_adminpw.getText().toString().equals(care.getAdminPassword())) {
                     main.ReplaceFragment(prev);
                     main.setTimer(care.getLimit());
-                }
-                else
+                } else
                     reject.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_minutes:
@@ -68,7 +68,7 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_hour:
                 btn_hour.setPressed();
                 if (btn_hour.IsPressed()) {
-                    care.setLimit(125);
+                    care.setLimit(600);
                 }
                 break;
 
@@ -80,7 +80,8 @@ public class TimeSetting extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_time_setting, container, false);
-        prev = new SelectMode(main);
+        if (prev == null)
+            prev = new SelectMode(main);
         super.onCreate(savedInstanceState);
         try {
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));

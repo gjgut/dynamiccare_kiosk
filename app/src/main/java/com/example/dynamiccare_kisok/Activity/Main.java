@@ -140,7 +140,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                getusbService().write("$CHM08".getBytes());
+                getusbService().write(Commands.Home(true).getBytes());
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 ExcerciseFinished finished = new ExcerciseFinished(main,
                         new View.OnClickListener() {

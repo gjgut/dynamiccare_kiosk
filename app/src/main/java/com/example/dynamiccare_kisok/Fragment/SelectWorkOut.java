@@ -226,13 +226,26 @@ public class SelectWorkOut extends DCfragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     try {
-                        ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
-                        if (item.getWorkout().getIsKinetic()) {
-                            main.setisIsoKinetic(true);
-                            main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
-                        } else {
-                            main.setisIsoKinetic(false);
-                            main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout()), true);
+                        if(parent.equals(adapter_plan)) {
+                            ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+                            if (item.getWorkout().getIsKinetic()) {
+                                main.setisIsoKinetic(true);
+                                main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout(),true), true);
+                            } else {
+                                main.setisIsoKinetic(false);
+                                main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout(),true), true);
+                            }
+                        }
+                        else if(parent.equals(adapter_workout))
+                        {
+                            ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+                            if (item.getWorkout().getIsKinetic()) {
+                                main.setisIsoKinetic(true);
+                                main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout(),false), true);
+                            } else {
+                                main.setisIsoKinetic(false);
+                                main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout(),false), true);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

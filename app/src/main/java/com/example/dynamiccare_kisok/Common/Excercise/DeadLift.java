@@ -44,7 +44,7 @@ public class DeadLift extends Excercise {
 
     @Override
     public String getMode() {
-        return "012";
+        return "02";
     }
 
     @Override
