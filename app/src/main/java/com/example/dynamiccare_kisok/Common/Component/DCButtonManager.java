@@ -5,14 +5,15 @@ import android.widget.Toast;
 public class DCButtonManager {
     static DCButton Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat;
     static DCButton Union[];
-    static DCActionButton Start, Ready, Stop;
+    static DCActionButton Start, Ready, Stop, Up, Down;
     static State DCState;
 
     public static State getDCState() {
         return DCState;
     }
 
-    public enum State {Clear, StartSetting, Setted,Ready, Excercise,onRest, Paused, Stop}
+    public enum State {Clear, StartSetting, Setted, Ready, Excercise, onRest, Paused, Stop}
+
     public DCButtonManager(DCButton Bench,
                            DCButton Squat,
                            DCButton Deadlift,
@@ -33,10 +34,19 @@ public class DCButtonManager {
 
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
             setDCState(State.Clear);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public DCButtonManager(DCActionButton Start,
+                           DCActionButton Ready,
+                           DCActionButton Up,
+                           DCActionButton Down) {
+        this.Start = Start;
+        this.Ready = Ready;
+        this.Up = Up;
+        this.Down = Down;
     }
 
     public DCButtonManager(DCButton Bench,
@@ -65,8 +75,7 @@ public class DCButtonManager {
             this.Stop = Stop;
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
             setDCState(State.Clear);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -87,6 +96,7 @@ public class DCButtonManager {
                     break;
                 }
                 case StartSetting: {
+                    DCState = State.StartSetting;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
                             i.Deactivate();
@@ -94,21 +104,26 @@ public class DCButtonManager {
                     }
                     Ready.Deactivate();
                     Start.Deactivate();
-                    Stop.Activate();
+                    if (Stop != null)
+                        Stop.Activate();
+                    Up.Deactivate();
+                    Down.Deactivate();
 
-                    DCState = State.StartSetting;
                     break;
                 }
                 case Setted: {
+                    DCState = State.Setted;
                     for (DCButton i : Union) {
                         i.Activate();
                     }
-                    DCState = State.Setted;
                     Ready.Activate();
                     Start.Deactivate();
+                    Up.Activate();
+                    Down.Activate();
                     break;
                 }
                 case Ready:
+                    DCState = State.Ready;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
                             i.Deactivate();
@@ -116,12 +131,13 @@ public class DCButtonManager {
                     }
                     Ready.Activate();
                     Start.Deactivate();
-                    DCState = State.Ready;
                     break;
                 case Excercise:
+                    DCState = State.Excercise;
                     Ready.Activate();
                     Start.Activate();
-                    DCState = State.Excercise;
+                    Up.Deactivate();
+                    Down.Deactivate();
                     break;
                 case onRest:
                     Ready.Deactivate();

@@ -35,11 +35,12 @@ import com.example.dynamiccare_kisok.R;
 public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     DCButton Low, Mid, High;
-    ImageButton Up, Down;
+    DCActionButton Up, Down;
     DCActionButton ready, go;
     ProgressBar power;
     ResCalculator resCalculator;
     DCEditText edt_time, edt_weight;
+    DCButtonManager dcButtonManager;
 
     Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
 
@@ -93,8 +94,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     public void setViews(View v) {
 
-        Up = (ImageButton) v.findViewById(R.id.btn_up);
-        Down = (ImageButton) v.findViewById(R.id.btn_down);
+        Up =  new DCActionButton(main,v.findViewById(R.id.btn_up),null);
+        Down = new DCActionButton(main,v.findViewById(R.id.btn_down),null);
 
         Low = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_low), getResources().getDrawable(R.drawable.pressed_btn_low));
         Mid = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_mid), getResources().getDrawable(R.drawable.pressed_btn_mid));
@@ -170,10 +171,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         Mid.getButton().setOnClickListener(this);
         High.getButton().setOnClickListener(this);
 
-        Up.setOnTouchListener(this);
-
-        Down.setOnTouchListener(this);
-
+        Up.getButton().setOnTouchListener(this);
+        Down.getButton().setOnTouchListener(this);
         ready.getButton().setOnClickListener(this);
         go.getButton().setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -188,7 +187,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         if (!go.isPause()) {
                             DCButtonManager.setDCState(DCButtonManager.State.Excercise);
                             setBottomBar(false);
-//                            main.PlaySound(new int[]{R.raw.bee_measurement_begin});
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
                             main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
@@ -197,7 +195,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
                         } else {
-                            DCButtonManager.setDCState(DCButtonManager.State.Clear);
+                            DCButtonManager.setDCState(DCButtonManager.State.Setted);
                             if (timer != null)
                                 timer.cancel();
                             main.getusbService().write("$CSP0#".getBytes());
@@ -212,6 +210,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 return false;
             }
         });
+
+        dcButtonManager = new DCButtonManager(go,ready,Up,Down);
+        dcButtonManager.setDCState(dcButtonManager.getDCState());
+
         go.Deactivate();
 
 
@@ -222,7 +224,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (v.getId() == R.id.btn_up) {
-                    Up.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_up));
+                    Up.getButton().setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_up));
                     timer = new CountDownTimer(1000000,1) {
                         @Override
                         public void onTick(long millisUntilFinished) {
@@ -237,7 +239,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     };
                     timer.start();
                 } else {
-                    Down.setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_down));
+                    Down.getButton().setImageDrawable(getResources().getDrawable(R.drawable.pressed_btn_down));
                     timer = new CountDownTimer(1000000,1) {
                         @Override
                         public void onTick(long millisUntilFinished) {
@@ -255,11 +257,11 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 break;
             case MotionEvent.ACTION_UP:
                 if (v.getId() == R.id.btn_up) {
-                    Up.setImageDrawable(getResources().getDrawable(R.drawable.btn_up));
+                    Up.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_up));
                     timer.cancel();
                     Log.i("Sent Command", "stop");
                 } else {
-                    Down.setImageDrawable(getResources().getDrawable(R.drawable.btn_down));
+                    Down.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_down));
                     timer.cancel();
                     Log.i("Sent Command", "stop");
                 }
