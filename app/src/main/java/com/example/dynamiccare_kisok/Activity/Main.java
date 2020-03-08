@@ -566,8 +566,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_back: {
                 PlaySound(R.raw.back_button);
-                if (currentFragment.getClass().getSimpleName() == "Explain")
+                if (currentFragment.getClass().getSimpleName() == "Explain" || currentFragment.getClass().getSimpleName() == "ExcerciseMode") {
                     main.getusbService().write(Commands.Home(true).getBytes());
+                    main.StopSound();
+                }
                 if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
                     Intent intent = new Intent(main, Login.class);
                     startActivity(intent);

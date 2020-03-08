@@ -34,7 +34,6 @@ public abstract class DCfragment extends Fragment implements View.OnClickListene
         {
             timer.cancel();
         }
-        main.StopSound();
     }
     public void HandleACK(ACK ack)
     {
