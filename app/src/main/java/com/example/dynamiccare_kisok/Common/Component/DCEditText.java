@@ -22,6 +22,7 @@ public class DCEditText implements TextWatcher {
         source.addTextChangedListener(this);
     }
 
+
     public EditText getSource() {
         return source;
     }

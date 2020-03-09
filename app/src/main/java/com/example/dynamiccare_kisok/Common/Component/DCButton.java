@@ -3,6 +3,7 @@ package com.example.dynamiccare_kisok.Common.Component;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -111,7 +112,7 @@ public class DCButton  {
                 this.button.setImageDrawable(UnPressed);
         }catch (Exception e)
         {
-            e.printStackTrace();
+            Log.e("Error",e.toString());
         }
     }
 
@@ -128,7 +129,7 @@ public class DCButton  {
                 this.button.setImageDrawable(UnPressed);
         }catch (Exception e)
         {
-            e.printStackTrace();
+            Log.e("Error",e.toString());
         }
     }
 

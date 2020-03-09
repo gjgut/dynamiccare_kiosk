@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Common.Component;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,29 +22,29 @@ public class DCActionBar {
 
     private Main main;
     private ActionBar actionBar;
-    private ImageButton Home,LogOut,TimeSet;
+    private ImageButton Home, LogOut, TimeSet;
     private TextView title;
 
-    public DCActionBar(Main _main, ActionBar _actionBar, String title){
+    public DCActionBar(Main _main, ActionBar _actionBar, String title) {
         this.main = _main;
         this.actionBar = _actionBar;
         setActionBar();
         this.title.setText(title);
     }
 
-    public void setTitle(String text)
-    {
+    public void setTitle(String text) {
         this.title.setText(text);
     }
 
-    public void setHome(int visibility)
-    {
+    public void setHome(int visibility) {
         Home.setVisibility(visibility);
     }
 
-    public void setTimeButton(int visibility){TimeSet.setVisibility(visibility);}
+    public void setTimeButton(int visibility) {
+        TimeSet.setVisibility(visibility);
+    }
 
-    public void setActionBar(){
+    public void setActionBar() {
         try {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(false);
@@ -68,33 +69,44 @@ public class DCActionBar {
             TimeSet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    main.PlaySound(R.raw.back_button);
-                    main.ReplaceFragment(new TimeSetting(main,main.getCurrentFragment()),true);
-                    main.overridePendingTransition(R.anim.left_in,R.anim.right_out);
+                    try {
+                        main.PlaySound(R.raw.back_button);
+                        main.ReplaceFragment(new TimeSetting(main, main.getCurrentFragment()), true);
+                        main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                    }
                 }
             });
 
             Home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    main.PlaySound(R.raw.home_button);
-                    main.ReplaceFragment(new SelectMode(main),true);
-                    main.overridePendingTransition(R.anim.left_in,R.anim.right_out);
+                    try {
+                        main.PlaySound(R.raw.home_button);
+                        main.ReplaceFragment(new SelectMode(main), true);
+                        main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                    }
                 }
             });
             LogOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    main.PlaySound(R.raw.back_button);
-                    Intent intent = new Intent(main, Login.class);
-                    main.startActivity(intent);
-                    main.overridePendingTransition(R.anim.left_in,R.anim.right_out);
-                    main.finish();
+                    try {
+                        main.PlaySound(R.raw.back_button);
+                        Intent intent = new Intent(main, Login.class);
+                        main.startActivity(intent);
+                        main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                        main.finish();
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                    }
                 }
             });
 
-        }catch(Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

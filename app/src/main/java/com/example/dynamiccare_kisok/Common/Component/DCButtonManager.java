@@ -1,5 +1,6 @@
 package com.example.dynamiccare_kisok.Common.Component;
 
+import android.util.Log;
 import android.widget.Toast;
 
 public class DCButtonManager {
@@ -34,8 +35,9 @@ public class DCButtonManager {
 
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
             setDCState(State.Clear);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e)
+        {
+            Log.e("Error",e.toString());
         }
     }
 
@@ -75,8 +77,9 @@ public class DCButtonManager {
             this.Stop = Stop;
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
             setDCState(State.Clear);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e)
+        {
+            Log.e("Error",e.toString());
         }
     }
 
@@ -156,8 +159,9 @@ public class DCButtonManager {
                     break;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e)
+        {
+            Log.e("Error",e.toString());
         }
     }
 
