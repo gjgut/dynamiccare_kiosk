@@ -646,6 +646,14 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 }
             }
 
+            if (currentFragment.getClass() == ExcerciseMode.class
+                    || currentFragment.getClass() == DetailResult.class
+                    || currentFragment.getClass() == SelectMode.class
+                    || currentFragment.getClass() == TimeSetting.class)
+                btn_next.setVisibility(View.INVISIBLE);
+            else
+                btn_next.setVisibility(View.VISIBLE);
+
             customActionBar.setHome(fragment.isHomeVisible());
             customActionBar.setTitle(fragment.getTitle());
             fragmentTransaction.replace(R.id.main_container, fragment);
@@ -676,7 +684,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             if (currentFragment.getClass() == ExcerciseMode.class
                     || currentFragment.getClass() == DetailResult.class
-                    || currentFragment.getClass() == SelectMode.class)
+                    || currentFragment.getClass() == SelectMode.class
+                    || currentFragment.getClass() == TimeSetting.class)
                 btn_next.setVisibility(View.INVISIBLE);
             else
                 btn_next.setVisibility(View.VISIBLE);

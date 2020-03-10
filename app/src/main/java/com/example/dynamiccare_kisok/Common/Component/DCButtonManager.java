@@ -91,6 +91,12 @@ public class DCButtonManager {
                     for (DCButton i : Union) {
                         i.Activate();
                     }
+                    if(Ready.isPressed)
+                        Ready.setPressedwithNoSound();
+                    if(Start.isPressed)
+                        Start.setPressedwithNoSound();
+                    if(Stop.isPressed)
+                        Stop.setPressedwithNoSound();
                     Ready.Deactivate();
                     Start.Deactivate();
                     Stop.Deactivate();

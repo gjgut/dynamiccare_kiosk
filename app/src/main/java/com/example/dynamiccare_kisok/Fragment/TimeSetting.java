@@ -33,6 +33,7 @@ public class TimeSetting extends DCfragment {
     Button btn_ok;
     DynamicCare care;
     DCfragment prev;
+    ExcerciseMode excerciseMode;
 
 
     public TimeSetting() {
@@ -46,6 +47,11 @@ public class TimeSetting extends DCfragment {
     public TimeSetting(Main main, DCfragment prev) {
         super(main);
         this.prev = prev;
+    }
+
+    public TimeSetting(Main main, ExcerciseMode excerciseMode) {
+        super(main);
+        this.excerciseMode = excerciseMode;
     }
 
     @Override
