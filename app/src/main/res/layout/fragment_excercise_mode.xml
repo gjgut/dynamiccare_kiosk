@@ -236,7 +236,7 @@
                     android:lineSpacingExtra="19sp"
                     android:text="레벨"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -378,7 +378,7 @@
                         android:lineSpacingExtra="19sp"
                         android:text="0 "
                         android:textColor="#ffffff"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -392,7 +392,7 @@
                         android:lineSpacingExtra="19sp"
                         android:text=" / "
                         android:textColor="#ffffff"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -409,7 +409,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -455,7 +455,7 @@
                         android:lineSpacingExtra="19sp"
                         android:text="0 "
                         android:textColor="#ffffff"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -469,7 +469,7 @@
                         android:lineSpacingExtra="19sp"
                         android:text=" / "
                         android:textColor="#ffffff"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -486,7 +486,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -537,6 +537,7 @@
                         android:textColorHighlight="#3993de"
                         android:textColorHint="@color/bb_inActiveBottomBarItemColor"
                         android:textColorLink="#3993de"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -550,7 +551,7 @@
                         android:lineSpacingExtra="19sp"
                         android:text="sec"
                         android:textColor="#ffffff"
-                        android:textSize="24sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
