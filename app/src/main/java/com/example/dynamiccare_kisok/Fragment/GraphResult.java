@@ -29,8 +29,11 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
+import com.example.dynamiccare_kisok.Common.Util.DCHttp;
 import com.example.dynamiccare_kisok.Dialog.NormalAlert;
 import com.example.dynamiccare_kisok.R;
+
+import org.json.JSONObject;
 
 public class GraphResult extends DCfragment implements View.OnTouchListener {
 
@@ -219,6 +222,23 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     }
 
+    public void SendResult() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode()+((main.getisIsoKinetic())?"02":"01"));
+            jsonObject.accumulate("device",main.getCare().getDeviceID().toString());
+            jsonObject.accumulate("email", "gjgustjd70@naver.com");
+            jsonObject.accumulate("start", resCalculator.getStart()==0?0:resCalculator.getStart()/1000);
+            jsonObject.accumulate("max", resCalculator.getMax()==0?0:resCalculator.getMax()/1000);
+            jsonObject.accumulate("min", resCalculator.getMin()==0?0:resCalculator.getMin()/1000);
+            jsonObject.accumulate("average", resCalculator.getAverage()==0?0:resCalculator.getAverage()/1000);
+
+            new DCHttp().SendResult(jsonObject.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
@@ -333,6 +353,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 case "AME":
                     if (Integer.parseInt(ack.getTime()) > 1000) {
                         resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
+                        if(Integer.parseInt(ack.getmTension())<resCalculator.getMax())
+                            break;
                         power.setProgress(Integer.parseInt(ack.getmTension()));
                     }
                     break;
@@ -356,6 +378,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                             R.raw.please_check_the_results_english,
                             R.raw.dynamic_care});
                     setBottomBar(true);
+                    SendResult();
                     break;
 
             }

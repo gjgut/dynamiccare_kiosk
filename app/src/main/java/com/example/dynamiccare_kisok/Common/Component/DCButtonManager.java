@@ -121,6 +121,7 @@ public class DCButtonManager {
                     }
                     Ready.Activate();
                     Start.Deactivate();
+                    Stop.Activate();
                     Up.Activate();
                     Down.Activate();
                     break;

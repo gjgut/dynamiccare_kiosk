@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 
 import org.json.JSONObject;
@@ -13,7 +14,16 @@ public class DynamicCare extends Application {
     public static String CurrentUser,DeviceID;
     public static JSONObject CurrentUserJson;
     public static int limit=600;
+    public static DCfragment tempFragment;
     public SharedPreferences Admin;
+
+    public static DCfragment getTempFragment() {
+        return tempFragment;
+    }
+
+    public static void setTempFragment(DCfragment tempFragment) {
+        DynamicCare.tempFragment = tempFragment;
+    }
 
     public String getAdminPassword() {
         return Admin.getString("password","");

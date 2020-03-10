@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     try {
-                        JSONObject response = Httplogin(edt_code.getSource().getText().toString());
+//                        JSONObject response = Httplogin(edt_code.getSource().getText().toString());
 //                        if ((Boolean) response.get("isPresent") != false && (Boolean) response.get("isError") != true) {
 //                            DynamicCare care = (DynamicCare) getApplication();
 //                            care.setCurrentUserJson(response);

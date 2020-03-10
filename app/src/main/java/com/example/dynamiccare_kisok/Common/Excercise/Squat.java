@@ -27,6 +27,7 @@ public class Squat extends Excercise {
     public String getSimpleName() {
         return "스쿼트";
     }
+
     @Override
     public String getMuscleName() { return "대퇴사두근";}
 

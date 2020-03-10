@@ -73,6 +73,7 @@ public class DCActionBar {
                         main.PlaySound(R.raw.back_button);
                         main.ReplaceFragment(new TimeSetting(main, main.getCurrentFragment()), true);
                         main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                        main.getCurrentFragment().timer.cancel();
                     } catch (Exception e) {
                         Log.e("Error", e.toString());
                     }

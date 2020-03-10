@@ -72,7 +72,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     int MeasureTime = 10;
     int MeasureWeight = 300;
     Handler handler;
-    int count;
+    int count=0;
     CountDownTimer countDownTimer;
     DynamicCare care;
 
@@ -120,7 +120,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     public void setTimer(int time) {
         countDownTimer.cancel();
-        count = time;
+        count += time;
         BottomRestTime.setTextColor(Color.WHITE);
         countDownTimer = new CountDownTimer(time * 1000, 1000) {
             @Override

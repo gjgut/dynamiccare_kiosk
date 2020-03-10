@@ -74,6 +74,7 @@ public class ExcerciseMode extends DCfragment {
     int count;
     Handler handler = new Handler();
 
+
     public ExcerciseMode(Main main) {
         super(main);
         main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
@@ -97,6 +98,7 @@ public class ExcerciseMode extends DCfragment {
         switch (v.getId()) {
             case R.id.exc_tab_btn_bench:
                 setExcercise(bench, new BenchPress(main));
+                TakeBreak("2");
                 break;
             case R.id.exc_tab_btn_squat:
                 setExcercise(squat, new Squat(main));
@@ -175,6 +177,7 @@ public class ExcerciseMode extends DCfragment {
 //            }, 3000);
         } else {
             dcButtonManager.setDCState(DCButtonManager.State.Clear);
+            ready.setPressed();
             main.setCurrentExcercise(null);
         }
     }
@@ -183,6 +186,7 @@ public class ExcerciseMode extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_excercise_mode, container, false);
+
         setViews(view);
 
 
@@ -419,6 +423,8 @@ public class ExcerciseMode extends DCfragment {
             txt_count.setOnClickListener(this);
             txt_set.setOnClickListener(this);
 
+            DCButtonManager.State prevstate = DCButtonManager.getDCState();
+
             dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf, start, ready, stop);
 
 
@@ -454,6 +460,39 @@ public class ExcerciseMode extends DCfragment {
 
                 }
             }
+
+            switch(main.getCurrentExcercise().getClass().getSimpleName())
+            {
+                case "BenchPress":
+                    bench.setPressed();
+                    break;
+                case "Squat":
+                    squat.setPressed();
+                    break;
+                case "DeadLift":
+                    deadlift.setPressed();
+                    break;
+                case "ShoulderPress":
+                    press.setPressed();
+                    break;
+                case "CarfRaise":
+                    carf.setPressed();
+                    break;
+                case "ArmCurl":
+                    curl.setPressed();
+                    break;
+                case "ArmExtension":
+                    extension.setPressed();
+                    break;
+                case "LatPullDown":
+                    latpull.setPressed();
+                    break;
+            }
+
+            dcButtonManager.setDCState(prevstate);
+
+            if(count != 0)
+                timer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
