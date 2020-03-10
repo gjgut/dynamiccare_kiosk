@@ -140,7 +140,7 @@ public class ExcerciseMode extends DCfragment {
                     txt_count.setText(edt_count.getSource().getText().toString());
                     dcButtonManager.setDCState(DCButtonManager.State.Ready);
                     main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
-                            main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
+                            main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
                             edt_set.getSource().getText().toString()).getBytes());
                 } else {
@@ -148,7 +148,7 @@ public class ExcerciseMode extends DCfragment {
 
                     dcButtonManager.setDCState(DCButtonManager.State.Clear);
                     main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                            main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
+                            main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
                             edt_set.getSource().getText().toString()).getBytes());
                 }
@@ -439,14 +439,15 @@ public class ExcerciseMode extends DCfragment {
             data.add("4(6cm/sec)");
             data.add("5(8.5cm/sec)");
 
-            List<String> number = new ArrayList<String>();
-            data.add("1");
-            data.add("2");
-            data.add("3");
-            data.add("4");
-            data.add("5");
+//            List<Integer> number = new ArrayList<Integer>();
+//            data.add(1);
+//            data.add("2");
+//            data.add("3");
+//            data.add("4");
+//            data.add("5");
 
-            spinnerAdapter spinnerAdapter = new spinnerAdapter(main, data, number);
+
+            spinnerAdapter spinnerAdapter = new spinnerAdapter(main,data);
             spin_level.setAdapter(spinnerAdapter);
 
             bench.getButton().setOnClickListener(this);
@@ -470,7 +471,7 @@ public class ExcerciseMode extends DCfragment {
                             if (start.isPause()) {
                                 dcButtonManager.setDCState(DCButtonManager.State.Excercise);
                                 main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                                        main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
+                                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                                         edt_count.getSource().getText().toString(),
                                         edt_set.getSource().getText().toString()).getBytes());
                                 main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
@@ -479,7 +480,7 @@ public class ExcerciseMode extends DCfragment {
                             } else {
                                 dcButtonManager.setDCState(DCButtonManager.State.Paused);
                                 main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
-                                        main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
+                                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                                         edt_count.getSource().getText().toString(),
                                         edt_set.getSource().getText().toString()).getBytes());
                                 start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
@@ -506,7 +507,7 @@ public class ExcerciseMode extends DCfragment {
 
                         main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                         main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                                main.getisIsoKinetic() ? spinnerAdapter.getCurrentNumber() : edt_weight.getSource().getText().toString(),
+                                main.getisIsoKinetic() ? String.valueOf(String.valueOf(spinnerAdapter.getCurrentNumber())) : edt_weight.getSource().getText().toString(),
                                 edt_count.getSource().getText().toString(),
                                 edt_set.getSource().getText().toString()).getBytes());
                         txt_count.setText("0");
@@ -625,19 +626,26 @@ public class ExcerciseMode extends DCfragment {
 class spinnerAdapter extends BaseAdapter {
     Context context;
     List<String> data;
-    List<String> number;
+    List<Integer> number;
     LayoutInflater inflater;
     static TextView spinnerText;
 
 
-    public spinnerAdapter(Context context, List<String> number, List<String> data) {
+    public spinnerAdapter(Context context, List<Integer> number, List<String> data) {
+        this.context = context;
+        this.data = data;
+        this.number = number;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public spinnerAdapter(Context context,List<String> data) {
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public static String getCurrentNumber() {
-        return spinnerText.getText().toString();
+    public static char getCurrentNumber() {
+        return spinnerText.getText().toString().charAt(0);
     }
 
 
@@ -681,7 +689,8 @@ class spinnerAdapter extends BaseAdapter {
 
     @Override
     public String getItem(int position) {
-        return number.get(position);
+        Log.i("getItem",String.valueOf(position+1));
+        return String.valueOf(position+1);
     }
 
     @Override
