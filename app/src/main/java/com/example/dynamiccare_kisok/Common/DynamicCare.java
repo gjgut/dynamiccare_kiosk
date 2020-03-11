@@ -13,7 +13,7 @@ public class DynamicCare extends Application {
     public  static DCSoundPlayer dcSoundPlayer;
     public static String CurrentUser,DeviceID;
     public static JSONObject CurrentUserJson;
-    public static int limit=600;
+    public static int limit=60;
     public static DCfragment tempFragment;
     public SharedPreferences Admin;
 
@@ -99,6 +99,6 @@ public class DynamicCare extends Application {
         super.onCreate();
         dcSoundPlayer = new DCSoundPlayer();
         Admin = getSharedPreferences("password",MODE_PRIVATE);
-//        setAdminPassword("0000");
+        setAdminPassword("0000");
     }
 }

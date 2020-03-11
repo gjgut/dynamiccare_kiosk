@@ -87,6 +87,7 @@ public class DCButtonManager {
         try {
             switch (state) {
                 case Clear: {
+                    Log.i("State","Clear");
                     DCButton.PressedOff();
                     for (DCButton i : Union) {
                         i.Activate();
@@ -105,6 +106,7 @@ public class DCButtonManager {
                     break;
                 }
                 case StartSetting: {
+                    Log.i("State","StartSetting");
                     DCState = State.StartSetting;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
@@ -143,6 +145,7 @@ public class DCButtonManager {
                     Start.Deactivate();
                     break;
                 case Excercise:
+                    Log.i("State","Excercise");
                     DCState = State.Excercise;
                     Ready.Activate();
                     Start.Activate();
@@ -150,6 +153,7 @@ public class DCButtonManager {
                     Down.Deactivate();
                     break;
                 case onRest:
+                    Log.i("State","onRest");
                     Ready.Deactivate();
                     Start.Deactivate();
                     break;

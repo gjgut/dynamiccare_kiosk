@@ -54,6 +54,8 @@ import com.example.dynamiccare_kisok.R;
 import java.lang.ref.WeakReference;
 import java.util.Set;
 
+import static com.example.dynamiccare_kisok.Common.DynamicCare.getDeviceID;
+
 public class Main extends AppCompatActivity implements View.OnClickListener {
     FinishAlert FinishAlert;
     Main main;
@@ -63,7 +65,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCActionBar customActionBar;
     static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
-    static boolean isIsoKinetic, isIsoTonic;
+    static boolean isIsoKinetic, isIsoTonic,alertflag=false;
     static Excercise currentExcercise;
     static UsbService usbService;
     static DCSoundPlayer dcSoundPlayer;
@@ -72,7 +74,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     int MeasureTime = 10;
     int MeasureWeight = 300;
     Handler handler;
-    int count=0;
+    int count = 0;
     CountDownTimer countDownTimer;
     DynamicCare care;
 
@@ -116,27 +118,38 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         dcSoundThread.playstream(stream);
     }
 
-    public void StopSound(){dcSoundThread.stopstream();}
+    public void StopSound() {
+        dcSoundThread.stopstream();
+    }
 
     public void setTimer(int time) {
-        countDownTimer.cancel();
+        if (countDownTimer != null)
+            countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
-        countDownTimer = new CountDownTimer(time * 1000, 1000) {
+        countDownTimer = new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                Log.i("Timer", String.valueOf(count));
                 if (count == 30) {
-                    FinishAlert.show();
+                    alertflag = true;
                     BottomRestTime.setTextColor(Color.RED);
 
                 }
+                if(count<30)
+                {
+                    if(alertflag && DCButtonManager.getDCState() != DCButtonManager.State.Excercise)
+                    {
+                        FinishAlert.show();
+                        alertflag = false;
+                    }
+                }
                 if (count < 10) {
                     BottomRestTime.setText("00:0" + String.valueOf(count));
-                }
-                else if(count>10 && count%60<10)
-                    BottomRestTime.setText("0"+String.valueOf(count / 60) + ":0" + String.valueOf(count % 60));
+                } else if (count > 10 && count % 60 < 10)
+                    BottomRestTime.setText("0" + String.valueOf(count / 60) + ":0" + String.valueOf(count % 60));
                 else
-                    BottomRestTime.setText("0"+String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
+                    BottomRestTime.setText("0" + String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
                 count--;
             }
 
@@ -361,7 +374,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 case "ASS":
                     switch (ack.getData()) {
                         case "00":
-                            PlaySound(new int[]{R.raw.thank_you_for_your_efforts, R.raw.thank_you_for_your_efforts_english});
+                            PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                             break;
                         case "01":
                             PlaySound(new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
@@ -478,7 +491,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         currentExcercise = excercise;
     }
 
-    public DCfragment getCurrentFragment(){
+    public DCfragment getCurrentFragment() {
         return currentFragment;
     }
 
@@ -501,51 +514,53 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
 
-                        }
-                    }, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
-            countDownTimer = new CountDownTimer(count * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    try {
-                        BottomRestTime.setText("00:" + String.valueOf(count));
-                        count--;
-
-                        if (count == 30) {
-                            FinishAlert.show();
-                            BottomRestTime.setTextColor(Color.RED);
-
-                        }
-                    } catch (Exception e) {
-                        Log.e("Error", e.toString());
-                        e.printStackTrace();
                     }
-                }
-
+                }, new View.OnClickListener() {
             @Override
-            public void onFinish() {
-                getusbService().write("$CHM08".getBytes());
-                Intent intent = new Intent(main, Login.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                ExcerciseFinished finished = new ExcerciseFinished(main,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        });
-                finished.show();
+            public void onClick(View v) {
             }
-        };
-        countDownTimer.start();
+        });
+//            countDownTimer = new CountDownTimer(count * 1000, 1000) {
+//                @Override
+//                public void onTick(long millisUntilFinished) {
+//                    try {
+//                        BottomRestTime.setText("00:" + String.valueOf(count));
+//                        count--;
+//
+//                        if (count == 30) {
+//                            FinishAlert.show();
+//                            BottomRestTime.setTextColor(Color.RED);
+//
+//                        }
+//                    } catch (Exception e) {
+//                        Log.e("Error", e.toString());
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            @Override
+//            public void onFinish() {
+//                getusbService().write("$CHM08".getBytes());
+//                Intent intent = new Intent(main, Login.class);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+//                ExcerciseFinished finished = new ExcerciseFinished(main,
+//                        new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                            }
+//                        },
+//                        new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                            }
+//                        });
+//                finished.show();
+//            }
+//        };
+
+//        countDownTimer.start();
+
 
         dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
@@ -557,6 +572,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
+        Toast.makeText(this,getCare().getDeviceID().toString(),Toast.LENGTH_LONG);
 
         if (care.getLimit() != 0)
             ReplaceFragment(new TimeSetting(this));

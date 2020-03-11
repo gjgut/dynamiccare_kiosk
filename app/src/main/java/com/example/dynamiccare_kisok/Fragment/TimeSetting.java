@@ -8,8 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Fragment.SelectMode;
 import com.example.dynamiccare_kisok.R;
@@ -34,6 +37,8 @@ public class TimeSetting extends DCfragment {
     DynamicCare care;
     DCfragment prev;
     ExcerciseMode excerciseMode;
+    CountDownTimer timer;
+    int count = 0;
 
 
     public TimeSetting() {
@@ -47,6 +52,10 @@ public class TimeSetting extends DCfragment {
     public TimeSetting(Main main, DCfragment prev) {
         super(main);
         this.prev = prev;
+        if(prev.getClass().getSimpleName().equals("ExcerciseMode"))
+        {
+            excerciseMode = (ExcerciseMode)prev;
+        }
     }
 
     public TimeSetting(Main main, ExcerciseMode excerciseMode) {
@@ -60,7 +69,14 @@ public class TimeSetting extends DCfragment {
 
             case R.id.btn_ok:
                 if (edt_adminpw.getText().toString().equals(care.getAdminPassword())) {
-                    main.ReplaceFragment(prev);
+                    if (excerciseMode != null) {
+                        if (timer != null)
+                            timer.cancel();
+                        Bundle outState = excerciseMode.getSaveState();
+                        outState.putInt("count", count);
+                        main.ReplaceFragment(new ExcerciseMode(main,outState));
+                    } else
+                        main.ReplaceFragment(prev);
                     main.setTimer(care.getLimit());
                 } else
                     reject.setVisibility(View.VISIBLE);
@@ -74,7 +90,7 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_hour:
                 btn_hour.setPressed();
                 if (btn_hour.IsPressed()) {
-                    care.setLimit(600);
+                    care.setLimit(60);
                 }
                 break;
 
@@ -88,6 +104,22 @@ public class TimeSetting extends DCfragment {
         View view = inflater.inflate(R.layout.fragment_time_setting, container, false);
         if (prev == null)
             prev = new SelectMode(main);
+        if (excerciseMode != null) {
+            count = excerciseMode.getSaveState().getInt("count");
+            timer = new CountDownTimer(count, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    count--;
+                    Log.i("timesetting",String.valueOf(count));
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            };
+            timer.start();
+        }
         super.onCreate(savedInstanceState);
         try {
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));
@@ -130,7 +162,14 @@ public class TimeSetting extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
-        return prev;
+            if (excerciseMode != null) {
+                if (timer != null)
+                    timer.cancel();
+                Bundle outState = excerciseMode.getSaveState();
+                outState.putInt("count", count);
+                return new ExcerciseMode(main,outState);
+            } else
+                return prev;
     }
 
     @Override

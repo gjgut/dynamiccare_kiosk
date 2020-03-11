@@ -505,7 +505,7 @@ public class ExcerciseMode extends DCfragment {
                         dcButtonManager.setDCState(DCButtonManager.State.Stop);
                         dcButtonManager.setDCState(DCButtonManager.State.Setted);
 
-                        main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+//                        main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                         main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                                 main.getisIsoKinetic() ? String.valueOf(String.valueOf(spinnerAdapter.getCurrentNumber())) : edt_weight.getSource().getText().toString(),
                                 edt_count.getSource().getText().toString(),
@@ -580,7 +580,6 @@ public class ExcerciseMode extends DCfragment {
     public void SendWorkoutRecord() {
         JSONObject jsonObject = new JSONObject();
         try {
-
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));
             jsonObject.accumulate("count", Integer.valueOf(edt_count.getSource().getText().toString()));
             jsonObject.accumulate("device", main.getCare().getDeviceID().toString());
