@@ -85,7 +85,7 @@ public class DCActionBar {
                 public void onClick(View v) {
                     try {
                         main.PlaySound(R.raw.home_button);
-                        main.ReplaceFragment(new SelectMode(main), true);
+                        main.ReplaceFragment(new SelectMode(main), false);
                         main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
                     } catch (Exception e) {
                         Log.e("Error", e.toString());

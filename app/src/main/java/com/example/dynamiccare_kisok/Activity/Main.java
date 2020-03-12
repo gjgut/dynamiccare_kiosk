@@ -502,6 +502,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         main = this;
 
+
         ackListener = new ACKListener(this);
         handler = new Handler();
 
@@ -573,6 +574,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
         Toast.makeText(this,getCare().getDeviceID().toString(),Toast.LENGTH_LONG);
+
+        Toast.makeText(this,getCare().getDeviceID().toString(),Toast.LENGTH_LONG).show();
 
         if (care.getLimit() != 0)
             ReplaceFragment(new TimeSetting(this));

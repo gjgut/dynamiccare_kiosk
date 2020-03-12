@@ -92,11 +92,11 @@ public class DCButtonManager {
                     for (DCButton i : Union) {
                         i.Activate();
                     }
-                    if(Ready.isPressed)
+                    if(Ready.IsPressed())
                         Ready.setPressedwithNoSound();
-                    if(Start.isPressed)
+                    if(Start.IsPressed())
                         Start.setPressedwithNoSound();
-                    if(Stop.isPressed)
+                    if(Stop.IsPressed())
                         Stop.setPressedwithNoSound();
                     Ready.Deactivate();
                     Start.Deactivate();
@@ -123,6 +123,7 @@ public class DCButtonManager {
                     break;
                 }
                 case Setted: {
+                    Log.i("State","Setted");
                     DCState = State.Setted;
                     for (DCButton i : Union) {
                         i.Activate();
@@ -135,6 +136,7 @@ public class DCButtonManager {
                     break;
                 }
                 case Ready:
+                    Log.i("State","Ready");
                     DCState = State.Ready;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
@@ -142,11 +144,15 @@ public class DCButtonManager {
                         }
                     }
                     Ready.Activate();
+                    if(!Ready.IsPressed())
+                        Ready.setPressedwithNoSound();
                     Start.Deactivate();
+                    Stop.Activate();
                     break;
                 case Excercise:
                     Log.i("State","Excercise");
                     DCState = State.Excercise;
+                    Stop.Activate();
                     Ready.Activate();
                     Start.Activate();
                     Up.Deactivate();
@@ -156,6 +162,7 @@ public class DCButtonManager {
                     Log.i("State","onRest");
                     Ready.Deactivate();
                     Start.Deactivate();
+                    Stop.Activate();
                     break;
                 case Paused: {
                     DCState = State.Paused;

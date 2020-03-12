@@ -77,6 +77,7 @@ public class ExcerciseMode extends DCfragment {
     Handler handler = new Handler();
     boolean isResume = false;
 
+    public ExcerciseMode(){}
 
     public ExcerciseMode(Main main) {
         super(main);
@@ -135,7 +136,7 @@ public class ExcerciseMode extends DCfragment {
             }
             case R.id.exc_btn_ready:
                 ready.setPressed();
-                if (ready.getButton().isPressed()) {
+                if (ready.IsPressed()) {
                     setPropertiesFocusable(false);
                     txt_count.setText(edt_count.getSource().getText().toString());
                     dcButtonManager.setDCState(DCButtonManager.State.Ready);
@@ -146,7 +147,7 @@ public class ExcerciseMode extends DCfragment {
                 } else {
                     setPropertiesFocusable(true);
 
-                    dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                    dcButtonManager.setDCState(DCButtonManager.State.Setted);
                     main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                             main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
@@ -185,7 +186,6 @@ public class ExcerciseMode extends DCfragment {
 //            }, 3000);
         } else {
             dcButtonManager.setDCState(DCButtonManager.State.Clear);
-            ready.setPressed();
             main.setCurrentExcercise(null);
         }
     }
@@ -308,27 +308,35 @@ public class ExcerciseMode extends DCfragment {
         if (main.getCurrentExcercise() != null)
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
+                    if(!bench.IsPressed())
                     bench.setPressed();
                     break;
                 case "Squat":
+                    if(!squat.IsPressed())
                     squat.setPressed();
                     break;
                 case "DeadLift":
+                    if(!deadlift.IsPressed())
                     deadlift.setPressed();
                     break;
                 case "ShoulderPress":
+                    if(!press.IsPressed())
                     press.setPressed();
                     break;
                 case "CarfRaise":
+                    if(!carf.IsPressed())
                     carf.setPressed();
                     break;
                 case "ArmCurl":
+                    if(!curl.IsPressed())
                     curl.setPressed();
                     break;
                 case "ArmExtension":
+                    if(!extension.IsPressed())
                     extension.setPressed();
                     break;
                 case "LatPullDown":
+                    if(!latpull.IsPressed())
                     latpull.setPressed();
                     break;
             }
