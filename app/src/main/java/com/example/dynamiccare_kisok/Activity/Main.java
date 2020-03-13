@@ -65,7 +65,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCActionBar customActionBar;
     static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
-    static boolean isIsoKinetic, isIsoTonic,alertflag=false;
+    static boolean isIsoKinetic, isIsoTonic, alertflag = false;
     static Excercise currentExcercise;
     static UsbService usbService;
     static DCSoundPlayer dcSoundPlayer;
@@ -136,10 +136,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     BottomRestTime.setTextColor(Color.RED);
 
                 }
-                if(count<30)
-                {
-                    if(alertflag && DCButtonManager.getDCState() != DCButtonManager.State.Excercise)
-                    {
+                if (count < 30) {
+                    if (alertflag && DCButtonManager.getDCState() != DCButtonManager.State.Excercise && DCButtonManager.getDCState() != DCButtonManager.State.Ready) {
                         FinishAlert.show();
                         alertflag = false;
                     }
@@ -573,9 +571,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
-        Toast.makeText(this,getCare().getDeviceID().toString(),Toast.LENGTH_LONG);
+        Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG);
 
-        Toast.makeText(this,getCare().getDeviceID().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG).show();
 
         if (care.getLimit() != 0)
             ReplaceFragment(new TimeSetting(this));
@@ -757,7 +755,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         dcSoundThread.stopstream();
-        countDownTimer.cancel();
+        if (countDownTimer != null)
+            countDownTimer.cancel();
     }
 
     private void setFilters() {

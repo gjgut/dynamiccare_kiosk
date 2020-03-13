@@ -178,7 +178,7 @@ public class ExcerciseMode extends DCfragment {
                             String.valueOf(30),
                             "2",
                             "0").getBytes());
-            TakeBreak(false);
+//            TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
 //                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));

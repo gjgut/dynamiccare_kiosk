@@ -90,7 +90,7 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_hour:
                 btn_hour.setPressed();
                 if (btn_hour.IsPressed()) {
-                    care.setLimit(60);
+                    care.setLimit(6000);
                 }
                 break;
 
