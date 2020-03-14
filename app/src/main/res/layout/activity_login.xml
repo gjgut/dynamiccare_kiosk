@@ -36,6 +36,7 @@
         android:lineSpacingExtra="21sp"
         android:maxLength="15"
         android:text="#137#249*4#3"
+        android:textCursorDrawable="@drawable/cursor_color"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
         android:textColorHint="#33ffffff"

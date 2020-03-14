@@ -44,6 +44,7 @@ import com.example.dynamiccare_kisok.Common.Util.UsbService;
 import com.example.dynamiccare_kisok.Dialog.ExcerciseFinished;
 import com.example.dynamiccare_kisok.Dialog.FinishAlert;
 import com.example.dynamiccare_kisok.Dialog.LoadPlan;
+import com.example.dynamiccare_kisok.Fragment.Explain;
 import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
@@ -510,7 +511,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             if (fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
-                if(care.isLimit())
+                if (care.isLimit())
                     customActionBar.setTimeButton(View.VISIBLE);
                 else
                     customActionBar.setTimeButton(View.INVISIBLE);
@@ -528,7 +529,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             }
 
 
-            if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
+            if (currentFragment.getClass() == ExcerciseMode.class ||
+                    currentFragment.getClass() == DetailResult.class ||
+                    currentFragment.getClass() == Explain.class ||
+            currentFragment.getClass() == SelectWorkOut.class)
                 btn_next.setVisibility(View.INVISIBLE);
             else
                 btn_next.setVisibility(View.VISIBLE);
@@ -553,8 +557,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             }
 
             if (currentFragment.getClass() == ExcerciseMode.class
-                    || currentFragment.getClass() == DetailResult.class
+                    || currentFragment.getClass() == Explain.class
                     || currentFragment.getClass() == SelectMode.class
+                    || currentFragment.getClass() == SelectWorkOut.class
                     || currentFragment.getClass() == TimeSetting.class)
                 btn_next.setVisibility(View.INVISIBLE);
             else
@@ -579,7 +584,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             if (fragment.getClass() != TimeSetting.class) {
                 bottombar.setVisibility(View.VISIBLE);
-                if(care.isLimit())
+                if (care.isLimit())
                     customActionBar.setTimeButton(View.VISIBLE);
                 else
                     customActionBar.setTimeButton(View.INVISIBLE);
@@ -594,6 +599,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             if (currentFragment.getClass() == ExcerciseMode.class
                     || currentFragment.getClass() == DetailResult.class
                     || currentFragment.getClass() == SelectMode.class
+                    || currentFragment.getClass() == SelectWorkOut.class
                     || currentFragment.getClass() == TimeSetting.class)
                 btn_next.setVisibility(View.INVISIBLE);
             else
@@ -649,57 +655,46 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         dcSoundPlayer = care.getDcSoundPlayer();
         count = care.getLimit();
 
-        FinishAlert = new FinishAlert(this,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        countDownTimer = new CountDownTimer(count * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                try {
+                    BottomRestTime.setText("00:" + String.valueOf(count));
+                    count--;
+
+                    if (count == 30) {
+                        FinishAlert.show();
+                        BottomRestTime.setTextColor(Color.RED);
 
                     }
-                }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                } catch (Exception e) {
+                    Log.e("Error", e.toString());
+                    e.printStackTrace();
+                }
             }
-        });
-//            countDownTimer = new CountDownTimer(count * 1000, 1000) {
-//                @Override
-//                public void onTick(long millisUntilFinished) {
-//                    try {
-//                        BottomRestTime.setText("00:" + String.valueOf(count));
-//                        count--;
-//
-//                        if (count == 30) {
-//                            FinishAlert.show();
-//                            BottomRestTime.setTextColor(Color.RED);
-//
-//                        }
-//                    } catch (Exception e) {
-//                        Log.e("Error", e.toString());
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//            @Override
-//            public void onFinish() {
-//                getusbService().write("$CHM08".getBytes());
-//                Intent intent = new Intent(main, Login.class);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-//                ExcerciseFinished finished = new ExcerciseFinished(main,
-//                        new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                            }
-//                        },
-//                        new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                            }
-//                        });
-//                finished.show();
-//            }
-//        };
 
-//        countDownTimer.start();
+            @Override
+            public void onFinish() {
+                getusbService().write("$CHM08".getBytes());
+                Intent intent = new Intent(main, Login.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                ExcerciseFinished finished = new ExcerciseFinished(main,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        },
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
+                finished.show();
+            }
+        };
+
+        countDownTimer.start();
 
 
         dcSoundThread = new DCSoundThread(this);
@@ -734,9 +729,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     StopSound();
                     if (currentFragment.getClass().getSimpleName() == "ExcerciseMode")
                         main.setCurrentExcercise(null);
-                    if (currentFragment.getClass().getSimpleName() == "Explain") {
+                    else if (currentFragment.getClass().getSimpleName() == "Explain") {
                         main.getusbService().write(Commands.Home(true).getBytes());
-                        main.setCurrentExcercise(null);
                     }
                     if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
                         Intent intent = new Intent(main, Login.class);

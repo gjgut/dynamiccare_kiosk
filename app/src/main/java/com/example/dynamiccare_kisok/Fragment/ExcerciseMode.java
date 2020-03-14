@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Component.DCSpinnerAdapter;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
 import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
 import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
@@ -71,6 +72,7 @@ public class ExcerciseMode extends DCfragment {
     ImageView Body;
     LinearLayout container;
     Spinner spin_level;
+    DCSpinnerAdapter spinnerAdapter;
     boolean isProgram = false, onSchedule = false;
     int count;
     Handler handler = new Handler();
@@ -454,7 +456,7 @@ public class ExcerciseMode extends DCfragment {
 //            data.add("5");
 
 
-            spinnerAdapter spinnerAdapter = new spinnerAdapter(main,data);
+            spinnerAdapter = new DCSpinnerAdapter(main,data);
             spin_level.setAdapter(spinnerAdapter);
 
             bench.getButton().setOnClickListener(this);
@@ -628,79 +630,3 @@ public class ExcerciseMode extends DCfragment {
     }
 }
 
-
-class spinnerAdapter extends BaseAdapter {
-    Context context;
-    List<String> data;
-    List<Integer> number;
-    LayoutInflater inflater;
-    static TextView spinnerText;
-
-
-    public spinnerAdapter(Context context, List<Integer> number, List<String> data) {
-        this.context = context;
-        this.data = data;
-        this.number = number;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public spinnerAdapter(Context context,List<String> data) {
-        this.context = context;
-        this.data = data;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    public static char getCurrentNumber() {
-        return spinnerText.getText().toString().charAt(0);
-    }
-
-
-    @Override
-    public int getCount() {
-        if (data != null) return data.size();
-        else return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.spinner_normal, parent, false);
-        }
-
-        spinnerText = (TextView) convertView.findViewById(R.id.spinnerText);
-        if (data != null) {
-            //데이터세팅
-            String text = data.get(position);
-            ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
-        }
-
-        return convertView;
-    }
-
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.spinner_drop_down, parent, false);
-        }
-
-        spinnerText = convertView.findViewById(R.id.spinnerText);
-        //데이터세팅
-        String text = data.get(position);
-        spinnerText.setText(text);
-
-
-        return convertView;
-    }
-
-    @Override
-    public String getItem(int position) {
-        Log.i("getItem",String.valueOf(position+1));
-        return String.valueOf(position+1);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-}

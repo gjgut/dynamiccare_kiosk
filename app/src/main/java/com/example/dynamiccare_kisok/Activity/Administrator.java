@@ -1,7 +1,6 @@
 package com.example.dynamiccare_kisok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
@@ -49,7 +47,6 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
 
         DynamicCare care = (DynamicCare) getApplicationContext();
         dcSoundPlayer = care.getDcSoundPlayer();
-
         dcSoundThread = new DCSoundThread(this,dcSoundPlayer);
 
         btn_back = findViewById(R.id.btn_back);
@@ -70,6 +67,7 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
                 }
                 else {
                     startActivity(new Intent(this, Login.class));
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
                     finish();
                 }
                 break;
