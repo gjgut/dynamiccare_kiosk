@@ -1,4 +1,4 @@
-package com.example.dynamiccare_kisok.Common.Util.AsyncTask;
+package com.example.dynamiccare_kisok.Common.Util;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,12 +13,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SendWorkoutTask extends AsyncTask<String, Void, JSONObject> {
+public class NetworkTask extends AsyncTask<String, Void, JSONObject> {
     @Override
     public JSONObject doInBackground(String... params) {
-        JSONObject result = null;
+        JSONObject result=null;
         try {
-            String url = "http://www.powerlogmobile.com/kiosk/save/workout";
+            String url = params[0];
             URL obj = new URL(url);
             HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 
@@ -27,11 +27,11 @@ public class SendWorkoutTask extends AsyncTask<String, Void, JSONObject> {
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Content-Type","application/json");
 
-            byte[] outputInBytes = params[0].getBytes("UTF-8");
+            byte[] outputInBytes = params[1].getBytes("UTF-8");
             OutputStream os = conn.getOutputStream();
-            os.write(outputInBytes);
+            os.write( outputInBytes );
             os.close();
 
             int retCode = conn.getResponseCode();
@@ -40,17 +40,17 @@ public class SendWorkoutTask extends AsyncTask<String, Void, JSONObject> {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
             StringBuffer response = new StringBuffer();
-            while ((line = br.readLine()) != null) {
+            while((line = br.readLine()) != null) {
                 response.append(line);
                 response.append("");
             }
             br.close();
             JSONParser parser = new JSONParser();
             String res = response.toString();
-            Object Obj = parser.parse(res);
+            Object Obj  = parser.parse(res);
             JSONObject jsonObject1 = new JSONObject(response.toString());
 
-            Log.i("response", res.toString());
+            Log.i("response",res.toString());
             result = jsonObject1;
 
 

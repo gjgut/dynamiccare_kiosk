@@ -37,7 +37,6 @@ import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Object.Workout;
 import com.example.dynamiccare_kisok.Common.Util.ACKListener;
-import com.example.dynamiccare_kisok.Common.Util.AsyncTask.SendWorkoutTask;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;

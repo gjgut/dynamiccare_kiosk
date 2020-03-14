@@ -40,7 +40,10 @@ public class LimitOff extends DCfragment {
             case R.id.btn_limit_deactivate:
                 admin.PlaySound(R.raw.normal_button);
                 if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword().toString()))
+                {
+                    care.offLimit();
                     admin.ReplaceFragment(new Authentification(admin), false);
+                }
                 else
                     reject.setVisibility(View.VISIBLE);
         }

@@ -47,15 +47,13 @@ public class TimeSetting extends DCfragment {
 
     public TimeSetting(Main main) {
         super(main);
+        care = (DynamicCare) main.getApplication();
     }
 
     public TimeSetting(Main main, DCfragment prev) {
         super(main);
+        care = (DynamicCare) main.getApplication();
         this.prev = prev;
-        if(prev.getClass().getSimpleName().equals("ExcerciseMode"))
-        {
-            excerciseMode = (ExcerciseMode)prev;
-        }
     }
 
     public TimeSetting(Main main, ExcerciseMode excerciseMode) {
@@ -151,8 +149,6 @@ public class TimeSetting extends DCfragment {
             reject = view.findViewById(R.id.password_reject);
             reject.setVisibility(View.INVISIBLE);
 
-
-            care = (DynamicCare) main.getApplication();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,6 +14,7 @@ public class DynamicCare extends Application {
     public static String CurrentUser,DeviceID;
     public static JSONObject CurrentUserJson;
     public static int limit=60;
+    public static boolean isLimit=true;
     public static DCfragment tempFragment;
     public SharedPreferences Admin;
 
@@ -64,6 +65,12 @@ public class DynamicCare extends Application {
 
     public static void setLimit(int limit) {
         DynamicCare.limit = limit;
+    }
+    public static void offLimit(){isLimit = false;}
+
+    public static boolean isLimit()
+    {
+        return isLimit;
     }
 
     public static JSONObject getCurrentUserJson() {

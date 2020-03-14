@@ -75,7 +75,6 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
                 break;
             }
             case R.id.btn_next: {
-//                PlaySound(R.raw.back_button);
                 ReplaceFragment(currentFragment.getNextFragment(), true);
                 break;
             }

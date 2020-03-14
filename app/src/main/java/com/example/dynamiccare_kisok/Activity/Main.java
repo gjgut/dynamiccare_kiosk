@@ -63,6 +63,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     ImageButton btn_back, btn_next;
     TextView BottomRestTime;
     DCActionBar customActionBar;
+    Handler handler;
+    CountDownTimer countDownTimer;
+    DynamicCare care;
     static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
     static boolean isIsoKinetic, isIsoTonic, alertflag = false;
@@ -71,12 +74,52 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     static DCSoundPlayer dcSoundPlayer;
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
-    int MeasureTime = 10;
-    int MeasureWeight = 300;
-    Handler handler;
-    int count = 0;
-    CountDownTimer countDownTimer;
-    DynamicCare care;
+    int MeasureTime = 10, MeasureWeight = 300, count = 0;
+
+    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                switch (intent.getAction()) {
+                    case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
+                        Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
+                        Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UsbService.ACTION_NO_USB: // NO USB CONNECTED
+                        Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
+                        Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
+                        Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    };
+    private final ServiceConnection usbConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName arg0, IBinder arg1) {
+            try {
+                usbService = ((UsbService.UsbBinder) arg1).getService();
+                usbService.setMain(main);
+                usbService.setHandler(ackListener);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            usbService = null;
+        }
+    };
 
     public DCSoundPlayer getDcSoundPlayer() {
         return dcSoundPlayer;
@@ -102,6 +145,34 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         care.setMeasureWeight(String.valueOf(measureWeight));
     }
 
+    public void setisIsoKinetic(boolean value) {
+        isIsoKinetic = value;
+    }
+
+    public void setIsIsoTonic(boolean value) {
+        isIsoTonic = value;
+    }
+
+    public boolean getisIsoKinetic() {
+        return isIsoKinetic;
+    }
+
+    public boolean getisIsoTonic() {
+        return isIsoTonic;
+    }
+
+    public static Excercise getCurrentExcercise() {
+        return currentExcercise;
+    }
+
+    public static void setCurrentExcercise(Excercise excercise) {
+        currentExcercise = excercise;
+    }
+
+    public DCfragment getCurrentFragment() {
+        return currentFragment;
+    }
+
     public static UsbService getusbService() {
         return usbService;
     }
@@ -109,6 +180,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public static ConstraintLayout getBottombar() {
         return bottombar;
     }
+
 
     public void PlaySound(int soundId) {
         dcSoundPlayer.playwithNoInterrept(soundId);
@@ -170,6 +242,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             }
         };
         countDownTimer.start();
+    }
+
+    public void limitoff() {
+        if (!care.isLimit()) {
+            BottomRestTime.setVisibility(View.INVISIBLE);
+            customActionBar.setTimeButton(View.INVISIBLE);
+            if (countDownTimer != null)
+                countDownTimer.cancel();
+        }
+
     }
 
     public void HandleACK(ACK ack) {
@@ -419,78 +501,137 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                switch (intent.getAction()) {
-                    case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
-                        Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
-                        break;
-                    case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
-                        Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
-                        break;
-                    case UsbService.ACTION_NO_USB: // NO USB CONNECTED
-                        Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
-                        Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
-                        Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
-                        break;
+    public void ReplaceFragment(DCfragment fragment, boolean isRight) {
+        try {
+
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            currentFragment = fragment;
+
+            if (fragment.getClass() != TimeSetting.class) {
+                bottombar.setVisibility(View.VISIBLE);
+                if(care.isLimit())
+                    customActionBar.setTimeButton(View.VISIBLE);
+                else
+                    customActionBar.setTimeButton(View.INVISIBLE);
+            } else {
+                bottombar.setVisibility(View.INVISIBLE);
+                customActionBar.setTimeButton(View.INVISIBLE);
+            }
+
+            if (isRight) {
+                bottombar.setVisibility(View.VISIBLE);
+                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+            } else if (!isRight) {
+                bottombar.setVisibility(View.VISIBLE);
+                fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+            }
+
+
+            if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
+                btn_next.setVisibility(View.INVISIBLE);
+            else
+                btn_next.setVisibility(View.VISIBLE);
+
+            switch (fragment.getClass().getSimpleName()) {
+                case "SelectMode":
+                    btn_next.setVisibility(View.INVISIBLE);
+                    break;
+                case "Explain": {
+                    btn_next.setVisibility(View.INVISIBLE);
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
+                    break;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                case "Instruction": {
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
+                    break;
+                }
+                case "GraphResult": {
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
+                    break;
+                }
             }
+
+            if (currentFragment.getClass() == ExcerciseMode.class
+                    || currentFragment.getClass() == DetailResult.class
+                    || currentFragment.getClass() == SelectMode.class
+                    || currentFragment.getClass() == TimeSetting.class)
+                btn_next.setVisibility(View.INVISIBLE);
+            else
+                btn_next.setVisibility(View.VISIBLE);
+
+            customActionBar.setHome(fragment.isHomeVisible());
+            customActionBar.setTitle(fragment.getTitle());
+            fragmentTransaction.replace(R.id.main_container, fragment);
+            fragmentTransaction.commit();
+
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
+    }
 
-    };
+    public void ReplaceFragment(DCfragment fragment) {
 
-    private final ServiceConnection usbConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName arg0, IBinder arg1) {
-            try {
-                usbService = ((UsbService.UsbBinder) arg1).getService();
-                usbService.setMain(main);
-                usbService.setHandler(ackListener);
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            currentFragment = fragment;
+
+            if (fragment.getClass() != TimeSetting.class) {
+                bottombar.setVisibility(View.VISIBLE);
+                if(care.isLimit())
+                    customActionBar.setTimeButton(View.VISIBLE);
+                else
+                    customActionBar.setTimeButton(View.INVISIBLE);
+            } else {
+                bottombar.setVisibility(View.INVISIBLE);
+                customActionBar.setTimeButton(View.INVISIBLE);
             }
+
+            customActionBar.setHome(fragment.isHomeVisible());
+            customActionBar.setTitle(fragment.getTitle());
+
+            if (currentFragment.getClass() == ExcerciseMode.class
+                    || currentFragment.getClass() == DetailResult.class
+                    || currentFragment.getClass() == SelectMode.class
+                    || currentFragment.getClass() == TimeSetting.class)
+                btn_next.setVisibility(View.INVISIBLE);
+            else
+                btn_next.setVisibility(View.VISIBLE);
+
+
+            fragmentTransaction.replace(R.id.main_container, fragment);
+            fragmentTransaction.commit();
+
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
+    }
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            usbService = null;
+    private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
+        if (!UsbService.SERVICE_CONNECTED) {
+            Intent startService = new Intent(this, service);
+            if (extras != null && !extras.isEmpty()) {
+                Set<String> keys = extras.keySet();
+                for (String key : keys) {
+                    String extra = extras.getString(key);
+                    startService.putExtra(key, extra);
+                }
+            }
+            startService(startService);
         }
-    };
-
-    public void setisIsoKinetic(boolean value) {
-        isIsoKinetic = value;
+        Intent bindingIntent = new Intent(this, service);
+        bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    public void setIsIsoTonic(boolean value) {
-        isIsoTonic = value;
-    }
-
-    public boolean getisIsoKinetic() {
-        return isIsoKinetic;
-    }
-
-    public boolean getisIsoTonic() {
-        return isIsoTonic;
-    }
-
-    public static Excercise getCurrentExcercise() {
-        return currentExcercise;
-    }
-
-    public static void setCurrentExcercise(Excercise excercise) {
-        currentExcercise = excercise;
-    }
-
-    public DCfragment getCurrentFragment() {
-        return currentFragment;
+    private void setFilters() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
+        filter.addAction(UsbService.ACTION_NO_USB);
+        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
+        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
+        registerReceiver(mUsbReceiver, filter);
     }
 
 
@@ -575,11 +716,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG).show();
 
-        if (care.getLimit() != 0)
+        if (care.isLimit())
             ReplaceFragment(new TimeSetting(this));
         else
             ReplaceFragment(new SelectMode(this));
 
+
+        limitoff();
     }
 
     @Override
@@ -615,107 +758,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public void ReplaceFragment(DCfragment fragment, boolean isRight) {
-        try {
-
-            fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            currentFragment = fragment;
-
-            if (fragment.getClass() != TimeSetting.class) {
-                bottombar.setVisibility(View.VISIBLE);
-                customActionBar.setTimeButton(View.VISIBLE);
-            } else {
-                bottombar.setVisibility(View.INVISIBLE);
-                customActionBar.setTimeButton(View.INVISIBLE);
-            }
-
-            if (isRight) {
-                bottombar.setVisibility(View.VISIBLE);
-                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-            } else if (!isRight) {
-                bottombar.setVisibility(View.VISIBLE);
-                fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-            }
-
-
-            if (currentFragment.getClass() == ExcerciseMode.class || currentFragment.getClass() == DetailResult.class)
-                btn_next.setVisibility(View.INVISIBLE);
-            else
-                btn_next.setVisibility(View.VISIBLE);
-
-            switch (fragment.getClass().getSimpleName()) {
-                case "SelectMode":
-                    btn_next.setVisibility(View.INVISIBLE);
-                    break;
-                case "Explain": {
-                    btn_next.setVisibility(View.INVISIBLE);
-                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
-                    break;
-                }
-                case "Instruction": {
-                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
-                    break;
-                }
-                case "GraphResult": {
-                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
-                    break;
-                }
-            }
-
-            if (currentFragment.getClass() == ExcerciseMode.class
-                    || currentFragment.getClass() == DetailResult.class
-                    || currentFragment.getClass() == SelectMode.class
-                    || currentFragment.getClass() == TimeSetting.class)
-                btn_next.setVisibility(View.INVISIBLE);
-            else
-                btn_next.setVisibility(View.VISIBLE);
-
-            customActionBar.setHome(fragment.isHomeVisible());
-            customActionBar.setTitle(fragment.getTitle());
-            fragmentTransaction.replace(R.id.main_container, fragment);
-            fragmentTransaction.commit();
-
-        } catch (Exception e) {
-            Log.e("Error", e.toString());
-        }
-    }
-
-    public void ReplaceFragment(DCfragment fragment) {
-
-        try {
-            fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            currentFragment = fragment;
-
-            if (fragment.getClass() != TimeSetting.class) {
-                bottombar.setVisibility(View.VISIBLE);
-                customActionBar.setTimeButton(View.VISIBLE);
-            } else {
-                bottombar.setVisibility(View.INVISIBLE);
-                customActionBar.setTimeButton(View.INVISIBLE);
-            }
-
-            customActionBar.setHome(fragment.isHomeVisible());
-            customActionBar.setTitle(fragment.getTitle());
-
-            if (currentFragment.getClass() == ExcerciseMode.class
-                    || currentFragment.getClass() == DetailResult.class
-                    || currentFragment.getClass() == SelectMode.class
-                    || currentFragment.getClass() == TimeSetting.class)
-                btn_next.setVisibility(View.INVISIBLE);
-            else
-                btn_next.setVisibility(View.VISIBLE);
-
-
-            fragmentTransaction.replace(R.id.main_container, fragment);
-            fragmentTransaction.commit();
-
-        } catch (Exception e) {
-            Log.e("Error", e.toString());
-        }
-    }
-
 
     @Override
     public void onResume() {
@@ -735,21 +777,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         unbindService(usbConnection);
     }
 
-    private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
-        if (!UsbService.SERVICE_CONNECTED) {
-            Intent startService = new Intent(this, service);
-            if (extras != null && !extras.isEmpty()) {
-                Set<String> keys = extras.keySet();
-                for (String key : keys) {
-                    String extra = extras.getString(key);
-                    startService.putExtra(key, extra);
-                }
-            }
-            startService(startService);
-        }
-        Intent bindingIntent = new Intent(this, service);
-        bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-    }
 
     @Override
     public void onDestroy() {
@@ -759,15 +786,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             countDownTimer.cancel();
     }
 
-    private void setFilters() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
-        filter.addAction(UsbService.ACTION_NO_USB);
-        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
-        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
-        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
-        registerReceiver(mUsbReceiver, filter);
-    }
 
 }
 
