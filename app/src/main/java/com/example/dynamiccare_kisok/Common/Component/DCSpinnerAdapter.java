@@ -28,7 +28,7 @@ public class DCSpinnerAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public DCSpinnerAdapter(Context context,List<String> data) {
+    public DCSpinnerAdapter(Context context, List<String> data) {
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -47,15 +47,19 @@ public class DCSpinnerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.spinner_normal, parent, false);
-        }
+        try {
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.spinner_normal, parent, false);
+            }
 
-        spinnerText = (TextView) convertView.findViewById(R.id.spinnerText);
-        if (data != null) {
-            //데이터세팅
-            String text = data.get(position);
-            ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
+            spinnerText = (TextView) convertView.findViewById(R.id.spinnerText);
+            if (data != null) {
+                //데이터세팅
+                String text = data.get(position);
+                ((TextView) convertView.findViewById(R.id.spinnerText)).setText(text);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
 
         return convertView;
@@ -63,15 +67,18 @@ public class DCSpinnerAdapter extends BaseAdapter {
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        try {
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.spinner_drop_down, parent, false);
+            }
 
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.spinner_drop_down, parent, false);
+            spinnerText = convertView.findViewById(R.id.spinnerText);
+            //데이터세팅
+            String text = data.get(position);
+            spinnerText.setText(text);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
-
-        spinnerText = convertView.findViewById(R.id.spinnerText);
-        //데이터세팅
-        String text = data.get(position);
-        spinnerText.setText(text);
 
 
         return convertView;
@@ -79,8 +86,8 @@ public class DCSpinnerAdapter extends BaseAdapter {
 
     @Override
     public String getItem(int position) {
-        Log.i("getItem",String.valueOf(position+1));
-        return String.valueOf(position+1);
+        Log.i("getItem", String.valueOf(position + 1));
+        return String.valueOf(position + 1);
     }
 
     @Override
