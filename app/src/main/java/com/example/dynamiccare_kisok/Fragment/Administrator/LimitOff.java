@@ -3,6 +3,7 @@ package com.example.dynamiccare_kisok.Fragment.Administrator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,17 +36,20 @@ public class LimitOff extends DCfragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_limit_deactivate:
-                admin.PlaySound(R.raw.normal_button);
-                if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword().toString()))
-                {
-                    care.offLimit();
-                    admin.ReplaceFragment(new Authentification(admin), false);
-                }
-                else
-                    reject.setVisibility(View.VISIBLE);
+        try {
+            switch (v.getId()) {
+                case R.id.btn_limit_deactivate:
+                    admin.PlaySound(R.raw.normal_button);
+                    if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword().toString())) {
+                        care.offLimit();
+                        admin.ReplaceFragment(new Authentification(admin), false);
+                    } else
+                        reject.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
 
     }
 

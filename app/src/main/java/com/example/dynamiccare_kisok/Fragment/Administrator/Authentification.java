@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class Authentification extends DCfragment {
 
-    ImageButton limitoff,modify;
+    ImageButton limitoff, modify;
     Intent intent;
 
 
@@ -41,16 +42,19 @@ public class Authentification extends DCfragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.btn_limit_off:
-                admin.PlaySound(R.raw.normal_button);
-                admin.ReplaceFragment(new LimitOff(admin),true);
-                break;
-            case R.id.btn_modify_psswd:
-                admin.PlaySound(R.raw.normal_button);
-                admin.ReplaceFragment(new ModifyAdmin(admin),true);
-                break;
+        try {
+            switch (v.getId()) {
+                case R.id.btn_limit_off:
+                    admin.PlaySound(R.raw.normal_button);
+                    admin.ReplaceFragment(new LimitOff(admin), true);
+                    break;
+                case R.id.btn_modify_psswd:
+                    admin.PlaySound(R.raw.normal_button);
+                    admin.ReplaceFragment(new ModifyAdmin(admin), true);
+                    break;
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
 
     }
@@ -58,16 +62,15 @@ public class Authentification extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_auth_authentification,container, false);
+        View view = inflater.inflate(R.layout.fragment_auth_authentification, container, false);
         super.onCreate(savedInstanceState);
-        try{
+        try {
             limitoff = view.findViewById(R.id.btn_limit_off);
             modify = view.findViewById(R.id.btn_modify_psswd);
 
             limitoff.setOnClickListener(this);
             modify.setOnClickListener(this);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return view;

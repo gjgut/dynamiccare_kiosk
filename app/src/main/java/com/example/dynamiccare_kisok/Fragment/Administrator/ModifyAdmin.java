@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class ModifyAdmin extends DCfragment {
 
     @Override
     public void onClick(View v) {
+        try{
         switch (v.getId()) {
             case R.id.btn_set_admin_ok:
                 admin.PlaySound(R.raw.normal_button);
@@ -103,6 +105,11 @@ public class ModifyAdmin extends DCfragment {
                 }
                 break;
         }
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+        }
+
     }
 
     @Nullable
