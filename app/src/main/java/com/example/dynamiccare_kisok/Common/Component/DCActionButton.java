@@ -51,11 +51,16 @@ public class DCActionButton {
     }
 
     public void setPressedwithNoSound() {
-        isPressed = !isPressed;
-        if (isPressed)
-            this.button.setImageDrawable(Pressed);
-        else
-            this.button.setImageDrawable(UnPressed);
+        try {
+            isPressed = !isPressed;
+            if (isPressed)
+                this.button.setImageDrawable(Pressed);
+            else
+                this.button.setImageDrawable(UnPressed);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public ImageButton getButton() {
@@ -67,20 +72,35 @@ public class DCActionButton {
     }
 
     public void setButton(ImageButton button, Drawable pressed) {
-        this.button = button;
-        this.Pressed = pressed;
-        this.UnPressed = button.getDrawable();
+        try {
+            this.button = button;
+            this.Pressed = pressed;
+            this.UnPressed = button.getDrawable();
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public void Activate() {
-        this.button.setEnabled(true);
-        this.button.setColorFilter(Color.parseColor("#00000000"),
-                PorterDuff.Mode.SRC_ATOP);
+        try {
+            this.button.setEnabled(true);
+            this.button.setColorFilter(Color.parseColor("#00000000"),
+                    PorterDuff.Mode.SRC_ATOP);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public void Deactivate() {
-        this.button.setEnabled(false);
-        this.button.setColorFilter(Color.parseColor("#28FFFFFF"),
-                PorterDuff.Mode.SRC_ATOP);
+        try {
+            this.button.setEnabled(false);
+            this.button.setColorFilter(Color.parseColor("#28FFFFFF"),
+                    PorterDuff.Mode.SRC_ATOP);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 }
