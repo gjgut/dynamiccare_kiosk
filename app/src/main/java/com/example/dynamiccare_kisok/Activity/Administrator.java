@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,22 +43,28 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrator);
+        try {
 
-        handler = new Handler();
+            handler = new Handler();
 
-        DynamicCare care = (DynamicCare) getApplicationContext();
-        dcSoundPlayer = care.getDcSoundPlayer();
-        dcSoundThread = new DCSoundThread(this,dcSoundPlayer);
+            DynamicCare care = (DynamicCare) getApplicationContext();
+            dcSoundPlayer = care.getDcSoundPlayer();
+            dcSoundThread = new DCSoundThread(this, dcSoundPlayer);
 
-        btn_back = findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(this);
+            btn_back = findViewById(R.id.btn_back);
+            btn_back.setOnClickListener(this);
 
-        ReplaceFragment(new Authentification(this),true);
+            ReplaceFragment(new Authentification(this), true);
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+        }
 
     }
 
     @Override
     public void onClick(View v) {
+        try{
         dcSoundPlayer.play(R.raw.back_button);
         switch (v.getId()) {
             case R.id.btn_back: {
@@ -77,6 +84,11 @@ public class Administrator extends AppCompatActivity implements View.OnClickList
                 break;
             }
         }
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+        }
+
     }
 
     public void ReplaceFragment(DCfragment fragment, boolean isRight) {
