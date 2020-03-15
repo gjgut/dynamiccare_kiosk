@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +55,8 @@ public class TimeSetting extends DCfragment {
 
     @Override
     public void onClick(View v) {
+        try{
         switch (v.getId()) {
-
             case R.id.btn_ok:
                 if (edt_adminpw.getText().toString().equals(care.getAdminPassword())) {
                     if (excerciseMode != null) {
@@ -82,8 +83,12 @@ public class TimeSetting extends DCfragment {
                     care.setLimit(6000);
                 }
                 break;
-
         }
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+        }
+
     }
 
 
@@ -136,6 +141,7 @@ public class TimeSetting extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
+        try{
             if (excerciseMode != null) {
                 if (timer != null)
                     timer.cancel();
@@ -144,6 +150,11 @@ public class TimeSetting extends DCfragment {
                 return new ExcerciseMode(main,outState);
             } else
                 return prev;
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+            return null;
+        }
     }
 
     @Override
