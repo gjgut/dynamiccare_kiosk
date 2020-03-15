@@ -108,6 +108,7 @@ public class TimeSetting extends DCfragment {
             btn_ok = view.findViewById(R.id.btn_ok);
             edt_adminpw = view.findViewById(R.id.et_adminpw);
 
+
             edt_adminpw.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,6 +129,11 @@ public class TimeSetting extends DCfragment {
             btn_minutes.getButton().setOnClickListener(this);
             btn_hour.getButton().setOnClickListener(this);
             btn_ok.setOnClickListener(this);
+
+            btn_minutes.setPressed();
+            if (btn_minutes.IsPressed()) {
+                care.setLimit(30);
+            }
 
             reject = view.findViewById(R.id.password_reject);
             reject.setVisibility(View.INVISIBLE);

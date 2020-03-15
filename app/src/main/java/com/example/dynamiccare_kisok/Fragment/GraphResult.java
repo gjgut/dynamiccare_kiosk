@@ -101,6 +101,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             Mid = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_mid), getResources().getDrawable(R.drawable.pressed_btn_mid));
             High = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_high), getResources().getDrawable(R.drawable.pressed_btn_high));
 
+            Low.setPressed();
+            if (Low.IsPressed())
+                main.getusbService().write(Commands.MeasureLevelCheck("L").getBytes());
+
             ready = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_ready), getResources().getDrawable(R.drawable.pressed_btn_ready));
             go = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_start), getResources().getDrawable(R.drawable.pressed_btn_start));
 
@@ -192,6 +196,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                                 main.getusbService().write(Commands.Home(true).getBytes());
                                 main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
 
+                                go.Activate();
                                 go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
                                 go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
                             }
@@ -351,7 +356,14 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             Log.i("ParseACK", ack.getCommandCode());
             switch (ack.getCommandCode()) {
                 case "AME":
-                    if (Integer.parseInt(ack.getTime()) > 1000) {
+                    if (Integer.parseInt(ack.getTime()) < 1000) {
+                        resCalculator.putBase(Integer.parseInt(ack.getmTension()));
+                        if (Integer.parseInt(ack.getmTension()) < resCalculator.getMax())
+                            break;
+                        power.setProgress(Integer.parseInt(ack.getmTension()));
+                    }
+                    else
+                    {
                         resCalculator.putNumber(Integer.parseInt(ack.getmTension()));
                         if (Integer.parseInt(ack.getmTension()) < resCalculator.getMax())
                             break;

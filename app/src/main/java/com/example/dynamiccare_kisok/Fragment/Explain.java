@@ -67,7 +67,6 @@ public class Explain extends DCfragment {
         try {
             switch (ack.getCommandCode()) {
                 case "PCA":
-                    setBottomBar(true);
             }
         } catch (Exception e) {
             Log.i("Error", e.toString());
@@ -127,6 +126,7 @@ public class Explain extends DCfragment {
                         main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
                     }
                 }, 3000);
+                setBottomBar(true);
             } else {
                 dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 setBottomBar(false);
