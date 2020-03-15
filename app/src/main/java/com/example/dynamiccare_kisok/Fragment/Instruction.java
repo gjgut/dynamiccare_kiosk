@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class Instruction extends DCfragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_instruction,container, false);
 
+        try{
         title = view.findViewById(R.id.txt_ins_title);
         content = view.findViewById(R.id.txt_ins_content);
 
@@ -48,6 +50,10 @@ public class Instruction extends DCfragment {
 
         title.setText(Main.getCurrentExcercise().getSimpleName());
         content.setText(Main.getCurrentExcercise().getInstruction());
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+        }
 
         return view;
     }
