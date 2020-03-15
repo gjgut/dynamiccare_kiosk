@@ -70,7 +70,7 @@ public class Workout {
 
     public boolean equals(Workout target)
     {
-             if(target.getExcercise()== getExcercise() &&
+             if(target.getExcercise().getClass().equals(getExcercise().getClass()) &&
                 target.getIsKinetic()== getIsKinetic() &&
                 target.getWeight()== getWeight() &&
                 target.getReps()== getReps() &&

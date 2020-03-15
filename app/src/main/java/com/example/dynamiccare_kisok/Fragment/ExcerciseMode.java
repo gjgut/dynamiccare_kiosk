@@ -263,6 +263,7 @@ public class ExcerciseMode extends DCfragment {
                     }
                     break;
                 case "ASS":
+                    setPropertiesFocusable(true);
                     SendWorkoutRecord();
                     break;
             }
@@ -274,6 +275,7 @@ public class ExcerciseMode extends DCfragment {
 
     public void TakeBreak(boolean isResume) {
         try {
+            setPropertiesFocusable(false);
             dcButtonManager.setDCState(DCButtonManager.State.onRest);
             exc_table.setVisibility(View.INVISIBLE);
             exc_rest.setVisibility(View.VISIBLE);
@@ -355,36 +357,28 @@ public class ExcerciseMode extends DCfragment {
             if (main.getCurrentExcercise() != null)
                 switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                     case "BenchPress":
-                        if (!bench.IsPressed())
-                            bench.setPressed();
+                        setExcercise(bench, new BenchPress(main));
                         break;
                     case "Squat":
-                        if (!squat.IsPressed())
-                            squat.setPressed();
+                        setExcercise(squat, new Squat(main));
                         break;
                     case "DeadLift":
-                        if (!deadlift.IsPressed())
-                            deadlift.setPressed();
+                        setExcercise(deadlift, new DeadLift(main));
                         break;
                     case "ShoulderPress":
-                        if (!press.IsPressed())
-                            press.setPressed();
-                        break;
-                    case "CarfRaise":
-                        if (!carf.IsPressed())
-                            carf.setPressed();
-                        break;
-                    case "ArmCurl":
-                        if (!curl.IsPressed())
-                            curl.setPressed();
-                        break;
-                    case "ArmExtension":
-                        if (!extension.IsPressed())
-                            extension.setPressed();
+                        setExcercise(press, new ShoulderPress(main));
                         break;
                     case "LatPullDown":
-                        if (!latpull.IsPressed())
-                            latpull.setPressed();
+                        setExcercise(latpull, new LatPullDown(main));
+                        break;
+                    case "CarfRaise":
+                        setExcercise(carf, new CarfRaise(main));
+                        break;
+                    case "ArmCurl":
+                        setExcercise(curl, new ArmCurl(main));
+                        break;
+                    case "ArmExtension":
+                        setExcercise(extension, new ArmExtension(main));
                         break;
                 }
 
@@ -583,7 +577,7 @@ public class ExcerciseMode extends DCfragment {
                                 edt_set.getSource().getText().toString()).getBytes());
                         txt_count.setText("0");
                         txt_set.setText("0");
-                        SendWorkoutRecord();
+//                        SendWorkoutRecord();
                     } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         stop.setPressedwithNoSound();
                     }
@@ -697,7 +691,10 @@ public class ExcerciseMode extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
-        return new SelectMode(main);
+        if(isProgram || onSchedule)
+            return new SelectWorkOut(main,null);
+        else
+            return new SelectMode(main);
     }
 
     @Override
