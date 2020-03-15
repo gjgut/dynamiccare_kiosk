@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Common.Component;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,22 +36,27 @@ public class DCListViewAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
+        try {
+            final int pos = position;
+            final Context context = parent.getContext();
 
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(ListViewItem, parent, false);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(ListViewItem, parent, false);
+            }
+
+            TextView title = convertView.findViewById(R.id.item_exc_title);
+            TextView content = convertView.findViewById(R.id.item_exc_content);
+
+            DCListViewItem DCListViewItem = listViewItemList.get(position);
+
+
+            title.setText(DCListViewItem.getExc_title());
+            content.setText(DCListViewItem.getExc_content());
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
 
-        TextView title = convertView.findViewById(R.id.item_exc_title);
-        TextView content = convertView.findViewById(R.id.item_exc_content);
-
-        DCListViewItem DCListViewItem = listViewItemList.get(position);
-
-
-        title.setText(DCListViewItem.getExc_title());
-        content.setText(DCListViewItem.getExc_content());
 
         return convertView;
     }
@@ -68,14 +74,19 @@ public class DCListViewAdapter extends BaseAdapter {
     }
 
     public void Fillitem(Workout workout) {
-        DCListViewItem item = new DCListViewItem();
-        item.setWorkout(workout);
+        try {
+            DCListViewItem item = new DCListViewItem();
+            item.setWorkout(workout);
 
 
-        item.setExc_title(item.getWorkout().getExcercise().getSimpleName() + " " + item.getWorkout().getExcercise().getMuscleName());
-        item.setExc_content(item.getWorkout().isKinetic() + ", " + item.getWorkout().getWeight() + "kg " + item.getWorkout().getReps() + "회 " + item.getWorkout().getSet() + "세트");
+            item.setExc_title(item.getWorkout().getExcercise().getSimpleName() + " " + item.getWorkout().getExcercise().getMuscleName());
+            item.setExc_content(item.getWorkout().isKinetic() + ", " + item.getWorkout().getWeight() + "kg " + item.getWorkout().getReps() + "회 " + item.getWorkout().getSet() + "세트");
 
-        itemContainer.add(item);
+            itemContainer.add(item);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public int getSize() {
