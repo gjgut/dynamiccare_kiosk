@@ -1,6 +1,7 @@
 package com.example.dynamiccare_kisok.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,6 +134,7 @@ public class SelectMode extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_mode, container, false);
+        try{
         main.PlaySound(new int[]{R.raw.select_the_mode, R.raw.select_the_mode_english});
         selectExec = view.findViewById(R.id.btn_select_exec);
         isokinetic = view.findViewById(R.id.btn_select_exec_isokinetic);
@@ -145,6 +147,10 @@ public class SelectMode extends DCfragment {
         isotonic.setOnClickListener(this);
 
         main.getusbService().write(Commands.Home(true).getBytes());
+        }catch (Exception e)
+        {
+            Log.i("Error",e.toString());
+        }
 
         return view;
     }
