@@ -303,6 +303,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         go.Activate();
                     } else {
                         setPropertiesFocusable(true);
+                        DCButtonManager.setDCState(DCButtonManager.State.Setted);
                         main.getusbService().write(Commands.Home(true).getBytes());
                         main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                         go.Deactivate();
@@ -427,6 +428,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     public void onDestroy() {
         super.onDestroy();
 
+        DCButtonManager.setDCState(DCButtonManager.State.Setted);
+        if (timer != null)
+            timer.cancel();
         main.getusbService().write("$CHM08#".getBytes());
         Log.i("Command", "CHM08");
 

@@ -188,28 +188,28 @@ public class Explain extends DCfragment {
 
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
-                    bench.setPressed();
+                    setExcercise(bench,new BenchPress(main));
                     break;
                 case "Squat":
-                    squat.setPressed();
+                    setExcercise(squat,new Squat(main));
                     break;
                 case "DeadLift":
-                    deadlift.setPressed();
+                    setExcercise(deadlift,new DeadLift(main));
                     break;
                 case "ShoulderPress":
-                    press.setPressed();
+                    setExcercise(press,new ShoulderPress(main));
                     break;
                 case "CarfRaise":
-                    carf.setPressed();
+                    setExcercise(carf,new CarfRaise(main));
                     break;
                 case "ArmCurl":
-                    curl.setPressed();
+                    setExcercise(curl,new ArmCurl(main));
                     break;
                 case "ArmExtension":
-                    extension.setPressed();
+                    setExcercise(extension,new ArmExtension(main));
                     break;
                 case "LatPullDown":
-                    latpull.setPressed();
+                    setExcercise(latpull,new LatPullDown(main));
                     break;
             }
 
