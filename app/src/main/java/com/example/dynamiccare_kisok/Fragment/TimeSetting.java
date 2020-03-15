@@ -19,6 +19,7 @@ import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.R;
 
@@ -46,12 +47,10 @@ public class TimeSetting extends DCfragment {
         super(main);
         care = (DynamicCare) main.getApplication();
         this.prev = prev;
+        if(prev.getClass()== ExcerciseMode.class)
+        this.excerciseMode = (ExcerciseMode) prev;
     }
 
-    public TimeSetting(Main main, ExcerciseMode excerciseMode) {
-        super(main);
-        this.excerciseMode = excerciseMode;
-    }
 
     @Override
     public void onClick(View v) {
@@ -130,7 +129,7 @@ public class TimeSetting extends DCfragment {
             btn_hour.getButton().setOnClickListener(this);
             btn_ok.setOnClickListener(this);
 
-            btn_minutes.setPressed();
+            btn_minutes.setPressedWithNoSound();
             if (btn_minutes.IsPressed()) {
                 care.setLimit(30);
             }

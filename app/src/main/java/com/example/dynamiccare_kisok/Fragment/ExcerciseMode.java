@@ -90,6 +90,7 @@ public class ExcerciseMode extends DCfragment {
     public ExcerciseMode(Main main, Bundle bundle) {
         super(main);
         savedState = bundle;
+        isResume = true;
     }
 
     public ExcerciseMode(Main main, Workout workout, boolean isProgram) {
@@ -184,7 +185,10 @@ public class ExcerciseMode extends DCfragment {
 
     public void setExcercise(DCButton button, Excercise excercise) {
         try {
-            button.setPressed();
+            if (isResume)
+                button.setPressedWithNoSound();
+            else
+                button.setPressed();
             if (button.IsPressed()) {
                 main.setCurrentExcercise(excercise);
                 dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
@@ -195,7 +199,8 @@ public class ExcerciseMode extends DCfragment {
                                 String.valueOf(30),
                                 "2",
                                 "0").getBytes());
-                TakeBreak(false);
+                if (!isResume)
+                    TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
 //                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
@@ -274,6 +279,8 @@ public class ExcerciseMode extends DCfragment {
             exc_rest.setVisibility(View.VISIBLE);
 
             if (!isResume) {
+                if (timer != null)
+                    timer.cancel();
                 count = Integer.parseInt(edt_rest.getSource().getText().toString());
                 timer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString()) * 1000, 1000) {
                     @Override
@@ -293,6 +300,8 @@ public class ExcerciseMode extends DCfragment {
                     }
                 };
             } else {
+                if (timer != null)
+                    timer.cancel();
                 timer = new CountDownTimer(count * 1000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -335,6 +344,7 @@ public class ExcerciseMode extends DCfragment {
 
     public void resumeView(Bundle inState) {
         try {
+            isResume = true;
             edt_count.getSource().setText(inState.getString("edt_count"));
             edt_weight.getSource().setText(inState.getString("edt_weight"));
             edt_set.getSource().setText(inState.getString("edt_set"));
@@ -379,9 +389,10 @@ public class ExcerciseMode extends DCfragment {
                 }
 
             dcButtonManager.setDCState(prevstate);
-            if (count != 0) {
+            if (count > 0) {
                 TakeBreak(true);
             }
+            isResume = false;
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -425,7 +436,6 @@ public class ExcerciseMode extends DCfragment {
 
     public void setViews(View view) {
         try {
-            isResume = true;
             if (main.getisIsoKinetic()) {
                 view.findViewById(R.id.container_weight).setVisibility(View.GONE);
                 view.findViewById(R.id.container_level).setVisibility(View.VISIBLE);
