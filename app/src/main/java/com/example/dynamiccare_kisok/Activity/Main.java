@@ -544,7 +544,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             if (currentFragment.getClass() == ExcerciseMode.class ||
                     currentFragment.getClass() == DetailResult.class ||
                     currentFragment.getClass() == Explain.class ||
-            currentFragment.getClass() == SelectWorkOut.class)
+                    currentFragment.getClass() == SelectWorkOut.class)
                 btn_next.setVisibility(View.INVISIBLE);
             else
                 btn_next.setVisibility(View.VISIBLE);
@@ -658,78 +658,82 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         main = this;
+        try {
 
+            ackListener = new ACKListener(this);
+            handler = new Handler();
 
-        ackListener = new ACKListener(this);
-        handler = new Handler();
+            care = (DynamicCare) getApplicationContext();
+            dcSoundPlayer = care.getDcSoundPlayer();
+            count = care.getLimit();
 
-        care = (DynamicCare) getApplicationContext();
-        dcSoundPlayer = care.getDcSoundPlayer();
-        count = care.getLimit();
+            countDownTimer = new CountDownTimer(count * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    try {
+                        BottomRestTime.setText("00:" + String.valueOf(count));
+                        count--;
 
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                try {
-                    BottomRestTime.setText("00:" + String.valueOf(count));
-                    count--;
+                        if (count == 30) {
+                            FinishAlert.show();
+                            BottomRestTime.setTextColor(Color.RED);
 
-                    if (count == 30) {
-                        FinishAlert.show();
-                        BottomRestTime.setTextColor(Color.RED);
-
+                        }
+                    } catch (Exception e) {
+                        Log.e("Error", e.toString());
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    Log.e("Error", e.toString());
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onFinish() {
-                getusbService().write("$CHM08".getBytes());
-                Intent intent = new Intent(main, Login.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                ExcerciseFinished finished = new ExcerciseFinished(main,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        });
-                finished.show();
-            }
-        };
+                @Override
+                public void onFinish() {
+                    getusbService().write("$CHM08".getBytes());
+                    Intent intent = new Intent(main, Login.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    ExcerciseFinished finished = new ExcerciseFinished(main,
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            },
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            });
+                    finished.show();
+                }
+            };
 
-        countDownTimer.start();
-
-
-        dcSoundThread = new DCSoundThread(this);
-        customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
-
-        btn_back = findViewById(R.id.btn_back);
-        btn_next = findViewById(R.id.btn_next);
-        bottombar = findViewById(R.id.Bottom);
-        BottomRestTime = (TextView) findViewById(R.id.usertimer);
-
-        btn_back.setOnClickListener(this);
-        btn_next.setOnClickListener(this);
-        Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG);
-
-        Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG).show();
-
-        if (care.isLimit())
-            ReplaceFragment(new TimeSetting(this));
-        else
-            ReplaceFragment(new SelectMode(this));
+            countDownTimer.start();
 
 
-        limitoff();
+            dcSoundThread = new DCSoundThread(this);
+            customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
+
+            btn_back = findViewById(R.id.btn_back);
+            btn_next = findViewById(R.id.btn_next);
+            bottombar = findViewById(R.id.Bottom);
+            BottomRestTime = (TextView) findViewById(R.id.usertimer);
+
+            btn_back.setOnClickListener(this);
+            btn_next.setOnClickListener(this);
+            Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG);
+
+            Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG).show();
+
+            if (care.isLimit())
+                ReplaceFragment(new TimeSetting(this));
+            else
+                ReplaceFragment(new SelectMode(this));
+
+
+            limitoff();
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     @Override
@@ -778,19 +782,29 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onPause() {
-        super.onPause();
-        unregisterReceiver(mUsbReceiver);
-        unbindService(usbConnection);
+        try {
+            super.onPause();
+            unregisterReceiver(mUsbReceiver);
+            unbindService(usbConnection);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        dcSoundThread.stopstream();
-        if (countDownTimer != null)
-            countDownTimer.cancel();
-        care.setLimit(30);
+        try {
+            super.onDestroy();
+            dcSoundThread.stopstream();
+            if (countDownTimer != null)
+                countDownTimer.cancel();
+            care.setLimit(30);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
 

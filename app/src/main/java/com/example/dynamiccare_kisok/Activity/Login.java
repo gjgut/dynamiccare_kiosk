@@ -18,14 +18,10 @@ import android.widget.Toast;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.DCHttp;
-import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
-import com.example.dynamiccare_kisok.Fragment.Administrator.Authentification;
 import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
