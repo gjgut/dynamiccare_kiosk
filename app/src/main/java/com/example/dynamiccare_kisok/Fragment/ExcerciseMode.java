@@ -94,102 +94,121 @@ public class ExcerciseMode extends DCfragment {
 
     public ExcerciseMode(Main main, Workout workout, boolean isProgram) {
         super(main);
-        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
-        main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
-        this.workout = workout;
-        if (isProgram)
-            isProgram = onSchedule = true;
-        else
-            onSchedule = true;
+        try {
+            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
+            main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
+            this.workout = workout;
+            if (isProgram)
+                isProgram = onSchedule = true;
+            else
+                onSchedule = true;
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.exc_tab_btn_bench:
-                setExcercise(bench, new BenchPress(main));
-                break;
-            case R.id.exc_tab_btn_squat:
-                setExcercise(squat, new Squat(main));
-                break;
-            case R.id.exc_tab_btn_deadlift:
-                setExcercise(deadlift, new DeadLift(main));
-                break;
-            case R.id.exc_tab_btn_shoulderpress:
-                setExcercise(press, new ShoulderPress(main));
-                break;
-            case R.id.exc_tab_btn_latpulldown:
-                setExcercise(latpull, new LatPullDown(main));
-                break;
-            case R.id.exc_tab_btn_carfraise:
-                setExcercise(carf, new CarfRaise(main));
-                break;
-            case R.id.exc_tab_btn_armcurl:
-                setExcercise(curl, new ArmCurl(main));
-                break;
-            case R.id.exc_tab_btn_armextension:
-                setExcercise(extension, new ArmExtension(main));
-                break;
-            case R.id.exc_btn_start:
-                break;
-            case R.id.exc_btn_stop: {
-                break;
-            }
-            case R.id.exc_btn_ready:
-                ready.setPressed();
-                if (ready.IsPressed()) {
-                    setPropertiesFocusable(false);
-                    txt_count.setText(edt_count.getSource().getText().toString());
-                    dcButtonManager.setDCState(DCButtonManager.State.Ready);
-                    main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
-                            main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-                            edt_count.getSource().getText().toString(),
-                            edt_set.getSource().getText().toString()).getBytes());
-                } else {
-                    setPropertiesFocusable(true);
-
-                    dcButtonManager.setDCState(DCButtonManager.State.Setted);
-                    main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                            main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-                            edt_count.getSource().getText().toString(),
-                            edt_set.getSource().getText().toString()).getBytes());
+        try {
+            switch (v.getId()) {
+                case R.id.exc_tab_btn_bench:
+                    setExcercise(bench, new BenchPress(main));
+                    break;
+                case R.id.exc_tab_btn_squat:
+                    setExcercise(squat, new Squat(main));
+                    break;
+                case R.id.exc_tab_btn_deadlift:
+                    setExcercise(deadlift, new DeadLift(main));
+                    break;
+                case R.id.exc_tab_btn_shoulderpress:
+                    setExcercise(press, new ShoulderPress(main));
+                    break;
+                case R.id.exc_tab_btn_latpulldown:
+                    setExcercise(latpull, new LatPullDown(main));
+                    break;
+                case R.id.exc_tab_btn_carfraise:
+                    setExcercise(carf, new CarfRaise(main));
+                    break;
+                case R.id.exc_tab_btn_armcurl:
+                    setExcercise(curl, new ArmCurl(main));
+                    break;
+                case R.id.exc_tab_btn_armextension:
+                    setExcercise(extension, new ArmExtension(main));
+                    break;
+                case R.id.exc_btn_start:
+                    break;
+                case R.id.exc_btn_stop: {
+                    break;
                 }
-                break;
+                case R.id.exc_btn_ready:
+                    ready.setPressed();
+                    if (ready.IsPressed()) {
+                        setPropertiesFocusable(false);
+                        txt_count.setText(edt_count.getSource().getText().toString());
+                        dcButtonManager.setDCState(DCButtonManager.State.Ready);
+                        main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
+                                main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
+                    } else {
+                        setPropertiesFocusable(true);
+
+                        dcButtonManager.setDCState(DCButtonManager.State.Setted);
+                        main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                                main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()).getBytes());
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     public void setPropertiesFocusable(boolean value) {
-        edt_count.getSource().setEnabled(value);
-        edt_set.getSource().setEnabled(value);
-        edt_weight.getSource().setEnabled(value);
-        edt_rest.getSource().setEnabled(value);
-        spin_level.setEnabled(value);
+        try {
+            edt_count.getSource().setEnabled(value);
+            edt_set.getSource().setEnabled(value);
+            edt_weight.getSource().setEnabled(value);
+            edt_rest.getSource().setEnabled(value);
+            spin_level.setEnabled(value);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
 
     public void setExcercise(DCButton button, Excercise excercise) {
-        button.setPressed();
-        if (button.IsPressed()) {
-            main.setCurrentExcercise(excercise);
-            dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-            Main.getusbService().write(
-                    Commands.MeasureSet(excercise.getMode(),
-                            String.valueOf(300),
-                            "000",
-                            String.valueOf(30),
-                            "2",
-                            "0").getBytes());
-            TakeBreak(false);
+        try {
+            button.setPressed();
+            if (button.IsPressed()) {
+                main.setCurrentExcercise(excercise);
+                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                Main.getusbService().write(
+                        Commands.MeasureSet(excercise.getMode(),
+                                String.valueOf(300),
+                                "000",
+                                String.valueOf(30),
+                                "2",
+                                "0").getBytes());
+                TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
 //                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
 //                }
 //            }, 3000);
-        } else {
-            dcButtonManager.setDCState(DCButtonManager.State.Clear);
-            main.setCurrentExcercise(null);
+            } else {
+                dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                main.setCurrentExcercise(null);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     @Nullable
@@ -197,11 +216,15 @@ public class ExcerciseMode extends DCfragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_excercise_mode, container, false);
-        prevstate = DCButtonManager.getDCState();
-        setViews(view);
+        try {
+            prevstate = DCButtonManager.getDCState();
+            setViews(view);
 
-        if (savedState != null) {
-            resumeView(savedState);
+            if (savedState != null) {
+                resumeView(savedState);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
 
         return view;
@@ -209,34 +232,39 @@ public class ExcerciseMode extends DCfragment {
 
     @Override
     public void HandleACK(ACK ack) {
-        switch (ack.getCommandCode()) {
-            case "ACD":
-                Toast.makeText(main, "Command:" + ack.getCommandCode() + ack.getData() + ack.getmTension() + ack.getTime(), Toast.LENGTH_LONG).show();
-                String count = String.valueOf(Integer.parseInt(ack.getData().substring(0, 2)));
-                String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
-                String restOn = ack.getData().substring(4, 5);
-                txt_count.setText(count);
-                txt_set.setText(set);
-                switch (restOn) {
-                    case "1":
-                        DCButtonManager.setDCState(DCButtonManager.State.onRest);
-                        TakeBreak(false);
-                        break;
-                }
-                break;
-            case "ACB":
-                switch (ack.getData()) {
-                    case "1":
-                        exc_rest.setVisibility(View.INVISIBLE);
-                        exc_table.setVisibility(View.VISIBLE);
-                        DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+        try {
+            switch (ack.getCommandCode()) {
+                case "ACD":
+                    Toast.makeText(main, "Command:" + ack.getCommandCode() + ack.getData() + ack.getmTension() + ack.getTime(), Toast.LENGTH_LONG).show();
+                    String count = String.valueOf(Integer.parseInt(ack.getData().substring(0, 2)));
+                    String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
+                    String restOn = ack.getData().substring(4, 5);
+                    txt_count.setText(count);
+                    txt_set.setText(set);
+                    switch (restOn) {
+                        case "1":
+                            DCButtonManager.setDCState(DCButtonManager.State.onRest);
+                            TakeBreak(false);
+                            break;
+                    }
+                    break;
+                case "ACB":
+                    switch (ack.getData()) {
+                        case "1":
+                            exc_rest.setVisibility(View.INVISIBLE);
+                            exc_table.setVisibility(View.VISIBLE);
+                            DCButtonManager.setDCState(DCButtonManager.State.Excercise);
 
-                }
-                break;
-            case "ASS":
-                SendWorkoutRecord();
-                break;
+                    }
+                    break;
+                case "ASS":
+                    SendWorkoutRecord();
+                    break;
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     public void TakeBreak(boolean isResume) {
@@ -291,87 +319,108 @@ public class ExcerciseMode extends DCfragment {
     }
 
     public void ResumeWorkout() {
-        exc_rest.setVisibility(View.INVISIBLE);
-        exc_table.setVisibility(View.VISIBLE);
-        DCButtonManager.setDCState(DCButtonManager.State.Excercise);
-        main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                edt_weight.getSource().getText().toString(),
-                edt_count.getSource().getText().toString(),
-                edt_set.getSource().getText().toString()).getBytes());
+        try {
+            exc_rest.setVisibility(View.INVISIBLE);
+            exc_table.setVisibility(View.VISIBLE);
+            DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+            main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                    edt_weight.getSource().getText().toString(),
+                    edt_count.getSource().getText().toString(),
+                    edt_set.getSource().getText().toString()).getBytes());
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public void resumeView(Bundle inState) {
-        edt_count.getSource().setText(inState.getString("edt_count"));
-        edt_weight.getSource().setText(inState.getString("edt_weight"));
-        edt_set.getSource().setText(inState.getString("edt_set"));
-        edt_rest.getSource().setText(inState.getString("edt_rest"));
-        txt_count.setText(inState.getString("txt_count"));
-        txt_set.setText(inState.getString("txt_set"));
-        count = inState.getInt("count");
-        if (main.getCurrentExcercise() != null)
-            switch (main.getCurrentExcercise().getClass().getSimpleName()) {
-                case "BenchPress":
-                    if (!bench.IsPressed())
-                        bench.setPressed();
-                    break;
-                case "Squat":
-                    if (!squat.IsPressed())
-                        squat.setPressed();
-                    break;
-                case "DeadLift":
-                    if (!deadlift.IsPressed())
-                        deadlift.setPressed();
-                    break;
-                case "ShoulderPress":
-                    if (!press.IsPressed())
-                        press.setPressed();
-                    break;
-                case "CarfRaise":
-                    if (!carf.IsPressed())
-                        carf.setPressed();
-                    break;
-                case "ArmCurl":
-                    if (!curl.IsPressed())
-                        curl.setPressed();
-                    break;
-                case "ArmExtension":
-                    if (!extension.IsPressed())
-                        extension.setPressed();
-                    break;
-                case "LatPullDown":
-                    if (!latpull.IsPressed())
-                        latpull.setPressed();
-                    break;
-            }
+        try {
+            edt_count.getSource().setText(inState.getString("edt_count"));
+            edt_weight.getSource().setText(inState.getString("edt_weight"));
+            edt_set.getSource().setText(inState.getString("edt_set"));
+            edt_rest.getSource().setText(inState.getString("edt_rest"));
+            txt_count.setText(inState.getString("txt_count"));
+            txt_set.setText(inState.getString("txt_set"));
+            count = inState.getInt("count");
+            if (main.getCurrentExcercise() != null)
+                switch (main.getCurrentExcercise().getClass().getSimpleName()) {
+                    case "BenchPress":
+                        if (!bench.IsPressed())
+                            bench.setPressed();
+                        break;
+                    case "Squat":
+                        if (!squat.IsPressed())
+                            squat.setPressed();
+                        break;
+                    case "DeadLift":
+                        if (!deadlift.IsPressed())
+                            deadlift.setPressed();
+                        break;
+                    case "ShoulderPress":
+                        if (!press.IsPressed())
+                            press.setPressed();
+                        break;
+                    case "CarfRaise":
+                        if (!carf.IsPressed())
+                            carf.setPressed();
+                        break;
+                    case "ArmCurl":
+                        if (!curl.IsPressed())
+                            curl.setPressed();
+                        break;
+                    case "ArmExtension":
+                        if (!extension.IsPressed())
+                            extension.setPressed();
+                        break;
+                    case "LatPullDown":
+                        if (!latpull.IsPressed())
+                            latpull.setPressed();
+                        break;
+                }
 
-        dcButtonManager.setDCState(prevstate);
-        if (count != 0) {
-            TakeBreak(true);
+            dcButtonManager.setDCState(prevstate);
+            if (count != 0) {
+                TakeBreak(true);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("edt_count", edt_count.getSource().getText().toString());
-        outState.putString("edt_weight", edt_weight.getSource().getText().toString());
-        outState.putString("edt_set", edt_set.getSource().getText().toString());
-        outState.putString("edt_rest", edt_rest.getSource().getText().toString());
-        outState.putString("txt_count", txt_count.getText().toString());
-        outState.putString("txt_set", txt_set.getText().toString());
-        outState.putInt("count", count);
+        try {
+            super.onSaveInstanceState(outState);
+            outState.putString("edt_count", edt_count.getSource().getText().toString());
+            outState.putString("edt_weight", edt_weight.getSource().getText().toString());
+            outState.putString("edt_set", edt_set.getSource().getText().toString());
+            outState.putString("edt_rest", edt_rest.getSource().getText().toString());
+            outState.putString("txt_count", txt_count.getText().toString());
+            outState.putString("txt_set", txt_set.getText().toString());
+            outState.putInt("count", count);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public Bundle getSaveState() {
-        Bundle outState = new Bundle();
-        outState.putString("edt_count", edt_count.getSource().getText().toString());
-        outState.putString("edt_weight", edt_weight.getSource().getText().toString());
-        outState.putString("edt_set", edt_set.getSource().getText().toString());
-        outState.putString("edt_rest", edt_rest.getSource().getText().toString());
-        outState.putString("txt_count", txt_count.getText().toString());
-        outState.putString("txt_set", txt_set.getText().toString());
-        outState.putInt("count", count);
-        return outState;
+        try {
+            Bundle outState = new Bundle();
+            outState.putString("edt_count", edt_count.getSource().getText().toString());
+            outState.putString("edt_weight", edt_weight.getSource().getText().toString());
+            outState.putString("edt_set", edt_set.getSource().getText().toString());
+            outState.putString("edt_rest", edt_rest.getSource().getText().toString());
+            outState.putString("txt_count", txt_count.getText().toString());
+            outState.putString("txt_set", txt_set.getText().toString());
+            outState.putInt("count", count);
+            return outState;
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+            return null;
+        }
+
     }
 
     public void setViews(View view) {
@@ -579,28 +628,32 @@ public class ExcerciseMode extends DCfragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        savedState = getSaveState();
-        if (timer != null)
-            timer.cancel();
+        try {
+            super.onDestroy();
+            savedState = getSaveState();
+            if (timer != null)
+                timer.cancel();
 
-        main.getusbService().write(Commands.Home(true).getBytes());
-        Log.i("Command", "CHM08");
+            main.getusbService().write(Commands.Home(true).getBytes());
+            Log.i("Command", "CHM08");
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
 
     }
 
     public void SendWorkoutRecord() {
-        Workout sendworkdout = new Workout(true,
-                main.getisIsoKinetic(),
-                main.getCurrentExcercise(),
-                Integer.valueOf(edt_weight.getSource().getText().toString()),
-                Integer.valueOf(edt_count.getSource().getText().toString()),
-                Integer.valueOf(edt_set.getSource().getText().toString()));
-        if(!workout.equals(sendworkdout))
-            isProgram = onSchedule = false;
-
-        JSONObject jsonObject = new JSONObject();
         try {
+            Workout sendworkdout = new Workout(true,
+                    main.getisIsoKinetic(),
+                    main.getCurrentExcercise(),
+                    Integer.valueOf(edt_weight.getSource().getText().toString()),
+                    Integer.valueOf(edt_count.getSource().getText().toString()),
+                    Integer.valueOf(edt_set.getSource().getText().toString()));
+            if (!workout.equals(sendworkdout))
+                isProgram = onSchedule = false;
+
+            JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));
             jsonObject.accumulate("count", Integer.valueOf(edt_count.getSource().getText().toString()));
             jsonObject.accumulate("device", main.getCare().getDeviceID().toString());
@@ -614,8 +667,9 @@ public class ExcerciseMode extends DCfragment {
             jsonObject.accumulate("weight", Integer.valueOf(edt_weight.getSource().getText().toString()));
             new DCHttp().SendWorkout(jsonObject.toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.i("Error", e.toString());
         }
+
     }
 
     @Override
