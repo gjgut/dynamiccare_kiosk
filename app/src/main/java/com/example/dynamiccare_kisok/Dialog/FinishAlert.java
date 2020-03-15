@@ -5,21 +5,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.example.dynamiccare_kisok.Activity.Main;
-import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class FinishAlert extends Dialog {
     ImageButton yes,no;

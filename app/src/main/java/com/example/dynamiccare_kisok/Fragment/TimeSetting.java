@@ -1,17 +1,12 @@
 package com.example.dynamiccare_kisok.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.dynamiccare_kisok.Activity.Administrator;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
-import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
-import com.example.dynamiccare_kisok.Fragment.SelectMode;
 import com.example.dynamiccare_kisok.R;
 
 public class TimeSetting extends DCfragment {
@@ -37,7 +29,6 @@ public class TimeSetting extends DCfragment {
     DynamicCare care;
     DCfragment prev;
     ExcerciseMode excerciseMode;
-    CountDownTimer timer;
     int count = 0;
 
 
@@ -104,19 +95,6 @@ public class TimeSetting extends DCfragment {
             prev = new SelectMode(main);
         if (excerciseMode != null) {
             count = excerciseMode.getSaveState().getInt("count");
-            timer = new CountDownTimer(count, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    count--;
-                    Log.i("timesetting",String.valueOf(count));
-                }
-
-                @Override
-                public void onFinish() {
-
-                }
-            };
-            timer.start();
         }
         super.onCreate(savedInstanceState);
         try {

@@ -25,6 +25,7 @@ public class DCSoundThread {
     {
         if (soundstream != null)
         soundstream.interrupt();
+        dcSoundPlayer.stop();
     }
 
     public void playstream(int[] stream) {

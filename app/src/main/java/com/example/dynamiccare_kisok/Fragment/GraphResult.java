@@ -1,18 +1,13 @@
 package com.example.dynamiccare_kisok.Fragment;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -27,7 +22,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
-import com.example.dynamiccare_kisok.Common.Util.ACKListener;
+import com.example.dynamiccare_kisok.Common.Object.MeasureResult;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCHttp;
 import com.example.dynamiccare_kisok.Dialog.NormalAlert;
@@ -41,7 +36,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     DCActionButton Up, Down;
     DCActionButton ready, go;
     ProgressBar power;
-    ResCalculator resCalculator;
+    MeasureResult resCalculator;
     DCEditText edt_time, edt_weight;
     DCButtonManager dcButtonManager;
 
@@ -193,7 +188,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
                             main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
-                            resCalculator = new ResCalculator();
+                            resCalculator = new MeasureResult();
 
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
@@ -410,39 +405,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
     }
 
-
-    private class ResCalculator {
-        int sum = 0, count = 0, max = 0, min = 0, average = 0, start = -1;
-
-        public void putNumber(int entry) {
-            count++;
-            if(start == -1)
-                start = min = entry;
-            sum += entry;
-            average = sum / count;
-            if (entry > max)
-                max = entry;
-            if (entry < min)
-                min = entry;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public int getAverage() {
-            return average;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-    }
 
     @Override
     public void onDestroy()

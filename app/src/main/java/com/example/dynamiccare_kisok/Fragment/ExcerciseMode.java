@@ -78,7 +78,8 @@ public class ExcerciseMode extends DCfragment {
     Handler handler = new Handler();
     boolean isResume = false;
 
-    public ExcerciseMode(){}
+    public ExcerciseMode() {
+    }
 
     public ExcerciseMode(Main main) {
         super(main);
@@ -97,7 +98,7 @@ public class ExcerciseMode extends DCfragment {
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
         this.workout = workout;
         if (isProgram)
-            isProgram = true;
+            isProgram = onSchedule = true;
         else
             onSchedule = true;
 
@@ -179,7 +180,7 @@ public class ExcerciseMode extends DCfragment {
                             String.valueOf(30),
                             "2",
                             "0").getBytes());
-//            TakeBreak(false);
+            TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
 //                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
@@ -234,6 +235,7 @@ public class ExcerciseMode extends DCfragment {
                 break;
             case "ASS":
                 SendWorkoutRecord();
+                break;
         }
     }
 
@@ -309,36 +311,36 @@ public class ExcerciseMode extends DCfragment {
         if (main.getCurrentExcercise() != null)
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
-                    if(!bench.IsPressed())
-                    bench.setPressed();
+                    if (!bench.IsPressed())
+                        bench.setPressed();
                     break;
                 case "Squat":
-                    if(!squat.IsPressed())
-                    squat.setPressed();
+                    if (!squat.IsPressed())
+                        squat.setPressed();
                     break;
                 case "DeadLift":
-                    if(!deadlift.IsPressed())
-                    deadlift.setPressed();
+                    if (!deadlift.IsPressed())
+                        deadlift.setPressed();
                     break;
                 case "ShoulderPress":
-                    if(!press.IsPressed())
-                    press.setPressed();
+                    if (!press.IsPressed())
+                        press.setPressed();
                     break;
                 case "CarfRaise":
-                    if(!carf.IsPressed())
-                    carf.setPressed();
+                    if (!carf.IsPressed())
+                        carf.setPressed();
                     break;
                 case "ArmCurl":
-                    if(!curl.IsPressed())
-                    curl.setPressed();
+                    if (!curl.IsPressed())
+                        curl.setPressed();
                     break;
                 case "ArmExtension":
-                    if(!extension.IsPressed())
-                    extension.setPressed();
+                    if (!extension.IsPressed())
+                        extension.setPressed();
                     break;
                 case "LatPullDown":
-                    if(!latpull.IsPressed())
-                    latpull.setPressed();
+                    if (!latpull.IsPressed())
+                        latpull.setPressed();
                     break;
             }
 
@@ -456,7 +458,7 @@ public class ExcerciseMode extends DCfragment {
 //            data.add("5");
 
 
-            spinnerAdapter = new DCSpinnerAdapter(main,data);
+            spinnerAdapter = new DCSpinnerAdapter(main, data);
             spin_level.setAdapter(spinnerAdapter);
 
             bench.getButton().setOnClickListener(this);
@@ -504,6 +506,7 @@ public class ExcerciseMode extends DCfragment {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_UP) {
+                        count = 0;
                         setPropertiesFocusable(true);
                         exc_rest.setVisibility(View.INVISIBLE);
                         exc_table.setVisibility(View.VISIBLE);
@@ -587,6 +590,15 @@ public class ExcerciseMode extends DCfragment {
     }
 
     public void SendWorkoutRecord() {
+        Workout sendworkdout = new Workout(true,
+                main.getisIsoKinetic(),
+                main.getCurrentExcercise(),
+                Integer.valueOf(edt_weight.getSource().getText().toString()),
+                Integer.valueOf(edt_count.getSource().getText().toString()),
+                Integer.valueOf(edt_set.getSource().getText().toString()));
+        if(!workout.equals(sendworkdout))
+            isProgram = onSchedule = false;
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));

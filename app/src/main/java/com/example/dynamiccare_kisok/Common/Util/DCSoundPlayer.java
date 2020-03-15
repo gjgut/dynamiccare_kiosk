@@ -699,4 +699,9 @@ public class DCSoundPlayer {
         }
     }
 
+    public void stop()
+    {
+        soundPool.autoPause();
+    }
+
 }

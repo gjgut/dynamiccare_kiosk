@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,16 +15,10 @@ import com.example.dynamiccare_kisok.Activity.Login;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class ExcerciseFinished extends Dialog {
     Main main;
-    Button yes,no;
-    View.OnClickListener yeslistner,nolistener;
-    TextView txt_today;
+    Button yes;
 
     public ExcerciseFinished(@NonNull Context context, View.OnClickListener yes, View.OnClickListener no) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);

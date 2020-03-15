@@ -200,6 +200,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
+        FinishAlert = new FinishAlert(main, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         countDownTimer = new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -456,6 +467,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     switch (ack.getData()) {
                         case "00":
                             PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+                            DCButtonManager.setDCState(DCButtonManager.State.Clear);
                             break;
                         case "01":
                             PlaySound(new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
@@ -778,6 +790,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         dcSoundThread.stopstream();
         if (countDownTimer != null)
             countDownTimer.cancel();
+        care.setLimit(30);
     }
 
 

@@ -1,20 +1,14 @@
 package com.example.dynamiccare_kisok.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.provider.BlockedNumberContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
@@ -22,29 +16,19 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.dynamiccare_kisok.Activity.Main;
-import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCListViewAdapter;
 import com.example.dynamiccare_kisok.Common.Component.DCListViewItem;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
-import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
 import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
 import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
-import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
-import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
-import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
-import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Object.Workout;
 import com.example.dynamiccare_kisok.R;
 
-import java.lang.invoke.WrongMethodTypeException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class SelectWorkOut extends DCfragment {

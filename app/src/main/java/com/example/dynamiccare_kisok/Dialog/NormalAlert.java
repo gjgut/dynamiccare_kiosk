@@ -17,8 +17,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class NormalAlert extends Dialog {
     Main main;
-    Button yes,no;
-    View.OnClickListener yeslistner,nolistener;
+    Button yes;
     String msg;
     TextView txt_messsage;
 

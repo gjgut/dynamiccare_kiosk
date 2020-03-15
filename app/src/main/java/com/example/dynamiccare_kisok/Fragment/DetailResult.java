@@ -2,13 +2,10 @@ package com.example.dynamiccare_kisok.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,10 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Activity.Main;
-import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
-import com.example.dynamiccare_kisok.Common.Component.DCButton;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
-import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 public class DetailResult extends DCfragment{

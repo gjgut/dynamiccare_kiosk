@@ -1,7 +1,5 @@
 package com.example.dynamiccare_kisok.Fragment;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

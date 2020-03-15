@@ -67,4 +67,17 @@ public class Workout {
     public void setReps(int reps) {
         Reps = reps;
     }
+
+    public boolean equals(Workout target)
+    {
+             if(target.getExcercise()== getExcercise() &&
+                target.getIsKinetic()== getIsKinetic() &&
+                target.getWeight()== getWeight() &&
+                target.getReps()== getReps() &&
+                target.getSet()== getSet())
+                    return true;
+             else
+                 return false;
+
+    }
 }
