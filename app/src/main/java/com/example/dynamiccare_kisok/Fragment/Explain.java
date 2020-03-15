@@ -2,6 +2,7 @@ package com.example.dynamiccare_kisok.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,79 +38,103 @@ public class Explain extends DCfragment {
 
     public Explain(Main main) {
         super(main);
-        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()).getBytes());
-        if (main.getisIsoTonic())
-            main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.sotonic_log_mode_english});
-        else
-            main.PlaySound(new int[]{R.raw.metric_log_mode, R.raw.metric_log_mode_english});
+        try {
+            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()).getBytes());
+            if (main.getisIsoTonic())
+                main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.sotonic_log_mode_english});
+            else
+                main.PlaySound(new int[]{R.raw.metric_log_mode, R.raw.metric_log_mode_english});
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
+
     }
 
     public void setBottomBar(boolean value) {
-        if (value)
-            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
-        else
-            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+        try {
+            if (value)
+                Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+            else
+                Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
+        }
 
     }
 
     @Override
     public void HandleACK(ACK ack) {
-        switch (ack.getCommandCode()) {
-            case "PCA":
-                setBottomBar(true);
+        try {
+            switch (ack.getCommandCode()) {
+                case "PCA":
+                    setBottomBar(true);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.mes_btn_bench:
-                setExcercise(bench, new BenchPress(main));
-                break;
-            case R.id.mes_btn_squat:
-                setExcercise(squat, new Squat(main));
-                break;
-            case R.id.mes_btn_deadlift:
-                setExcercise(deadlift, new DeadLift(main));
-                break;
-            case R.id.mes_btn_shoulderpress:
-                setExcercise(press, new ShoulderPress(main));
-                break;
-            case R.id.mes_btn_latpulldown:
-                setExcercise(latpull, new LatPullDown(main));
-                break;
-            case R.id.mes_btn_carfraise:
-                setExcercise(carf, new CarfRaise(main));
-                break;
-            case R.id.mes_btn_armcurl:
-                setExcercise(curl, new ArmCurl(main));
-                break;
-            case R.id.mes_btn_armextension:
-                setExcercise(extension, new ArmExtension(main));
-                break;
+        try {
+            switch (v.getId()) {
+                case R.id.mes_btn_bench:
+                    setExcercise(bench, new BenchPress(main));
+                    break;
+                case R.id.mes_btn_squat:
+                    setExcercise(squat, new Squat(main));
+                    break;
+                case R.id.mes_btn_deadlift:
+                    setExcercise(deadlift, new DeadLift(main));
+                    break;
+                case R.id.mes_btn_shoulderpress:
+                    setExcercise(press, new ShoulderPress(main));
+                    break;
+                case R.id.mes_btn_latpulldown:
+                    setExcercise(latpull, new LatPullDown(main));
+                    break;
+                case R.id.mes_btn_carfraise:
+                    setExcercise(carf, new CarfRaise(main));
+                    break;
+                case R.id.mes_btn_armcurl:
+                    setExcercise(curl, new ArmCurl(main));
+                    break;
+                case R.id.mes_btn_armextension:
+                    setExcercise(extension, new ArmExtension(main));
+                    break;
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     public void setExcercise(DCButton button, Excercise excercise) {
-        button.setPressed();
-        if (button.IsPressed()) {
-            dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-            Main.setCurrentExcercise(excercise);
-            Main.getusbService().write(
-                    Commands.MeasureSet(excercise.getMode(),
-                            String.valueOf(main.getMeasureWeight()),
-                            "000", String.valueOf(main.getMeasureTime()),
-                            "1",
-                            "0").getBytes());
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
-                }
-            }, 3000);
-        } else {
-            dcButtonManager.setDCState(DCButtonManager.State.Clear);
-            setBottomBar(false);
+        try {
+            button.setPressed();
+            if (button.IsPressed()) {
+                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                Main.setCurrentExcercise(excercise);
+                Main.getusbService().write(
+                        Commands.MeasureSet(excercise.getMode(),
+                                String.valueOf(main.getMeasureWeight()),
+                                "000", String.valueOf(main.getMeasureTime()),
+                                "1",
+                                "0").getBytes());
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+                    }
+                }, 3000);
+            } else {
+                dcButtonManager.setDCState(DCButtonManager.State.Clear);
+                setBottomBar(false);
+            }
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
+
     }
 
     @Nullable
@@ -161,8 +186,7 @@ public class Explain extends DCfragment {
             curl.getButton().setOnClickListener(this);
             extension.getButton().setOnClickListener(this);
 
-            switch(main.getCurrentExcercise().getClass().getSimpleName())
-            {
+            switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
                     bench.setPressed();
                     break;
