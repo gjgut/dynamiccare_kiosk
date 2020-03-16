@@ -5,24 +5,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Application;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
-import com.example.dynamiccare_kisok.Common.Component.DCActionButton;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
@@ -41,9 +33,8 @@ import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.Common.Util.UsbService;
-import com.example.dynamiccare_kisok.Dialog.ExcerciseFinished;
 import com.example.dynamiccare_kisok.Dialog.FinishAlert;
-import com.example.dynamiccare_kisok.Dialog.LoadPlan;
+import com.example.dynamiccare_kisok.Dialog.NormalAlert;
 import com.example.dynamiccare_kisok.Fragment.Explain;
 import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
@@ -52,10 +43,7 @@ import com.example.dynamiccare_kisok.Fragment.SelectMode;
 import com.example.dynamiccare_kisok.Fragment.SelectWorkOut;
 import com.example.dynamiccare_kisok.R;
 
-import java.lang.ref.WeakReference;
 import java.util.Set;
-
-import static com.example.dynamiccare_kisok.Common.DynamicCare.getDeviceID;
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
     FinishAlert FinishAlert;
@@ -237,9 +225,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                getusbService().write(Commands.Home(true).getBytes());
+                getusbService().write(Commands.Home(true));
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                ExcerciseFinished finished = new ExcerciseFinished(main,
+                NormalAlert finished = new NormalAlert(main,
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -249,7 +237,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             @Override
                             public void onClick(View v) {
                             }
-                        });
+                        },"30분이 경과되었습니다.");
                 finished.show();
             }
         };
@@ -272,7 +260,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             switch (ack.getCommandCode()) {
                 case "CHM":
                     PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-                    usbService.write(Commands.Home(true).getBytes());
+                    usbService.write(Commands.Home(true));
                     Intent intent = new Intent(this, Login.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.left_in, R.anim.right_out);
@@ -691,7 +679,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     Intent intent = new Intent(main, Login.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                    ExcerciseFinished finished = new ExcerciseFinished(main,
+                    NormalAlert finished = new NormalAlert(main,
                             new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -701,7 +689,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                                 @Override
                                 public void onClick(View v) {
                                 }
-                            });
+                            },"30분이 경과되었습니다.");
                     finished.show();
                 }
             };
@@ -746,7 +734,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     if (currentFragment.getClass().getSimpleName() == "ExcerciseMode")
                         main.setCurrentExcercise(null);
                     else if (currentFragment.getClass().getSimpleName() == "Explain") {
-                        main.getusbService().write(Commands.Home(true).getBytes());
+                        main.getusbService().write(Commands.Home(true));
                     }
                     if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
                         Intent intent = new Intent(main, Login.class);

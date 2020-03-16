@@ -42,7 +42,7 @@ public class FinishAlert extends Dialog {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.3f;
         getWindow().setAttributes(layoutParams);
-        setContentView(R.layout.dialog_excercise_finished);
+        setContentView(R.layout.dialog_warning_for_finish);
 
 
         yes = findViewById(R.id.btn_yes);

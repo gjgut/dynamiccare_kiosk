@@ -45,11 +45,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.DCHttp;
-import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
-import com.example.dynamiccare_kisok.Common.Util.DCSoundThread;
 import com.example.dynamiccare_kisok.R;
-import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseReady1;
-import com.example.dynamiccare_kisok.Test.Runnable.ExcerciseStart;
 
 import org.json.JSONObject;
 
@@ -83,7 +79,7 @@ public class ExcerciseMode extends DCfragment {
 
     public ExcerciseMode(Main main) {
         super(main);
-        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
+        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
         main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
     }
 
@@ -96,7 +92,7 @@ public class ExcerciseMode extends DCfragment {
     public ExcerciseMode(Main main, Workout workout, boolean isProgram) {
         super(main);
         try {
-            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()).getBytes());
+            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
             main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
             this.workout = workout;
             if (isProgram)
@@ -151,7 +147,7 @@ public class ExcerciseMode extends DCfragment {
                         main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
                                 main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                                 edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                                edt_set.getSource().getText().toString()));
                     } else {
                         setPropertiesFocusable(true);
 
@@ -159,7 +155,7 @@ public class ExcerciseMode extends DCfragment {
                         main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                                 main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                                 edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                                edt_set.getSource().getText().toString()));
                     }
                     break;
             }
@@ -198,7 +194,7 @@ public class ExcerciseMode extends DCfragment {
                                 "000",
                                 String.valueOf(30),
                                 "2",
-                                "0").getBytes());
+                                "0"));
                 if (!isResume)
                     TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
@@ -291,7 +287,7 @@ public class ExcerciseMode extends DCfragment {
                         if (count == 15)
                             main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
                         else if (count < 10)
-                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS0" + count + "#"));
+                            main.HandleACK(ACKListener.ParseACK("$ACS0" + count + "#"));
                         count--;
                     }
 
@@ -311,7 +307,7 @@ public class ExcerciseMode extends DCfragment {
                         if (count == 15)
                             main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
                         else if (count < 10)
-                            main.HandleACK(ACKListener.ACKParser.ParseACK("$ACS0" + count + "#"));
+                            main.HandleACK(ACKListener.ParseACK("$ACS0" + count + "#"));
                         count--;
                         Log.i("Timer Used", String.valueOf(count));
                     }
@@ -337,7 +333,7 @@ public class ExcerciseMode extends DCfragment {
             main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
                     edt_weight.getSource().getText().toString(),
                     edt_count.getSource().getText().toString(),
-                    edt_set.getSource().getText().toString()).getBytes());
+                    edt_set.getSource().getText().toString()));
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -537,7 +533,7 @@ public class ExcerciseMode extends DCfragment {
                                 main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
                                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                                         edt_count.getSource().getText().toString(),
-                                        edt_set.getSource().getText().toString()).getBytes());
+                                        edt_set.getSource().getText().toString()));
                                 main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
                                 start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
                                 start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
@@ -546,7 +542,7 @@ public class ExcerciseMode extends DCfragment {
                                 main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
                                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                                         edt_count.getSource().getText().toString(),
-                                        edt_set.getSource().getText().toString()).getBytes());
+                                        edt_set.getSource().getText().toString()));
                                 start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
                                 start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
                             }
@@ -574,7 +570,7 @@ public class ExcerciseMode extends DCfragment {
                         main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                                 main.getisIsoKinetic() ? String.valueOf(String.valueOf(spinnerAdapter.getCurrentNumber())) : edt_weight.getSource().getText().toString(),
                                 edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()).getBytes());
+                                edt_set.getSource().getText().toString()));
                         txt_count.setText("0");
                         txt_set.setText("0");
 //                        SendWorkoutRecord();
@@ -638,7 +634,7 @@ public class ExcerciseMode extends DCfragment {
             if (timer != null)
                 timer.cancel();
 
-            main.getusbService().write(Commands.Home(true).getBytes());
+            main.getusbService().write(Commands.Home(true));
             Log.i("Command", "CHM08");
         } catch (Exception e) {
             Log.i("Error", e.toString());

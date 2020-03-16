@@ -39,7 +39,7 @@ public class Explain extends DCfragment {
     public Explain(Main main) {
         super(main);
         try {
-            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()).getBytes());
+            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()));
             if (main.getisIsoTonic())
                 main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.sotonic_log_mode_english});
             else
@@ -120,10 +120,10 @@ public class Explain extends DCfragment {
                                 String.valueOf(main.getMeasureWeight()),
                                 "000", String.valueOf(main.getMeasureTime()),
                                 "1",
-                                "0").getBytes());
+                                "0"));
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+                        main.HandleACK(ACKListener.ParseACK("$PCA#"));
                     }
                 }, 3000);
                 setBottomBar(true);

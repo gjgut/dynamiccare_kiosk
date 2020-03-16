@@ -103,7 +103,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
             Low.setPressed();
             if (Low.IsPressed())
-                main.getusbService().write(Commands.MeasureLevelCheck("L").getBytes());
+                main.getusbService().write(Commands.MeasureLevelCheck("L"));
 
             ready = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_ready), getResources().getDrawable(R.drawable.pressed_btn_ready));
             go = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_start), getResources().getDrawable(R.drawable.pressed_btn_start));
@@ -183,7 +183,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                                 setBottomBar(false);
                                 if (resCalculator != null)
                                     main.getusbService().write("$CSP0#".getBytes());
-                                main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()).getBytes());
+                                main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()));
                                 resCalculator = new MeasureResult();
 
                                 go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
@@ -193,7 +193,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                                 if (timer != null)
                                     timer.cancel();
                                 main.getusbService().write("$CSP0#".getBytes());
-                                main.getusbService().write(Commands.Home(true).getBytes());
+                                main.getusbService().write(Commands.Home(true));
                                 main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
 
                                 go.Activate();
@@ -244,7 +244,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         timer = new CountDownTimer(1000000, 1) {
                             @Override
                             public void onTick(long millisUntilFinished) {
-                                main.getusbService().write(Commands.Position("U").getBytes());
+                                main.getusbService().write(Commands.Position("U"));
                                 Log.i("Position", "U");
                             }
 
@@ -259,7 +259,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                         timer = new CountDownTimer(1000000, 1) {
                             @Override
                             public void onTick(long millisUntilFinished) {
-                                main.getusbService().write(Commands.Position("D").getBytes());
+                                main.getusbService().write(Commands.Position("D"));
                                 Log.i("Position", "D");
                             }
 
@@ -299,12 +299,12 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                     if (ready.IsPressed()) {
                         setPropertiesFocusable(false);
                         main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
-                        main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())).getBytes());
+                        main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())));
                         go.Activate();
                     } else {
                         setPropertiesFocusable(true);
                         DCButtonManager.setDCState(DCButtonManager.State.Setted);
-                        main.getusbService().write(Commands.Home(true).getBytes());
+                        main.getusbService().write(Commands.Home(true));
                         main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                         go.Deactivate();
                     }
@@ -312,20 +312,20 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 case R.id.btn_low: {
                     Low.setPressed();
                     if (Low.IsPressed())
-                        main.getusbService().write(Commands.MeasureLevelCheck("L").getBytes());
+                        main.getusbService().write(Commands.MeasureLevelCheck("L"));
                     break;
                 }
                 case R.id.btn_mid: {
                     Mid.setPressed();
                     if (Mid.IsPressed())
-                        main.getusbService().write(Commands.MeasureLevelCheck("M").getBytes());
+                        main.getusbService().write(Commands.MeasureLevelCheck("M"));
                     break;
                 }
 
                 case R.id.btn_high: {
                     High.setPressed();
                     if (High.IsPressed())
-                        main.getusbService().write(Commands.MeasureLevelCheck("H").getBytes());
+                        main.getusbService().write(Commands.MeasureLevelCheck("H"));
                     break;
                 }
 

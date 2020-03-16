@@ -15,7 +15,6 @@ import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.Commands;
-import com.example.dynamiccare_kisok.Common.Util.HttpUtil;
 import com.example.dynamiccare_kisok.Dialog.LoadPlan;
 import com.example.dynamiccare_kisok.R;
 
@@ -34,7 +33,7 @@ public class SelectMode extends DCfragment {
     @Override
     public void onClick(View v) {
         try {
-            main.getusbService().write(Commands.Home(true).getBytes());
+            main.getusbService().write(Commands.Home(true));
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
                     try {
@@ -49,7 +48,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             loadPlandialog.dismiss();
                                             ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, null), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
+                                            main.getusbService().write(Commands.ExcerciseMode(false));
                                         }
                                     },
                                     new View.OnClickListener() {
@@ -57,7 +56,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             main.setisIsoKinetic(false);
                                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
+                                            main.getusbService().write(Commands.ExcerciseMode(false));
                                             loadPlandialog.dismiss();
                                         }
                                     });
@@ -65,12 +64,12 @@ public class SelectMode extends DCfragment {
 //                        } else {
 //                            main.setisIsoKinetic(false);
 //                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-//                            main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
+//                            main.getusbService().write(Commands.ExcerciseMode(false));
 //                        }
                     } catch (NullPointerException e) {
                         main.setisIsoKinetic(false);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                        main.getusbService().write(Commands.ExcerciseMode(false).getBytes());
+                        main.getusbService().write(Commands.ExcerciseMode(false));
                     }
                     break;
                 }
@@ -86,7 +85,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             loadPlandialog.dismiss();
                                             ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
+                                            main.getusbService().write(Commands.ExcerciseMode(true));
                                         }
                                     },
                                     new View.OnClickListener() {
@@ -94,7 +93,7 @@ public class SelectMode extends DCfragment {
                                         public void onClick(View v) {
                                             main.setisIsoKinetic(true);
                                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
+                                            main.getusbService().write(Commands.ExcerciseMode(true));
                                             loadPlandialog.dismiss();
                                         }
                                     });
@@ -102,25 +101,25 @@ public class SelectMode extends DCfragment {
                         } else {
                             main.setisIsoKinetic(true);
                             ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                            main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
+                            main.getusbService().write(Commands.ExcerciseMode(true));
                         }
                     } catch (NullPointerException e) {
                         main.setisIsoKinetic(true);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                        main.getusbService().write(Commands.ExcerciseMode(true).getBytes());
+                        main.getusbService().write(Commands.ExcerciseMode(true));
                     }
                     break;
                 }
                 case R.id.btn_sel_mes_isometric: {
                     main.setIsIsoTonic(false);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
-                    main.getusbService().write(Commands.MeasureMode(false).getBytes());
+                    main.getusbService().write(Commands.MeasureMode(false));
                     break;
                 }
                 case R.id.btn_sel_mes_isotonic: {
                     main.setIsIsoTonic(true);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
-                    main.getusbService().write(Commands.MeasureMode(true).getBytes());
+                    main.getusbService().write(Commands.MeasureMode(true));
                     break;
                 }
             }
@@ -146,7 +145,7 @@ public class SelectMode extends DCfragment {
         isometronic.setOnClickListener(this);
         isotonic.setOnClickListener(this);
 
-        main.getusbService().write(Commands.Home(true).getBytes());
+        main.getusbService().write(Commands.Home(true));
         }catch (Exception e)
         {
             Log.i("Error",e.toString());
@@ -155,19 +154,19 @@ public class SelectMode extends DCfragment {
         return view;
     }
 
-    public org.json.JSONObject isTherePlan() {
-        try {
-            DynamicCare care = (DynamicCare) main.getApplication();
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("uid", care.getCurrentUser());
-            String json = jsonObject.toString();
-            return new HttpUtil().execute(json).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public JSONObject isTherePlan() {
+//        try {
+//            DynamicCare care = (DynamicCare) main.getApplication();
+//
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.accumulate("uid", care.getCurrentUser());
+//            String json = jsonObject.toString();
+//            return new HttpUtil().execute(json).get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     @Override
     public String getTitle() {

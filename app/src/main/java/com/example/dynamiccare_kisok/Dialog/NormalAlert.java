@@ -45,11 +45,11 @@ public class NormalAlert extends Dialog {
         yes.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                dismiss();
                 Intent intent = new Intent(main, Login.class);
                 main.startActivity(intent);
                 main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 main.finish();
+                dismiss();
             }
         });
     }
