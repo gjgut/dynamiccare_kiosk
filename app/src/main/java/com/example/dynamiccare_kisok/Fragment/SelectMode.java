@@ -38,10 +38,10 @@ public class SelectMode extends DCfragment {
                 case R.id.btn_select_exec: {
                     try {
                     DynamicCare care = (DynamicCare) main.getApplication();
-//                    JSONObject jsonObject = care.getCurrentUserJson();
-//                    JSONObject resultData = (JSONObject) jsonObject.get("resultData");
-//                        main.getusbService().write(Commands.Home(true).getBytes());
-//                        if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
+                    JSONObject jsonObject = care.getCurrentUserJson();
+                    JSONObject resultData = (JSONObject) jsonObject.get("resultData");
+                        main.getusbService().write(Commands.Home(true));
+                        if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
                             loadPlandialog = new LoadPlan(main,
                                     new View.OnClickListener() {
                                         @Override
@@ -61,11 +61,11 @@ public class SelectMode extends DCfragment {
                                         }
                                     });
                             loadPlandialog.show();
-//                        } else {
-//                            main.setisIsoKinetic(false);
-//                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-//                            main.getusbService().write(Commands.ExcerciseMode(false));
-//                        }
+                        } else {
+                            main.setisIsoKinetic(false);
+                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
+                            main.getusbService().write(Commands.ExcerciseMode(false));
+                        }
                     } catch (NullPointerException e) {
                         main.setisIsoKinetic(false);
                         ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);

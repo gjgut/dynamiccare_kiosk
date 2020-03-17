@@ -51,7 +51,7 @@ public class FinishAlert extends Dialog {
         yes.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                main.ReplaceFragment(new TimeSetting(main), true);
+                main.ReplaceFragment(new TimeSetting(main,main.getCurrentFragment()), true);
                 dismiss();
             }
         });

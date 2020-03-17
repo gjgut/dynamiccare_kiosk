@@ -342,7 +342,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         try {
             View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
             setViews(view);
-            setBottomBar(false);
+            setBottomBar(true);
             return view;
         } catch (Exception e) {
             Toast.makeText(main, e.toString(), Toast.LENGTH_LONG).show();
@@ -420,7 +420,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
 
     @Override
     public DCfragment getNextFragment() {
-        return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
+//        return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
+        return new DetailResult(main, 100000, 250000, 100000, 150000);
     }
 
 

@@ -63,9 +63,9 @@ public class TimeSetting extends DCfragment {
                             timer.cancel();
                         Bundle outState = excerciseMode.getSaveState();
                         outState.putInt("count", count);
-                        main.ReplaceFragment(new ExcerciseMode(main,outState));
+                        main.ReplaceFragment(new ExcerciseMode(main,outState),false);
                     } else
-                        main.ReplaceFragment(prev);
+                        main.ReplaceFragment(prev,false);
                     main.setTimer(care.getLimit());
                 } else
                     reject.setVisibility(View.VISIBLE);

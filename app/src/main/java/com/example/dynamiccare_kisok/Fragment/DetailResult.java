@@ -54,11 +54,12 @@ public class DetailResult extends DCfragment{
         View v = inflater.inflate(R.layout.fragment_result_detail,container, false);
         try {
 
+            Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
+
             txt_start = (TextView) v.findViewById(R.id.txt_start);
             txt_max = (TextView) v.findViewById(R.id.txt_max);
             txt_min = (TextView) v.findViewById(R.id.txt_min);
             txt_average = (TextView) v.findViewById(R.id.txt_average);
-
 
 
             txt_start.setText(value_start/1000 + "kg");
