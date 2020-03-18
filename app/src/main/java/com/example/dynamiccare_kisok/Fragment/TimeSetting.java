@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
+import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
@@ -25,7 +26,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class TimeSetting extends DCfragment {
     DCButton btn_minutes, btn_hour;
-    EditText edt_adminpw;
+    DCEditText edt_adminpw;
     TextView reject;
     Button btn_ok;
     DynamicCare care;
@@ -105,10 +106,10 @@ public class TimeSetting extends DCfragment {
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));
             btn_hour = new DCButton(main, view.findViewById(R.id.btn_hour), getResources().getDrawable(R.drawable.btn_hr_c));
             btn_ok = view.findViewById(R.id.btn_ok);
-            edt_adminpw = view.findViewById(R.id.et_adminpw);
+            edt_adminpw.setSource(view.findViewById(R.id.et_adminpw));
 
 
-            edt_adminpw.addTextChangedListener(new TextWatcher() {
+            edt_adminpw.getSource().addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
