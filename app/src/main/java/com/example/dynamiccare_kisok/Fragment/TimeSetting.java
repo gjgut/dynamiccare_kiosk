@@ -58,7 +58,7 @@ public class TimeSetting extends DCfragment {
         try{
         switch (v.getId()) {
             case R.id.btn_ok:
-                if (edt_adminpw.getText().toString().equals(care.getAdminPassword())) {
+                if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword())) {
                     if (excerciseMode != null) {
                         if (timer != null)
                             timer.cancel();
