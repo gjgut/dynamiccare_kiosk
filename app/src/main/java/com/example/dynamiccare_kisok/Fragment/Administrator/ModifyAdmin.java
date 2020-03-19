@@ -39,20 +39,9 @@ public class ModifyAdmin extends DCfragment {
         super(admin);
     }
 
-
     @Override
     public DCfragment getBackFragment() {
         return new Authentification(admin);
-    }
-
-    @Override
-    public DCfragment getNextFragment() {
-        return null;
-    }
-
-    @Override
-    public String getTitle() {
-        return null;
     }
 
     @Override
@@ -61,17 +50,11 @@ public class ModifyAdmin extends DCfragment {
     }
 
     @Override
-    public void HandleACK(ACK ack) {
-        super.HandleACK(ack);
-    }
-
-    @Override
     public void onClick(View v) {
         try{
         switch (v.getId()) {
             case R.id.btn_set_admin_ok:
                 admin.PlaySound(R.raw.normal_button);
-                DynamicCare care = (DynamicCare) admin.getApplication();
                 if (prev.getSource().getText().toString().equals(care.getAdminPassword())) {
                     care.setAdminPassword(New.getSource().getText().toString());
                     if (New.getSource().getText().toString().equals(correct.getSource().getText().toString()))
@@ -92,13 +75,11 @@ public class ModifyAdmin extends DCfragment {
                 admin.PlaySound(R.raw.normal_button);
                 if (isVisible) {
                     newpwvisible.setImageDrawable(admin.getDrawable(R.drawable.ic_visibility_off));
-                    newpwvisible.setPadding(30, 30, 30, 30);
                     New.getSource().setTransformationMethod(PasswordTransformationMethod.getInstance());
                     New.getSource().setSelection(New.getSource().length());
                     isVisible = false;
                 } else {
                     newpwvisible.setImageDrawable(admin.getDrawable(R.drawable.ic_visibility_on));
-                    newpwvisible.setPadding(40, 35, 31, 38);
                     New.getSource().setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     New.getSource().setSelection(New.getSource().length());
                     isVisible = true;
@@ -123,62 +104,12 @@ public class ModifyAdmin extends DCfragment {
             newpwvisible = view.findViewById(R.id.btn_newpw_visible);
             ok = view.findViewById(R.id.btn_set_admin_ok);
 
-            prev = new DCEditText(view.findViewById(R.id.et_prevpw));
-            New = new DCEditText(view.findViewById(R.id.et_newpw));
-            correct = new DCEditText(view.findViewById(R.id.et_pwconfirm));
-
-
             reject = view.findViewById(R.id.password_reject);
             reject.setVisibility(View.INVISIBLE);
 
-            prev.getSource().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    reject.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-            New.getSource().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    reject.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-            correct.getSource().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    reject.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+            prev = new DCEditText(view.findViewById(R.id.et_prevpw),reject);
+            New = new DCEditText(view.findViewById(R.id.et_newpw),reject);
+            correct = new DCEditText(view.findViewById(R.id.et_pwconfirm),reject);
 
             ok.setOnClickListener(this);
             newpwvisible.setOnClickListener(this);

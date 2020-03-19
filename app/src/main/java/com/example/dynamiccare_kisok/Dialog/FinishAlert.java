@@ -15,7 +15,7 @@ import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.R;
 
 
-public class FinishAlert extends Dialog {
+public class FinishAlert extends Dialog implements View.OnClickListener{
     ImageButton yes,no;
     Main main;
 
@@ -23,6 +23,13 @@ public class FinishAlert extends Dialog {
     {
         super(main, android.R.style.Theme_Translucent_NoTitleBar);
         this.main = main;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()== R.id.btn_yes)
+            main.ReplaceFragment(new TimeSetting(main, main.getCurrentFragment()), true);
+        dismiss();
     }
 
     @Override
@@ -34,23 +41,11 @@ public class FinishAlert extends Dialog {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.dialog_warning_for_finish);
 
-
         yes = findViewById(R.id.btn_yes);
         no = findViewById(R.id.btn_no);
 
-        yes.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                main.ReplaceFragment(new TimeSetting(main,main.getCurrentFragment()), true);
-                dismiss();
-            }
-        });
-        no.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        yes.setOnClickListener(this);
+        no.setOnClickListener(this);
     }
 
 }

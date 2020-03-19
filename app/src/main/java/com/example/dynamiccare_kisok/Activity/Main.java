@@ -2,6 +2,7 @@ package com.example.dynamiccare_kisok.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -37,6 +38,8 @@ import com.example.dynamiccare_kisok.Common.Util.UsbService;
 import com.example.dynamiccare_kisok.Dialog.FinishAlert;
 import com.example.dynamiccare_kisok.Dialog.NormalAlert;
 import com.example.dynamiccare_kisok.Fragment.Explain;
+import com.example.dynamiccare_kisok.Fragment.GraphResult;
+import com.example.dynamiccare_kisok.Fragment.Instruction;
 import com.example.dynamiccare_kisok.Fragment.TimeSetting;
 import com.example.dynamiccare_kisok.Fragment.DetailResult;
 import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
@@ -65,8 +68,6 @@ public class Main extends DCActivity implements View.OnClickListener {
     static DCSoundPlayer dcSoundPlayer;
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
-    HashMap<String, Integer> CountSound = new HashMap<String, Integer>();
-    HashMap<String, int[]> SetSound = new HashMap<String, int[]>();
     int MeasureTime = 10, MeasureWeight = 300, count = 0;
 
     @Override
@@ -79,7 +80,9 @@ public class Main extends DCActivity implements View.OnClickListener {
             @Override
             public void onTick(long millisUntilFinished) {
                 try {
-                    BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60)) + ":" + ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
+                    BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60))
+                                            + ":" +
+                                            ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
                     count--;
                     if (count == 30) {
                         new FinishAlert(main).show();
@@ -105,73 +108,9 @@ public class Main extends DCActivity implements View.OnClickListener {
         bottombar = findViewById(R.id.Bottom);
         BottomRestTime = findViewById(R.id.usertimer);
 
-        makeSoundMap();
     }
 
-    private void makeSoundMap() {
-        CountSound.put("01", R.raw.one);
-        CountSound.put("02", R.raw.two);
-        CountSound.put("03", R.raw.three);
-        CountSound.put("04", R.raw.four);
-        CountSound.put("05", R.raw.five);
-        CountSound.put("06", R.raw.six);
-        CountSound.put("07", R.raw.seven);
-        CountSound.put("08", R.raw.eight);
-        CountSound.put("09", R.raw.nine);
-        CountSound.put("10", R.raw.ten);
-        CountSound.put("11", R.raw.eleven);
-        CountSound.put("12", R.raw.twelve);
-        CountSound.put("13", R.raw.threeteen);
-        CountSound.put("14", R.raw.fourteen);
-        CountSound.put("15", R.raw.fifteen);
-        CountSound.put("16", R.raw.sixteen);
-        CountSound.put("17", R.raw.seventeen);
-        CountSound.put("18", R.raw.eighteen);
-        CountSound.put("19", R.raw.nineteen);
-        CountSound.put("20", R.raw.twenty);
-        CountSound.put("21", R.raw.twenty_one);
-        CountSound.put("22", R.raw.twenty_two);
-        CountSound.put("23", R.raw.twenty_three);
-        CountSound.put("24", R.raw.twenty_four);
-        CountSound.put("25", R.raw.twenty_five);
-        CountSound.put("26", R.raw.twenty_six);
-        CountSound.put("27", R.raw.twenty_seven);
-        CountSound.put("28", R.raw.twenty_eight);
-        CountSound.put("29", R.raw.twenty_nine);
-        CountSound.put("30", R.raw.thirty);
-        CountSound.put("31", R.raw.thirty_one);
-        CountSound.put("32", R.raw.thirty_two);
-        CountSound.put("33", R.raw.thirty_three);
-        CountSound.put("34", R.raw.thirty_three);
-        CountSound.put("35", R.raw.thirty_five);
-        CountSound.put("36", R.raw.thirty_six);
-        CountSound.put("37", R.raw.thirty_seven);
-        CountSound.put("38", R.raw.thirty_eight);
-        CountSound.put("39", R.raw.thirty_nine);
-        CountSound.put("40", R.raw.fourty);
-        CountSound.put("41", R.raw.fourty_one);
-        CountSound.put("42", R.raw.fourty_two);
-        CountSound.put("43", R.raw.fourty_three);
-        CountSound.put("44", R.raw.fourty_four);
-        CountSound.put("45", R.raw.fourty_five);
-        CountSound.put("46", R.raw.fourty_six);
-        CountSound.put("47", R.raw.fourty_seven);
-        CountSound.put("48", R.raw.fourty_eight);
-        CountSound.put("49", R.raw.fourty_nine);
-        CountSound.put("50", R.raw.fifty);
 
-        SetSound.put("00", new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-        SetSound.put("01", new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
-        SetSound.put("02", new int[]{R.raw.two_set_complete, R.raw.take_a_break, R.raw.two_set_complete_english, R.raw.take_a_break_english});
-        SetSound.put("03", new int[]{R.raw.three_set_complete, R.raw.take_a_break, R.raw.three_set_complete_english, R.raw.take_a_break_english});
-        SetSound.put("04", new int[]{R.raw.take_a_break, R.raw.four_sets_completed_english, R.raw.take_a_break_english});
-        SetSound.put("05", new int[]{R.raw.take_a_break, R.raw.five_sets_completed_english, R.raw.take_a_break_english});
-        SetSound.put("06", new int[]{R.raw.take_a_break, R.raw.six_sets_completed_english, R.raw.take_a_break_english});
-        SetSound.put("07", new int[]{R.raw.take_a_break, R.raw.seven_sets_completed_english, R.raw.take_a_break_english});
-        SetSound.put("08", new int[]{R.raw.take_a_break, R.raw.eight_sets_completed_english, R.raw.take_a_break_english});
-        SetSound.put("09", new int[]{R.raw.take_a_break, R.raw.nine_sets_completed_english, R.raw.take_a_break_english});
-        SetSound.put("10", new int[]{R.raw.take_a_break, R.raw.ten_sets_completed_english, R.raw.take_a_break_english});
-    }
 
     @Override
     protected void setListener() {
@@ -376,10 +315,10 @@ public class Main extends DCActivity implements View.OnClickListener {
                     break;
                 case "AEE":
                 case "ACS":
-                    PlaySound(CountSound.get(ack.getData()));
+                    PlaySound(dcSoundPlayer.getCoundSound(ack.getData()));
                     break;
                 case "ASS":
-                    PlaySound(SetSound.get(ack.getData()));
+                    PlaySound(dcSoundPlayer.getSetSound(ack.getData()));
                     break;
                 case "PCA":
                     DCButtonManager.setDCState(DCButtonManager.State.Setted);
@@ -400,114 +339,75 @@ public class Main extends DCActivity implements View.OnClickListener {
 
     public void ReplaceFragment(DCfragment fragment, boolean isRight) {
         try {
-
-            fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            currentFragment = fragment;
-
-            if (fragment.getClass() != TimeSetting.class) {
-                bottombar.setVisibility(View.VISIBLE);
-                if (care.isLimit())
-                    customActionBar.setTimeButton(View.VISIBLE);
-                else
-                    customActionBar.setTimeButton(View.INVISIBLE);
-            } else {
-                bottombar.setVisibility(View.INVISIBLE);
-                customActionBar.setTimeButton(View.INVISIBLE);
-            }
-
-            if (isRight) {
-                bottombar.setVisibility(View.VISIBLE);
-                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-            } else if (!isRight) {
-                bottombar.setVisibility(View.VISIBLE);
-                fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-            }
-
-
-            if (currentFragment.getClass() == ExcerciseMode.class ||
-                    currentFragment.getClass() == DetailResult.class ||
-                    currentFragment.getClass() == Explain.class ||
-                    currentFragment.getClass() == SelectWorkOut.class)
-                btn_next.setVisibility(View.INVISIBLE);
-            else
-                btn_next.setVisibility(View.VISIBLE);
-
-            switch (fragment.getClass().getSimpleName()) {
-                case "SelectMode":
-                    btn_next.setVisibility(View.INVISIBLE);
-                    break;
-                case "Explain": {
-                    btn_next.setVisibility(View.INVISIBLE);
-                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
-                    break;
-                }
-                case "Instruction": {
-                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
-                    break;
-                }
-                case "GraphResult": {
-                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
-                    break;
-                }
-            }
-
-            if (currentFragment.getClass() == ExcerciseMode.class
-                    || currentFragment.getClass() == Explain.class
-                    || currentFragment.getClass() == SelectMode.class
-                    || currentFragment.getClass() == SelectWorkOut.class
-                    || currentFragment.getClass() == TimeSetting.class)
-                btn_next.setVisibility(View.INVISIBLE);
-            else
-                btn_next.setVisibility(View.VISIBLE);
-
-            customActionBar.setHome(fragment.isHomeVisible());
-            customActionBar.setTitle(fragment.getTitle());
-            fragmentTransaction.replace(R.id.main_container, fragment);
-            fragmentTransaction.commit();
-
+            frgobSetting(fragment);
+            frgcommit(isRight, fragment);
         } catch (Exception e) {
             Log.e("Error", e.toString());
         }
     }
 
     public void ReplaceFragment(DCfragment fragment) {
-
         try {
-            fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            currentFragment = fragment;
-
-            if (fragment.getClass() != TimeSetting.class) {
-                bottombar.setVisibility(View.VISIBLE);
-                if (care.isLimit())
-                    customActionBar.setTimeButton(View.VISIBLE);
-                else
-                    customActionBar.setTimeButton(View.INVISIBLE);
-            } else {
-                bottombar.setVisibility(View.INVISIBLE);
-                customActionBar.setTimeButton(View.INVISIBLE);
-            }
-
-            customActionBar.setHome(fragment.isHomeVisible());
-            customActionBar.setTitle(fragment.getTitle());
-
-            if (currentFragment.getClass() == ExcerciseMode.class
-                    || currentFragment.getClass() == DetailResult.class
-                    || currentFragment.getClass() == SelectMode.class
-                    || currentFragment.getClass() == SelectWorkOut.class
-                    || currentFragment.getClass() == TimeSetting.class)
-                btn_next.setVisibility(View.INVISIBLE);
-            else
-                btn_next.setVisibility(View.VISIBLE);
-
-
-            fragmentTransaction.replace(R.id.main_container, fragment);
-            fragmentTransaction.commit();
-
+            frgobSetting(fragment);
+            frgcommit(fragment);
         } catch (Exception e) {
             Log.e("Error", e.toString());
         }
+    }
+
+    public void frgobSetting(DCfragment fg) {
+        Class frgClass = fg.getClass();
+
+        if (frgClass == TimeSetting.class) {
+            bottombar.setVisibility(View.INVISIBLE);
+            customActionBar.setTimeButton(View.INVISIBLE);
+        } else {
+            bottombar.setVisibility(View.VISIBLE);
+            if (care.isLimit())
+                customActionBar.setTimeButton(View.VISIBLE);
+            else
+                customActionBar.setTimeButton(View.INVISIBLE);
+
+            if (frgClass == ExcerciseMode.class
+                    || frgClass == SelectMode.class
+                    || frgClass == SelectWorkOut.class
+                    || frgClass == Explain.class) {
+                btn_next.setVisibility(View.INVISIBLE);
+                if (frgClass == Explain.class)
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_instruct));
+            } else {
+                btn_next.setVisibility(View.VISIBLE);
+                if (frgClass == Instruction.class)
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_lograedy));
+                else if (frgClass == GraphResult.class)
+                    btn_next.setImageDrawable(getResources().getDrawable(R.drawable.btn_logdetail));
+            }
+        }
+    }
+
+    public void frgcommit(boolean isRight, DCfragment fg) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        currentFragment = fg;
+        if (isRight) {
+            bottombar.setVisibility(View.VISIBLE);
+            fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+        } else if (!isRight) {
+            bottombar.setVisibility(View.VISIBLE);
+            fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+        }
+        customActionBar.setHome(fg.isHomeVisible());
+        customActionBar.setTitle(fg.getTitle());
+        fragmentTransaction.replace(R.id.main_container, fg);
+        fragmentTransaction.commit();
+    }
+
+    public void frgcommit(DCfragment fg) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        currentFragment = fg;
+        customActionBar.setHome(fg.isHomeVisible());
+        customActionBar.setTitle(fg.getTitle());
+        fragmentTransaction.replace(R.id.main_container, fg);
+        fragmentTransaction.commit();
     }
 
     private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
@@ -575,12 +475,9 @@ public class Main extends DCActivity implements View.OnClickListener {
                     case "SelectMode":
                         ChangeActivity(Login.class);
                         break;
-                    default:
-                        ReplaceFragment(currentFragment.getBackFragment(), false);
-                        break;
                 }
-            }
-            else if (v.getId() == R.id.btn_back)
+                ReplaceFragment(currentFragment.getBackFragment(), false);
+            } else if (v.getId() == R.id.btn_next)
                 ReplaceFragment(currentFragment.getNextFragment(), true);
         } catch (Exception e) {
             Log.e("Error", e.toString());

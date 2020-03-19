@@ -98,15 +98,6 @@ public class LimitOff extends DCfragment {
         return new Authentification(admin);
     }
 
-    @Override
-    public DCfragment getNextFragment() {
-        return null;
-    }
-
-    @Override
-    public String getTitle() {
-        return null;
-    }
 
     @Override
     public int isHomeVisible() {

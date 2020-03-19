@@ -17,21 +17,20 @@ import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.R;
 
-public class DetailResult extends DCfragment{
-    ProgressBar start,average,max,min;
-    TextView txt_start,txt_max,txt_min,txt_average;
-    int value_start,value_max,value_min,value_average;
-    TextView uppertitle,lowertitle;
+public class DetailResult extends DCfragment {
+    ProgressBar start, average, max, min;
+    TextView txt_start, txt_max, txt_min, txt_average;
+    int value_start, value_max, value_min, value_average;
+    TextView uppertitle, lowertitle;
     ImageView body;
     Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
 
 
-    public DetailResult(Main main)
-    {
+    public DetailResult(Main main) {
         super(main);
     }
-    public DetailResult(Main main,int start,int max,int min,int average)
-    {
+
+    public DetailResult(Main main, int start, int max, int min, int average) {
         super(main);
         value_start = start;
         value_average = average;
@@ -41,17 +40,15 @@ public class DetailResult extends DCfragment{
     }
 
 
-
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
 
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_result_detail,container, false);
+        View v = inflater.inflate(R.layout.fragment_result_detail, container, false);
         try {
 
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
@@ -62,15 +59,15 @@ public class DetailResult extends DCfragment{
             txt_average = (TextView) v.findViewById(R.id.txt_average);
 
 
-            txt_start.setText(value_start/1000 + "kg");
-            txt_max.setText(value_max/1000 + "kg");
-            txt_min.setText(value_min/1000 + "kg");
-            txt_average.setText(value_average/1000 + "kg");
+            txt_start.setText(value_start / 1000 + "kg");
+            txt_max.setText(value_max / 1000 + "kg");
+            txt_min.setText(value_min / 1000 + "kg");
+            txt_average.setText(value_average / 1000 + "kg");
 
-            Log.i("Value_start",String.valueOf(value_start));
-            Log.i("Value_max",String.valueOf(value_max));
-            Log.i("Value_min",String.valueOf(value_min));
-            Log.i("Value_average",String.valueOf(value_average));
+            Log.i("Value_start", String.valueOf(value_start));
+            Log.i("Value_max", String.valueOf(value_max));
+            Log.i("Value_min", String.valueOf(value_min));
+            Log.i("Value_average", String.valueOf(value_average));
 
             start = (ProgressBar) v.findViewById(R.id.progressBar_start);
             average = (ProgressBar) v.findViewById(R.id.progressBar_average);
@@ -86,13 +83,12 @@ public class DetailResult extends DCfragment{
             lowertitle.setText(main.getCurrentExcercise().getSimpleName() + " " + main.getCurrentExcercise().getMuscleName());
             body.setImageDrawable(main.getCurrentExcercise().getMappingBody());
 
-            Log.i("value_max",String.valueOf(value_max));
+            Log.i("value_max", String.valueOf(value_max));
 
-            Thread th_start =  new Thread(new Runnable() {
+            Thread th_start = new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i<=value_start;i+=5000)
-                    {
+                    for (int i = 0; i <= value_start; i += 5000) {
                         final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
@@ -101,7 +97,7 @@ public class DetailResult extends DCfragment{
                             }
                         });
 
-                        Log.i("start_i",String.valueOf(i));
+                        Log.i("start_i", String.valueOf(i));
 
                         try {
                             Thread.sleep(50); // 시간지연
@@ -113,8 +109,7 @@ public class DetailResult extends DCfragment{
             Thread th_max = new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i<=value_max;i+=5000)
-                    {
+                    for (int i = 0; i <= value_max; i += 5000) {
                         final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
@@ -122,7 +117,7 @@ public class DetailResult extends DCfragment{
                                 max.setProgress(value2);
                             }
                         });
-                        Log.i("max_i",String.valueOf(i));
+                        Log.i("max_i", String.valueOf(i));
 
                         try {
                             Thread.sleep(50); // 시간지연
@@ -131,11 +126,10 @@ public class DetailResult extends DCfragment{
                     } // end of while
                 }
             });
-            Thread th_min =  new Thread(new Runnable() {
+            Thread th_min = new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i<=value_min;i+=5000)
-                    {
+                    for (int i = 0; i <= value_min; i += 5000) {
                         final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
@@ -144,7 +138,7 @@ public class DetailResult extends DCfragment{
                             }
                         });
 
-                        Log.i("min_i",String.valueOf(i));
+                        Log.i("min_i", String.valueOf(i));
                         try {
                             Thread.sleep(50); // 시간지연
                         } catch (InterruptedException e) {
@@ -152,11 +146,10 @@ public class DetailResult extends DCfragment{
                     } // end of while
                 }
             });
-            Thread th_average =  new Thread(new Runnable() {
+            Thread th_average = new Thread(new Runnable() {
                 @Override
                 public void run() { // Thread 로 작업할 내용을 구현
-                    for(int i=0;i<=value_average;i+=5000)
-                    {
+                    for (int i = 0; i <= value_average; i += 5000) {
                         final int value2 = i;
                         handler.post(new Runnable() {
                             @Override
@@ -165,7 +158,7 @@ public class DetailResult extends DCfragment{
                             }
                         });
 
-                        Log.i("average_i",String.valueOf(i));
+                        Log.i("average_i", String.valueOf(i));
                         try {
                             Thread.sleep(50); // 시간지연
                         } catch (InterruptedException e) {
@@ -178,8 +171,7 @@ public class DetailResult extends DCfragment{
             th_min.start(); // 쓰레드 시작
             th_average.start(); // 쓰레드 시작
 
-        }catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -188,7 +180,7 @@ public class DetailResult extends DCfragment{
 
     @Override
     public String getTitle() {
-        if(main.getisIsoTonic())
+        if (main.getisIsoTonic())
             return "등척성 측정 모드";
         else
             return "등장성 측정 모드";
@@ -196,18 +188,16 @@ public class DetailResult extends DCfragment{
 
     @Override
     public int isHomeVisible() {
-        return  View.VISIBLE;
+        return View.VISIBLE;
     }
 
     @Override
-    public DCfragment getBackFragment()
-    {
+    public DCfragment getBackFragment() {
         return new GraphResult(main);
     }
 
     @Override
-    public DCfragment getNextFragment()
-    {
+    public DCfragment getNextFragment() {
         return null;
     }
 

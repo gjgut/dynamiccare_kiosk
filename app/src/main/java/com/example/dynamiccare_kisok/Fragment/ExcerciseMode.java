@@ -1,18 +1,13 @@
 package com.example.dynamiccare_kisok.Fragment;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -22,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCSpinnerAdapter;

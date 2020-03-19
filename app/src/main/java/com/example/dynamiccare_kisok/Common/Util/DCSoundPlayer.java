@@ -10,63 +10,14 @@ import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.R;
 
 import java.io.File;
+import java.util.HashMap;
 
 
 public class DCSoundPlayer {
-    public static enum integer {
-        one,
-        two,
-        three,
-        four,
-        five,
-        six,
-        seven,
-        eight,
-        nine,
-        ten,
-        eleven,
-        twelve,
-        threeteen,
-        fourteen,
-        fifteen,
-        sixteen,
-        seventeen,
-        eighteen,
-        nineteen,
-        twenty,
-        twenty_one,
-        twenty_two,
-        twenty_three,
-        twenty_four,
-        twenty_five,
-        twenty_six,
-        twenty_seven,
-        twenty_eight,
-        twenty_nine,
-        thirty,
-        thirty_one,
-        thirty_two,
-        thirty_three,
-        thirty_four,
-        thirty_five,
-        thirty_six,
-        thirty_seven,
-        thirty_eight,
-        thirty_nine,
-        fourty,
-        fourty_one,
-        fourty_two,
-        fourty_three,
-        fourty_four,
-        fourty_five,
-        fourty_six,
-        fourty_seven,
-        fourty_eight,
-        fourty_nine,
-        fifty
-    }
 
     private SoundPool soundPool;
+    HashMap<String, Integer> CountSound = new HashMap<String, Integer>();
+    HashMap<String, int[]> SetSound = new HashMap<String, int[]>();
     private int back_button,
             bee_measurement_begin,
             delay_sound,
@@ -87,9 +38,8 @@ public class DCSoundPlayer {
             show_your_result,
             stopping_measurement,
             take_pose_and_place_bar_or_wire_to_right_position,
-            thanks_for_your_effort;
-
-    private int one_set_complete,
+            thanks_for_your_effort,
+            one_set_complete,
             one_set_complete_english,
             two_set_complete,
             two_set_complete_english,
@@ -108,17 +58,15 @@ public class DCSoundPlayer {
             take_down_the_bar,
             take_down_the_bar_english,
             thank_you_for_your_efforts,
-            thank_you_for_your_efforts_english;
-
-    private int eight_sets_completed_english,
+            thank_you_for_your_efforts_english,
+            eight_sets_completed_english,
             five_sets_completed_english,
             four_sets_completed_english,
             nine_sets_completed_english,
             seven_sets_completed_english,
             six_sets_completed_english,
-            ten_sets_completed_english;
-
-    private int select_the_mode,
+            ten_sets_completed_english,
+            select_the_mode,
             select_the_mode_english,
             excercise_mode,
             excercise_mode_english,
@@ -127,9 +75,8 @@ public class DCSoundPlayer {
             metric_log_mode,
             metric_log_mode_english,
             sotonic_log_mode,
-            sotonic_log_mode_english;
-
-    private int setup_is_complete_english,
+            sotonic_log_mode_english,
+            setup_is_complete_english,
             please_follow_the_directions_english,
             adjust_the_bar_or_wire_properly_english,
             please_do_your_best_in_measuring_english,
@@ -137,9 +84,8 @@ public class DCSoundPlayer {
             the_measurement_wil_begin_shortly_english,
             the_measurement_starts_when_you_hear_the_beep_sound_english,
             the_measurement_is_going_to_stop_english,
-            please_check_the_results_english;
-
-    private int one,
+            please_check_the_results_english,
+            one,
             two,
             three,
             four,
@@ -190,6 +136,70 @@ public class DCSoundPlayer {
             fourty_nine,
             fifty;
 
+    private void makeSoundMap() {
+        CountSound.put("01", R.raw.one);
+        CountSound.put("02", R.raw.two);
+        CountSound.put("03", R.raw.three);
+        CountSound.put("04", R.raw.four);
+        CountSound.put("05", R.raw.five);
+        CountSound.put("06", R.raw.six);
+        CountSound.put("07", R.raw.seven);
+        CountSound.put("08", R.raw.eight);
+        CountSound.put("09", R.raw.nine);
+        CountSound.put("10", R.raw.ten);
+        CountSound.put("11", R.raw.eleven);
+        CountSound.put("12", R.raw.twelve);
+        CountSound.put("13", R.raw.threeteen);
+        CountSound.put("14", R.raw.fourteen);
+        CountSound.put("15", R.raw.fifteen);
+        CountSound.put("16", R.raw.sixteen);
+        CountSound.put("17", R.raw.seventeen);
+        CountSound.put("18", R.raw.eighteen);
+        CountSound.put("19", R.raw.nineteen);
+        CountSound.put("20", R.raw.twenty);
+        CountSound.put("21", R.raw.twenty_one);
+        CountSound.put("22", R.raw.twenty_two);
+        CountSound.put("23", R.raw.twenty_three);
+        CountSound.put("24", R.raw.twenty_four);
+        CountSound.put("25", R.raw.twenty_five);
+        CountSound.put("26", R.raw.twenty_six);
+        CountSound.put("27", R.raw.twenty_seven);
+        CountSound.put("28", R.raw.twenty_eight);
+        CountSound.put("29", R.raw.twenty_nine);
+        CountSound.put("30", R.raw.thirty);
+        CountSound.put("31", R.raw.thirty_one);
+        CountSound.put("32", R.raw.thirty_two);
+        CountSound.put("33", R.raw.thirty_three);
+        CountSound.put("34", R.raw.thirty_three);
+        CountSound.put("35", R.raw.thirty_five);
+        CountSound.put("36", R.raw.thirty_six);
+        CountSound.put("37", R.raw.thirty_seven);
+        CountSound.put("38", R.raw.thirty_eight);
+        CountSound.put("39", R.raw.thirty_nine);
+        CountSound.put("40", R.raw.fourty);
+        CountSound.put("41", R.raw.fourty_one);
+        CountSound.put("42", R.raw.fourty_two);
+        CountSound.put("43", R.raw.fourty_three);
+        CountSound.put("44", R.raw.fourty_four);
+        CountSound.put("45", R.raw.fourty_five);
+        CountSound.put("46", R.raw.fourty_six);
+        CountSound.put("47", R.raw.fourty_seven);
+        CountSound.put("48", R.raw.fourty_eight);
+        CountSound.put("49", R.raw.fourty_nine);
+        CountSound.put("50", R.raw.fifty);
+
+        SetSound.put("00", new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+        SetSound.put("01", new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
+        SetSound.put("02", new int[]{R.raw.two_set_complete, R.raw.take_a_break, R.raw.two_set_complete_english, R.raw.take_a_break_english});
+        SetSound.put("03", new int[]{R.raw.three_set_complete, R.raw.take_a_break, R.raw.three_set_complete_english, R.raw.take_a_break_english});
+        SetSound.put("04", new int[]{R.raw.take_a_break, R.raw.four_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("05", new int[]{R.raw.take_a_break, R.raw.five_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("06", new int[]{R.raw.take_a_break, R.raw.six_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("07", new int[]{R.raw.take_a_break, R.raw.seven_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("08", new int[]{R.raw.take_a_break, R.raw.eight_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("09", new int[]{R.raw.take_a_break, R.raw.nine_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("10", new int[]{R.raw.take_a_break, R.raw.ten_sets_completed_english, R.raw.take_a_break_english});
+    }
 
     public void initSounds(Context context) {
         try {
@@ -317,9 +327,18 @@ public class DCSoundPlayer {
             fourty_eight = soundPool.load(context, R.raw.fourty_eight, 1);
             fourty_nine = soundPool.load(context, R.raw.fourty_nine, 1);
             fifty = soundPool.load(context, R.raw.fifty, 1);
+            makeSoundMap();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getCoundSound(String src) {
+        return CountSound.get(src);
+    }
+
+    public int[] getSetSound(String src) {
+        return SetSound.get(src);
     }
 
     public void playwithNoInterrept(int raw_id) {
@@ -699,8 +718,7 @@ public class DCSoundPlayer {
         }
     }
 
-    public void stop()
-    {
+    public void stop() {
         soundPool.autoPause();
     }
 

@@ -18,7 +18,7 @@ import com.example.dynamiccare_kisok.Fragment.*;
 
 import java.sql.Time;
 
-public class DCActionBar {
+public class DCActionBar implements View.OnClickListener {
 
     private Main main;
     private ActionBar actionBar;
@@ -46,69 +46,63 @@ public class DCActionBar {
 
     public void setActionBar() {
         try {
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setDisplayShowHomeEnabled(false);
-
-            View mCustomView = LayoutInflater.from(main)
-                    .inflate(R.layout.custom_actionbar, null);
-            actionBar.setCustomView(mCustomView);
-
-            // Custom ActionBar 생성하면 양쪽에 공백이 생기는데 이 공백을 채우기 위해 아래 4줄 적용
-            Toolbar parent = (Toolbar) mCustomView.getParent();
-            parent.setContentInsetsAbsolute(0, 0);
-            ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-            actionBar.setCustomView(mCustomView, params);
-
-            title = (TextView) mCustomView.findViewById(R.id.action_bar_title);
-            Home = mCustomView.findViewById(R.id.action_bar_home);
-            LogOut = mCustomView.findViewById(R.id.action_bar_logout);
-            TimeSet = mCustomView.findViewById(R.id.action_bar_timeset);
-
-            TimeSet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        main.PlaySound(R.raw.back_button);
-                        main.ReplaceFragment(new TimeSetting(main, main.getCurrentFragment()), true);
-                        main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                        main.getCurrentFragment().timer.cancel();
-                    } catch (Exception e) {
-                        Log.e("Error", e.toString());
-                    }
-                }
-            });
-
-            Home.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        main.PlaySound(R.raw.home_button);
-                        main.ReplaceFragment(new SelectMode(main), false);
-                        main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                    } catch (Exception e) {
-                        Log.e("Error", e.toString());
-                    }
-                }
-            });
-            LogOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        main.PlaySound(R.raw.back_button);
-                        Intent intent = new Intent(main, Login.class);
-                        main.startActivity(intent);
-                        main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                        main.finish();
-                    } catch (Exception e) {
-                        Log.e("Error", e.toString());
-                    }
-                }
-            });
+            ViewMapping();
+            setListener();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        try {
+            switch (v.getId()) {
+                case R.id.action_bar_home:
+                    main.PlaySound(R.raw.home_button);
+                    main.ReplaceFragment(new SelectMode(main), false);
+                    main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    break;
+                case R.id.action_bar_logout:
+                    main.PlaySound(R.raw.back_button);
+                    main.ChangeActivity(Login.class);
+                    break;
+                case R.id.action_bar_timeset:
+                    main.PlaySound(R.raw.back_button);
+                    main.ReplaceFragment(new TimeSetting(main, main.getCurrentFragment()), true);
+                    main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    main.getCurrentFragment().timer.cancel();
+                    break;
+            }
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+        }
+    }
+
+    private void setListener() {
+        TimeSet.setOnClickListener(this);
+        Home.setOnClickListener(this);
+        LogOut.setOnClickListener(this);
+
+    }
+
+    private void ViewMapping() {
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+
+        View mCustomView = LayoutInflater.from(main)
+                .inflate(R.layout.custom_actionbar, null);
+        actionBar.setCustomView(mCustomView);
+        Toolbar parent = (Toolbar) mCustomView.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(mCustomView, params);
+
+        title = mCustomView.findViewById(R.id.action_bar_title);
+        Home = mCustomView.findViewById(R.id.action_bar_home);
+        LogOut = mCustomView.findViewById(R.id.action_bar_logout);
+        TimeSet = mCustomView.findViewById(R.id.action_bar_timeset);
     }
 }

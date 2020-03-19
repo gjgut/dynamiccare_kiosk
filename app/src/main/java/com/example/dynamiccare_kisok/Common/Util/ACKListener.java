@@ -52,42 +52,34 @@ public class ACKListener extends Handler {
             ACK result = new ACK();
             switch (ack.substring(0, 3)) {
                 case "CHM":
+                case "ACS":
+                case "AEE":
+                case "ASS":
                     result.setCommandCode(ack.substring(0, 3));
                     result.setData(ack.substring(3, 5));
                     break;
-                case "AME": {
+                case "AME":
                     result.setCommandCode(ack.substring(0, 3));
                     result.setTime(ack.substring(3, 9));
                     result.setmTension(ack.substring(9, 15));
                     result.setData(ack.substring(15, 16));
                     result.setChecksums(ack.substring(16, 18));
                     break;
-                }
-                case "ASP": {
+                case "ASP":
                     result.setCommandCode(ack.substring(0, 3));
                     Log.i("Parsing ASP", "");
                     result.setData(ack.substring(3, 4));
                     result.setChecksums(ack.substring(4, 6));
                     break;
-                }
-                case "ACD": {
+                case "ACD":
                     result.setCommandCode(ack.substring(0, 3));
                     result.setData(ack.substring(3, ack.length()));
                     break;
-                }
                 case "ACB":
-                case "AET": {
+                case "AET":
                     result.setCommandCode(ack.substring(0, 3));
                     result.setData(ack.substring(3, 4));
                     break;
-                }
-                case "ACS":
-                case "AEE":
-                case "ASS": {
-                    result.setCommandCode(ack.substring(0, 3));
-                    result.setData(ack.substring(3, 5));
-                    break;
-                }
                 case "PCA":
                     result.setCommandCode(ack.substring(0, 3));
                     break;

@@ -187,37 +187,11 @@ public class UsbService extends Service {
             serialPort.write(data);
 //        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
 //        {
-//            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v)
-//                {
-//
-//                }
-//            },new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v)
-//                {
-//
-//                }
-//            },"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.");
-//            connectUsb.show();
+//            new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.").show();
 //        }
 //        else
 //        {
-//            NormalAlert connectUsb = new NormalAlert(main,new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v)
-//                {
-//
-//                }
-//            },new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v)
-//                {
-//
-//                }
-//            },"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.");
-//            connectUsb.show();
+//            new NormalAlert(main,"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.").show();
 //        }
     }
 

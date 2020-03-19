@@ -16,25 +16,22 @@ public abstract class DCActivity extends AppCompatActivity {
     protected DynamicCare care;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        care = (DynamicCare)getApplication();
+        care = (DynamicCare) getApplication();
     }
 
-    protected abstract void ViewMapping();
-    protected  abstract void setListener();
+    protected void ViewMapping(){}
+    protected void setListener(){}
 
-    public void ChangeActivity(Class name)
-    {
-        startActivity(new Intent(getApplicationContext(),name));
-        if(name != Login.class)
+    public void ChangeActivity(Class name) {
+        startActivity(new Intent(getApplicationContext(), name));
+        if (name != Login.class)
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
         else
             overridePendingTransition(R.anim.left_in, R.anim.right_out);
         finish();
     }
-
 
 
 }

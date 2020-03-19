@@ -27,9 +27,16 @@ public abstract class DCfragment extends Fragment implements View.OnClickListene
         this.admin = admin;
         care = (DynamicCare)admin.getApplication();
     }
-    public abstract DCfragment getBackFragment();
-    public abstract DCfragment getNextFragment();
-    public abstract String getTitle();
+    public DCfragment getBackFragment() {
+        return null;
+    }
+    public DCfragment getNextFragment() {
+        return null;
+    }
+    public String getTitle()
+    {
+        return null;
+    }
     public abstract int isHomeVisible();
 
     @Override

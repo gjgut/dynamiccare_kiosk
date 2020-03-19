@@ -101,9 +101,7 @@ public class Administrator extends DCActivity implements View.OnClickListener {
     public void isNextFragment(boolean isNext) {
         if(currentFragment.getBackFragment()==null)
         {
-            startActivity(new Intent(this, Login.class));
-            overridePendingTransition(R.anim.left_in, R.anim.right_out);
-            finish();
+            ChangeActivity(Login.class);
             return;
         }
         if (isNext)

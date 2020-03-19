@@ -19,8 +19,6 @@ import com.example.dynamiccare_kisok.R;
 public class Authentification extends DCfragment {
 
     ImageButton limitoff, modify;
-    Intent intent;
-
 
     public Authentification() {
         super();
@@ -43,13 +41,12 @@ public class Authentification extends DCfragment {
     @Override
     public void onClick(View v) {
         try {
+            admin.PlaySound(R.raw.normal_button);
             switch (v.getId()) {
                 case R.id.btn_limit_off:
-                    admin.PlaySound(R.raw.normal_button);
                     admin.ReplaceFragment(new LimitOff(admin), true);
                     break;
                 case R.id.btn_modify_psswd:
-                    admin.PlaySound(R.raw.normal_button);
                     admin.ReplaceFragment(new ModifyAdmin(admin), true);
                     break;
             }
@@ -76,19 +73,11 @@ public class Authentification extends DCfragment {
         return view;
     }
 
-    @Override
-    public String getTitle() {
-        return null;
-    }
 
     @Override
     public int isHomeVisible() {
         return 0;
     }
 
-    @Override
-    public void HandleACK(ACK ack) {
-        super.HandleACK(ack);
-    }
 
 }

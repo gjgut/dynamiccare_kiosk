@@ -16,18 +16,6 @@ public class DCActionButton {
     Drawable Pressed, UnPressed;
     Main main;
 
-    public boolean isPause() {
-        return isPause;
-    }
-
-
-    public void setPause() {
-        isPause = !isPause;
-    }
-
-    public DCActionButton() {
-    }
-
     public DCActionButton(Main main) {
         this.main = main;
     }
@@ -37,14 +25,20 @@ public class DCActionButton {
         setButton(button, pressed);
     }
 
+    public boolean isPause() {
+        return isPause;
+    }
+
+
+    public void setPause() {
+        isPause = !isPause;
+    }
+
+
     public void setPressed() {
         try {
             main.PlaySound(R.raw.normal_button);
-            isPressed = !isPressed;
-            if (isPressed)
-                this.button.setImageDrawable(Pressed);
-            else
-                this.button.setImageDrawable(UnPressed);
+            setPressedwithNoSound();
         } catch (Exception e) {
             Log.e("Error", e.toString());
         }

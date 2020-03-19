@@ -19,8 +19,6 @@ public class DCButton {
     static Drawable DefaultBody;
     Main main;
 
-    public DCButton() {
-    }
 
     public DCButton(Main main) {
         this.main = main;
@@ -120,10 +118,6 @@ public class DCButton {
         return isPressed;
     }
 
-    public static DCButton getPressedButton() {
-        return PressedButton;
-    }
-
     public static void PressedOff() {
         PressedButton = null;
     }
@@ -131,14 +125,7 @@ public class DCButton {
     public void setPressed() {
         try {
             main.PlaySound(R.raw.normal_button);
-            isPressed = !isPressed;
-            ToggleButton();
-            if (getMappingBody() != null)
-                UpdateBody();
-            if (isPressed)
-                this.button.setImageDrawable(Pressed);
-            else
-                this.button.setImageDrawable(UnPressed);
+            setPressedWithNoSound();
         } catch (Exception e) {
             Log.e("Error", e.toString());
         }

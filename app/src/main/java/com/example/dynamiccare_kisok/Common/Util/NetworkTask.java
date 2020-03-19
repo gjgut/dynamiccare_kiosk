@@ -34,8 +34,6 @@ public class NetworkTask extends AsyncTask<String, Void, JSONObject> {
             os.write( outputInBytes );
             os.close();
 
-            int retCode = conn.getResponseCode();
-
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
@@ -45,12 +43,10 @@ public class NetworkTask extends AsyncTask<String, Void, JSONObject> {
                 response.append("");
             }
             br.close();
-            JSONParser parser = new JSONParser();
             String res = response.toString();
-            Object Obj  = parser.parse(res);
             JSONObject jsonObject1 = new JSONObject(response.toString());
 
-            Log.i("response",res.toString());
+            Log.i("response",res);
             result = jsonObject1;
 
 
