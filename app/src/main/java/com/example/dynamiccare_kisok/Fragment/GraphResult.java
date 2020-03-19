@@ -121,16 +121,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         if (Integer.valueOf(edt_time.getSource().getText().toString()) > 999) {
-                            NormalAlert alert = new NormalAlert(main, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            }, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            }, "입력할 수 있는 시간 범위를 초과하였습니다."
+                            NormalAlert alert = new NormalAlert(main, "입력할 수 있는 시간 범위를 초과하였습니다."
                             );
                         } else
                             main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
@@ -143,17 +134,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus)
                         if (Integer.valueOf(edt_time.getSource().getText().toString()) > 500) {
-                            NormalAlert alert = new NormalAlert(main, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            }, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            }, "입력할 수 있는 무게 범위를 초과하였습니다."
-                            );
+                            NormalAlert alert = new NormalAlert(main, "입력할 수 있는 무게 범위를 초과하였습니다.");
                         } else
                             main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
 

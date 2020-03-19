@@ -106,7 +106,7 @@ public class TimeSetting extends DCfragment {
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));
             btn_hour = new DCButton(main, view.findViewById(R.id.btn_hour), getResources().getDrawable(R.drawable.btn_hr_c));
             btn_ok = view.findViewById(R.id.btn_ok);
-            edt_adminpw.setSource(view.findViewById(R.id.et_adminpw));
+            edt_adminpw = new DCEditText(view.findViewById(R.id.et_adminpw));
 
 
             edt_adminpw.getSource().addTextChangedListener(new TextWatcher() {

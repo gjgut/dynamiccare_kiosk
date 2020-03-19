@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Common.Component.DCActionBar;
+import com.example.dynamiccare_kisok.Common.Component.DCActivity;
 import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
@@ -43,9 +44,11 @@ import com.example.dynamiccare_kisok.Fragment.SelectMode;
 import com.example.dynamiccare_kisok.Fragment.SelectWorkOut;
 import com.example.dynamiccare_kisok.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-public class Main extends AppCompatActivity implements View.OnClickListener {
+public class Main extends DCActivity implements View.OnClickListener {
     FinishAlert FinishAlert;
     Main main;
     DCfragment currentFragment;
@@ -54,7 +57,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     DCActionBar customActionBar;
     Handler handler;
     CountDownTimer countDownTimer;
-    DynamicCare care;
     static ConstraintLayout bottombar;
     FragmentManager fragmentManager;
     static boolean isIsoKinetic, isIsoTonic, alertflag = false;
@@ -63,7 +65,120 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     static DCSoundPlayer dcSoundPlayer;
     DCSoundThread dcSoundThread;
     ACKListener ackListener;
+    HashMap<String, Integer> CountSound = new HashMap<String, Integer>();
+    HashMap<String, int[]> SetSound = new HashMap<String, int[]>();
     int MeasureTime = 10, MeasureWeight = 300, count = 0;
+
+    @Override
+    protected void ViewMapping() {
+        ackListener = new ACKListener(this);
+        handler = new Handler();
+        dcSoundPlayer = care.getDcSoundPlayer();
+        count = care.getLimit();
+        countDownTimer = new CountDownTimer(count * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                try {
+                    BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60)) + ":" + ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
+                    count--;
+                    if (count == 30) {
+                        new FinishAlert(main).show();
+                        BottomRestTime.setTextColor(Color.RED);
+                    }
+                } catch (Exception e) {
+                    Log.e("Error", e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                getusbService().write("$CHM08".getBytes());
+                new NormalAlert(main, "30분이 경과되었습니다.").show();
+            }
+        };
+        dcSoundThread = new DCSoundThread(this);
+        customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
+
+        btn_back = findViewById(R.id.btn_back);
+        btn_next = findViewById(R.id.btn_next);
+        bottombar = findViewById(R.id.Bottom);
+        BottomRestTime = findViewById(R.id.usertimer);
+
+        makeSoundMap();
+    }
+
+    private void makeSoundMap() {
+        CountSound.put("01", R.raw.one);
+        CountSound.put("02", R.raw.two);
+        CountSound.put("03", R.raw.three);
+        CountSound.put("04", R.raw.four);
+        CountSound.put("05", R.raw.five);
+        CountSound.put("06", R.raw.six);
+        CountSound.put("07", R.raw.seven);
+        CountSound.put("08", R.raw.eight);
+        CountSound.put("09", R.raw.nine);
+        CountSound.put("10", R.raw.ten);
+        CountSound.put("11", R.raw.eleven);
+        CountSound.put("12", R.raw.twelve);
+        CountSound.put("13", R.raw.threeteen);
+        CountSound.put("14", R.raw.fourteen);
+        CountSound.put("15", R.raw.fifteen);
+        CountSound.put("16", R.raw.sixteen);
+        CountSound.put("17", R.raw.seventeen);
+        CountSound.put("18", R.raw.eighteen);
+        CountSound.put("19", R.raw.nineteen);
+        CountSound.put("20", R.raw.twenty);
+        CountSound.put("21", R.raw.twenty_one);
+        CountSound.put("22", R.raw.twenty_two);
+        CountSound.put("23", R.raw.twenty_three);
+        CountSound.put("24", R.raw.twenty_four);
+        CountSound.put("25", R.raw.twenty_five);
+        CountSound.put("26", R.raw.twenty_six);
+        CountSound.put("27", R.raw.twenty_seven);
+        CountSound.put("28", R.raw.twenty_eight);
+        CountSound.put("29", R.raw.twenty_nine);
+        CountSound.put("30", R.raw.thirty);
+        CountSound.put("31", R.raw.thirty_one);
+        CountSound.put("32", R.raw.thirty_two);
+        CountSound.put("33", R.raw.thirty_three);
+        CountSound.put("34", R.raw.thirty_three);
+        CountSound.put("35", R.raw.thirty_five);
+        CountSound.put("36", R.raw.thirty_six);
+        CountSound.put("37", R.raw.thirty_seven);
+        CountSound.put("38", R.raw.thirty_eight);
+        CountSound.put("39", R.raw.thirty_nine);
+        CountSound.put("40", R.raw.fourty);
+        CountSound.put("41", R.raw.fourty_one);
+        CountSound.put("42", R.raw.fourty_two);
+        CountSound.put("43", R.raw.fourty_three);
+        CountSound.put("44", R.raw.fourty_four);
+        CountSound.put("45", R.raw.fourty_five);
+        CountSound.put("46", R.raw.fourty_six);
+        CountSound.put("47", R.raw.fourty_seven);
+        CountSound.put("48", R.raw.fourty_eight);
+        CountSound.put("49", R.raw.fourty_nine);
+        CountSound.put("50", R.raw.fifty);
+
+        SetSound.put("00", new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+        SetSound.put("01", new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
+        SetSound.put("02", new int[]{R.raw.two_set_complete, R.raw.take_a_break, R.raw.two_set_complete_english, R.raw.take_a_break_english});
+        SetSound.put("03", new int[]{R.raw.three_set_complete, R.raw.take_a_break, R.raw.three_set_complete_english, R.raw.take_a_break_english});
+        SetSound.put("04", new int[]{R.raw.take_a_break, R.raw.four_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("05", new int[]{R.raw.take_a_break, R.raw.five_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("06", new int[]{R.raw.take_a_break, R.raw.six_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("07", new int[]{R.raw.take_a_break, R.raw.seven_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("08", new int[]{R.raw.take_a_break, R.raw.eight_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("09", new int[]{R.raw.take_a_break, R.raw.nine_sets_completed_english, R.raw.take_a_break_english});
+        SetSound.put("10", new int[]{R.raw.take_a_break, R.raw.ten_sets_completed_english, R.raw.take_a_break_english});
+    }
+
+    @Override
+    protected void setListener() {
+        btn_back.setOnClickListener(this);
+        btn_next.setOnClickListener(this);
+    }
+
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
@@ -188,17 +303,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
-        FinishAlert = new FinishAlert(main, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         countDownTimer = new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -206,39 +310,23 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 if (count == 30) {
                     alertflag = true;
                     BottomRestTime.setTextColor(Color.RED);
-
+                } else if (count < 30 &&
+                        alertflag && DCButtonManager.getDCState() != DCButtonManager.State.Excercise
+                        && DCButtonManager.getDCState() != DCButtonManager.State.Ready
+                ) {
+                    new FinishAlert(main).show();
+                    alertflag = false;
                 }
-                if (count < 30) {
-                    if (alertflag && DCButtonManager.getDCState() != DCButtonManager.State.Excercise && DCButtonManager.getDCState() != DCButtonManager.State.Ready) {
-                        FinishAlert.show();
-                        alertflag = false;
-                    }
-                }
-                if (count < 10) {
-                    BottomRestTime.setText("00:0" + String.valueOf(count));
-                } else if (count > 10 && count % 60 < 10)
-                    BottomRestTime.setText("0" + String.valueOf(count / 60) + ":0" + String.valueOf(count % 60));
-                else
-                    BottomRestTime.setText("0" + String.valueOf(count / 60) + ":" + String.valueOf(count % 60));
+                BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60))
+                        + ":" +
+                        ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
                 count--;
             }
 
             @Override
             public void onFinish() {
                 getusbService().write(Commands.Home(true));
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                NormalAlert finished = new NormalAlert(main,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        },"30분이 경과되었습니다.");
-                finished.show();
+                new NormalAlert(main, "30분이 경과되었습니다.").show();
             }
         };
         countDownTimer.start();
@@ -261,16 +349,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 case "CHM":
                     PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                     usbService.write(Commands.Home(true));
-                    Intent intent = new Intent(this, Login.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                    finish();
-                    break;
-                case "AME":
-                    break;
-                case "ASP":
-                    break;
-                case "ACD":
+                    ChangeActivity(Login.class);
                     break;
                 case "ACB":
                     switch (ack.getData()) {
@@ -297,200 +376,17 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     break;
                 case "AEE":
                 case "ACS":
-                    switch (ack.getData()) {
-                        case "01":
-                            PlaySound(new int[]{R.raw.one});
-                            break;
-                        case "02":
-                            PlaySound(new int[]{R.raw.two});
-                            break;
-                        case "03":
-                            PlaySound(new int[]{R.raw.three});
-                            break;
-                        case "04":
-                            PlaySound(new int[]{R.raw.four});
-                            break;
-                        case "05":
-                            PlaySound(new int[]{R.raw.five});
-                            break;
-                        case "06":
-                            PlaySound(new int[]{R.raw.six});
-                            break;
-                        case "07":
-                            PlaySound(new int[]{R.raw.seven});
-                            break;
-                        case "08":
-                            PlaySound(new int[]{R.raw.eight});
-                            break;
-                        case "09":
-                            PlaySound(new int[]{R.raw.nine});
-                            break;
-                        case "10":
-                            PlaySound(new int[]{R.raw.ten});
-                            break;
-                        case "11":
-                            PlaySound(new int[]{R.raw.eleven});
-                            break;
-                        case "12":
-                            PlaySound(new int[]{R.raw.twelve});
-                            break;
-                        case "13":
-                            PlaySound(new int[]{R.raw.threeteen});
-                            break;
-                        case "14":
-                            PlaySound(new int[]{R.raw.fourteen});
-                            break;
-                        case "15":
-                            PlaySound(new int[]{R.raw.fifteen});
-                            break;
-                        case "16":
-                            PlaySound(new int[]{R.raw.sixteen});
-                            break;
-                        case "17":
-                            PlaySound(new int[]{R.raw.seventeen});
-                            break;
-                        case "18":
-                            PlaySound(new int[]{R.raw.eighteen});
-                            break;
-                        case "19":
-                            PlaySound(new int[]{R.raw.nineteen});
-                            break;
-                        case "20":
-                            PlaySound(new int[]{R.raw.twenty});
-                            break;
-                        case "21":
-                            PlaySound(new int[]{R.raw.twenty_one});
-                            break;
-                        case "22":
-                            PlaySound(new int[]{R.raw.twenty_two});
-                            break;
-                        case "23":
-                            PlaySound(new int[]{R.raw.twenty_three});
-                            break;
-                        case "24":
-                            PlaySound(new int[]{R.raw.twenty_four});
-                            break;
-                        case "25":
-                            PlaySound(new int[]{R.raw.twenty_five});
-                            break;
-                        case "26":
-                            PlaySound(new int[]{R.raw.twenty_six});
-                            break;
-                        case "27":
-                            PlaySound(new int[]{R.raw.twenty_seven});
-                            break;
-                        case "28":
-                            PlaySound(new int[]{R.raw.twenty_eight});
-                            break;
-                        case "29":
-                            PlaySound(new int[]{R.raw.twenty_nine});
-                            break;
-                        case "30":
-                            PlaySound(new int[]{R.raw.thirty});
-                            break;
-                        case "31":
-                            PlaySound(new int[]{R.raw.thirty_one});
-                            break;
-                        case "32":
-                            PlaySound(new int[]{R.raw.thirty_two});
-                            break;
-                        case "33":
-                            PlaySound(new int[]{R.raw.thirty_three});
-                            break;
-                        case "34":
-                            PlaySound(new int[]{R.raw.thirty_three});
-                            break;
-                        case "35":
-                            PlaySound(new int[]{R.raw.thirty_five});
-                            break;
-                        case "36":
-                            PlaySound(new int[]{R.raw.thirty_six});
-                            break;
-                        case "37":
-                            PlaySound(new int[]{R.raw.thirty_seven});
-                            break;
-                        case "38":
-                            PlaySound(new int[]{R.raw.thirty_eight});
-                            break;
-                        case "39":
-                            PlaySound(new int[]{R.raw.thirty_nine});
-                            break;
-                        case "40":
-                            PlaySound(new int[]{R.raw.fourty});
-                            break;
-                        case "41":
-                            PlaySound(new int[]{R.raw.fourty_one});
-                            break;
-                        case "42":
-                            PlaySound(new int[]{R.raw.fourty_two});
-                            break;
-                        case "43":
-                            PlaySound(new int[]{R.raw.fourty_three});
-                            break;
-                        case "44":
-                            PlaySound(new int[]{R.raw.fourty_four});
-                            break;
-                        case "45":
-                            PlaySound(new int[]{R.raw.fourty_five});
-                            break;
-                        case "46":
-                            PlaySound(new int[]{R.raw.fourty_six});
-                            break;
-                        case "47":
-                            PlaySound(new int[]{R.raw.fourty_seven});
-                            break;
-                        case "48":
-                            PlaySound(new int[]{R.raw.fourty_eight});
-                            break;
-                        case "49":
-                            PlaySound(new int[]{R.raw.fourty_nine});
-                            break;
-                        case "50":
-                            PlaySound(new int[]{R.raw.fifty});
-                            break;
-
-                    }
+                    PlaySound(CountSound.get(ack.getData()));
                     break;
                 case "ASS":
-                    switch (ack.getData()) {
-                        case "00":
-                            PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-                            DCButtonManager.setDCState(DCButtonManager.State.Clear);
-                            break;
-                        case "01":
-                            PlaySound(new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
-                            break;
-                        case "02":
-                            PlaySound(new int[]{R.raw.two_set_complete, R.raw.take_a_break, R.raw.two_set_complete_english, R.raw.take_a_break_english});
-                            break;
-                        case "03":
-                            PlaySound(new int[]{R.raw.three_set_complete, R.raw.take_a_break, R.raw.three_set_complete_english, R.raw.take_a_break_english});
-                            break;
-                        case "04":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.four_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                        case "05":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.five_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                        case "06":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.six_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                        case "07":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.seven_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                        case "08":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.eight_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                        case "09":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.nine_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                        case "10":
-                            PlaySound(new int[]{R.raw.take_a_break, R.raw.ten_sets_completed_english, R.raw.take_a_break_english});
-                            break;
-                    }
+                    PlaySound(SetSound.get(ack.getData()));
                     break;
                 case "PCA":
                     DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                    break;
+                case "AME":
+                case "ASP":
+                case "ACD":
                     break;
             }
             currentFragment.HandleACK(ack);
@@ -647,76 +543,14 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         main = this;
         try {
-
-            ackListener = new ACKListener(this);
-            handler = new Handler();
-
-            care = (DynamicCare) getApplicationContext();
-            dcSoundPlayer = care.getDcSoundPlayer();
-            count = care.getLimit();
-
-            countDownTimer = new CountDownTimer(count * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    try {
-                        BottomRestTime.setText("00:" + String.valueOf(count));
-                        count--;
-
-                        if (count == 30) {
-                            FinishAlert.show();
-                            BottomRestTime.setTextColor(Color.RED);
-
-                        }
-                    } catch (Exception e) {
-                        Log.e("Error", e.toString());
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFinish() {
-                    getusbService().write("$CHM08".getBytes());
-                    Intent intent = new Intent(main, Login.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                    NormalAlert finished = new NormalAlert(main,
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            },
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            },"30분이 경과되었습니다.");
-                    finished.show();
-                }
-            };
-
+            ViewMapping();
+            setListener();
             countDownTimer.start();
-
-
-            dcSoundThread = new DCSoundThread(this);
-            customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
-
-            btn_back = findViewById(R.id.btn_back);
-            btn_next = findViewById(R.id.btn_next);
-            bottombar = findViewById(R.id.Bottom);
-            BottomRestTime = (TextView) findViewById(R.id.usertimer);
-
-            btn_back.setOnClickListener(this);
-            btn_next.setOnClickListener(this);
-            Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG);
-
-            Toast.makeText(this, getCare().getDeviceID().toString(), Toast.LENGTH_LONG).show();
-
+            Toast.makeText(this, care.getDeviceID().toString(), Toast.LENGTH_LONG).show();
             if (care.isLimit())
                 ReplaceFragment(new TimeSetting(this));
             else
                 ReplaceFragment(new SelectMode(this));
-
-
             limitoff();
         } catch (Exception e) {
             Log.i("Error", e.toString());
@@ -727,30 +561,27 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         try {
-            switch (v.getId()) {
-                case R.id.btn_back: {
-                    PlaySound(R.raw.back_button);
-                    StopSound();
-                    if (currentFragment.getClass().getSimpleName() == "ExcerciseMode")
+            String freagmentname = currentFragment.getClass().getSimpleName();
+            StopSound();
+            PlaySound(R.raw.back_button);
+            if (v.getId() == R.id.btn_back) {
+                switch (freagmentname) {
+                    case "ExcerciseMode":
                         main.setCurrentExcercise(null);
-                    else if (currentFragment.getClass().getSimpleName() == "Explain") {
+                        break;
+                    case "Explain":
                         main.getusbService().write(Commands.Home(true));
-                    }
-                    if (currentFragment.getClass().getSimpleName().equals("SelectMode")) {
-                        Intent intent = new Intent(main, Login.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                        finish();
-                    }
-                    ReplaceFragment(currentFragment.getBackFragment(), false);
-                    break;
-                }
-                case R.id.btn_next: {
-                    PlaySound(R.raw.back_button);
-                    ReplaceFragment(currentFragment.getNextFragment(), true);
-                    break;
+                        break;
+                    case "SelectMode":
+                        ChangeActivity(Login.class);
+                        break;
+                    default:
+                        ReplaceFragment(currentFragment.getBackFragment(), false);
+                        break;
                 }
             }
+            else if (v.getId() == R.id.btn_back)
+                ReplaceFragment(currentFragment.getNextFragment(), true);
         } catch (Exception e) {
             Log.e("Error", e.toString());
         }

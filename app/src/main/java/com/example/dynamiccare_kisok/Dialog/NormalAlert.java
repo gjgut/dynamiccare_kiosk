@@ -21,10 +21,9 @@ public class NormalAlert extends Dialog {
     String msg;
     TextView txt_messsage;
 
-    public NormalAlert(@NonNull Context context, View.OnClickListener yes, View.OnClickListener no,String msg) {
+    public NormalAlert(@NonNull Context context,String msg) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.main = (Main)context;
-        main = (Main)context;
         this.msg = msg;
     }
 
@@ -45,10 +44,7 @@ public class NormalAlert extends Dialog {
         yes.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(main, Login.class);
-                main.startActivity(intent);
-                main.overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                main.finish();
+                main.ChangeActivity(Login.class);
                 dismiss();
             }
         });

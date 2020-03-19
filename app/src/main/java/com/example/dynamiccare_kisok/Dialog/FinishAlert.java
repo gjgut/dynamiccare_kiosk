@@ -18,20 +18,10 @@ import com.example.dynamiccare_kisok.R;
 public class FinishAlert extends Dialog {
     ImageButton yes,no;
     Main main;
-    View.OnClickListener yeslistner,nolistener;
-    TextView txt_today;
-
-    public FinishAlert(@NonNull Context context, View.OnClickListener yes, View.OnClickListener no) {
-        super(context, android.R.style.Theme_Translucent_NoTitleBar);
-        this.main = (Main)context;
-        this.yeslistner = yes;
-        this.nolistener = no;
-
-    }
 
     public FinishAlert(Main main)
     {
-        super(main);
+        super(main, android.R.style.Theme_Translucent_NoTitleBar);
         this.main = main;
     }
 
