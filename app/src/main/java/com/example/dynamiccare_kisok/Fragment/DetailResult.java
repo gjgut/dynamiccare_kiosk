@@ -26,6 +26,7 @@ public class DetailResult extends DCfragment {
     Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
 
 
+
     public DetailResult(Main main) {
         super(main);
     }
@@ -38,7 +39,29 @@ public class DetailResult extends DCfragment {
         value_min = min;
 
     }
+    private void progressThread(ProgressBar p,int value)
+    {
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() { // Thread 로 작업할 내용을 구현
+                for (int i = 0; i <= value; i += 5000) {
+                    final int value2 = i;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() { // 화면에 변경하는 작업을 구현
+                            p.setProgress(value2);
+                        }
+                    });
 
+                    try {
+                        Thread.sleep(50); // 시간지연
+                    } catch (InterruptedException e) {
+                    }
+                } // end of while
+            }
+        });
+        th.start();
+    }
 
     @Override
     public void onClick(View v) {
@@ -53,10 +76,10 @@ public class DetailResult extends DCfragment {
 
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);
 
-            txt_start = (TextView) v.findViewById(R.id.txt_start);
-            txt_max = (TextView) v.findViewById(R.id.txt_max);
-            txt_min = (TextView) v.findViewById(R.id.txt_min);
-            txt_average = (TextView) v.findViewById(R.id.txt_average);
+            txt_start =  v.findViewById(R.id.txt_start);
+            txt_max = v.findViewById(R.id.txt_max);
+            txt_min = v.findViewById(R.id.txt_min);
+            txt_average =  v.findViewById(R.id.txt_average);
 
 
             txt_start.setText(value_start / 1000 + "kg");
@@ -69,10 +92,10 @@ public class DetailResult extends DCfragment {
             Log.i("Value_min", String.valueOf(value_min));
             Log.i("Value_average", String.valueOf(value_average));
 
-            start = (ProgressBar) v.findViewById(R.id.progressBar_start);
-            average = (ProgressBar) v.findViewById(R.id.progressBar_average);
-            max = (ProgressBar) v.findViewById(R.id.progressBar_max);
-            min = (ProgressBar) v.findViewById(R.id.progressBar_min);
+            start = v.findViewById(R.id.progressBar_start);
+            average =  v.findViewById(R.id.progressBar_average);
+            max = v.findViewById(R.id.progressBar_max);
+            min = v.findViewById(R.id.progressBar_min);
 
 
             uppertitle = v.findViewById(R.id.txt_detail_title);
@@ -85,91 +108,10 @@ public class DetailResult extends DCfragment {
 
             Log.i("value_max", String.valueOf(value_max));
 
-            Thread th_start = new Thread(new Runnable() {
-                @Override
-                public void run() { // Thread 로 작업할 내용을 구현
-                    for (int i = 0; i <= value_start; i += 5000) {
-                        final int value2 = i;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() { // 화면에 변경하는 작업을 구현
-                                start.setProgress(value2);
-                            }
-                        });
-
-                        Log.i("start_i", String.valueOf(i));
-
-                        try {
-                            Thread.sleep(50); // 시간지연
-                        } catch (InterruptedException e) {
-                        }
-                    } // end of while
-                }
-            });
-            Thread th_max = new Thread(new Runnable() {
-                @Override
-                public void run() { // Thread 로 작업할 내용을 구현
-                    for (int i = 0; i <= value_max; i += 5000) {
-                        final int value2 = i;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() { // 화면에 변경하는 작업을 구현
-                                max.setProgress(value2);
-                            }
-                        });
-                        Log.i("max_i", String.valueOf(i));
-
-                        try {
-                            Thread.sleep(50); // 시간지연
-                        } catch (InterruptedException e) {
-                        }
-                    } // end of while
-                }
-            });
-            Thread th_min = new Thread(new Runnable() {
-                @Override
-                public void run() { // Thread 로 작업할 내용을 구현
-                    for (int i = 0; i <= value_min; i += 5000) {
-                        final int value2 = i;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() { // 화면에 변경하는 작업을 구현
-                                min.setProgress(value2);
-                            }
-                        });
-
-                        Log.i("min_i", String.valueOf(i));
-                        try {
-                            Thread.sleep(50); // 시간지연
-                        } catch (InterruptedException e) {
-                        }
-                    } // end of while
-                }
-            });
-            Thread th_average = new Thread(new Runnable() {
-                @Override
-                public void run() { // Thread 로 작업할 내용을 구현
-                    for (int i = 0; i <= value_average; i += 5000) {
-                        final int value2 = i;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() { // 화면에 변경하는 작업을 구현
-                                average.setProgress(value2);
-                            }
-                        });
-
-                        Log.i("average_i", String.valueOf(i));
-                        try {
-                            Thread.sleep(50); // 시간지연
-                        } catch (InterruptedException e) {
-                        }
-                    } // end of while
-                }
-            });
-            th_start.start(); // 쓰레드 시작
-            th_max.start(); // 쓰레드 시작
-            th_min.start(); // 쓰레드 시작
-            th_average.start(); // 쓰레드 시작
+            progressThread(start,value_start);
+            progressThread(max,value_max);
+            progressThread(min,value_min);
+            progressThread(average,value_average);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -196,10 +138,6 @@ public class DetailResult extends DCfragment {
         return new GraphResult(main);
     }
 
-    @Override
-    public DCfragment getNextFragment() {
-        return null;
-    }
 
 
 }

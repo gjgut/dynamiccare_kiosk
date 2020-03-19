@@ -30,7 +30,7 @@ import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
 
-public class GraphResult extends DCfragment implements View.OnTouchListener {
+public class GraphResult extends DCfragment implements View.OnTouchListener,View.OnFocusChangeListener {
 
     DCButton Low, Mid, High;
     DCActionButton Up, Down;
@@ -40,11 +40,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
     DCEditText edt_time, edt_weight;
     DCButtonManager dcButtonManager;
 
-    Handler handler = new Handler(); // Thread 에서 화면에 그리기 위해서 필요
-
-    final int MSG_PROGRESS = 10;
-
-    Thread moveAction;
 
     public GraphResult(Main main) {
         super(main);
@@ -97,18 +92,18 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             Up = new DCActionButton(main, v.findViewById(R.id.btn_up), null);
             Down = new DCActionButton(main, v.findViewById(R.id.btn_down), null);
 
-            Low = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_low), getResources().getDrawable(R.drawable.pressed_btn_low));
-            Mid = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_mid), getResources().getDrawable(R.drawable.pressed_btn_mid));
-            High = new DCButton(main, (ImageButton) v.findViewById(R.id.btn_high), getResources().getDrawable(R.drawable.pressed_btn_high));
+            Low = new DCButton(main,  v.findViewById(R.id.btn_low), getResources().getDrawable(R.drawable.pressed_btn_low));
+            Mid = new DCButton(main,  v.findViewById(R.id.btn_mid), getResources().getDrawable(R.drawable.pressed_btn_mid));
+            High = new DCButton(main,  v.findViewById(R.id.btn_high), getResources().getDrawable(R.drawable.pressed_btn_high));
 
             Low.setPressed();
             if (Low.IsPressed())
                 main.getusbService().write(Commands.MeasureLevelCheck("L"));
 
-            ready = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_ready), getResources().getDrawable(R.drawable.pressed_btn_ready));
-            go = new DCActionButton(main, (ImageButton) v.findViewById(R.id.btn_start), getResources().getDrawable(R.drawable.pressed_btn_start));
+            ready = new DCActionButton(main,  v.findViewById(R.id.btn_ready), getResources().getDrawable(R.drawable.pressed_btn_ready));
+            go = new DCActionButton(main,  v.findViewById(R.id.btn_start), getResources().getDrawable(R.drawable.pressed_btn_start));
 
-            power = (ProgressBar) v.findViewById(R.id.progressBar_power);
+            power =  v.findViewById(R.id.progressBar_power);
 
             edt_time = new DCEditText(v.findViewById(R.id.edt_time));
             edt_weight = new DCEditText(v.findViewById(R.id.edt_weight));
@@ -116,76 +111,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             edt_time.getSource().setText(main.getMeasureTime());
             edt_weight.getSource().setText(main.getMeasureWeight());
 
-            edt_time.getSource().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        if (Integer.valueOf(edt_time.getSource().getText().toString()) > 999) {
-                            NormalAlert alert = new NormalAlert(main, "입력할 수 있는 시간 범위를 초과하였습니다."
-                            );
-                        } else
-                            main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
-                    }
-
-                }
-            });
-            edt_weight.getSource().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus)
-                        if (Integer.valueOf(edt_time.getSource().getText().toString()) > 500) {
-                            NormalAlert alert = new NormalAlert(main, "입력할 수 있는 무게 범위를 초과하였습니다.");
-                        } else
-                            main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
-
-                }
-            });
-
-
-            Low.getButton().setOnClickListener(this);
-            Mid.getButton().setOnClickListener(this);
-            High.getButton().setOnClickListener(this);
-
-            Up.getButton().setOnTouchListener(this);
-            Down.getButton().setOnTouchListener(this);
-            ready.getButton().setOnClickListener(this);
-            go.getButton().setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            go.setPressedwithNoSound();
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            go.setPressed();
-                            go.setPause();
-                            if (!go.isPause()) {
-                                DCButtonManager.setDCState(DCButtonManager.State.Excercise);
-                                setBottomBar(false);
-                                if (resCalculator != null)
-                                    main.getusbService().write("$CSP0#".getBytes());
-                                main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()));
-                                resCalculator = new MeasureResult();
-
-                                go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
-                                go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
-                            } else {
-                                DCButtonManager.setDCState(DCButtonManager.State.Setted);
-                                if (timer != null)
-                                    timer.cancel();
-                                main.getusbService().write("$CSP0#".getBytes());
-                                main.getusbService().write(Commands.Home(true));
-                                main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-
-                                go.Activate();
-                                go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-                                go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-                            }
-                            break;
-                    }
-                    return false;
-                }
-            });
+            setListener();
 
             dcButtonManager = new DCButtonManager(go, ready, Up, Down);
             dcButtonManager.setDCState(dcButtonManager.getDCState());
@@ -194,8 +120,58 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
+    }
+
+    private void setListener()
+    {
+        edt_time.getSource().setOnFocusChangeListener(this);
+        edt_weight.getSource().setOnFocusChangeListener(this);
 
 
+        Low.getButton().setOnClickListener(this);
+        Mid.getButton().setOnClickListener(this);
+        High.getButton().setOnClickListener(this);
+
+        Up.getButton().setOnTouchListener(this);
+        Down.getButton().setOnTouchListener(this);
+        ready.getButton().setOnClickListener(this);
+        go.getButton().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        go.setPressedwithNoSound();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        go.setPressed();
+                        go.setPause();
+                        if (!go.isPause()) {
+                            DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+                            setBottomBar(false);
+                            if (resCalculator != null)
+                                main.getusbService().write("$CSP0#".getBytes());
+                            main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()));
+                            resCalculator = new MeasureResult();
+
+                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
+                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
+                        } else {
+                            DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                            if (timer != null)
+                                timer.cancel();
+                            main.getusbService().write("$CSP0#".getBytes());
+                            main.getusbService().write(Commands.Home(true));
+                            main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+
+                            go.Activate();
+                            go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                            go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     public void SendResult() {
@@ -212,6 +188,27 @@ public class GraphResult extends DCfragment implements View.OnTouchListener {
             new DCHttp().SendResult(jsonObject.toString());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(v.getId() ==R.id.edt_weight) {
+            if (!hasFocus)
+                if (Integer.valueOf(edt_time.getSource().getText().toString()) > 500)
+                    new NormalAlert(main, "입력할 수 있는 무게 범위를 초과하였습니다.").show();
+                else
+                    main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
+        }
+        else if(v.getId() ==R.id.edt_time)
+        {
+            if (!hasFocus) {
+                if (Integer.valueOf(edt_time.getSource().getText().toString()) > 999)
+                    new NormalAlert(main, "입력할 수 있는 시간 범위를 초과하였습니다.").show();
+                else
+                    main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
+            }
+
         }
     }
 

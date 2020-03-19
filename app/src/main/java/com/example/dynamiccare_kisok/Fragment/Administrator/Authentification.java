@@ -29,16 +29,6 @@ public class Authentification extends DCfragment {
     }
 
     @Override
-    public DCfragment getBackFragment() {
-        return null;
-    }
-
-    @Override
-    public DCfragment getNextFragment() {
-        return null;
-    }
-
-    @Override
     public void onClick(View v) {
         try {
             admin.PlaySound(R.raw.normal_button);

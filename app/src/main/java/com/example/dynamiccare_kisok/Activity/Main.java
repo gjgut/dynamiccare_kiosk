@@ -52,7 +52,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Main extends DCActivity implements View.OnClickListener {
-    FinishAlert FinishAlert;
     Main main;
     DCfragment currentFragment;
     ImageButton btn_back, btn_next;

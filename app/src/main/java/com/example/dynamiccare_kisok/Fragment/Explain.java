@@ -63,18 +63,6 @@ public class Explain extends DCfragment {
     }
 
     @Override
-    public void HandleACK(ACK ack) {
-        try {
-            switch (ack.getCommandCode()) {
-                case "PCA":
-            }
-        } catch (Exception e) {
-            Log.i("Error", e.toString());
-        }
-
-    }
-
-    @Override
     public void onClick(View v) {
         try {
             switch (v.getId()) {
@@ -147,28 +135,28 @@ public class Explain extends DCfragment {
 
     public void setViews(View view) {
         try {
-            bench = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_bench),
+            bench = new DCButton(main,view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));
-            squat = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_squat),
+            squat = new DCButton(main, view.findViewById(R.id.mes_btn_squat),
                     getResources().getDrawable(R.drawable.pressed_btn_squat),
                     getResources().getDrawable(R.drawable.exp_quad));
-            deadlift = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_deadlift),
+            deadlift = new DCButton(main,  view.findViewById(R.id.mes_btn_deadlift),
                     getResources().getDrawable(R.drawable.pressed_btn_deadlift),
                     getResources().getDrawable(R.drawable.exp_spine));
-            press = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_shoulderpress),
+            press = new DCButton(main, view.findViewById(R.id.mes_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.pressed_btn_shoulderpress),
                     getResources().getDrawable(R.drawable.exp_shoulder));
-            latpull = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_latpulldown),
+            latpull = new DCButton(main, view.findViewById(R.id.mes_btn_latpulldown),
                     getResources().getDrawable(R.drawable.pressed_btn_latpulldown),
                     getResources().getDrawable(R.drawable.exp_lat));
-            carf = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_carfraise),
+            carf = new DCButton(main, view.findViewById(R.id.mes_btn_carfraise),
                     getResources().getDrawable(R.drawable.pressed_btn_carfraise),
                     getResources().getDrawable(R.drawable.exp_lower_leg));
-            curl = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_armcurl),
+            curl = new DCButton(main, view.findViewById(R.id.mes_btn_armcurl),
                     getResources().getDrawable(R.drawable.pressed_btn_amrcurl),
                     getResources().getDrawable(R.drawable.exp_biceps));
-            extension = new DCButton(main, (ImageButton) view.findViewById(R.id.mes_btn_armextension),
+            extension = new DCButton(main,  view.findViewById(R.id.mes_btn_armextension),
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.exp_triceps));
             Body = view.findViewById(R.id.exp_body);
@@ -177,14 +165,7 @@ public class Explain extends DCfragment {
             dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf);
             handler = new Handler();
 
-            bench.getButton().setOnClickListener(this);
-            squat.getButton().setOnClickListener(this);
-            deadlift.getButton().setOnClickListener(this);
-            press.getButton().setOnClickListener(this);
-            latpull.getButton().setOnClickListener(this);
-            carf.getButton().setOnClickListener(this);
-            curl.getButton().setOnClickListener(this);
-            extension.getButton().setOnClickListener(this);
+            setListener();
 
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
@@ -216,6 +197,18 @@ public class Explain extends DCfragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setListener()
+    {
+        bench.getButton().setOnClickListener(this);
+        squat.getButton().setOnClickListener(this);
+        deadlift.getButton().setOnClickListener(this);
+        press.getButton().setOnClickListener(this);
+        latpull.getButton().setOnClickListener(this);
+        carf.getButton().setOnClickListener(this);
+        curl.getButton().setOnClickListener(this);
+        extension.getButton().setOnClickListener(this);
     }
 
     @Override

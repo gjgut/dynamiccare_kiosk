@@ -52,7 +52,6 @@ public class TimeSetting extends DCfragment {
         this.excerciseMode = (ExcerciseMode) prev;
     }
 
-
     @Override
     public void onClick(View v) {
         try{
@@ -95,36 +94,18 @@ public class TimeSetting extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_time_setting, container, false);
         if (prev == null)
             prev = new SelectMode(main);
         if (excerciseMode != null) {
             count = excerciseMode.getSaveState().getInt("count");
         }
-        super.onCreate(savedInstanceState);
         try {
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));
             btn_hour = new DCButton(main, view.findViewById(R.id.btn_hour), getResources().getDrawable(R.drawable.btn_hr_c));
             btn_ok = view.findViewById(R.id.btn_ok);
-            edt_adminpw = new DCEditText(view.findViewById(R.id.et_adminpw));
-
-
-            edt_adminpw.getSource().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    reject.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+            edt_adminpw = new DCEditText(view.findViewById(R.id.et_adminpw),reject);
 
             btn_minutes.getButton().setOnClickListener(this);
             btn_hour.getButton().setOnClickListener(this);
@@ -162,12 +143,6 @@ public class TimeSetting extends DCfragment {
             return null;
         }
     }
-
-    @Override
-    public DCfragment getNextFragment() {
-        return null;
-    }
-
     @Override
     public String getTitle() {
         return "사용 시간 설정";
@@ -178,8 +153,4 @@ public class TimeSetting extends DCfragment {
         return View.INVISIBLE;
     }
 
-    @Override
-    public void HandleACK(ACK ack) {
-        super.HandleACK(ack);
-    }
 }

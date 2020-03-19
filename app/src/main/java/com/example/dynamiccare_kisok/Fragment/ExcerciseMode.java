@@ -45,9 +45,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class ExcerciseMode extends DCfragment {
+public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     DCButtonManager.State prevstate;
     Bundle savedState;
@@ -127,11 +126,6 @@ public class ExcerciseMode extends DCfragment {
                 case R.id.exc_tab_btn_armextension:
                     setExcercise(extension, new ArmExtension(main));
                     break;
-                case R.id.exc_btn_start:
-                    break;
-                case R.id.exc_btn_stop: {
-                    break;
-                }
                 case R.id.exc_btn_ready:
                     ready.setPressed();
                     if (ready.IsPressed()) {
@@ -428,7 +422,6 @@ public class ExcerciseMode extends DCfragment {
                 view.findViewById(R.id.container_weight).setVisibility(View.VISIBLE);
             }
 
-
             bench = new DCButton(main);
             squat = new DCButton(main);
             deadlift = new DCButton(main);
@@ -483,7 +476,6 @@ public class ExcerciseMode extends DCfragment {
             exc_table = view.findViewById(R.id.exc_table);
             exc_rest = view.findViewById(R.id.exc_rest);
 
-
             DCButton.setBody(Body);
 
             List<String> data = new ArrayList<String>();
@@ -493,132 +485,128 @@ public class ExcerciseMode extends DCfragment {
             data.add("4(6cm/sec)");
             data.add("5(8.5cm/sec)");
 
-//            List<Integer> number = new ArrayList<Integer>();
-//            data.add(1);
-//            data.add("2");
-//            data.add("3");
-//            data.add("4");
-//            data.add("5");
-
-
             spinnerAdapter = new DCSpinnerAdapter(main, data);
             spin_level.setAdapter(spinnerAdapter);
 
-            bench.getButton().setOnClickListener(this);
-            squat.getButton().setOnClickListener(this);
-            deadlift.getButton().setOnClickListener(this);
-            press.getButton().setOnClickListener(this);
-            latpull.getButton().setOnClickListener(this);
-            carf.getButton().setOnClickListener(this);
-            curl.getButton().setOnClickListener(this);
-            extension.getButton().setOnClickListener(this);
-            start.getButton().setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            start.setPressedwithNoSound();
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            start.setPressed();
-                            start.setPause();
-                            if (start.isPause()) {
-                                dcButtonManager.setDCState(DCButtonManager.State.Excercise);
-                                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-                                        edt_count.getSource().getText().toString(),
-                                        edt_set.getSource().getText().toString()));
-                                main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
-                                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
-                                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
-                            } else {
-                                dcButtonManager.setDCState(DCButtonManager.State.Paused);
-                                main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
-                                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-                                        edt_count.getSource().getText().toString(),
-                                        edt_set.getSource().getText().toString()));
-                                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-                                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-                            }
-                            break;
-                    }
-                    return false;
-                }
-            });
-            stop.getButton().setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        count = 0;
-                        setPropertiesFocusable(true);
-                        exc_rest.setVisibility(View.INVISIBLE);
-                        exc_table.setVisibility(View.VISIBLE);
-                        if (timer != null)
-                            timer.cancel();
-
-                        stop.setPressed();
-                        dcButtonManager.setDCState(DCButtonManager.State.Stop);
-                        dcButtonManager.setDCState(DCButtonManager.State.Setted);
-
-//                        main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-                        main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                                main.getisIsoKinetic() ? String.valueOf(String.valueOf(spinnerAdapter.getCurrentNumber())) : edt_weight.getSource().getText().toString(),
-                                edt_count.getSource().getText().toString(),
-                                edt_set.getSource().getText().toString()));
-                        txt_count.setText("0");
-                        txt_set.setText("0");
-//                        SendWorkoutRecord();
-                    } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        stop.setPressedwithNoSound();
-                    }
-                    return false;
-                }
-            });
-            ready.getButton().setOnClickListener(this);
-            txt_count.setOnClickListener(this);
-            txt_set.setOnClickListener(this);
-
-
             dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf, start, ready, stop);
 
-
-            if (workout != null) {
-                edt_count.getSource().setText(String.valueOf(workout.getReps()));
-                edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
-                edt_set.getSource().setText(String.valueOf(workout.getSet()));
-                switch (workout.getExcercise().getSimpleName()) {
-                    case "벤치 프레스":
-                        setExcercise(bench, new BenchPress(main));
-                        break;
-                    case "스쿼트":
-                        setExcercise(squat, new Squat(main));
-                        break;
-                    case "데드 리프트":
-                        setExcercise(deadlift, new DeadLift(main));
-                        break;
-                    case "숄더 프레스":
-                        setExcercise(press, new ShoulderPress(main));
-                        break;
-                    case "랫 풀 다운":
-                        setExcercise(latpull, new LatPullDown(main));
-                        break;
-                    case "카프 레이즈":
-                        setExcercise(carf, new CarfRaise(main));
-                        break;
-                    case "암 컬":
-                        setExcercise(curl, new ArmCurl(main));
-                        break;
-                    case "암 익스텐션":
-                        setExcercise(extension, new ArmExtension(main));
-                        break;
-                }
-            }
+            setListener();
+            Loadworkout();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private void Loadworkout() {
+        if (workout != null) {
+            edt_count.getSource().setText(String.valueOf(workout.getReps()));
+            edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
+            edt_set.getSource().setText(String.valueOf(workout.getSet()));
+            switch (workout.getExcercise().getSimpleName()) {
+                case "벤치 프레스":
+                    setExcercise(bench, new BenchPress(main));
+                    break;
+                case "스쿼트":
+                    setExcercise(squat, new Squat(main));
+                    break;
+                case "데드 리프트":
+                    setExcercise(deadlift, new DeadLift(main));
+                    break;
+                case "숄더 프레스":
+                    setExcercise(press, new ShoulderPress(main));
+                    break;
+                case "랫 풀 다운":
+                    setExcercise(latpull, new LatPullDown(main));
+                    break;
+                case "카프 레이즈":
+                    setExcercise(carf, new CarfRaise(main));
+                    break;
+                case "암 컬":
+                    setExcercise(curl, new ArmCurl(main));
+                    break;
+                case "암 익스텐션":
+                    setExcercise(extension, new ArmExtension(main));
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId() == R.id.exc_btn_ready) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    start.setPressedwithNoSound();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    start.setPressed();
+                    start.setPause();
+                    if (start.isPause()) {
+                        dcButtonManager.setDCState(DCButtonManager.State.Excercise);
+                        main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                                main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()));
+                        main.PlaySound(new int[]{R.raw.start_excercise, R.raw.start_excercise_english});
+                        start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
+                        start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
+                    } else {
+                        dcButtonManager.setDCState(DCButtonManager.State.Paused);
+                        main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
+                                main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
+                                edt_count.getSource().getText().toString(),
+                                edt_set.getSource().getText().toString()));
+                        start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                        start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+                    }
+                    break;
+            }
+        } else if (v.getId() == R.id.exc_btn_stop) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                count = 0;
+                setPropertiesFocusable(true);
+                exc_rest.setVisibility(View.INVISIBLE);
+                exc_table.setVisibility(View.VISIBLE);
+                if (timer != null)
+                    timer.cancel();
+
+                stop.setPressed();
+                dcButtonManager.setDCState(DCButtonManager.State.Stop);
+                dcButtonManager.setDCState(DCButtonManager.State.Setted);
+
+//                        main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                        main.getisIsoKinetic() ? String.valueOf(String.valueOf(spinnerAdapter.getCurrentNumber())) : edt_weight.getSource().getText().toString(),
+                        edt_count.getSource().getText().toString(),
+                        edt_set.getSource().getText().toString()));
+                txt_count.setText("0");
+                txt_set.setText("0");
+//                        SendWorkoutRecord();
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                stop.setPressedwithNoSound();
+            }
+        }
+        return false;
+    }
+
+
+    private void setListener() {
+        bench.getButton().setOnClickListener(this);
+        squat.getButton().setOnClickListener(this);
+        deadlift.getButton().setOnClickListener(this);
+        press.getButton().setOnClickListener(this);
+        latpull.getButton().setOnClickListener(this);
+        carf.getButton().setOnClickListener(this);
+        curl.getButton().setOnClickListener(this);
+        extension.getButton().setOnClickListener(this);
+
+        start.getButton().setOnTouchListener(this);
+        stop.getButton().setOnTouchListener(this);
+        ready.getButton().setOnClickListener(this);
+        txt_count.setOnClickListener(this);
+        txt_set.setOnClickListener(this);
+    }
 
     @Override
     public void onDestroy() {
@@ -681,15 +669,11 @@ public class ExcerciseMode extends DCfragment {
 
     @Override
     public DCfragment getBackFragment() {
-        if(isProgram || onSchedule)
-            return new SelectWorkOut(main,null);
+        if (isProgram || onSchedule)
+            return new SelectWorkOut(main, null);
         else
             return new SelectMode(main);
     }
 
-    @Override
-    public DCfragment getNextFragment() {
-        return null;
-    }
 }
 

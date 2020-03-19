@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,80 +37,13 @@ public class SelectMode extends DCfragment {
             main.getusbService().write(Commands.Home(true));
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
-                    try {
-                    DynamicCare care = (DynamicCare) main.getApplication();
-                    JSONObject jsonObject = care.getCurrentUserJson();
-                    JSONObject resultData = (JSONObject) jsonObject.get("resultData");
-                        main.getusbService().write(Commands.Home(true));
-                        if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
-                            loadPlandialog = new LoadPlan(main,
-                                    new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            loadPlandialog.dismiss();
-                                            ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, null), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(false));
-                                        }
-                                    },
-                                    new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            main.setisIsoKinetic(false);
-                                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(false));
-                                            loadPlandialog.dismiss();
-                                        }
-                                    });
-                            loadPlandialog.show();
-                        } else {
-                            main.setisIsoKinetic(false);
-                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                            main.getusbService().write(Commands.ExcerciseMode(false));
-                        }
-                    } catch (NullPointerException e) {
-                        main.setisIsoKinetic(false);
-                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                        main.getusbService().write(Commands.ExcerciseMode(false));
-                    }
+                   goExcMode(false);
                     break;
                 }
-                case R.id.btn_select_exec_isokinetic: {
-                    try {
-                    DynamicCare care = (DynamicCare) main.getApplication();
-                    JSONObject jsonObject = care.getCurrentUserJson();
-                    JSONObject resultData = (JSONObject) jsonObject.get("resultData");
-                        if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
-                            loadPlandialog = new LoadPlan(main,
-                                    new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            loadPlandialog.dismiss();
-                                            ((Main) getActivity()).ReplaceFragment(new SelectWorkOut(main, resultData), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(true));
-                                        }
-                                    },
-                                    new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            main.setisIsoKinetic(true);
-                                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                                            main.getusbService().write(Commands.ExcerciseMode(true));
-                                            loadPlandialog.dismiss();
-                                        }
-                                    });
-                            loadPlandialog.show();
-                        } else {
-                            main.setisIsoKinetic(true);
-                            ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                            main.getusbService().write(Commands.ExcerciseMode(true));
-                        }
-                    } catch (NullPointerException e) {
-                        main.setisIsoKinetic(true);
-                        ((Main) getActivity()).ReplaceFragment(new ExcerciseMode(main), true);
-                        main.getusbService().write(Commands.ExcerciseMode(true));
-                    }
+                case R.id.btn_select_exec_isokinetic:
+                    goExcMode(true);
                     break;
-                }
+
                 case R.id.btn_sel_mes_isometric: {
                     main.setIsIsoTonic(false);
                     ((Main) getActivity()).ReplaceFragment(new Explain(main), true);
@@ -125,30 +59,62 @@ public class SelectMode extends DCfragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
-//            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void goExcMode(boolean isKinetic) {
+        try {
+            JSONObject resultData = (JSONObject) care.getCurrentUserJson().get("resultData");
+            if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
+                loadPlandialog = new LoadPlan(main,
+                        v1 -> {
+                            loadPlandialog.dismiss();
+                            main.ReplaceFragment(new SelectWorkOut(main, resultData), true);
+                            main.getusbService().write(Commands.ExcerciseMode(isKinetic));
+                        },
+                        v12 -> {
+                            main.setisIsoKinetic(isKinetic);
+                            main.ReplaceFragment(new ExcerciseMode(main), true);
+                            main.getusbService().write(Commands.ExcerciseMode(isKinetic));
+                            loadPlandialog.dismiss();
+                        });
+                loadPlandialog.show();
+            } else {
+                main.setisIsoKinetic(isKinetic);
+                main.ReplaceFragment(new ExcerciseMode(main), true);
+                main.getusbService().write(Commands.ExcerciseMode(isKinetic));
+            }
+        } catch (NullPointerException e) {
+            main.setisIsoKinetic(isKinetic);
+            main.ReplaceFragment(new ExcerciseMode(main), true);
+            main.getusbService().write(Commands.ExcerciseMode(isKinetic));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
+            container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_mode, container, false);
-        try{
-        main.PlaySound(new int[]{R.raw.select_the_mode, R.raw.select_the_mode_english});
-        selectExec = view.findViewById(R.id.btn_select_exec);
-        isokinetic = view.findViewById(R.id.btn_select_exec_isokinetic);
-        isometronic = view.findViewById(R.id.btn_sel_mes_isometric);
-        isotonic = view.findViewById(R.id.btn_sel_mes_isotonic);
+        try {
+            main.PlaySound(new int[]{R.raw.select_the_mode, R.raw.select_the_mode_english});
+            selectExec = view.findViewById(R.id.btn_select_exec);
+            isokinetic = view.findViewById(R.id.btn_select_exec_isokinetic);
+            isometronic = view.findViewById(R.id.btn_sel_mes_isometric);
+            isotonic = view.findViewById(R.id.btn_sel_mes_isotonic);
 
-        selectExec.setOnClickListener(this);
-        isokinetic.setOnClickListener(this);
-        isometronic.setOnClickListener(this);
-        isotonic.setOnClickListener(this);
+            selectExec.setOnClickListener(this);
+            isokinetic.setOnClickListener(this);
+            isometronic.setOnClickListener(this);
+            isotonic.setOnClickListener(this);
 
-        main.getusbService().write(Commands.Home(true));
-        }catch (Exception e)
-        {
-            Log.i("Error",e.toString());
+            main.getusbService().write(Commands.Home(true));
+        } catch (Exception e) {
+            Log.i("Error", e.toString());
         }
 
         return view;
