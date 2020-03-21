@@ -323,7 +323,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener,View
             setBottomBar(true);
             return view;
         } catch (Exception e) {
-            Toast.makeText(main, e.toString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(main, e.toString(), Toast.LENGTH_LONG).show();
             return null;
         }
     }

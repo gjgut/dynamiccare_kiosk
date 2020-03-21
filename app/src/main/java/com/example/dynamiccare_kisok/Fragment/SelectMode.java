@@ -59,7 +59,7 @@ public class SelectMode extends DCfragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 

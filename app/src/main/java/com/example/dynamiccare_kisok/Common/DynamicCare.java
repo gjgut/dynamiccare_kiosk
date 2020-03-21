@@ -63,8 +63,8 @@ public class DynamicCare extends Application {
         return limit;
     }
 
-    public static void setLimit(int limit) {
-        DynamicCare.limit = limit;
+    public static void setLimit(int limits) {
+        limit = limits;
     }
     public static void offLimit(){isLimit = false;}
 

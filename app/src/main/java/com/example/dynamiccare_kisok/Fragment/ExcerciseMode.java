@@ -72,8 +72,14 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public ExcerciseMode(Main main) {
         super(main);
-        main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
-        main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
+        try {
+            main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
+            main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
+            main.getCare().getCurrentUserJson().put("plnVwId", null);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public ExcerciseMode(Main main, Bundle bundle) {
@@ -183,8 +189,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                                 String.valueOf(30),
                                 "2",
                                 "0"));
-                if (!isResume)
-                    TakeBreak(false);
+//                if (!isResume)
+//                    TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
 //                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
@@ -224,7 +230,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         try {
             switch (ack.getCommandCode()) {
                 case "ACD":
-                    Toast.makeText(main, "Command:" + ack.getCommandCode() + ack.getData() + ack.getmTension() + ack.getTime(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(main, "Command:" + ack.getCommandCode() + ack.getData() + ack.getmTension() + ack.getTime(), Toast.LENGTH_LONG).show();
                     String count = String.valueOf(Integer.parseInt(ack.getData().substring(0, 2)));
                     String set = String.valueOf(Integer.parseInt(ack.getData().substring(2, 4)));
                     String restOn = ack.getData().substring(4, 5);
@@ -633,17 +639,21 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     Integer.valueOf(edt_count.getSource().getText().toString()),
                     Integer.valueOf(edt_set.getSource().getText().toString()));
             if (!workout.equals(sendworkdout))
+            {
                 isProgram = onSchedule = false;
+                main.getCare().getCurrentUserJson().put("plnVwId",null);
+            }
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));
             jsonObject.accumulate("count", Integer.valueOf(edt_count.getSource().getText().toString()));
-            jsonObject.accumulate("device", main.getCare().getDeviceID().toString());
-            jsonObject.accumulate("email", "");
+            jsonObject.accumulate("device", main.getCare().getDeviceID());
+            jsonObject.accumulate("email", main.getCare().getCurrentUserJson().get("plnVwEmail"));
             jsonObject.accumulate("height", 0);
+            jsonObject.accumulate("index",  main.getCare().getCurrentUserJson().get("plnVwId"));
             jsonObject.accumulate("isProgram", isProgram);
-            jsonObject.accumulate("level", 0);
             jsonObject.accumulate("onSchedule", onSchedule);
+            jsonObject.accumulate("level", 0);
             jsonObject.accumulate("rest", Integer.valueOf(edt_rest.getSource().getText().toString()));
             jsonObject.accumulate("set", Integer.valueOf(edt_set.getSource().getText().toString()));
             jsonObject.accumulate("weight", Integer.valueOf(edt_weight.getSource().getText().toString()));

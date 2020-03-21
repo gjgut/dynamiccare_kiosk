@@ -73,13 +73,13 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_minutes:
                 btn_minutes.setPressed();
                 if (btn_minutes.IsPressed()) {
-                    care.setLimit(30);
+                    care.setLimit(1800);
                 }
                 break;
             case R.id.btn_hour:
                 btn_hour.setPressed();
                 if (btn_hour.IsPressed()) {
-                    care.setLimit(6000);
+                    care.setLimit(3600);
                 }
                 break;
         }
@@ -113,7 +113,7 @@ public class TimeSetting extends DCfragment {
 
             btn_minutes.setPressedWithNoSound();
             if (btn_minutes.IsPressed()) {
-                care.setLimit(30);
+                care.setLimit(1800);
             }
 
             reject = view.findViewById(R.id.password_reject);

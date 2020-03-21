@@ -75,15 +75,15 @@ public class Main extends DCActivity implements View.OnClickListener {
         handler = new Handler();
         dcSoundPlayer = care.getDcSoundPlayer();
         count = care.getLimit();
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
+        countDownTimer = new CountDownTimer(count * 1000, 60000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 try {
-                    BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60))
-                                            + ":" +
-                                            ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
-                    count--;
-                    if (count == 30) {
+                    BottomRestTime.setText(((count < 36000) ? "0" + (count / 3600) : (count / 3600))
+                            + ":" +
+                            ((count % 3600) < 600 ? "0" + ((count % 3600) / 60) : ((count % 3600) / 60)));
+                    count-=60;
+                    if (count == 600) {
                         new FinishAlert(main).show();
                         BottomRestTime.setTextColor(Color.RED);
                     }
@@ -241,24 +241,24 @@ public class Main extends DCActivity implements View.OnClickListener {
             countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
+        countDownTimer = new CountDownTimer(count * 1000, 60000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
-                if (count == 30) {
+                if (count == 600) {
                     alertflag = true;
                     BottomRestTime.setTextColor(Color.RED);
-                } else if (count < 30 &&
+                } else if (count < 600 &&
                         alertflag && DCButtonManager.getDCState() != DCButtonManager.State.Excercise
                         && DCButtonManager.getDCState() != DCButtonManager.State.Ready
                 ) {
                     new FinishAlert(main).show();
                     alertflag = false;
                 }
-                BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60))
+                BottomRestTime.setText(((count < 36000) ? "0" + (count / 3600) : (count / 3600))
                         + ":" +
-                        ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
-                count--;
+                        ((count % 3600) < 600 ? "0" + ((count % 3600) / 60) : ((count % 3600) / 60)));
+                count-=60;
             }
 
             @Override
@@ -282,7 +282,7 @@ public class Main extends DCActivity implements View.OnClickListener {
 
     public void HandleACK(ACK ack) {
         try {
-            Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
             switch (ack.getCommandCode()) {
                 case "CHM":
                     PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
@@ -332,7 +332,7 @@ public class Main extends DCActivity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
             Log.i("Main-Broadcasted", ack.getCommandCode() + e.toString());
-            Toast.makeText(this, "ACK:" + ack.getCommandCode() + e.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "ACK:" + ack.getCommandCode() + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -445,7 +445,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             ViewMapping();
             setListener();
             countDownTimer.start();
-            Toast.makeText(this, care.getDeviceID().toString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, care.getDeviceID().toString(), Toast.LENGTH_LONG).show();
             if (care.isLimit())
                 ReplaceFragment(new TimeSetting(this));
             else
