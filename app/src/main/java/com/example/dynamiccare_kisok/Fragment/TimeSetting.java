@@ -58,17 +58,17 @@ public class TimeSetting extends DCfragment {
         switch (v.getId()) {
             case R.id.btn_ok:
                 if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword())) {
-                    if (excerciseMode != null) {
+                    if(prev == null)
+                        main.ReplaceFragment(new SelectMode(main),true);
+                    else if (excerciseMode != null) {
                         if (timer != null)
                             timer.cancel();
                         Bundle outState = excerciseMode.getSaveState();
                         outState.putInt("count", count);
                         main.ReplaceFragment(new ExcerciseMode(main,outState),false);
-                    } else if(prev!=null)
+                    }
+                    else if(prev.getClass()==SelectMode.class)
                         main.ReplaceFragment(prev,false);
-                    else
-                        main.ReplaceFragment(prev,true);
-
                     main.setTimer(care.getLimit());
                 } else
                     reject.setVisibility(View.VISIBLE);
@@ -99,8 +99,8 @@ public class TimeSetting extends DCfragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_time_setting, container, false);
-        if (prev == null)
-            prev = new SelectMode(main);
+//        if (prev == null)
+//            prev = new SelectMode(main);
         if (excerciseMode != null) {
             count = excerciseMode.getSaveState().getInt("count");
         }

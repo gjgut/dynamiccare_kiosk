@@ -446,7 +446,7 @@ public class Main extends DCActivity implements View.OnClickListener {
         try {
             ViewMapping();
             setListener();
-            countDownTimer.start();
+//            countDownTimer.start();
             Toast.makeText(this, care.getDeviceID().toString(), Toast.LENGTH_LONG).show();
             if (care.isLimit())
                 ReplaceFragment(new TimeSetting(this));
