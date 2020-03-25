@@ -62,7 +62,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
     LinearLayout container;
     Spinner spin_level;
     DCSpinnerAdapter spinnerAdapter;
-    boolean isProgram = false, onSchedule = false;
+    boolean isProgram = false, onSchedule = false, isSend = true;
     int count;
     Handler handler = new Handler();
     boolean isResume = false;
@@ -76,8 +76,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
             main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
             main.getCare().getCurrentUserJson().put("plnVwId", null);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -88,14 +87,15 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         isResume = true;
     }
 
-    public ExcerciseMode(Main main, Workout workout, boolean isProgram) {
+    public ExcerciseMode(Main main, DCfragment dCfragment, Workout workout, boolean isProgram) {
         super(main);
         try {
+            prev = dCfragment;
             main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
             main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
             this.workout = workout;
             if (isProgram)
-                isProgram = onSchedule = true;
+                this.isProgram = this.onSchedule = true;
             else
                 onSchedule = true;
         } catch (Exception e) {
@@ -254,7 +254,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     break;
                 case "ASS":
                     setPropertiesFocusable(true);
-                    SendWorkoutRecord();
+                    if (isSend)
+                        SendWorkoutRecord();
                     break;
             }
         } catch (Exception e) {
@@ -506,9 +507,11 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     private void Loadworkout() {
         if (workout != null) {
+            spin_level.setSelection(workout.getLevel() > 0 ? workout.getLevel() - 1 : 0);
             edt_count.getSource().setText(String.valueOf(workout.getReps()));
             edt_weight.getSource().setText(String.valueOf(workout.getWeight()));
             edt_set.getSource().setText(String.valueOf(workout.getSet()));
+            edt_rest.getSource().setText(String.valueOf(workout.getRest()));
             switch (workout.getExcercise().getSimpleName()) {
                 case "벤치 프레스":
                     setExcercise(bench, new BenchPress(main));
@@ -546,6 +549,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     start.setPressedwithNoSound();
                     break;
                 case MotionEvent.ACTION_UP:
+                    isSend = true;
                     start.setPressed();
                     start.setPause();
                     if (start.isPause()) {
@@ -580,15 +584,13 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 stop.setPressed();
                 dcButtonManager.setDCState(DCButtonManager.State.Stop);
                 dcButtonManager.setDCState(DCButtonManager.State.Setted);
-
-//                        main.PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
                 main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                        main.getisIsoKinetic() ? String.valueOf(String.valueOf(spinnerAdapter.getCurrentNumber())) : edt_weight.getSource().getText().toString(),
+                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));
                 txt_count.setText("0");
                 txt_set.setText("0");
-//                        SendWorkoutRecord();
+                isSend = false;
             } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 stop.setPressedwithNoSound();
             }
@@ -635,28 +637,31 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             Workout sendworkdout = new Workout(true,
                     main.getisIsoKinetic(),
                     main.getCurrentExcercise(),
-                    Integer.valueOf(edt_weight.getSource().getText().toString()),
+                    Integer.valueOf(main.getisIsoKinetic() ? spin_level.getSelectedItem().toString() : edt_weight.getSource().getText().toString()),
                     Integer.valueOf(edt_count.getSource().getText().toString()),
-                    Integer.valueOf(edt_set.getSource().getText().toString()));
-            if (!workout.equals(sendworkdout))
-            {
+                    Integer.valueOf(edt_set.getSource().getText().toString()),
+                    Integer.valueOf(edt_rest.getSource().getText().toString()),
+                    workout.getIndex());
+            if (!workout.equals(sendworkdout)) {
                 isProgram = onSchedule = false;
-                main.getCare().getCurrentUserJson().put("plnVwId",null);
+                sendworkdout.setIndex(null);
             }
+//            Log.i("planIndex",);
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));
             jsonObject.accumulate("count", Integer.valueOf(edt_count.getSource().getText().toString()));
             jsonObject.accumulate("device", main.getCare().getDeviceID());
-            jsonObject.accumulate("email", main.getCare().getCurrentUserJson().get("plnVwEmail"));
+            jsonObject.accumulate("email", main.getCare().getCurrentUserJson().get("email"));
             jsonObject.accumulate("height", 0);
-            jsonObject.accumulate("index",  main.getCare().getCurrentUserJson().get("plnVwId"));
+            jsonObject.accumulate("index", sendworkdout.getIndex());
             jsonObject.accumulate("isProgram", isProgram);
             jsonObject.accumulate("onSchedule", onSchedule);
-            jsonObject.accumulate("level", 0);
-            jsonObject.accumulate("rest", Integer.valueOf(edt_rest.getSource().getText().toString()));
-            jsonObject.accumulate("set", Integer.valueOf(edt_set.getSource().getText().toString()));
-            jsonObject.accumulate("weight", Integer.valueOf(edt_weight.getSource().getText().toString()));
+            jsonObject.accumulate("level", sendworkdout.getLevel());
+            jsonObject.accumulate("rest", sendworkdout.getRest());
+            jsonObject.accumulate("set", sendworkdout.getSet());
+            jsonObject.accumulate("weight", sendworkdout.getWeight());
+            Log.i("SendJson", jsonObject.toString());
             new DCHttp().SendWorkout(jsonObject.toString());
         } catch (Exception e) {
             Log.i("Error", e.toString());
@@ -679,8 +684,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     @Override
     public DCfragment getBackFragment() {
-        if (isProgram || onSchedule)
-            return new SelectWorkOut(main, null);
+        if (prev != null)
+            return prev;
         else
             return new SelectMode(main);
     }

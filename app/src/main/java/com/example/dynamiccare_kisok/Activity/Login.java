@@ -60,6 +60,7 @@ public class Login extends DCActivity implements View.OnClickListener {
             } else if (v.getId() == R.id.bt_dwload) {
                 act = QRlink.class;
             }
+            care.setUserId(edt_code.getSource().getText().toString());
             ChangeActivity(act);
         }catch (Exception e)
         {

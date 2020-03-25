@@ -27,6 +27,7 @@ public class SelectMode extends DCfragment {
 
     public SelectMode(Main main) {
         super(main);
+        care.UpdateJson();
         Main.setCurrentExcercise(null);
         DCButton.PressedOff();
     }
@@ -62,11 +63,14 @@ public class SelectMode extends DCfragment {
 //            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
+    private void ParseAllDone(String src)
+    {
+        ;
+    }
     private void goExcMode(boolean isKinetic) {
         try {
             JSONObject resultData = (JSONObject) care.getCurrentUserJson().get("resultData");
-            if (!resultData.get("programList").toString().equals("null") && !resultData.get("privateList").toString().equals("null")) {
+            if (resultData.toString().contains("\"plnVwIsDone\":\"false\"") && (!resultData.get("programList").toString().equals("null") || !resultData.get("privateList").toString().equals("null"))) {
                 loadPlandialog = new LoadPlan(main,
                         v1 -> {
                             loadPlandialog.dismiss();
@@ -120,19 +124,12 @@ public class SelectMode extends DCfragment {
         return view;
     }
 
-//    public JSONObject isTherePlan() {
-//        try {
-//            DynamicCare care = (DynamicCare) main.getApplication();
-//
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.accumulate("uid", care.getCurrentUser());
-//            String json = jsonObject.toString();
-//            return new HttpUtil().execute(json).get();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        care.UpdateJson();
+    }
 
     @Override
     public String getTitle() {

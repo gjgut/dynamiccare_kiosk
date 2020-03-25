@@ -80,7 +80,7 @@ public class DCListViewAdapter extends BaseAdapter {
 
 
             item.setExc_title(item.getWorkout().getExcercise().getSimpleName() + " " + item.getWorkout().getExcercise().getMuscleName());
-            item.setExc_content(item.getWorkout().isKinetic() + ", " + item.getWorkout().getWeight() + "kg " + item.getWorkout().getReps() + "회 " + item.getWorkout().getSet() + "세트");
+            item.setExc_content(item.getWorkout().isKinetic() + ", " + (item.getWorkout().getIsKinetic()?item.getWorkout().getLevel()+" 레벨 ":item.getWorkout().getWeight() + "kg ") + item.getWorkout().getReps() + "회 " + item.getWorkout().getSet() + "세트");
 
             itemContainer.add(item);
         } catch (Exception e) {

@@ -5,16 +5,23 @@ import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
 public class Workout {
     boolean isWorkout = false, isKinetic = false;
     Excercise excercise;
-    int Weight = 0, Reps = 0,Set=0;
+    int Weight = 0, Reps = 0,Set=0,level=0,Rest=0;
+    String index="";
 
-    public Workout(boolean isWorkout, boolean isKinetic, Excercise excercise, int weight, int reps, int set) {
+    public Workout(boolean isWorkout, boolean isKinetic, Excercise excercise, int weight, int reps, int set,int rest,String index) {
         this.isWorkout = isWorkout;
         this.isKinetic = isKinetic;
         this.excercise = excercise;
-        Weight = weight;
+        if(isKinetic)
+            this.level = weight;
+        else
+            Weight = weight;
         Reps = reps;
+        Rest =rest;
         Set = set;
+        this.index = index;
     }
+
 
     public Excercise getExcercise() {
         return excercise;
@@ -66,6 +73,30 @@ public class Workout {
 
     public void setReps(int reps) {
         Reps = reps;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getRest() {
+        return Rest;
+    }
+
+    public void setRest(int rest) {
+        Rest = rest;
     }
 
     public boolean equals(Workout target)

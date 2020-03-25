@@ -14,6 +14,7 @@ import com.example.dynamiccare_kisok.Common.Object.ACK;
 
 public abstract class DCfragment extends Fragment implements View.OnClickListener{
     protected  Main main;
+    protected DCfragment prev;
     protected DynamicCare care;
     protected Administrator admin;
     protected CountDownTimer timer;

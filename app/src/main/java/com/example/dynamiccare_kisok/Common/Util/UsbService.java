@@ -182,17 +182,17 @@ public class UsbService extends Service {
      * This function will be called from MainActivity to write data through Serial Port
      */
     public void write(byte[] data) {
-        if (serialPort != null && serialPort.open() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
+//        if (serialPort != null && serialPort.open() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
         if (serialPort != null)
             serialPort.write(data);
-        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
-        {
-            new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.").show();
-        }
-        else
-        {
-            new NormalAlert(main,"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.").show();
-        }
+//        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
+//        {
+//            new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 설정을 확인해주십시오.").show();
+//        }
+//        else
+//        {
+//            new NormalAlert(main,"기기가 장치와 연결되지 않았습니다.\nUSB가 제대로 연결되었는지 확인해주십시오.").show();
+//        }
     }
 
     public void setHandler(Handler mHandler) {

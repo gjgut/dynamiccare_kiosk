@@ -55,13 +55,23 @@ public class SelectWorkOut extends DCfragment {
 
     public SelectWorkOut(Main main, JSONObject WorkoutJson) {
         super(main);
+        care.UpdateJson();
         this.WorkoutJson = WorkoutJson;
-
     }
 
     public SelectWorkOut(Main main) {
         super(main);
+        try {
+            care.UpdateJson();
+            this.WorkoutJson = (JSONObject) care.getCurrentUserJson().get("resultData");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -165,107 +175,109 @@ public class SelectWorkOut extends DCfragment {
             adapter_plan = new DCListViewAdapter(R.layout.list_plan_item);
             adapter_workout = new DCListViewAdapter(R.layout.list_workout_item);
 
-            Workout workoutlist[];
-            workoutlist = new Workout[]{
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new Squat(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new CarfRaise(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-
-            };
-            Workout programlist[] = new Workout[8];
-            programlist = new Workout[]{
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new Squat(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new CarfRaise(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3),
-                    new Workout(false,
-                            false, new BenchPress(main),
-                            30,
-                            20,
-                            3)
-            };
-
-            for (Workout work : workoutlist) {
-                if (work == null)
-                    break;
-                worklayout.setVisibility(View.VISIBLE);
-                adapter_workout.Fillitem(work);
-            }
-
-            for (Workout work : programlist) {
-                if (work == null)
-                    break;
-                planlayout.setVisibility(View.VISIBLE);
-                adapter_plan.Fillitem(work);
-            }
+//            Workout workoutlist[];
+//            workoutlist = new Workout[]{
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new Squat(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new CarfRaise(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//
+//            };
+//            Workout programlist[] = new Workout[8];
+//            programlist = new Workout[]{
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new Squat(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new CarfRaise(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3),
+//                    new Workout(false,
+//                            false, new BenchPress(main),
+//                            30,
+//                            20,
+//                            3)
+//            };
+//
+//            for (Workout work : workoutlist) {
+//                if (work == null)
+//                    break;
+//                worklayout.setVisibility(View.VISIBLE);
+//                adapter_workout.Fillitem(work);
+//            }
+//
+//            for (Workout work : programlist) {
+//                if (work == null)
+//                    break;
+//                planlayout.setVisibility(View.VISIBLE);
+//                adapter_plan.Fillitem(work);
+//            }
+            care.UpdateJson();
+            this.WorkoutJson = (JSONObject) care.getCurrentUserJson().get("resultData");
             PaintListView();
             setListener();
             Pagging();
@@ -277,125 +289,81 @@ public class SelectWorkOut extends DCfragment {
         return view;
     }
 
-    private void PaintListView() {
+    private Workout[] FillWorkoutArray(String target, boolean isPlan) {
         try {
-            JSONArray programlistArray = null;
-            JSONArray workoutlistArray = null;
-
-            Workout workoutlist[] = new Workout[8];
-            Workout programlist[] = new Workout[8];
-
-            if (!WorkoutJson.get("programList").equals(null))
-                programlistArray = WorkoutJson.getJSONArray("programList");
-            if (!WorkoutJson.get("privateList").equals(null))
-                workoutlistArray = WorkoutJson.getJSONArray("privateList");
-
-            for (int i = 0; i < workoutlistArray.length(); i++) {
-                JSONObject workout1 = workoutlistArray.getJSONObject(i);
-                boolean isKinetic = false;
-                Excercise excercise = new BenchPress(main);
-                switch (workout1.get("plnVwCommonCode").toString().substring(0, 1)) {
-                    case "A":
-                        excercise = new BenchPress(main);
-                        break;
-                    case "B":
-                        excercise = new Squat(main);
-                        break;
-                    case "C":
-                        excercise = new DeadLift(main);
-                        break;
-                    case "D":
-                        excercise = new ShoulderPress(main);
-                        break;
-                    case "E":
-                        excercise = new CarfRaise(main);
-                        break;
-                    case "F":
-                        excercise = new ArmCurl(main);
-                        break;
-                    case "G":
-                        excercise = new ArmExtension(main);
-                        break;
-                    case "H":
-                        excercise = new LatPullDown(main);
-                        break;
+            if (!WorkoutJson.get(target).equals(null)) {
+                Workout Arraylist[] = new Workout[8];
+                if (!WorkoutJson.get(target).equals(null)) {
+                    JSONArray Array = WorkoutJson.getJSONArray(target);
+                    for (int i = 0; i < Array.length(); i++) {
+                        JSONObject program = Array.getJSONObject(i);
+                        boolean isKinetic;
+                        Excercise excercise = null;
+                        if (Boolean.valueOf(program.get("plnVwIsDone").toString()))
+                            continue;
+                        switch (program.get("plnVwCommonCode").toString().substring(0, 1)) {
+                            case "A":
+                                excercise = new BenchPress(main);
+                                break;
+                            case "B":
+                                excercise = new Squat(main);
+                                break;
+                            case "C":
+                                excercise = new DeadLift(main);
+                                break;
+                            case "D":
+                                excercise = new ShoulderPress(main);
+                                break;
+                            case "E":
+                                excercise = new CarfRaise(main);
+                                break;
+                            case "F":
+                                excercise = new ArmCurl(main);
+                                break;
+                            case "G":
+                                excercise = new ArmExtension(main);
+                                break;
+                            case "H":
+                                excercise = new LatPullDown(main);
+                                break;
+                        }
+                        switch (program.get("plnVwCommonCode").toString().substring(2)) {
+                            case "1":
+                                isKinetic = false;
+                                break;
+                            default:
+                                isKinetic = true;
+                                break;
+                        }
+                        Arraylist[i] = new Workout(false,
+                                isKinetic, excercise,
+                                Integer.valueOf(isKinetic ? program.get("plnVwLevel").toString() : program.get("plnVwWeight").toString()),
+                                Integer.valueOf(program.get("plnVwCount").toString()),
+                                Integer.valueOf(program.get("plnVwSet").toString()),
+                                Integer.valueOf(program.get("plnVwRest").toString()),
+                                program.get("plnVwId").toString());
+                        if (Arraylist[i] == null)
+                            continue;
+                        if (isPlan) {
+                            planlayout.setVisibility(View.VISIBLE);
+                            adapter_plan.Fillitem(Arraylist[i]);
+                        } else {
+                            worklayout.setVisibility(View.VISIBLE);
+                            adapter_workout.Fillitem(Arraylist[i]);
+                        }
+                    }
                 }
-                switch (workout1.get("plnVwCommonCode").toString().substring(2)) {
-                    case "1":
-                        isKinetic = false;
-                        break;
-                    default:
-                        isKinetic = true;
-                        break;
-                }
-                workoutlist[i] = new Workout(false,
-                        isKinetic, excercise,
-                        Integer.valueOf(workout1.get("plnVwWeight").toString()),
-                        Integer.valueOf(workout1.get("plnVwCount").toString()),
-                        Integer.valueOf(workout1.get("plnVwSet").toString()));
-            }
-
-            for (int i = 0; i < programlistArray.length(); i++) {
-                JSONObject program = programlistArray.getJSONObject(i);
-                boolean isKinetic = false;
-                Excercise excercise = new BenchPress(main);
-                switch (program.get("plnVwCommonCode").toString().substring(0, 1)) {
-                    case "A":
-                        excercise = new BenchPress(main);
-                        break;
-                    case "B":
-                        excercise = new Squat(main);
-                        break;
-                    case "C":
-                        excercise = new DeadLift(main);
-                        break;
-                    case "D":
-                        excercise = new ShoulderPress(main);
-                        break;
-                    case "E":
-                        excercise = new CarfRaise(main);
-                        break;
-                    case "F":
-                        excercise = new ArmCurl(main);
-                        break;
-                    case "G":
-                        excercise = new ArmExtension(main);
-                        break;
-                    case "H":
-                        excercise = new LatPullDown(main);
-                        break;
-                }
-                switch (program.get("plnVwCommonCode").toString().substring(2)) {
-                    case "1":
-                        isKinetic = false;
-                        break;
-                    default:
-                        isKinetic = true;
-                        break;
-                }
-                programlist[i] = new Workout(false,
-                        isKinetic, excercise,
-                        Integer.valueOf(program.get("plnVwWeight").toString()),
-                        Integer.valueOf(program.get("plnVwCount").toString()),
-                        Integer.valueOf(program.get("plnVwSet").toString()));
-            }
-
-            for (Workout work : workoutlist) {
-                if (work == null)
-                    break;
-                worklayout.setVisibility(View.VISIBLE);
-                adapter_workout.Fillitem(work);
-            }
-
-            for (Workout work : programlist) {
-                if (work == null)
-                    break;
-                planlayout.setVisibility(View.VISIBLE);
-                adapter_plan.Fillitem(work);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
+        return null;
+    }
+
+    private void PaintListView() {
+        FillWorkoutArray("programList", true);
+        FillWorkoutArray("privateList", false);
     }
 
     private void setListener() {
@@ -404,13 +372,8 @@ public class SelectWorkOut extends DCfragment {
         AdapterView.OnItemClickListener itemlistener = (parent, view, position, id) -> {
             try {
                 DCListViewItem item = (DCListViewItem) parent.getItemAtPosition(position);
-                if (item.getWorkout().getIsKinetic()) {
-                    main.setisIsoKinetic(true);
-                    main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout(), true), true);
-                } else {
-                    main.setisIsoKinetic(false);
-                    main.ReplaceFragment(new ExcerciseMode(main, item.getWorkout(), true), true);
-                }
+                main.setisIsoKinetic(item.getWorkout().getIsKinetic());
+                main.ReplaceFragment(new ExcerciseMode(main, this, item.getWorkout(), true), true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

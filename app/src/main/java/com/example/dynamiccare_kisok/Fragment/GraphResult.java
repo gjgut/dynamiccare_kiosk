@@ -179,7 +179,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener,View
         try {
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));
             jsonObject.accumulate("device", main.getCare().getDeviceID().toString());
-            jsonObject.accumulate("email", "gjgustjd70@naver.com");
+            jsonObject.accumulate("email", care.getCurrentUserJson().get("email"));
             jsonObject.accumulate("start", resCalculator.getStart() == 0 ? 0 : resCalculator.getStart() / 1000);
             jsonObject.accumulate("max", resCalculator.getMax() == 0 ? 0 : resCalculator.getMax() / 1000);
             jsonObject.accumulate("min", resCalculator.getMin() == 0 ? 0 : resCalculator.getMin() / 1000);
@@ -320,7 +320,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener,View
         try {
             View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
             setViews(view);
-            setBottomBar(true);
+            setBottomBar(false);
             return view;
         } catch (Exception e) {
 //            Toast.makeText(main, e.toString(), Toast.LENGTH_LONG).show();
@@ -398,8 +398,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener,View
 
     @Override
     public DCfragment getNextFragment() {
-//        return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
-        return new DetailResult(main, 100000, 250000, 100000, 150000);
+        return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
+//        return new DetailResult(main, 100000, 250000, 100000, 150000);
     }
 
 
