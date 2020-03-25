@@ -15,7 +15,7 @@ public class DynamicCare extends Application {
     public static String CurrentUser, DeviceID;
     public static JSONObject CurrentUserJson;
     public static String UserId;
-    public static int limit = 60;
+    public static int limit = 0;
     public static boolean isLimit = true;
     public static DCfragment tempFragment;
     public SharedPreferences Admin;

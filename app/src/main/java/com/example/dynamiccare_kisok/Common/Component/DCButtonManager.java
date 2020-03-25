@@ -35,9 +35,8 @@ public class DCButtonManager {
 
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
             setDCState(State.Clear);
-        }catch (Exception e)
-        {
-            Log.e("Error",e.toString());
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
     }
 
@@ -77,9 +76,8 @@ public class DCButtonManager {
             this.Stop = Stop;
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
             setDCState(State.Clear);
-        }catch (Exception e)
-        {
-            Log.e("Error",e.toString());
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
     }
 
@@ -87,16 +85,16 @@ public class DCButtonManager {
         try {
             switch (state) {
                 case Clear: {
-                    Log.i("State","Clear");
+                    Log.i("State", "Clear");
                     DCButton.PressedOff();
                     for (DCButton i : Union) {
                         i.Activate();
                     }
-                    if(Ready.IsPressed())
+                    if (Ready.IsPressed())
                         Ready.setPressedwithNoSound();
-                    if(Start.IsPressed())
+                    if (Start.IsPressed())
                         Start.setPressedwithNoSound();
-                    if(Stop.IsPressed())
+                    if (Stop.IsPressed())
                         Stop.setPressedwithNoSound();
                     Ready.Deactivate();
                     Start.Deactivate();
@@ -106,7 +104,7 @@ public class DCButtonManager {
                     break;
                 }
                 case StartSetting: {
-                    Log.i("State","StartSetting");
+                    Log.i("State", "StartSetting");
                     DCState = State.StartSetting;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
@@ -123,20 +121,22 @@ public class DCButtonManager {
                     break;
                 }
                 case Setted: {
-                    Log.i("State","Setted");
+                    Log.i("State", "Setted");
                     DCState = State.Setted;
                     for (DCButton i : Union) {
                         i.Activate();
                     }
                     Ready.Activate();
-                    Start.Deactivate();
-                    Stop.Activate();
+                    if (Start != null)
+                        Start.Deactivate();
+                    if (Stop != null)
+                        Stop.Activate();
                     Up.Activate();
                     Down.Activate();
                     break;
                 }
                 case Ready:
-                    Log.i("State","Ready");
+                    Log.i("State", "Ready");
                     DCState = State.Ready;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
@@ -144,13 +144,13 @@ public class DCButtonManager {
                         }
                     }
                     Ready.Activate();
-                    if(!Ready.IsPressed())
+                    if (!Ready.IsPressed())
                         Ready.setPressedwithNoSound();
                     Start.Deactivate();
                     Stop.Activate();
                     break;
                 case Excercise:
-                    Log.i("State","Excercise");
+                    Log.i("State", "Excercise");
                     DCState = State.Excercise;
                     Stop.Activate();
                     Ready.Activate();
@@ -159,7 +159,7 @@ public class DCButtonManager {
                     Down.Deactivate();
                     break;
                 case onRest:
-                    Log.i("State","onRest");
+                    Log.i("State", "onRest");
                     Ready.Deactivate();
                     Start.Deactivate();
                     Stop.Activate();
@@ -177,9 +177,8 @@ public class DCButtonManager {
                     break;
                 }
             }
-        }catch (Exception e)
-        {
-            Log.e("Error",e.toString());
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
         }
     }
 
