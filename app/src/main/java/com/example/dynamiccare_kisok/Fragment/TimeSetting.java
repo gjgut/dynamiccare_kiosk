@@ -64,8 +64,11 @@ public class TimeSetting extends DCfragment {
                         Bundle outState = excerciseMode.getSaveState();
                         outState.putInt("count", count);
                         main.ReplaceFragment(new ExcerciseMode(main,outState),false);
-                    } else
+                    } else if(prev!=null)
+                        main.ReplaceFragment(prev,false);
+                    else
                         main.ReplaceFragment(prev,true);
+
                     main.setTimer(care.getLimit());
                 } else
                     reject.setVisibility(View.VISIBLE);
@@ -73,7 +76,7 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_minutes:
                 btn_minutes.setPressed();
                 if (btn_minutes.IsPressed()) {
-                    care.setLimit(1800);
+                    care.setLimit(30);
                 }
                 break;
             case R.id.btn_hour:
@@ -113,7 +116,7 @@ public class TimeSetting extends DCfragment {
 
             btn_minutes.setPressedWithNoSound();
             if (btn_minutes.IsPressed()) {
-                care.setLimit(1800);
+                care.setLimit(30);
             }
 
             reject = view.findViewById(R.id.password_reject);

@@ -354,6 +354,8 @@ public class SelectWorkOut extends DCfragment {
                     }
                 }
             }
+            if (adapter_plan.getSize() == 0 && adapter_workout.getSize() == 0)
+                main.ReplaceFragment(new SelectMode(main), false);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -373,7 +375,7 @@ public class SelectWorkOut extends DCfragment {
             try {
                 DCListViewItem item = (DCListViewItem) parent.getItemAtPosition(position);
                 main.setisIsoKinetic(item.getWorkout().getIsKinetic());
-                main.ReplaceFragment(new ExcerciseMode(main, this, item.getWorkout(), true), true);
+                main.ReplaceFragment(new ExcerciseMode(main, this, item.getWorkout(), parent.getId() == R.id.list_plan), true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -63,10 +63,6 @@ public class SelectMode extends DCfragment {
 //            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-    private void ParseAllDone(String src)
-    {
-        ;
-    }
     private void goExcMode(boolean isKinetic) {
         try {
             JSONObject resultData = (JSONObject) care.getCurrentUserJson().get("resultData");

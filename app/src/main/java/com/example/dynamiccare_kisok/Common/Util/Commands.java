@@ -6,7 +6,9 @@ public class Commands {
     protected static boolean withChecksum = true;
 
     public static String getFullCommand(boolean isChecksum, String content) {
-        return "$" + content + (withChecksum ? getCheckSums(content) : "") + "#";
+        String s = "$" + content + (withChecksum ? getCheckSums(content) : "") + "#";
+        Log.i("Command",s);
+        return s;
     }
 
     protected static String getCheckSums(String content) {

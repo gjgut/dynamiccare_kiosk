@@ -182,8 +182,8 @@ public class UsbService extends Service {
      * This function will be called from MainActivity to write data through Serial Port
      */
     public void write(byte[] data) {
-//        if (serialPort != null && serialPort.open() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
-        if (serialPort != null)
+//        if (serialPort != null && serialPort.isOpen() && DCHttp.getWhatKindOfNetwork(main)!="NONE")
+        if(serialPort!=null)
             serialPort.write(data);
 //        else if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
 //        {
