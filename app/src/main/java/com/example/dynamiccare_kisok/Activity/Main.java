@@ -75,30 +75,6 @@ public class Main extends DCActivity implements View.OnClickListener {
         handler = new Handler();
         dcSoundPlayer = care.getDcSoundPlayer();
         count = care.getLimit();
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                try {
-                    BottomRestTime.setText(((count < 600) ? "0" + String.valueOf(count / 60) : String.valueOf(count / 60))
-                            + ":" +
-                            ((count % 60) < 10 ? "0" + String.valueOf(count % 60) : String.valueOf(count % 60)));
-                    count--;
-                    if (count == 30) {
-                        new FinishAlert(main).show();
-                        BottomRestTime.setTextColor(Color.RED);
-                    }
-                } catch (Exception e) {
-                    Log.e("Error", e.toString());
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                getusbService().write("$CHM08".getBytes());
-                new NormalAlert(main, "30분이 경과되었습니다.").show();
-            }
-        };
         dcSoundThread = new DCSoundThread(this);
         customActionBar = new DCActionBar(this, getSupportActionBar(), "메인");
 
@@ -241,7 +217,24 @@ public class Main extends DCActivity implements View.OnClickListener {
             countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
-        countDownTimer = new CountDownTimer(count * 1000, 1000) {
+        countDownTimer = SecondTimer();
+//        countDownTimer = MinuteTimer();
+        countDownTimer.start();
+    }
+
+    public void limitoff() {
+        if (!care.isLimit()) {
+            BottomRestTime.setVisibility(View.INVISIBLE);
+            customActionBar.setTimeButton(View.INVISIBLE);
+            if (countDownTimer != null)
+                countDownTimer.cancel();
+        }
+
+    }
+
+    private CountDownTimer SecondTimer()
+    {
+       return new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
@@ -269,17 +262,37 @@ public class Main extends DCActivity implements View.OnClickListener {
                 new NormalAlert(main, "30분이 경과되었습니다.").show();
             }
         };
-        countDownTimer.start();
     }
+    private CountDownTimer MinuteTimer()
+    {
+        return new CountDownTimer(count * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.i("Timer", String.valueOf(count));
+                if (count == 600) {
+                    alertflag = true;
+                    BottomRestTime.setTextColor(Color.RED);
+                } else if (count < 600 &&
+                        alertflag
+                        && DCButtonManager.getDCState() != DCButtonManager.State.Excercise
+                        && DCButtonManager.getDCState() != DCButtonManager.State.Ready
+                        && currentFragment.getClass() != TimeSetting.class
+                ) {
+                    new FinishAlert(main).show();
+                    alertflag = false;
+                }
+                BottomRestTime.setText(((count < 36000) ? "0" + (count / 3600) : (count / 3600))
+                        + ":" +
+                        ((count % 3600)/60 < 10 ? "0" + (count % 3600)/60 : (count % 3600)/60));
+                count--;
+            }
 
-    public void limitoff() {
-        if (!care.isLimit()) {
-            BottomRestTime.setVisibility(View.INVISIBLE);
-            customActionBar.setTimeButton(View.INVISIBLE);
-            if (countDownTimer != null)
-                countDownTimer.cancel();
-        }
-
+            @Override
+            public void onFinish() {
+                getusbService().write(Commands.Home(true));
+                new NormalAlert(main, "30분이 경과되었습니다.").show();
+            }
+        };
     }
 
     public void HandleACK(ACK ack) {
@@ -316,6 +329,8 @@ public class Main extends DCActivity implements View.OnClickListener {
                     break;
                 case "AEE":
                 case "ACS":
+                    if(currentFragment.getClass() == ExcerciseMode.class)
+                        break;
                     PlaySound(dcSoundPlayer.getCoundSound(ack.getData()));
                     break;
                 case "ASS":

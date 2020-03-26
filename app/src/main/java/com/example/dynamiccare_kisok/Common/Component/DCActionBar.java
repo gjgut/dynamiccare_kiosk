@@ -12,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.dynamiccare_kisok.Activity.Login;
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 import com.example.dynamiccare_kisok.Fragment.*;

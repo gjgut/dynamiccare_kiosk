@@ -109,11 +109,11 @@ public class Explain extends DCfragment {
                                 "000", String.valueOf(main.getMeasureTime()),
                                 "1",
                                 "0"));
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        main.HandleACK(ACKListener.ParseACK("$PCA#"));
-                    }
-                }, 3000);
+//                handler.postDelayed(new Runnable() {
+//                    public void run() {
+//                        main.HandleACK(ACKListener.ParseACK("$PCA#"));
+//                    }
+//                }, 3000);
                 setBottomBar(true);
             } else {
                 dcButtonManager.setDCState(DCButtonManager.State.Clear);

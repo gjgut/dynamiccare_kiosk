@@ -67,7 +67,7 @@ public class TimeSetting extends DCfragment {
                         outState.putInt("count", count);
                         main.ReplaceFragment(new ExcerciseMode(main,outState),false);
                     }
-                    else if(prev.getClass()==SelectMode.class)
+                    else
                         main.ReplaceFragment(prev,false);
                     main.setTimer(care.getLimit());
                 } else
@@ -76,7 +76,7 @@ public class TimeSetting extends DCfragment {
             case R.id.btn_minutes:
                 btn_minutes.setPressed();
                 if (btn_minutes.IsPressed()) {
-                    care.setLimit(30);
+                    care.setLimit(35);
                 }
                 break;
             case R.id.btn_hour:

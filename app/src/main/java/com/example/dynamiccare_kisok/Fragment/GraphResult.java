@@ -96,7 +96,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener,View
             Mid = new DCButton(main,  v.findViewById(R.id.btn_mid), getResources().getDrawable(R.drawable.pressed_btn_mid));
             High = new DCButton(main,  v.findViewById(R.id.btn_high), getResources().getDrawable(R.drawable.pressed_btn_high));
 
-            Low.setPressed();
+            Low.setPressedWithNoSound();
             if (Low.IsPressed())
                 main.getusbService().write(Commands.MeasureLevelCheck("L"));
 

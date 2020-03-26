@@ -160,6 +160,7 @@ public class DCButtonManager {
                     break;
                 case onRest:
                     Log.i("State", "onRest");
+                    DCState = State.onRest;
                     Ready.Deactivate();
                     Start.Deactivate();
                     Stop.Activate();
