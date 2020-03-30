@@ -177,7 +177,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener,View
     public void SendResult() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoKinetic()) ? "02" : "01"));
+            jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoTonic()) ? "02" : "01"));
             jsonObject.accumulate("device", main.getCare().getDeviceID().toString());
             jsonObject.accumulate("email", care.getCurrentUserJson().get("email"));
             jsonObject.accumulate("start", resCalculator.getStart() == 0 ? 0 : resCalculator.getStart() / 1000);

@@ -354,8 +354,8 @@ public class SelectWorkOut extends DCfragment {
                     }
                 }
             }
-            if (adapter_plan.getSize() == 0 && adapter_workout.getSize() == 0)
-                main.ReplaceFragment(new SelectMode(main), false);
+//            if (adapter_plan.getSize() == 0 && adapter_workout.getSize() == 0)
+//                main.ReplaceFragment(new SelectMode(main), false);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

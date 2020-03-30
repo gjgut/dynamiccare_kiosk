@@ -12,7 +12,7 @@ import com.example.dynamiccare_kisok.R;
 public class DCActionButton {
     ImageButton button;
     boolean isPressed;
-    boolean isPause = true;
+    boolean isPause = false;
     Drawable Pressed, UnPressed;
     Main main;
 

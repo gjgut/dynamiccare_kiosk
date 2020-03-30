@@ -152,14 +152,26 @@ public class DCButtonManager {
                 case Excercise:
                     Log.i("State", "Excercise");
                     DCState = State.Excercise;
+                    for (DCButton i : Union) {
+                        if (i != DCButton.PressedButton) {
+                            i.Deactivate();
+                        }
+                    }
                     Stop.Activate();
                     Ready.Activate();
+                    if (!Ready.IsPressed())
+                        Ready.setPressedwithNoSound();
                     Start.Activate();
                     Up.Deactivate();
                     Down.Deactivate();
                     break;
                 case onRest:
                     Log.i("State", "onRest");
+                    for (DCButton i : Union) {
+                        if (i != DCButton.PressedButton) {
+                            i.Deactivate();
+                        }
+                    }
                     DCState = State.onRest;
                     Ready.Deactivate();
                     Start.Deactivate();
@@ -167,9 +179,24 @@ public class DCButtonManager {
                     break;
                 case Paused: {
                     DCState = State.Paused;
+                    for (DCButton i : Union) {
+                        if (i != DCButton.PressedButton) {
+                            i.Deactivate();
+                        }
+                    }
+                    Stop.Activate();
+                    Ready.Activate();
+                    if (!Ready.IsPressed())
+                        Ready.setPressedwithNoSound();
+                    Start.Activate();
                     break;
                 }
                 case Stop: {
+                    for (DCButton i : Union) {
+                        if (i != DCButton.PressedButton) {
+                            i.Activate();
+                        }
+                    }
                     if (Ready.isPressed)
                         Ready.setPressedwithNoSound();
                     if (Start.isPressed)

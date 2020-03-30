@@ -110,8 +110,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         try {
             switch (v.getId()) {
                 case R.id.exc_tab_btn_bench:
-                    TakeBreak(false);
                     setExcercise(bench, new BenchPress(main));
+                    TakeBreak(false);
                     break;
                 case R.id.exc_tab_btn_squat:
                     setExcercise(squat, new Squat(main));
@@ -137,7 +137,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 case R.id.exc_btn_ready:
                     ready.setPressed();
                     if (ready.IsPressed()) {
-                        isResume=false;
+                        isResume = false;
                         setPropertiesFocusable(false);
                         txt_count.setText(edt_count.getSource().getText().toString());
                         dcButtonManager.setDCState(DCButtonManager.State.Ready);
@@ -195,7 +195,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 //                    TakeBreak(false);
 //            handler.postDelayed(new Runnable() {
 //                public void run() {
-//                    main.HandleACK(ACKListener.ACKParser.ParseACK("$PCA#"));
+//                    main.HandleACK(ACKListener.ParseACK("$PCA#"));
 //                }
 //            }, 3000);
             } else if (!button.IsPressed() && !isResume) {
@@ -254,12 +254,16 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     }
                     break;
                 case "ASS":
+                    isResume = false;
                     setPropertiesFocusable(true);
-                    if (isSend)
+                    if (ready.getButton().isPressed())
+                        ready.setPressedwithNoSound();
+                    if (isSend && ack.getData() == "00")
                         SendWorkoutRecord();
                     break;
+                case "AEE":
                 case "ACS":
-                    if(!isResume)
+                    if (!isResume)
                         main.PlaySound(dcSoundPlayer.getCoundSound(ack.getData()));
                     break;
             }
@@ -330,10 +334,13 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             exc_rest.setVisibility(View.INVISIBLE);
             exc_table.setVisibility(View.VISIBLE);
             DCButtonManager.setDCState(DCButtonManager.State.Excercise);
-            main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                    edt_weight.getSource().getText().toString(),
-                    edt_count.getSource().getText().toString(),
-                    edt_set.getSource().getText().toString()));
+            if (!ready.IsPressed())
+                ready.setPressedwithNoSound();
+            if (!isResume)
+                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                        edt_weight.getSource().getText().toString(),
+                        edt_count.getSource().getText().toString(),
+                        edt_set.getSource().getText().toString()));
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -379,9 +386,16 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 }
 
             dcButtonManager.setDCState(prevstate);
-            if (dcButtonManager.getDCState() == DCButtonManager.State.onRest)
+            if (dcButtonManager.getDCState() == DCButtonManager.State.onRest) {
                 ResumeWorkout();
-
+            }
+            if (start.isPause() &&
+                    (DCButtonManager.getDCState() == DCButtonManager.State.Excercise ||
+                            DCButtonManager.getDCState() == DCButtonManager.State.onRest)) {
+                start.setPause();
+                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+            }
 //            if (count > 0) {
 //                TakeBreak(true);
 //            }
@@ -483,6 +497,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     getResources().getDrawable(R.drawable.pressed_btn_stop));
             ready.setButton(view.findViewById(R.id.exc_btn_ready),
                     getResources().getDrawable(R.drawable.pressed_btn_ready));
+            start.setPause();
             txt_count = view.findViewById(R.id.txt_realcount);
             txt_set = view.findViewById(R.id.txt_realset);
             rest_time = view.findViewById(R.id.rest_time);
@@ -552,7 +567,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         try {
-            if (v.getId() == R.id.exc_btn_ready) {
+            if (v.getId() == R.id.exc_btn_start) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         start.setPressedwithNoSound();
@@ -600,12 +615,17 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     txt_count.setText("0");
                     txt_set.setText("0");
                     isSend = false;
+
+                    if (!start.isPause()) {
+                        start.setPause();
+                        start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_pause));
+                        start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
+                    }
                 } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     stop.setPressedwithNoSound();
                 }
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -636,12 +656,12 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             savedState = getSaveState();
             if (timer != null)
                 timer.cancel();
-            if (DCButtonManager.getDCState() == DCButtonManager.State.onRest) {
-                main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
-                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-                        edt_count.getSource().getText().toString(),
-                        edt_set.getSource().getText().toString()));
-            }
+//            if (DCButtonManager.getDCState() == DCButtonManager.State.onRest) {
+//                main.getusbService().write(Commands.ExcercisePause(main.getCurrentExcercise().getMode(),
+//                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
+//                        edt_count.getSource().getText().toString(),
+//                        edt_set.getSource().getText().toString()));
+//            }
 //            main.getusbService().write(Commands.Home(true));
 //            Log.i("Command", "CHM08");
         } catch (Exception e) {
@@ -652,6 +672,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void SendWorkoutRecord() {
         try {
+            Log.i("SendWorkout", "Work!");
             Workout sendworkdout = new Workout(true,
                     main.getisIsoKinetic(),
                     main.getCurrentExcercise(),

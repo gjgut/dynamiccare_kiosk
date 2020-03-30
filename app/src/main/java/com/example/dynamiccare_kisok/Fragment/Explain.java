@@ -35,6 +35,7 @@ public class Explain extends DCfragment {
     DCButtonManager dcButtonManager;
     Handler handler;
     ImageView Body;
+    boolean isResume;
 
     public Explain(Main main) {
         super(main);
@@ -101,20 +102,23 @@ public class Explain extends DCfragment {
         try {
             button.setPressed();
             if (button.IsPressed()) {
-                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                Main.setCurrentExcercise(excercise);
-                Main.getusbService().write(
-                        Commands.MeasureSet(excercise.getMode(),
-                                String.valueOf(main.getMeasureWeight()),
-                                "000", String.valueOf(main.getMeasureTime()),
-                                "1",
-                                "0"));
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                    Main.setCurrentExcercise(excercise);
+                if(!isResume) {
+                    Main.getusbService().write(
+                            Commands.MeasureSet(excercise.getMode(),
+                                    String.valueOf(main.getMeasureWeight()),
+                                    "000", String.valueOf(main.getMeasureTime()),
+                                    "1",
+                                    "0"));
 //                handler.postDelayed(new Runnable() {
 //                    public void run() {
 //                        main.HandleACK(ACKListener.ParseACK("$PCA#"));
 //                    }
 //                }, 3000);
+                }
                 setBottomBar(true);
+                isResume=false;
             } else {
                 dcButtonManager.setDCState(DCButtonManager.State.Clear);
                 setBottomBar(false);
@@ -124,6 +128,7 @@ public class Explain extends DCfragment {
         }
 
     }
+
 
     @Nullable
     @Override
@@ -167,6 +172,8 @@ public class Explain extends DCfragment {
 
             setListener();
 
+            if(main.getCurrentExcercise()!=null)
+                isResume = true;
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
                     setExcercise(bench,new BenchPress(main));
