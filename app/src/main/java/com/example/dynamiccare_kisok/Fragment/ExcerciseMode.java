@@ -39,6 +39,7 @@ import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Common.Util.DCHttp;
+import com.example.dynamiccare_kisok.Dialog.NormalAlert;
 import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
@@ -135,6 +136,10 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     setExcercise(extension, new ArmExtension(main));
                     break;
                 case R.id.exc_btn_ready:
+                    if(!CheckValid()) {
+                        new NormalAlert(main, "입력 값이 잘못되었습니다.").show();
+                        break;
+                    }
                     ready.setPressed();
                     if (ready.IsPressed()) {
                         isResume = false;
@@ -396,7 +401,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             }
             if (prevstate == DCButtonManager.State.onRest
                     || DCButtonManager.getDCState() == DCButtonManager.State.Paused) {
-                if(!start.isPause())
+                if (!start.isPause())
                     start.setPause();
                 start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
                 start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
@@ -527,6 +532,18 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private boolean CheckValid() {
+        try {
+            return (main.getisIsoKinetic() ? Integer.valueOf(spin_level.getSelectedItem().toString()) : Integer.valueOf(edt_weight.getSource().getText().toString())) > 0 &&
+                    Integer.valueOf(edt_count.getSource().getText().toString()) > 0 &&
+                    Integer.valueOf(edt_set.getSource().getText().toString()) > 0 &&
+                    Integer.valueOf(edt_rest.getSource().getText().toString()) > 0;
+        }catch (Exception e)
+        {
+            return false;
         }
     }
 
@@ -725,9 +742,14 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     @Override
     public DCfragment getBackFragment() {
-        if (prev != null)
+        if (prev != null) {
+            if (prev.getClass() == SelectWorkOut.class)
+                if (care.isTherePlan())
+                    return prev;
+                else
+                    return new SelectMode(main);
             return prev;
-        else
+        } else
             return new SelectMode(main);
     }
 

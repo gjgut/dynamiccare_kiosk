@@ -54,7 +54,7 @@
         android:inputType="number"
         android:letterSpacing="-0.02"
         android:lineSpacingExtra="21sp"
-        android:maxLength="4"
+        android:maxLength="12"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textColorHint="#33ffffff"

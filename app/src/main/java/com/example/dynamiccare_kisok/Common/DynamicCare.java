@@ -5,8 +5,12 @@ import android.content.SharedPreferences;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.Common.Util.DCHttp;
 import com.example.dynamiccare_kisok.Common.Util.DCSoundPlayer;
+import com.example.dynamiccare_kisok.Dialog.LoadPlan;
+import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
+import com.example.dynamiccare_kisok.Fragment.SelectWorkOut;
 
 import org.json.JSONObject;
 
@@ -75,6 +79,21 @@ public class DynamicCare extends Application {
         editor.putString("mWeight", weight);
 
         editor.commit();
+    }
+
+    public boolean isTherePlan()
+    {
+        try {
+            JSONObject resultData = (JSONObject) getCurrentUserJson().get("resultData");
+            if (resultData.toString().contains("\"plnVwIsDone\":\"false\"") && (!resultData.get("programList").toString().equals("null") || !resultData.get("privateList").toString().equals("null"))) {
+                return true;
+            } else
+                return false;
+            }catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static int getLimit() {
