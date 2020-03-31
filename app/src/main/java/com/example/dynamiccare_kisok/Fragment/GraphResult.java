@@ -108,8 +108,8 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
             edt_time = new DCEditText(v.findViewById(R.id.edt_time));
             edt_weight = new DCEditText(v.findViewById(R.id.edt_weight));
 
-            edt_time.getSource().setText(main.getMeasureTime());
-            edt_weight.getSource().setText(main.getMeasureWeight());
+//            edt_time.getSource().setText(main.getMeasureTime());
+//            edt_weight.getSource().setText(main.getMeasureWeight());
 
             setListener();
 
@@ -144,12 +144,12 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     case MotionEvent.ACTION_UP:
                         go.setPressed();
                         go.setPause();
-                        if (!go.isPause()) {
+                        if (go.isPause()) {
                             DCButtonManager.setDCState(DCButtonManager.State.Excercise);
                             setBottomBar(false);
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
-                            main.getusbService().write(Commands.MeasureStart(main.getMeasureWeight(), main.getMeasureTime()));
+                            main.getusbService().write(Commands.MeasureStart(edt_weight.getSource().getText().toString(), edt_time.getSource().getText().toString()));
                             resCalculator = new MeasureResult();
 
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
@@ -359,6 +359,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     DCButtonManager.setDCState(DCButtonManager.State.Clear);
                     setBottomBar(false);
                     ready.setPressed();
+                    go.Deactivate();
                     go.setPressed();
                     go.setPause();
                     go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));

@@ -137,7 +137,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     break;
                 case R.id.exc_btn_ready:
                     if(!CheckValid()) {
-                        new NormalAlert(main, "입력 값이 잘못되었습니다.").show();
+                        new NormalAlert(main, "입력 값이 잘못되었습니다.",false).show();
                         break;
                     }
                     ready.setPressed();
@@ -265,7 +265,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 case "ASS":
                     isResume = false;
                     setPropertiesFocusable(true);
-                    if (isSend && ack.getData() == "00") {
+                    if (isSend && ack.getData().equals("00")) {
+                        DCButtonManager.setDCState(DCButtonManager.State.Setted);
                         if (ready.IsPressed())
                             ready.setPressedwithNoSound();
                         SendWorkoutRecord();
@@ -721,6 +722,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             jsonObject.accumulate("weight", sendworkdout.getWeight());
             Log.i("SendJson", jsonObject.toString());
             new DCHttp().SendWorkout(jsonObject.toString());
+            main.ReplaceFragment(new SelectMode(main),false);
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }

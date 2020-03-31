@@ -20,7 +20,7 @@ public class NormalAlert extends Dialog {
     Button yes;
     String msg;
     TextView txt_messsage;
-    boolean isNormal;
+    boolean isNormal=true;
 
     public NormalAlert(@NonNull Context context,String msg) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
@@ -53,6 +53,7 @@ public class NormalAlert extends Dialog {
             @Override
             public void onClick(View v){
                 if(!isNormal)
+                    main.ChangeActivity(Login.class);
                 dismiss();
             }
         });

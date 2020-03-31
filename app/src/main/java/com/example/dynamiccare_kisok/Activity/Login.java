@@ -56,7 +56,7 @@ public class Login extends DCActivity implements View.OnClickListener {
                     act = Main.class;
                 }
                 else
-                    throw new Exception();
+                    Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
             } else if (v.getId() == R.id.bt_dwload) {
                 act = QRlink.class;
             }
@@ -65,7 +65,7 @@ public class Login extends DCActivity implements View.OnClickListener {
         }catch (Exception e)
         {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "오류가 발생하였습니다.인터넷 연결을 확인해 주십시오.", Toast.LENGTH_SHORT).show();
         }
     }
 
