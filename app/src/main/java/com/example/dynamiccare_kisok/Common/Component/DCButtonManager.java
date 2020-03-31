@@ -178,6 +178,7 @@ public class DCButtonManager {
                     Stop.Activate();
                     break;
                 case Paused: {
+                    Log.i("State", "Paused");
                     DCState = State.Paused;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
@@ -192,6 +193,7 @@ public class DCButtonManager {
                     break;
                 }
                 case Stop: {
+                    DCState = State.Stop;
                     for (DCButton i : Union) {
                         if (i != DCButton.PressedButton) {
                             i.Activate();
@@ -201,7 +203,6 @@ public class DCButtonManager {
                         Ready.setPressedwithNoSound();
                     if (Start.isPressed)
                         Start.setPressedwithNoSound();
-                    DCState = State.Stop;
                     break;
                 }
             }

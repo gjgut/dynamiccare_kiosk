@@ -56,6 +56,11 @@ public class DCButton {
 
     }
 
+    public static DCButton getPressedButton()
+    {
+        return PressedButton;
+    }
+
     public static void setBody(ImageView body) {
         Body = body;
         DefaultBody = Body.getDrawable();

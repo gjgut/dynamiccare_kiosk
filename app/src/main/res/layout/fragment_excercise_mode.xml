@@ -531,7 +531,7 @@
                         android:backgroundTint=" #33ffffff"
                         android:gravity="center|center_horizontal|top|center_vertical"
                         android:inputType="numberDecimal"
-                        android:maxLength="2"
+                        android:maxLength="3"
                         android:text="30"
                         android:textColor="#FFFFFF"
                         android:textColorHighlight="#3993de"

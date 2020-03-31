@@ -74,13 +74,15 @@ public class TimeSetting extends DCfragment {
                     reject.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_minutes:
-                btn_minutes.setPressed();
+                if(DCButton.getPressedButton()!=btn_minutes)
+                    btn_minutes.setPressed();
                 if (btn_minutes.IsPressed()) {
                     care.setLimit(35);
                 }
                 break;
             case R.id.btn_hour:
-                btn_hour.setPressed();
+                if(DCButton.getPressedButton()!=btn_hour)
+                    btn_hour.setPressed();
                 if (btn_hour.IsPressed()) {
                     care.setLimit(3600);
                 }

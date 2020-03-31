@@ -376,6 +376,7 @@ public class Main extends DCActivity implements View.OnClickListener {
 
         if (frgClass == TimeSetting.class) {
             bottombar.setVisibility(View.INVISIBLE);
+            btn_next.setVisibility(View.INVISIBLE);
             customActionBar.setTimeButton(View.INVISIBLE);
         } else {
             bottombar.setVisibility(View.VISIBLE);
@@ -404,11 +405,10 @@ public class Main extends DCActivity implements View.OnClickListener {
     public void frgcommit(boolean isRight, DCfragment fg) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         currentFragment = fg;
+        bottombar.setVisibility(View.VISIBLE);
         if (isRight) {
-            bottombar.setVisibility(View.VISIBLE);
             fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
         } else if (!isRight) {
-            bottombar.setVisibility(View.VISIBLE);
             fragmentTransaction.setCustomAnimations(R.anim.left_in, R.anim.right_out);
         }
         customActionBar.setHome(fg.isHomeVisible());
