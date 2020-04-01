@@ -31,6 +31,7 @@ import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
 import com.example.dynamiccare_kisok.Common.Excercise.Squat;
 import com.example.dynamiccare_kisok.Common.Object.ACK;
 import com.example.dynamiccare_kisok.Common.Object.Workout;
+import com.example.dynamiccare_kisok.Common.Util.Commands;
 import com.example.dynamiccare_kisok.R;
 
 import java.text.SimpleDateFormat;
@@ -55,6 +56,12 @@ public class SelectWorkOut extends DCfragment {
 
     public SelectWorkOut(Main main, JSONObject WorkoutJson) {
         super(main);
+        if (main.getCurrentExcercise() != null)
+            main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                    "0",
+                    "0",
+                    "0"));
+        main.setCurrentExcercise(null);
         care.UpdateJson();
         this.WorkoutJson = WorkoutJson;
     }
@@ -62,6 +69,12 @@ public class SelectWorkOut extends DCfragment {
     public SelectWorkOut(Main main) {
         super(main);
         try {
+            if (main.getCurrentExcercise() != null)
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                        "0",
+                        "0",
+                        "0"));
+            main.setCurrentExcercise(null);
             care.UpdateJson();
             this.WorkoutJson = (JSONObject) care.getCurrentUserJson().get("resultData");
         } catch (Exception e) {

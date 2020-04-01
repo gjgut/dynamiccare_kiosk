@@ -27,18 +27,23 @@ public class SelectMode extends DCfragment {
 
     public SelectMode(Main main) {
         super(main);
+        if (main.getCurrentExcercise() != null)
+            main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                    "0",
+                    "0",
+                    "0"));
+        main.setCurrentExcercise(null);
         care.UpdateJson();
-        Main.setCurrentExcercise(null);
         DCButton.PressedOff();
     }
 
     @Override
     public void onClick(View v) {
         try {
-            main.getusbService().write(Commands.Home(true));
+//            main.getusbService().write(Commands.Home(true));
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
-                   goExcMode(false);
+                    goExcMode(false);
                     break;
                 }
                 case R.id.btn_select_exec_isokinetic:
@@ -63,6 +68,7 @@ public class SelectMode extends DCfragment {
 //            Toast.makeText(main, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
+
     private void goExcMode(boolean isKinetic) {
         try {
             JSONObject resultData = (JSONObject) care.getCurrentUserJson().get("resultData");
@@ -89,8 +95,7 @@ public class SelectMode extends DCfragment {
             main.setisIsoKinetic(isKinetic);
             main.ReplaceFragment(new ExcerciseMode(main), true);
             main.getusbService().write(Commands.ExcerciseMode(isKinetic));
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -112,7 +117,8 @@ public class SelectMode extends DCfragment {
             isometronic.setOnClickListener(this);
             isotonic.setOnClickListener(this);
 
-            main.getusbService().write(Commands.Home(true));
+            Main.setCurrentExcercise(null);
+//            main.getusbService().write(Commands.Home(true));
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -121,8 +127,7 @@ public class SelectMode extends DCfragment {
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         care.UpdateJson();
     }

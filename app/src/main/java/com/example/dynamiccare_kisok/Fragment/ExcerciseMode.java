@@ -64,7 +64,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
     ImageView Body;
     Spinner spin_level;
     DCSpinnerAdapter spinnerAdapter;
-    boolean isProgram = false, onSchedule = false, isSend = true;
+    boolean isProgram = false, onSchedule = false, isSend = true,isDown=true;
     int count;
     Handler handler = new Handler();
     boolean isResume = false;
@@ -78,6 +78,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
             main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
             main.getCare().getCurrentUserJson().put("plnVwId", null);
+            main.setCurrentExcercise(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,7 +138,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     break;
                 case R.id.exc_btn_ready:
                     if (!CheckValid()) {
-                        new NormalAlert(main, "입력 값이 잘못되었습니다.", false).show();
+                        new NormalAlert(main, "입력 값이 잘못되었습니다.", true).show();
                         break;
                     }
                     if (!ready.IsPressed()) {
@@ -291,6 +292,11 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     if (!isResume)
                         main.PlaySound(dcSoundPlayer.getCoundSound(ack.getData()));
                     break;
+                case "PCA":
+                    if(isDown)
+                        DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                    else
+                        DCButtonManager.setDCState(DCButtonManager.State.Clear);
             }
         } catch (Exception e) {
             Log.i("Error", e.toString());
@@ -646,6 +652,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                             main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
                             edt_set.getSource().getText().toString()));
+                    isDown=false;
                     txt_count.setText("0");
                     txt_set.setText("0");
                     isSend = false;
@@ -692,10 +699,14 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             if (timer != null)
                 timer.cancel();
             if (main.getCurrentFragment().getClass() != TimeSetting.class)
+            {
                 main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));
+                isDown=false;
+                isSend=false;
+            }
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -756,14 +767,22 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     @Override
     public DCfragment getBackFragment() {
+
         if (prev == null) {
+            isSend=false;
             return new SelectMode(main);
         } else {
             if (dcButtonManager.getDCState() == DCButtonManager.State.Clear) {
                 if (care.isTherePlan())
+                {
+                    isSend=false;
                     return prev;
+                }
                 else
+                    {
+                    isSend = false;
                     return new SelectMode(main);
+                }
             } else if (dcButtonManager.getDCState() != DCButtonManager.State.StartSetting) {
                 new NormalAlert(main, "바가 세팅 중입니다.세팅이 완료되면 눌러주십시오.", true).show();
                 count = 0;
@@ -772,12 +791,13 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 exc_table.setVisibility(View.VISIBLE);
                 if (timer != null)
                     timer.cancel();
-                dcButtonManager.setDCState(DCButtonManager.State.Stop);
                 dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
                 main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));
+                isDown=false;
+                isSend = false;
                 txt_count.setText("0");
                 txt_set.setText("0");
                 if (start.isPause()) {

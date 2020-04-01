@@ -368,7 +368,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             frgcommit(isRight, fragment);
         } catch (Exception e) {
             Log.e("Error", e.toString());
-            new NormalAlert(main,e.toString()).show();
+//            new NormalAlert(main,e.toString()).show();
         }
     }
 
@@ -378,7 +378,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             frgcommit(fragment);
         } catch (Exception e) {
             Log.e("Error", e.toString());
-            new NormalAlert(main,e.toString()).show();
+//            new NormalAlert(main,e.toString()).show();
         }
     }
 
@@ -493,9 +493,6 @@ public class Main extends DCActivity implements View.OnClickListener {
             PlaySound(R.raw.back_button);
             if (v.getId() == R.id.btn_back) {
                 switch (freagmentname) {
-                    case "ExcerciseMode":
-                        main.setCurrentExcercise(null);
-                        break;
                     case "Explain":
                         main.getusbService().write(Commands.Home(true));
                         break;
