@@ -184,7 +184,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void setExcercise(DCButton button, Excercise excercise) {
         try {
-
+            isDown=true;
             if (DCButton.getPressedButton() != button) {
                 if (isResume)
                     button.setPressedWithNoSound();
@@ -281,7 +281,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     isResume = false;
                     setPropertiesFocusable(true);
                     if (isSend && ack.getData().equals("00")) {
-                        DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                        DCButtonManager.setDCState(DCButtonManager.State.Clear);
                         if (ready.IsPressed())
                             ready.setPressedwithNoSound();
                         SendWorkoutRecord();
@@ -473,6 +473,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void setViews(View view) {
         try {
+            main.getBtn_back().setVisibility(View.VISIBLE);
             if (main.getisIsoKinetic()) {
                 view.findViewById(R.id.container_weight).setVisibility(View.GONE);
                 view.findViewById(R.id.container_level).setVisibility(View.VISIBLE);
@@ -700,7 +701,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 timer.cancel();
             if (main.getCurrentFragment().getClass() != TimeSetting.class)
             {
-                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                main.getusbService().write(Commands.ExcerciseStop("00",
                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));

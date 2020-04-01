@@ -279,6 +279,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                 case R.id.btn_ready:
                     if (!ready.IsPressed()) {
                         ready.setPressed();
+                        DCButtonManager.setDCState(DCButtonManager.State.Ready);
                         setPropertiesFocusable(false);
                         main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                         main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())));
@@ -411,19 +412,20 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     public void onDestroy() {
         super.onDestroy();
 
-        if (DCButtonManager.getDCState() != DCButtonManager.State.StartSetting)
-            DCButtonManager.setDCState(DCButtonManager.State.Setted);
         if (timer != null)
             timer.cancel();
         if (main.getCurrentFragment().getClass() != TimeSetting.class &&
-                main.getCurrentFragment().getClass() != DetailResult.class) {
-            main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                main.getCurrentFragment().getClass() != DetailResult.class &&
+                (DCButtonManager.getDCState()== DCButtonManager.State.Ready ||
+                        DCButtonManager.getDCState()== DCButtonManager.State.Excercise)) {
+            if (DCButtonManager.getDCState() != DCButtonManager.State.StartSetting)
+                DCButtonManager.setDCState(DCButtonManager.State.Setted);
+            main.getusbService().write(Commands.ExcerciseStop("00",
                     "0",
                     "0",
                     "0"));
             main.getusbService().write(Commands.Home(false));
             main.getusbService().write(Commands.Home(true));
-            Log.i("Command", "CHM08");
         }
 
     }

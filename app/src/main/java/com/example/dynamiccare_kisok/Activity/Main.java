@@ -47,6 +47,7 @@ import com.example.dynamiccare_kisok.Fragment.SelectMode;
 import com.example.dynamiccare_kisok.Fragment.SelectWorkOut;
 import com.example.dynamiccare_kisok.R;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -84,7 +85,6 @@ public class Main extends DCActivity implements View.OnClickListener {
         BottomRestTime = findViewById(R.id.usertimer);
 
     }
-
 
 
     @Override
@@ -140,14 +140,14 @@ public class Main extends DCActivity implements View.OnClickListener {
     };
 
 
-    public ImageButton getBtn_next()
-    {
+    public ImageButton getBtn_next() {
         return btn_next;
     }
-    public ImageButton getBtn_back()
-    {
+
+    public ImageButton getBtn_back() {
         return btn_back;
     }
+
     public DCSoundPlayer getDcSoundPlayer() {
         return dcSoundPlayer;
     }
@@ -241,9 +241,8 @@ public class Main extends DCActivity implements View.OnClickListener {
 
     }
 
-    private CountDownTimer SecondTimer()
-    {
-       return new CountDownTimer(count * 1000, 1000) {
+    private CountDownTimer SecondTimer() {
+        return new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
@@ -272,8 +271,8 @@ public class Main extends DCActivity implements View.OnClickListener {
             }
         };
     }
-    private CountDownTimer MinuteTimer()
-    {
+
+    private CountDownTimer MinuteTimer() {
         return new CountDownTimer(count * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -292,7 +291,7 @@ public class Main extends DCActivity implements View.OnClickListener {
                 }
                 BottomRestTime.setText(((count < 36000) ? "0" + (count / 3600) : (count / 3600))
                         + ":" +
-                        ((count % 3600)/60 < 10 ? "0" + (count % 3600)/60 : (count % 3600)/60));
+                        ((count % 3600) / 60 < 10 ? "0" + (count % 3600) / 60 : (count % 3600) / 60));
                 count--;
             }
 
@@ -338,12 +337,19 @@ public class Main extends DCActivity implements View.OnClickListener {
                     break;
                 case "AEE":
                 case "ACS":
-                    if(currentFragment.getClass() == ExcerciseMode.class)
+                    if (currentFragment.getClass() == ExcerciseMode.class)
                         break;
                     PlaySound(dcSoundPlayer.getCoundSound(ack.getData()));
                     break;
                 case "ASS":
-                    PlaySound(dcSoundPlayer.getSetSound(ack.getData()));
+                    if (currentFragment.getClass() == Explain.class ||
+                            currentFragment.getClass() == Instruction.class ||
+                            currentFragment.getClass() == GraphResult.class ||
+                            currentFragment.getClass() == DetailResult.class)
+                        main.PlaySound(new int[]{R.raw.stopping_measurement,
+                                R.raw.thank_you_for_your_efforts});
+                    else
+                        PlaySound(dcSoundPlayer.getSetSound(ack.getData()));
                     break;
                 case "PCA":
                     DCButtonManager.setDCState(DCButtonManager.State.Setted);
@@ -480,7 +486,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             limitoff();
         } catch (Exception e) {
             Log.i("Error", e.toString());
-            new NormalAlert(main,e.toString()).show();
+            new NormalAlert(main, e.toString()).show();
         }
 
     }
@@ -493,9 +499,6 @@ public class Main extends DCActivity implements View.OnClickListener {
             PlaySound(R.raw.back_button);
             if (v.getId() == R.id.btn_back) {
                 switch (freagmentname) {
-                    case "Explain":
-                        main.getusbService().write(Commands.Home(true));
-                        break;
                     case "SelectMode":
                         ChangeActivity(Login.class);
                         break;
@@ -537,7 +540,8 @@ public class Main extends DCActivity implements View.OnClickListener {
     public void onDestroy() {
         try {
             super.onDestroy();
-            dcSoundThread.stopstream();
+            if(main.currentFragment.getClass() != TimeSetting.class)
+                dcSoundThread.stopstream();
             if (countDownTimer != null)
                 countDownTimer.cancel();
             care.setLimit(30);

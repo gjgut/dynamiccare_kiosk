@@ -97,6 +97,8 @@ public class DCButtonManager {
                     Log.i("State", "Clear");
                     DCButton.PressedOff();
                     for (DCButton i : Union) {
+                        if(i.IsPressed())
+                            i.setPressedWithNoSound();
                         i.Activate();
                     }
                     if (Ready.IsPressed())

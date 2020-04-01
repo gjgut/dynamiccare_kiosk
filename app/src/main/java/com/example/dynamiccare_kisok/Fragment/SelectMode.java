@@ -27,11 +27,6 @@ public class SelectMode extends DCfragment {
 
     public SelectMode(Main main) {
         super(main);
-        if (main.getCurrentExcercise() != null)
-            main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                    "0",
-                    "0",
-                    "0"));
         main.setCurrentExcercise(null);
         care.UpdateJson();
         DCButton.PressedOff();
