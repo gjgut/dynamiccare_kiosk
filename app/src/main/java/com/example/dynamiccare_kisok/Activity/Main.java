@@ -266,8 +266,7 @@ public class Main extends DCActivity implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                getusbService().write(Commands.Home(true));
-                new NormalAlert(main, "30분이 경과되었습니다.").show();
+                new NormalAlert(main, "30분이 경과되었습니다.",false).show();
             }
         };
     }

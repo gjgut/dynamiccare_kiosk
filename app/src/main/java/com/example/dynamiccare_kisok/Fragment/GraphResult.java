@@ -180,7 +180,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     }
 
     public void SendResult() {
-        Log.i("Send","LogSend!!");
+        Log.i("Send", "LogSend!!");
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate("commonCode", main.getCurrentExcercise().getDBCode() + ((main.getisIsoTonic()) ? "02" : "01"));
@@ -377,9 +377,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                         SendResult();
                     break;
                 case "PCA":
-                case "AHM":
+//                case "AHM":
                     DCButtonManager.setDCState(DCButtonManager.State.Setted);
-                    if(ready.IsPressed())
+                    if (ready.IsPressed())
                         ready.setPressedwithNoSound();
                     break;
 
@@ -410,7 +410,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     @Override
     public DCfragment getNextFragment() {
         return new DetailResult(main, resCalculator.getStart(), resCalculator.getMax(), resCalculator.getMin(), resCalculator.getAverage());
-//        return new DetailResult(main, 100000, 250000, 100000, 150000);
     }
 
 
@@ -421,17 +420,24 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
         if (timer != null)
             timer.cancel();
         if (main.getCurrentFragment().getClass() != TimeSetting.class &&
-                main.getCurrentFragment().getClass() != DetailResult.class &&
-                (DCButtonManager.getDCState()== DCButtonManager.State.MeasureReady ||
-                        DCButtonManager.getDCState()== DCButtonManager.State.Measuring)) {
-//            if (DCButtonManager.getDCState() != DCButtonManager.State.StartSetting)
-//                DCButtonManager.setDCState(DCButtonManager.State.Setted);
-            main.getusbService().write(Commands.ExcerciseStop("00",
-                    "0",
-                    "0",
-                    "0"));
-            main.getusbService().write(Commands.Home(false));
-            main.getusbService().write(Commands.Home(true));
+                main.getCurrentFragment().getClass() != DetailResult.class) {
+            if (DCButtonManager.getDCState() == DCButtonManager.State.MeasureReady ||
+                    DCButtonManager.getDCState() == DCButtonManager.State.Measuring){
+                main.getusbService().write(Commands.ExcerciseStop("00",
+                        "0",
+                        "0",
+                        "0"));
+                main.getusbService().write(Commands.Home(false));
+                main.getusbService().write(Commands.Home(true));
+            }
+        else
+            {
+                main.getusbService().write(Commands.ExcerciseStop("00",
+                        "0",
+                        "0",
+                        "0"));
+                main.getusbService().write(Commands.Home(true));
+            }
         }
 
     }

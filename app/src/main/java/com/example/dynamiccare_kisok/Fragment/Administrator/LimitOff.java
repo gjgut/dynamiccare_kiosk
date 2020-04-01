@@ -22,8 +22,8 @@ import com.example.dynamiccare_kisok.R;
 
 public class LimitOff extends DCfragment {
     DCEditText edt_adminpw;
-    TextView reject;
-    Button limit_off;
+    TextView reject, title;
+    Button limit;
     DynamicCare care;
 
     public LimitOff() {
@@ -41,7 +41,10 @@ public class LimitOff extends DCfragment {
                 case R.id.btn_limit_deactivate:
                     admin.PlaySound(R.raw.normal_button);
                     if (edt_adminpw.getSource().getText().toString().equals(care.getAdminPassword().toString())) {
-                        care.offLimit();
+                        if (care.isLimit())
+                            care.offLimit();
+                        else
+                            care.onLimit();
                         admin.ReplaceFragment(new Authentification(admin), false);
                     } else
                         reject.setVisibility(View.VISIBLE);
@@ -62,12 +65,22 @@ public class LimitOff extends DCfragment {
 
         try {
             edt_adminpw = new DCEditText(view.findViewById(R.id.et_adminpw));
-            limit_off = view.findViewById(R.id.btn_limit_deactivate);
+            limit = view.findViewById(R.id.btn_limit_deactivate);
 
-            limit_off.setOnClickListener(this);
+            limit.setOnClickListener(this);
 
             reject = view.findViewById(R.id.password_reject);
             reject.setVisibility(View.INVISIBLE);
+
+            title = view.findViewById(R.id.txt_ins_title);
+
+            if (care.isLimit()) {
+                title.setText("시간 제한 해제");
+                limit.setText("해제");
+            } else {
+                title.setText("시간 제한");
+                limit.setText("확인");
+            }
 
             edt_adminpw.getSource().addTextChangedListener(new TextWatcher() {
                 @Override

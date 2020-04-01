@@ -104,12 +104,22 @@ public class DynamicCare extends Application {
         limit = limits;
     }
 
-    public static void offLimit() {
-        isLimit = false;
+    public void offLimit() {
+        SharedPreferences.Editor editor = Admin.edit();
+        editor.putBoolean("isLimit", false);
+
+        editor.commit();
     }
 
-    public static boolean isLimit() {
-        return isLimit;
+    public void onLimit() {
+        SharedPreferences.Editor editor = Admin.edit();
+        editor.putBoolean("isLimit", true);
+
+        editor.commit();
+    }
+
+    public boolean isLimit() {
+        return Admin.getBoolean("isLimit", true);
     }
 
     public static JSONObject getCurrentUserJson() {

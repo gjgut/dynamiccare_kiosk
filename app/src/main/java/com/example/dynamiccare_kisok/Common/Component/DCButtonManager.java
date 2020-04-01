@@ -49,6 +49,34 @@ public class DCButtonManager {
         }
     }
 
+    public DCButtonManager(DCButton Bench,
+                           DCButton Squat,
+                           DCButton Deadlift,
+                           DCButton Press,
+                           DCButton Carf,
+                           DCButton Curl,
+                           DCButton Extension,
+                           DCButton Lat,
+                           State state) {
+        try {
+            this.Bench = Bench;
+            this.Squat = Squat;
+            this.Deadlift = Deadlift;
+            this.Press = Press;
+            this.Carf = Carf;
+            this.Curl = Curl;
+            this.Extension = Extension;
+            this.Lat = Lat;
+
+            Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
+            if(state==null)
+                state=State.Clear;
+            setDCState(state);
+        } catch (Exception e) {
+            Log.e("Error", e.toString());
+        }
+    }
+
     public DCButtonManager(DCActionButton Start,
                            DCActionButton Ready,
                            DCActionButton Up,

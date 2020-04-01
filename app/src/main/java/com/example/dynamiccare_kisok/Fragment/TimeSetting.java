@@ -142,7 +142,13 @@ public class TimeSetting extends DCfragment {
                 outState.putInt("count", count);
                 return new ExcerciseMode(main,outState);
             } else
+            {
+                if(prev.getClass()==Explain.class)
+                    return new Explain(main);
+                else if(prev.getClass()==GraphResult.class)
+                    return new GraphResult(main);
                 return prev;
+            }
         }catch (Exception e)
         {
             Log.i("Error",e.toString());

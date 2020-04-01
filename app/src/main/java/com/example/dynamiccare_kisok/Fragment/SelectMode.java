@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dynamiccare_kisok.Common.Component.DCButton;
+import com.example.dynamiccare_kisok.Common.Component.DCButtonManager;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
@@ -28,6 +29,8 @@ public class SelectMode extends DCfragment {
     public SelectMode(Main main) {
         super(main);
         main.setCurrentExcercise(null);
+        if(DCButtonManager.getDCState()== DCButtonManager.State.StartSetting)
+
         care.UpdateJson();
         DCButton.PressedOff();
     }

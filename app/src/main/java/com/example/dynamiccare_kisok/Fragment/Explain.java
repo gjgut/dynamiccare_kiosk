@@ -254,7 +254,7 @@ public class Explain extends DCfragment {
 
     @Override
     public int isHomeVisible() {
-        return View.INVISIBLE;
+        return View.VISIBLE;
     }
 
     @Override
