@@ -153,6 +153,7 @@ public class DynamicCare extends Application {
         super.onCreate();
         dcSoundPlayer = new DCSoundPlayer();
         Admin = getSharedPreferences("password", MODE_PRIVATE);
-        setAdminPassword("0000");
+        if(getAdminPassword()=="")
+            setAdminPassword("0000");
     }
 }

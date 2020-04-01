@@ -19,6 +19,8 @@ import com.example.dynamiccare_kisok.Common.Component.DCActivity;
 import com.example.dynamiccare_kisok.Common.Component.DCEditText;
 import com.example.dynamiccare_kisok.Common.DynamicCare;
 import com.example.dynamiccare_kisok.Common.Util.DCHttp;
+import com.example.dynamiccare_kisok.Dialog.NormalAlert;
+import com.example.dynamiccare_kisok.Dialog.Warning;
 import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
@@ -65,6 +67,7 @@ public class Login extends DCActivity implements View.OnClickListener {
         }catch (Exception e)
         {
             e.printStackTrace();
+            new Warning(this,e.toString()).show();
             Toast.makeText(getApplicationContext(), "오류가 발생하였습니다.인터넷 연결을 확인해 주십시오.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -95,12 +98,12 @@ public class Login extends DCActivity implements View.OnClickListener {
             Toast.makeText(this, "권한 승인이 필요합니다", Toast.LENGTH_LONG).show();
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_PHONE_STATE)) {
-                Toast.makeText(this, "000부분 사용을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_PHONE_STATE},
                         1001);
-                Toast.makeText(this, "000부분 사용을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
             }
         }
         TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);

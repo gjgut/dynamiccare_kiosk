@@ -100,33 +100,42 @@ public class Explain extends DCfragment {
 
     public void setExcercise(DCButton button, Excercise excercise) {
         try {
-            button.setPressed();
-            if (button.IsPressed()) {
-                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                    Main.setCurrentExcercise(excercise);
-                if(!isResume) {
+            if (DCButton.getPressedButton() != button) {
+                button.setPressed();
+            }
+            if (button.IsPressed() &&
+                    (dcButtonManager.getDCState() == DCButtonManager.State.Clear ||
+                            dcButtonManager.getDCState() == DCButtonManager.State.Setted)) {
+                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+                Main.setCurrentExcercise(excercise);
+                if (!isResume) {
                     Main.getusbService().write(
                             Commands.MeasureSet(excercise.getMode(),
                                     String.valueOf(main.getMeasureWeight()),
                                     "000", String.valueOf(main.getMeasureTime()),
                                     "1",
                                     "0"));
-//                handler.postDelayed(new Runnable() {
-//                    public void run() {
-//                        main.HandleACK(ACKListener.ParseACK("$PCA#"));
-//                    }
-//                }, 3000);
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            main.HandleACK(ACKListener.ParseACK("$PCA#"));
+                        }
+                    }, 3000);
                 }
                 setBottomBar(true);
-                isResume=false;
-            } else {
-                dcButtonManager.setDCState(DCButtonManager.State.Clear);
-                setBottomBar(false);
+                isResume = false;
             }
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (main.getCurrentFragment().getClass() != TimeSetting.class &&
+                main.getCurrentFragment().getClass() != SelectMode.class)
+            main.getusbService().write(Commands.Home(true));
     }
 
 
@@ -140,13 +149,13 @@ public class Explain extends DCfragment {
 
     public void setViews(View view) {
         try {
-            bench = new DCButton(main,view.findViewById(R.id.mes_btn_bench),
+            bench = new DCButton(main, view.findViewById(R.id.mes_btn_bench),
                     getResources().getDrawable(R.drawable.pressed_btn_benchpress),
                     getResources().getDrawable(R.drawable.exp_pec));
             squat = new DCButton(main, view.findViewById(R.id.mes_btn_squat),
                     getResources().getDrawable(R.drawable.pressed_btn_squat),
                     getResources().getDrawable(R.drawable.exp_quad));
-            deadlift = new DCButton(main,  view.findViewById(R.id.mes_btn_deadlift),
+            deadlift = new DCButton(main, view.findViewById(R.id.mes_btn_deadlift),
                     getResources().getDrawable(R.drawable.pressed_btn_deadlift),
                     getResources().getDrawable(R.drawable.exp_spine));
             press = new DCButton(main, view.findViewById(R.id.mes_btn_shoulderpress),
@@ -161,7 +170,7 @@ public class Explain extends DCfragment {
             curl = new DCButton(main, view.findViewById(R.id.mes_btn_armcurl),
                     getResources().getDrawable(R.drawable.pressed_btn_amrcurl),
                     getResources().getDrawable(R.drawable.exp_biceps));
-            extension = new DCButton(main,  view.findViewById(R.id.mes_btn_armextension),
+            extension = new DCButton(main, view.findViewById(R.id.mes_btn_armextension),
                     getResources().getDrawable(R.drawable.pressed_btn_armextension),
                     getResources().getDrawable(R.drawable.exp_triceps));
             Body = view.findViewById(R.id.exp_body);
@@ -172,32 +181,32 @@ public class Explain extends DCfragment {
 
             setListener();
 
-            if(main.getCurrentExcercise()!=null)
+            if (main.getCurrentExcercise() != null)
                 isResume = true;
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
-                    setExcercise(bench,new BenchPress(main));
+                    setExcercise(bench, new BenchPress(main));
                     break;
                 case "Squat":
-                    setExcercise(squat,new Squat(main));
+                    setExcercise(squat, new Squat(main));
                     break;
                 case "DeadLift":
-                    setExcercise(deadlift,new DeadLift(main));
+                    setExcercise(deadlift, new DeadLift(main));
                     break;
                 case "ShoulderPress":
-                    setExcercise(press,new ShoulderPress(main));
+                    setExcercise(press, new ShoulderPress(main));
                     break;
                 case "CarfRaise":
-                    setExcercise(carf,new CarfRaise(main));
+                    setExcercise(carf, new CarfRaise(main));
                     break;
                 case "ArmCurl":
-                    setExcercise(curl,new ArmCurl(main));
+                    setExcercise(curl, new ArmCurl(main));
                     break;
                 case "ArmExtension":
-                    setExcercise(extension,new ArmExtension(main));
+                    setExcercise(extension, new ArmExtension(main));
                     break;
                 case "LatPullDown":
-                    setExcercise(latpull,new LatPullDown(main));
+                    setExcercise(latpull, new LatPullDown(main));
                     break;
             }
 
@@ -206,8 +215,7 @@ public class Explain extends DCfragment {
         }
     }
 
-    private void setListener()
-    {
+    private void setListener() {
         bench.getButton().setOnClickListener(this);
         squat.getButton().setOnClickListener(this);
         deadlift.getButton().setOnClickListener(this);

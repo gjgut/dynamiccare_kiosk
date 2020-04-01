@@ -3,17 +3,25 @@ package com.example.dynamiccare_kisok.Common.Component;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.dynamiccare_kisok.Activity.Main;
+
 public class DCButtonManager {
     static DCButton Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat;
     static DCButton Union[];
     static DCActionButton Start, Ready, Stop, Up, Down;
     static State DCState;
+    private static Main main;
 
     public static State getDCState() {
         return DCState;
     }
 
     public enum State {Clear, StartSetting, Setted, Ready, Excercise, onRest, Paused, Stop}
+
+    public static void setMainContext(Main main)
+    {
+        DCButtonManager.main = main;
+    }
 
     public DCButtonManager(DCButton Bench,
                            DCButton Squat,
@@ -114,7 +122,7 @@ public class DCButtonManager {
                     Ready.Deactivate();
                     Start.Deactivate();
                     if (Stop != null)
-                        Stop.Activate();
+                        Stop.Deactivate();
                     Up.Deactivate();
                     Down.Deactivate();
 

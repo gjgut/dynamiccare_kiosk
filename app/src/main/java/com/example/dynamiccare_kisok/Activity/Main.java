@@ -139,6 +139,15 @@ public class Main extends DCActivity implements View.OnClickListener {
         }
     };
 
+
+    public ImageButton getBtn_next()
+    {
+        return btn_next;
+    }
+    public ImageButton getBtn_back()
+    {
+        return btn_back;
+    }
     public DCSoundPlayer getDcSoundPlayer() {
         return dcSoundPlayer;
     }
@@ -359,6 +368,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             frgcommit(isRight, fragment);
         } catch (Exception e) {
             Log.e("Error", e.toString());
+            new NormalAlert(main,e.toString()).show();
         }
     }
 
@@ -368,6 +378,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             frgcommit(fragment);
         } catch (Exception e) {
             Log.e("Error", e.toString());
+            new NormalAlert(main,e.toString()).show();
         }
     }
 
@@ -452,17 +463,16 @@ public class Main extends DCActivity implements View.OnClickListener {
         registerReceiver(mUsbReceiver, filter);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         main = this;
+        DCButtonManager.setMainContext(main);
         try {
             ViewMapping();
             setListener();
-//            countDownTimer.start();
-            Toast.makeText(this, care.getDeviceID().toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, care.getDeviceID(), Toast.LENGTH_LONG).show();
             if (care.isLimit())
                 ReplaceFragment(new TimeSetting(this));
             else
@@ -470,6 +480,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             limitoff();
         } catch (Exception e) {
             Log.i("Error", e.toString());
+            new NormalAlert(main,e.toString()).show();
         }
 
     }

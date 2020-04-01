@@ -273,18 +273,12 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
         try {
             switch (v.getId()) {
                 case R.id.btn_ready:
-                    ready.setPressed();
-                    if (ready.IsPressed()) {
+                    if (!ready.IsPressed()) {
+                        ready.setPressed();
                         setPropertiesFocusable(false);
                         main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                         main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())));
                         go.Activate();
-                    } else {
-                        setPropertiesFocusable(true);
-                        DCButtonManager.setDCState(DCButtonManager.State.Setted);
-                        main.getusbService().write(Commands.Home(true));
-                        main.PlaySound(new int[]{R.raw.stopping_measurement, R.raw.thank_you_for_your_efforts, R.raw.the_measurement_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
-                        go.Deactivate();
                     }
                     break;
                 case R.id.btn_low: {
@@ -358,6 +352,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     Log.i("Measure ended:", "");
                     DCButtonManager.setDCState(DCButtonManager.State.Clear);
                     setBottomBar(false);
+                    main.getBtn_back().setVisibility(View.INVISIBLE);
                     ready.setPressed();
                     go.Deactivate();
                     go.setPressed();
@@ -415,8 +410,12 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
             DCButtonManager.setDCState(DCButtonManager.State.Setted);
         if (timer != null)
             timer.cancel();
-        main.getusbService().write("$CHM08#".getBytes());
-        Log.i("Command", "CHM08");
+        if(main.getCurrentFragment().getClass() != TimeSetting.class)
+        {
+            main.getusbService().write(Commands.Home(false));
+            main.getusbService().write(Commands.Home(true));
+            Log.i("Command", "CHM08");
+        }
 
     }
 }
