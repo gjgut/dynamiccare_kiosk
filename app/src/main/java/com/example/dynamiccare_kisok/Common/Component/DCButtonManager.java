@@ -16,7 +16,8 @@ public class DCButtonManager {
         return DCState;
     }
 
-    public enum State {Clear, StartSetting, Setted, Ready, Excercise, onRest, Paused, Stop}
+    public enum State {Clear, StartSetting, Setted, Ready, Excercise, onRest, Paused, Stop,
+                        MeasureReady,Measuring}
 
     public static void setMainContext(Main main)
     {
@@ -136,6 +137,8 @@ public class DCButtonManager {
                         i.Activate();
                     }
                     Ready.Activate();
+                    if(Ready.IsPressed())
+                        Ready.setPressedwithNoSound();
                     if (Start != null)
                         Start.Deactivate();
                     if (Stop != null)
@@ -214,6 +217,30 @@ public class DCButtonManager {
                         Start.setPressedwithNoSound();
                     break;
                 }
+
+                case MeasureReady:
+                    Log.i("State", "MeasureReady");
+                    DCState = State.MeasureReady;
+                    for (DCButton i : Union) {
+                        if (i != DCButton.PressedButton) {
+                            i.Deactivate();
+                        }
+                    }
+                    Ready.Activate();
+                    if (!Ready.IsPressed())
+                        Ready.setPressedwithNoSound();
+                    Start.Activate();
+                    break;
+                case Measuring:
+                    Log.i("State", "Measuring");
+                    DCState = State.Measuring;
+                    Ready.Activate();
+                    if (!Ready.IsPressed())
+                        Ready.setPressedwithNoSound();
+                    Start.Activate();
+                    Up.Deactivate();
+                    Down.Deactivate();
+                    break;
             }
         } catch (Exception e) {
             Log.e("Error", e.toString());

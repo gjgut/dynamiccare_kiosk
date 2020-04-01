@@ -107,6 +107,7 @@ public class TimeSetting extends DCfragment {
             count = excerciseMode.getSaveState().getInt("count");
         }
         try {
+            main.getBtn_back().setVisibility(View.VISIBLE);
             btn_minutes = new DCButton(main, view.findViewById(R.id.btn_minutes), getResources().getDrawable(R.drawable.btn_minute_c));
             btn_hour = new DCButton(main, view.findViewById(R.id.btn_hour), getResources().getDrawable(R.drawable.btn_hr_c));
             btn_ok = view.findViewById(R.id.btn_ok);

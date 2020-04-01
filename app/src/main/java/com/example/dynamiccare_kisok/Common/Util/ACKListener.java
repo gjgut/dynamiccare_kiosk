@@ -80,6 +80,7 @@ public class ACKListener extends Handler {
                     result.setCommandCode(ack.substring(0, 3));
                     result.setData(ack.substring(3, 4));
                     break;
+                case "AHM":
                 case "PCA":
                     result.setCommandCode(ack.substring(0, 3));
                     break;

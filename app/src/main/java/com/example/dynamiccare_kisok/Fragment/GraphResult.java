@@ -146,7 +146,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                         go.setPressed();
                         go.setPause();
                         if (go.isPause()) {
-                            DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+                            DCButtonManager.setDCState(DCButtonManager.State.Measuring);
                             isSend = true;
                             setBottomBar(false);
                             if (resCalculator != null)
@@ -157,7 +157,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
                             go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_stop));
                         } else {
-                            DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                            DCButtonManager.setDCState(DCButtonManager.State.StartSetting);
                             isSend = false;
                             if (timer != null)
                                 timer.cancel();
@@ -279,7 +279,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                 case R.id.btn_ready:
                     if (!ready.IsPressed()) {
                         ready.setPressed();
-                        DCButtonManager.setDCState(DCButtonManager.State.Ready);
+                        DCButtonManager.setDCState(DCButtonManager.State.MeasureReady);
                         setPropertiesFocusable(false);
                         main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                         main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())));
@@ -355,9 +355,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     if (DCButtonManager.getDCState() == DCButtonManager.State.Clear)
                         break;
                     Log.i("Measure ended:", "");
-                    DCButtonManager.setDCState(DCButtonManager.State.Clear);
+                    DCButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     setBottomBar(false);
-                    main.getBtn_back().setVisibility(View.INVISIBLE);
+//                    main.getBtn_back().setVisibility(View.INVISIBLE);
                     ready.setPressed();
                     go.Deactivate();
                     go.setPressed();
@@ -375,6 +375,12 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     setBottomBar(true);
                     if (isSend)
                         SendResult();
+                    break;
+                case "PCA":
+                case "AHM":
+                    DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                    if(ready.IsPressed())
+                        ready.setPressedwithNoSound();
                     break;
 
             }
@@ -416,10 +422,10 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
             timer.cancel();
         if (main.getCurrentFragment().getClass() != TimeSetting.class &&
                 main.getCurrentFragment().getClass() != DetailResult.class &&
-                (DCButtonManager.getDCState()== DCButtonManager.State.Ready ||
-                        DCButtonManager.getDCState()== DCButtonManager.State.Excercise)) {
-            if (DCButtonManager.getDCState() != DCButtonManager.State.StartSetting)
-                DCButtonManager.setDCState(DCButtonManager.State.Setted);
+                (DCButtonManager.getDCState()== DCButtonManager.State.MeasureReady ||
+                        DCButtonManager.getDCState()== DCButtonManager.State.Measuring)) {
+//            if (DCButtonManager.getDCState() != DCButtonManager.State.StartSetting)
+//                DCButtonManager.setDCState(DCButtonManager.State.Setted);
             main.getusbService().write(Commands.ExcerciseStop("00",
                     "0",
                     "0",
