@@ -45,6 +45,7 @@ public class Explain extends DCfragment {
                 main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.sotonic_log_mode_english});
             else
                 main.PlaySound(new int[]{R.raw.metric_log_mode, R.raw.metric_log_mode_english});
+
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -101,13 +102,16 @@ public class Explain extends DCfragment {
     public void setExcercise(DCButton button, Excercise excercise) {
         try {
             if (DCButton.getPressedButton() != button) {
-                button.setPressed();
+                if (isResume)
+                    button.setPressedWithNoSound();
+                else
+                    button.setPressed();
             }
             if (button.IsPressed() &&
-                    (dcButtonManager.getDCState() == DCButtonManager.State.Clear ||
-                            dcButtonManager.getDCState() == DCButtonManager.State.Setted)) {
+                    (dcButtonManager.getDCState().equals(DCButtonManager.State.Clear) ||
+                            dcButtonManager.getDCState().equals(DCButtonManager.State.Setted))) {
+                main.setCurrentExcercise(excercise);
                 dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
-                Main.setCurrentExcercise(excercise);
                 if (!isResume) {
                     Main.getusbService().write(
                             Commands.MeasureSet(excercise.getMode(),
@@ -115,11 +119,11 @@ public class Explain extends DCfragment {
                                     "000", String.valueOf(main.getMeasureTime()),
                                     "1",
                                     "0"));
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            main.HandleACK(ACKListener.ParseACK("$PCA#"));
-                        }
-                    }, 3000);
+//                    handler.postDelayed(new Runnable() {
+//                        public void run() {
+//                            main.HandleACK(ACKListener.ParseACK("$PCA#"));
+//                        }
+//                    }, 3000);
                 }
                 setBottomBar(true);
                 isResume = false;
@@ -134,8 +138,13 @@ public class Explain extends DCfragment {
     public void onDestroy() {
         super.onDestroy();
         if (main.getCurrentFragment().getClass() != TimeSetting.class &&
-                main.getCurrentFragment().getClass() != SelectMode.class)
-            main.getusbService().write(Commands.Home(true));
+                main.getCurrentFragment().getClass() != SelectMode.class &&
+                main.getCurrentFragment().getClass() != Instruction.class)
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                        "0",
+                        "0",
+                        "0"));
+
     }
 
 
@@ -181,6 +190,13 @@ public class Explain extends DCfragment {
 
             setListener();
 
+
+            if(dcButtonManager.getDCState()==null)
+                dcButtonManager.setDCState(DCButtonManager.State.Clear);
+            else
+                dcButtonManager.setDCState(DCButtonManager.getDCState());
+
+
             if (main.getCurrentExcercise() != null)
                 isResume = true;
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
@@ -209,6 +225,8 @@ public class Explain extends DCfragment {
                     setExcercise(latpull, new LatPullDown(main));
                     break;
             }
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
