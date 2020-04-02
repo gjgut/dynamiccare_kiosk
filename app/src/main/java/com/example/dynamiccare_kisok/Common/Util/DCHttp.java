@@ -13,6 +13,7 @@ public class DCHttp {
 
     public static final String WIFI_STATE = "WIFE";
     public static final String MOBILE_STATE = "MOBILE";
+    public static final String ETHERNET_STATE = "ETHERNET";
     public static final String NONE_STATE = "NONE";
 
 
@@ -24,7 +25,9 @@ public class DCHttp {
                 return WIFI_STATE;
             } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
                 return MOBILE_STATE;
-            }
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_ETHERNET) {
+            return ETHERNET_STATE;
+        }
         }
         return NONE_STATE;
     }
