@@ -67,7 +67,6 @@ public class Login extends DCActivity implements View.OnClickListener {
         }catch (Exception e)
         {
             e.printStackTrace();
-            new Warning(this,e.toString()).show();
             Toast.makeText(getApplicationContext(), "오류가 발생하였습니다.인터넷 연결을 확인해 주십시오.", Toast.LENGTH_SHORT).show();
         }
     }

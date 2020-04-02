@@ -190,7 +190,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
             jsonObject.accumulate("average", resCalculator.getAverage() == 0 ? 0 : resCalculator.getAverage() / 1000);
 
             new DCHttp().SendResult(jsonObject.toString());
+            new NormalAlert(main, "결과를 전송하였습니다.",true).show();
         } catch (Exception e) {
+            new NormalAlert(main, e.toString()).show();
             e.printStackTrace();
         }
     }
@@ -428,7 +430,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                 main.getusbService().write(Commands.Home(false));
                 main.getusbService().write(Commands.Home(true));
             }
-        else
+            else
             {
                 main.getusbService().write(Commands.ExcerciseStop("00",
                         "0",
