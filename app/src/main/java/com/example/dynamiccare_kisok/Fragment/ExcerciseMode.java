@@ -786,7 +786,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     return new SelectMode(main);
                 }
             } else if (dcButtonManager.getDCState() != DCButtonManager.State.StartSetting) {
-                new NormalAlert(main, "바가 세팅 중입니다.세팅이 완료되면 눌러주십시오.(Setted)", true).show();
+                new NormalAlert(main, "바가 세팅 중입니다.세팅이 완료되면 눌러주십시오.", true).show();
                 count = 0;
                 setPropertiesFocusable(true);
                 exc_rest.setVisibility(View.INVISIBLE);
@@ -808,7 +808,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     start.setButton(start.getButton(), getResources().getDrawable(R.drawable.btn_pause_pressed));
                 }
             } else {
-                new NormalAlert(main, "바가 세팅 중입니다.세팅이 완료되면 눌러주십시오.(StartSetting)", true).show();
+                new NormalAlert(main, "바가 세팅 중입니다.세팅이 완료되면 눌러주십시오.", true).show();
             }
             return null;
         }
