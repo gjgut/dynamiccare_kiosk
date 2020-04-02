@@ -111,7 +111,10 @@ public class Explain extends DCfragment {
                     (dcButtonManager.getDCState().equals(DCButtonManager.State.Clear) ||
                             dcButtonManager.getDCState().equals(DCButtonManager.State.Setted))) {
                 main.setCurrentExcercise(excercise);
-                dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+
+                if (!isResume)
+                    dcButtonManager.setDCState(DCButtonManager.State.StartSetting);
+
                 if (!isResume) {
                     Main.getusbService().write(
                             Commands.MeasureSet(excercise.getMode(),
@@ -185,20 +188,18 @@ public class Explain extends DCfragment {
             Body = view.findViewById(R.id.exp_body);
             DCButton.setBody(Body);
 
-            dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf);
+            dcButtonManager = new DCButtonManager(bench, squat, deadlift, press, curl, extension, latpull, carf,dcButtonManager.getDCState());
             handler = new Handler();
 
             setListener();
 
 
-            if(dcButtonManager.getDCState()==null)
-                dcButtonManager.setDCState(DCButtonManager.State.Clear);
-            else
-                dcButtonManager.setDCState(DCButtonManager.getDCState());
-
-
             if (main.getCurrentExcercise() != null)
+            {
                 isResume = true;
+            }
+
+
             switch (main.getCurrentExcercise().getClass().getSimpleName()) {
                 case "BenchPress":
                     setExcercise(bench, new BenchPress(main));

@@ -4,6 +4,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.dynamiccare_kisok.Activity.Main;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmCurl;
+import com.example.dynamiccare_kisok.Common.Excercise.ArmExtension;
+import com.example.dynamiccare_kisok.Common.Excercise.BenchPress;
+import com.example.dynamiccare_kisok.Common.Excercise.CarfRaise;
+import com.example.dynamiccare_kisok.Common.Excercise.DeadLift;
+import com.example.dynamiccare_kisok.Common.Excercise.Excercise;
+import com.example.dynamiccare_kisok.Common.Excercise.LatPullDown;
+import com.example.dynamiccare_kisok.Common.Excercise.ShoulderPress;
+import com.example.dynamiccare_kisok.Common.Excercise.Squat;
+import com.example.dynamiccare_kisok.R;
 
 public class DCButtonManager {
     static DCButton Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat;
@@ -16,11 +26,12 @@ public class DCButtonManager {
         return DCState;
     }
 
-    public enum State {Clear, StartSetting, Setted, Ready, Excercise, onRest, Paused, Stop,
-                        MeasureReady,Measuring}
+    public enum State {
+        Clear, StartSetting, Setted, Ready, Excercise, onRest, Paused, Stop,
+        MeasureReady, Measuring,MeasureClear
+    }
 
-    public static void setMainContext(Main main)
-    {
+    public static void setMainContext(Main main) {
         DCButtonManager.main = main;
     }
 
@@ -69,8 +80,12 @@ public class DCButtonManager {
             this.Lat = Lat;
 
             Union = new DCButton[]{Bench, Squat, Deadlift, Press, Carf, Curl, Extension, Lat};
-            if(state==null)
-                state=State.Clear;
+            if (main.getCurrentExcercise()!=null) {
+                DCButton.PressedButton = getExcButton();
+                DCButton.PressedButton.setPressedWithNoSound();
+            }
+            if (state == null)
+                state = State.Clear;
             setDCState(state);
         } catch (Exception e) {
             Log.e("Error", e.toString());
@@ -126,7 +141,7 @@ public class DCButtonManager {
                     Log.i("State", "Clear");
                     DCButton.PressedOff();
                     for (DCButton i : Union) {
-                        if(i.IsPressed())
+                        if (i.IsPressed())
                             i.setPressedWithNoSound();
                         i.Activate();
                     }
@@ -165,7 +180,7 @@ public class DCButtonManager {
                         i.Activate();
                     }
                     Ready.Activate();
-                    if(Ready.IsPressed())
+                    if (Ready.IsPressed())
                         Ready.setPressedwithNoSound();
                     if (Start != null)
                         Start.Deactivate();
@@ -266,8 +281,32 @@ public class DCButtonManager {
                     if (!Ready.IsPressed())
                         Ready.setPressedwithNoSound();
                     Start.Activate();
+                    if(Start.isPause()==false)
+                    {
+                        Start.setPause();
+                        Start.getButton().setImageDrawable(main.getResources().getDrawable(R.drawable.btn_stop));
+                        Start.setButton(Start.getButton(), main.getResources().getDrawable(R.drawable.pressed_btn_stop));
+                    }
                     Up.Deactivate();
                     Down.Deactivate();
+                    break;
+                case MeasureClear:
+                    Log.i("State", "MeasureClear");
+                    DCState = State.MeasureClear;
+                    Ready.setPressed();
+                    Start.Deactivate();
+                    Start.setPressed();
+                    Start.setPause();
+                    Start.getButton().setImageDrawable(main.getResources().getDrawable(R.drawable.btn_start));
+                    Start.setButton(Start.getButton(), main.getResources().getDrawable(R.drawable.pressed_btn_start));
+                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                            R.raw.stopping_measurement,
+                            R.raw.thank_you_for_your_efforts,
+                            R.raw.show_your_result,
+                            R.raw.the_measurement_is_going_to_stop_english,
+                            R.raw.thank_you_for_your_efforts_english,
+                            R.raw.please_check_the_results_english,
+                            R.raw.dynamic_care});
                     break;
             }
         } catch (Exception e) {
@@ -275,5 +314,26 @@ public class DCButtonManager {
         }
     }
 
+    private static DCButton getExcButton() {
+        switch (main.getCurrentExcercise().getClass().getSimpleName()) {
+            case "BenchPress":
+                return Bench;
+            case "Squat":
+                return Squat;
+            case "DeadLift":
+                return Deadlift;
+            case "ShoulderPress":
+                return Press;
+            case "LatPullDown":
+                return Lat;
+            case "CarfRaise":
+                return Carf;
+            case "ArmCurl":
+                return Curl;
+            case "ArmExtension":
+                return Extension;
+        }
+        return null;
+    }
 
 }

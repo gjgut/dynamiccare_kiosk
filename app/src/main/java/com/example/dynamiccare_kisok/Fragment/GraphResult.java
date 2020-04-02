@@ -116,8 +116,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
 
             dcButtonManager = new DCButtonManager(go, ready, Up, Down);
             dcButtonManager.setDCState(dcButtonManager.getDCState());
-
-            go.Deactivate();
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -358,20 +356,20 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     DCButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     setBottomBar(false);
 //                    main.getBtn_back().setVisibility(View.INVISIBLE);
-                    ready.setPressed();
-                    go.Deactivate();
-                    go.setPressed();
-                    go.setPause();
-                    go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-                    go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-                            R.raw.stopping_measurement,
-                            R.raw.thank_you_for_your_efforts,
-                            R.raw.show_your_result,
-                            R.raw.the_measurement_is_going_to_stop_english,
-                            R.raw.thank_you_for_your_efforts_english,
-                            R.raw.please_check_the_results_english,
-                            R.raw.dynamic_care});
+//                    ready.setPressed();
+//                    go.Deactivate();
+//                    go.setPressed();
+//                    go.setPause();
+//                    go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+//                    go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+//                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+//                            R.raw.stopping_measurement,
+//                            R.raw.thank_you_for_your_efforts,
+//                            R.raw.show_your_result,
+//                            R.raw.the_measurement_is_going_to_stop_english,
+//                            R.raw.thank_you_for_your_efforts_english,
+//                            R.raw.please_check_the_results_english,
+//                            R.raw.dynamic_care});
                     setBottomBar(true);
                     if (isSend)
                         SendResult();
