@@ -747,6 +747,10 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             new DCHttp().SendWorkout(jsonObject.toString());
             new NormalAlert(main, "결과를 전송하였습니다.", true).show();
         } catch (Exception e) {
+            if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
+            {
+                new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 및 이더넷 설정을 확인해주십시오.").show();
+            }
             if (main.getCurrentExcercise() == null)
 //                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             Log.i("Error", e.toString());
