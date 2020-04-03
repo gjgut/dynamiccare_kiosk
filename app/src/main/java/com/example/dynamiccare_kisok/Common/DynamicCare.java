@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class DynamicCare extends Application {
     public static DCSoundPlayer dcSoundPlayer;
-    public static String CurrentUser, DeviceID;
+    public static String CurrentUser, DeviceID="000000000000000";
     public static JSONObject CurrentUserJson;
     public static String UserId;
     public static int limit = 0;
@@ -53,7 +53,7 @@ public class DynamicCare extends Application {
     }
 
     public static String getDeviceID() {
-        return DeviceID;
+        return "000000000000000";
     }
 
     public static void setDeviceID(String deviceID) {

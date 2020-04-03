@@ -95,21 +95,27 @@ public class Login extends DCActivity implements View.OnClickListener {
     }
 
     public void setDeviceID() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "권한 승인이 필요합니다", Toast.LENGTH_LONG).show();
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_PHONE_STATE)) {
-                Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_PHONE_STATE},
-                        1001);
-                Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "권한 승인이 필요합니다", Toast.LENGTH_LONG).show();
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.READ_PHONE_STATE)) {
+                    Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.READ_PHONE_STATE},
+                            1001);
+                    Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                }
             }
+            TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            String device = manager.getDeviceId();
+            care.setDeviceID(device);
+        }catch (Exception e)
+        {
+            new NormalAlert(this, e.toString(), true).show();
+            e.printStackTrace();
         }
-        TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        String device = manager.getDeviceId();
-        care.setDeviceID(device);
     }
 
     public JSONObject Httplogin(String code) {
