@@ -700,7 +700,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             if (timer != null)
                 timer.cancel();
             if (main.getCurrentFragment().getClass() != TimeSetting.class) {
-                main.getusbService().write(Commands.ExcerciseStop("00",
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));
@@ -751,8 +751,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             {
                 new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 및 이더넷 설정을 확인해주십시오.").show();
             }
-            if (main.getCurrentExcercise() == null)
-//                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
+                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             Log.i("Error", e.toString());
         }
 

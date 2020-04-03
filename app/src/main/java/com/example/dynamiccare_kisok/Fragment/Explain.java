@@ -143,7 +143,7 @@ public class Explain extends DCfragment {
         if (main.getCurrentFragment().getClass() != TimeSetting.class &&
                 main.getCurrentFragment().getClass() != Instruction.class &&
                 main.getCurrentFragment().getClass() != GraphResult.class)
-                main.getusbService().write(Commands.ExcerciseStop("00",
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                         "0",
                         "0",
                         "0"));

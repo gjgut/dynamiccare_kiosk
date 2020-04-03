@@ -197,9 +197,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
         } catch (Exception e) {
             if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
         {
-            new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 및 이더넷 설정을 확인해주십시오.").show();
+            new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n와이파이 및 이더넷 설정을 확인해주십시오.").show();
         }
-//            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
+            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             e.printStackTrace();
         }
     }
@@ -423,7 +423,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                 main.getCurrentFragment().getClass() != DetailResult.class) {
             if (DCButtonManager.getDCState() == DCButtonManager.State.MeasureReady ||
                     DCButtonManager.getDCState() == DCButtonManager.State.Measuring) {
-                main.getusbService().write(Commands.ExcerciseStop("00",
+                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                         "0",
                         "0",
                         "0"));
