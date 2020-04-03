@@ -195,7 +195,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
             new DCHttp().SendResult(jsonObject.toString());
             new NormalAlert(main, "결과를 전송하였습니다.", true).show();
         } catch (Exception e) {
-            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
+//            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             e.printStackTrace();
         }
     }
@@ -360,13 +360,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     Log.i("Measure ended:", "");
                     DCButtonManager.setDCState(DCButtonManager.State.StartSetting);
                     setBottomBar(false);
-//                    main.getBtn_back().setVisibility(View.INVISIBLE);
-//                    ready.setPressed();
-//                    go.Deactivate();
-//                    go.setPressed();
-//                    go.setPause();
-//                    go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-//                    go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
                     main.PlaySound(new int[]{R.raw.measurement_complete_sound,
                             R.raw.stopping_measurement,
                             R.raw.thank_you_for_your_efforts,
