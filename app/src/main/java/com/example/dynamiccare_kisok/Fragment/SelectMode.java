@@ -28,7 +28,6 @@ public class SelectMode extends DCfragment {
 
     public SelectMode(Main main) {
         super(main);
-        main.setCurrentExcercise(null);
         if(DCButtonManager.getDCState()== DCButtonManager.State.StartSetting)
 
         care.UpdateJson();
@@ -114,8 +113,6 @@ public class SelectMode extends DCfragment {
             isokinetic.setOnClickListener(this);
             isometronic.setOnClickListener(this);
             isotonic.setOnClickListener(this);
-
-            Main.setCurrentExcercise(null);
 //            main.getusbService().write(Commands.Home(true));
         } catch (Exception e) {
             Log.i("Error", e.toString());

@@ -707,6 +707,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 isDown = false;
                 isSend = false;
             }
+            main.setCurrentExcercise(null);
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
