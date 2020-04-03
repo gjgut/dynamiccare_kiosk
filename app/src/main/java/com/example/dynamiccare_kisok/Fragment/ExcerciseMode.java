@@ -745,8 +745,9 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             jsonObject.accumulate("set", sendworkdout.getSet());
             jsonObject.accumulate("weight", sendworkdout.getWeight());
             Log.i("SendJson", jsonObject.toString());
-            new DCHttp().SendWorkout(jsonObject.toString());
-            new NormalAlert(main, "결과를 전송하였습니다.", true).show();
+            JSONObject result = new DCHttp().SendWorkout(jsonObject.toString());
+            Log.i("SendJson", result.toString());
+            new NormalAlert(main, "결과를 전송하였습니다."+result.toString(), true).show();
         } catch (Exception e) {
             if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
             {
