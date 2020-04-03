@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class DCSoundPlayer {
 
     private SoundPool soundPool;
-    HashMap<String, Integer> CountSound = new HashMap<String, Integer>();
+    HashMap<String, int[]> CountSound = new HashMap<String, int[]>();
     HashMap<String, int[]> SetSound = new HashMap<String, int[]>();
     private int back_button,
             bee_measurement_begin,
@@ -137,56 +137,56 @@ public class DCSoundPlayer {
             fifty;
 
     private void makeSoundMap() {
-        CountSound.put("01", R.raw.one);
-        CountSound.put("02", R.raw.two);
-        CountSound.put("03", R.raw.three);
-        CountSound.put("04", R.raw.four);
-        CountSound.put("05", R.raw.five);
-        CountSound.put("06", R.raw.six);
-        CountSound.put("07", R.raw.seven);
-        CountSound.put("08", R.raw.eight);
-        CountSound.put("09", R.raw.nine);
-        CountSound.put("10", R.raw.ten);
-        CountSound.put("11", R.raw.eleven);
-        CountSound.put("12", R.raw.twelve);
-        CountSound.put("13", R.raw.threeteen);
-        CountSound.put("14", R.raw.fourteen);
-        CountSound.put("15", R.raw.fifteen);
-        CountSound.put("16", R.raw.sixteen);
-        CountSound.put("17", R.raw.seventeen);
-        CountSound.put("18", R.raw.eighteen);
-        CountSound.put("19", R.raw.nineteen);
-        CountSound.put("20", R.raw.twenty);
-        CountSound.put("21", R.raw.twenty_one);
-        CountSound.put("22", R.raw.twenty_two);
-        CountSound.put("23", R.raw.twenty_three);
-        CountSound.put("24", R.raw.twenty_four);
-        CountSound.put("25", R.raw.twenty_five);
-        CountSound.put("26", R.raw.twenty_six);
-        CountSound.put("27", R.raw.twenty_seven);
-        CountSound.put("28", R.raw.twenty_eight);
-        CountSound.put("29", R.raw.twenty_nine);
-        CountSound.put("30", R.raw.thirty);
-        CountSound.put("31", R.raw.thirty_one);
-        CountSound.put("32", R.raw.thirty_two);
-        CountSound.put("33", R.raw.thirty_three);
-        CountSound.put("34", R.raw.thirty_three);
-        CountSound.put("35", R.raw.thirty_five);
-        CountSound.put("36", R.raw.thirty_six);
-        CountSound.put("37", R.raw.thirty_seven);
-        CountSound.put("38", R.raw.thirty_eight);
-        CountSound.put("39", R.raw.thirty_nine);
-        CountSound.put("40", R.raw.fourty);
-        CountSound.put("41", R.raw.fourty_one);
-        CountSound.put("42", R.raw.fourty_two);
-        CountSound.put("43", R.raw.fourty_three);
-        CountSound.put("44", R.raw.fourty_four);
-        CountSound.put("45", R.raw.fourty_five);
-        CountSound.put("46", R.raw.fourty_six);
-        CountSound.put("47", R.raw.fourty_seven);
-        CountSound.put("48", R.raw.fourty_eight);
-        CountSound.put("49", R.raw.fourty_nine);
-        CountSound.put("50", R.raw.fifty);
+        CountSound.put("01", new int[]{R.raw.one});
+        CountSound.put("02", new int[]{R.raw.two});
+        CountSound.put("03", new int[]{R.raw.three});
+        CountSound.put("04", new int[]{R.raw.four});
+        CountSound.put("05", new int[]{R.raw.five});
+        CountSound.put("06", new int[]{R.raw.six});
+        CountSound.put("07", new int[]{R.raw.seven});
+        CountSound.put("08", new int[]{R.raw.eight});
+        CountSound.put("09", new int[]{R.raw.nine});
+        CountSound.put("10", new int[]{R.raw.ten});
+        CountSound.put("11", new int[]{R.raw.eleven});
+        CountSound.put("12", new int[]{R.raw.twelve});
+        CountSound.put("13", new int[]{R.raw.threeteen});
+        CountSound.put("14", new int[]{R.raw.fourteen});
+        CountSound.put("15", new int[]{R.raw.fifteen});
+        CountSound.put("16", new int[]{R.raw.sixteen});
+        CountSound.put("17", new int[]{R.raw.seventeen});
+        CountSound.put("18", new int[]{R.raw.eighteen});
+        CountSound.put("19", new int[]{R.raw.nineteen});
+        CountSound.put("20", new int[]{R.raw.twenty});
+        CountSound.put("21", new int[]{R.raw.twenty_one});
+        CountSound.put("22", new int[]{R.raw.twenty_two});
+        CountSound.put("23", new int[]{R.raw.twenty_three});
+        CountSound.put("24", new int[]{R.raw.twenty_four});
+        CountSound.put("25", new int[]{R.raw.twenty_five});
+        CountSound.put("26", new int[]{R.raw.twenty_six});
+        CountSound.put("27", new int[]{R.raw.twenty_seven});
+        CountSound.put("28", new int[]{R.raw.twenty_eight});
+        CountSound.put("29", new int[]{R.raw.twenty_nine});
+        CountSound.put("30", new int[]{R.raw.thirty});
+        CountSound.put("31", new int[]{R.raw.thirty_one});
+        CountSound.put("32", new int[]{R.raw.thirty_two});
+        CountSound.put("33", new int[]{R.raw.thirty_three});
+        CountSound.put("34", new int[]{R.raw.thirty_three});
+        CountSound.put("35", new int[]{R.raw.thirty_five});
+        CountSound.put("36", new int[]{R.raw.thirty_six});
+        CountSound.put("37", new int[]{R.raw.thirty_seven});
+        CountSound.put("38", new int[]{R.raw.thirty_eight});
+        CountSound.put("39", new int[]{R.raw.thirty_nine});
+        CountSound.put("40", new int[]{R.raw.fourty});
+        CountSound.put("41", new int[]{R.raw.fourty_one});
+        CountSound.put("42", new int[]{R.raw.fourty_two});
+        CountSound.put("43", new int[]{R.raw.fourty_three});
+        CountSound.put("44", new int[]{R.raw.fourty_four});
+        CountSound.put("45", new int[]{R.raw.fourty_five});
+        CountSound.put("46", new int[]{R.raw.fourty_six});
+        CountSound.put("47", new int[]{R.raw.fourty_seven});
+        CountSound.put("48", new int[]{R.raw.fourty_eight});
+        CountSound.put("49", new int[]{R.raw.fourty_nine});
+        CountSound.put("50", new int[]{R.raw.fifty});
 
         SetSound.put("00", new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
         SetSound.put("01", new int[]{R.raw.one_set_complete, R.raw.take_a_break, R.raw.one_set_complete_english, R.raw.take_a_break_english});
@@ -333,7 +333,7 @@ public class DCSoundPlayer {
         }
     }
 
-    public int getCoundSound(String src) {
+    public int[] getCoundSound(String src) {
         return CountSound.get(src);
     }
 

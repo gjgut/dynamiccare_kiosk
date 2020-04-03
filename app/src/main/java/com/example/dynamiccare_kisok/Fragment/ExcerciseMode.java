@@ -64,7 +64,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
     ImageView Body;
     Spinner spin_level;
     DCSpinnerAdapter spinnerAdapter;
-    boolean isProgram = false, onSchedule = false, isSend = true,isDown=true;
+    boolean isProgram = false, onSchedule = false, isSend = true, isDown = true;
     int count;
     Handler handler = new Handler();
     boolean isResume = false;
@@ -184,7 +184,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void setExcercise(DCButton button, Excercise excercise) {
         try {
-            isDown=true;
+            isDown = true;
             if (DCButton.getPressedButton() != button) {
                 if (isResume)
                     button.setPressedWithNoSound();
@@ -201,7 +201,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         Commands.MeasureSet(excercise.getMode(),
                                 String.valueOf(300),
                                 "000",
-                                String.valueOf(30),
+                                String.valueOf(10),
                                 "2",
                                 "0"));
 //                if (!isResume)
@@ -285,7 +285,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         if (ready.IsPressed())
                             ready.setPressedwithNoSound();
                         SendWorkoutRecord();
-                        main.ReplaceFragment(new SelectMode(main),false);
+                        main.ReplaceFragment(new SelectMode(main), false);
                     }
                     break;
                 case "AEE":
@@ -294,7 +294,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         main.PlaySound(dcSoundPlayer.getCoundSound(ack.getData()));
                     break;
                 case "PCA":
-                    if(isDown)
+                    if (isDown)
                         DCButtonManager.setDCState(DCButtonManager.State.Setted);
                     else
                         DCButtonManager.setDCState(DCButtonManager.State.Clear);
@@ -365,14 +365,13 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         try {
             exc_rest.setVisibility(View.INVISIBLE);
             exc_table.setVisibility(View.VISIBLE);
-            DCButtonManager.setDCState(DCButtonManager.State.Excercise);
+            DCButtonManager.setDCState(DCButtonManager.State.StartSetting);
             if (!ready.IsPressed())
                 ready.setPressedwithNoSound();
-            if (!isResume)
-                main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
-                        edt_weight.getSource().getText().toString(),
-                        edt_count.getSource().getText().toString(),
-                        edt_set.getSource().getText().toString()));
+            main.getusbService().write(Commands.ExcerciseStart(main.getCurrentExcercise().getMode(),
+                    edt_weight.getSource().getText().toString(),
+                    edt_count.getSource().getText().toString(),
+                    edt_set.getSource().getText().toString()));
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -421,14 +420,14 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             if (dcButtonManager.getDCState() == DCButtonManager.State.onRest) {
                 ResumeWorkout();
             }
-            if (prevstate == DCButtonManager.State.onRest
-                    || DCButtonManager.getDCState() == DCButtonManager.State.Paused) {
-                setPropertiesFocusable(false);
-                if (!start.isPause())
-                    start.setPause();
-                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
-                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-            }
+//            if (prevstate == DCButtonManager.State.onRest
+//                    || DCButtonManager.getDCState() == DCButtonManager.State.Paused) {
+//                setPropertiesFocusable(false);
+//                if (!start.isPause())
+//                    start.setPause();
+//                start.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
+//                start.setButton(start.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
+//            }
 
             isResume = false;
         } catch (Exception e) {
@@ -654,7 +653,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                             main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                             edt_count.getSource().getText().toString(),
                             edt_set.getSource().getText().toString()));
-                    isDown=false;
+                    isDown = false;
                     txt_count.setText("0");
                     txt_set.setText("0");
                     isSend = false;
@@ -700,14 +699,13 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             savedState = getSaveState();
             if (timer != null)
                 timer.cancel();
-            if (main.getCurrentFragment().getClass() != TimeSetting.class)
-            {
+            if (main.getCurrentFragment().getClass() != TimeSetting.class) {
                 main.getusbService().write(Commands.ExcerciseStop("00",
                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));
-                isDown=false;
-                isSend=false;
+                isDown = false;
+                isSend = false;
             }
         } catch (Exception e) {
             Log.i("Error", e.toString());
@@ -747,9 +745,11 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             jsonObject.accumulate("weight", sendworkdout.getWeight());
             Log.i("SendJson", jsonObject.toString());
             new DCHttp().SendWorkout(jsonObject.toString());
-            new NormalAlert(main, "결과를 전송하였습니다.",true).show();
+            new NormalAlert(main, "결과를 전송하였습니다.", true).show();
             main.ReplaceFragment(new SelectMode(main), false);
         } catch (Exception e) {
+            if (main.getCurrentExcercise() == null)
+                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             Log.i("Error", e.toString());
         }
 
@@ -772,17 +772,14 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
     public DCfragment getBackFragment() {
 
         if (prev == null) {
-            isSend=false;
+            isSend = false;
             return new SelectMode(main);
         } else {
             if (dcButtonManager.getDCState() == DCButtonManager.State.Clear) {
-                if (care.isTherePlan())
-                {
-                    isSend=false;
+                if (care.isTherePlan()) {
+                    isSend = false;
                     return prev;
-                }
-                else
-                {
+                } else {
                     isSend = false;
                     return new SelectMode(main);
                 }
@@ -799,7 +796,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
                         edt_count.getSource().getText().toString(),
                         edt_set.getSource().getText().toString()));
-                isDown=false;
+                isDown = false;
                 isSend = false;
                 txt_count.setText("0");
                 txt_set.setText("0");

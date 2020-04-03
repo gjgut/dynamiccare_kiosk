@@ -45,19 +45,22 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     public GraphResult(Main main) {
         super(main);
         try {
-            main.PlaySound(
-                    new int[]{R.raw.power_log,
-                            R.raw.setting_is_completed,
-                            R.raw.follow_instruction,
-                            R.raw.take_pose_and_place_bar_or_wire_to_right_position,
-                            R.raw.effort_maximally_during_measurement,
-                            R.raw.dont_stop_measurement_by_stop_sound,
-                            R.raw.measurement_begin_soon,
-                            R.raw.please_follow_the_directions_english,
-                            R.raw.adjust_the_bar_or_wire_properly_english,
-                            R.raw.please_do_your_best_in_measuring_english,
-                            R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english,
-                            R.raw.the_measurement_wil_begin_shortly_english});
+            if (dcButtonManager.getDCState() != DCButtonManager.State.MeasureClear &&
+                    dcButtonManager.getDCState() != DCButtonManager.State.MeasureReady &&
+                    dcButtonManager.getDCState() != DCButtonManager.State.Measuring)
+                main.PlaySound(
+                        new int[]{R.raw.power_log,
+                                R.raw.setting_is_completed,
+                                R.raw.follow_instruction,
+                                R.raw.take_pose_and_place_bar_or_wire_to_right_position,
+                                R.raw.effort_maximally_during_measurement,
+                                R.raw.dont_stop_measurement_by_stop_sound,
+                                R.raw.measurement_begin_soon,
+                                R.raw.please_follow_the_directions_english,
+                                R.raw.adjust_the_bar_or_wire_properly_english,
+                                R.raw.please_do_your_best_in_measuring_english,
+                                R.raw.do_not_stop_measuring_until_the_end_comment_is_made_english,
+                                R.raw.the_measurement_wil_begin_shortly_english});
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -190,9 +193,9 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
             jsonObject.accumulate("average", resCalculator.getAverage() == 0 ? 0 : resCalculator.getAverage() / 1000);
 
             new DCHttp().SendResult(jsonObject.toString());
-            new NormalAlert(main, "결과를 전송하였습니다.",true).show();
+            new NormalAlert(main, "결과를 전송하였습니다.", true).show();
         } catch (Exception e) {
-            new NormalAlert(main, e.toString()).show();
+            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             e.printStackTrace();
         }
     }
@@ -364,14 +367,14 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
 //                    go.setPause();
 //                    go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_start));
 //                    go.setButton(go.getButton(), getResources().getDrawable(R.drawable.pressed_btn_start));
-//                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
-//                            R.raw.stopping_measurement,
-//                            R.raw.thank_you_for_your_efforts,
-//                            R.raw.show_your_result,
-//                            R.raw.the_measurement_is_going_to_stop_english,
-//                            R.raw.thank_you_for_your_efforts_english,
-//                            R.raw.please_check_the_results_english,
-//                            R.raw.dynamic_care});
+                    main.PlaySound(new int[]{R.raw.measurement_complete_sound,
+                            R.raw.stopping_measurement,
+                            R.raw.thank_you_for_your_efforts,
+                            R.raw.show_your_result,
+                            R.raw.the_measurement_is_going_to_stop_english,
+                            R.raw.thank_you_for_your_efforts_english,
+                            R.raw.please_check_the_results_english,
+                            R.raw.dynamic_care});
                     setBottomBar(true);
                     if (isSend)
                         SendResult();
@@ -422,16 +425,14 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
         if (main.getCurrentFragment().getClass() != TimeSetting.class &&
                 main.getCurrentFragment().getClass() != DetailResult.class) {
             if (DCButtonManager.getDCState() == DCButtonManager.State.MeasureReady ||
-                    DCButtonManager.getDCState() == DCButtonManager.State.Measuring){
+                    DCButtonManager.getDCState() == DCButtonManager.State.Measuring) {
                 main.getusbService().write(Commands.ExcerciseStop("00",
                         "0",
                         "0",
                         "0"));
                 main.getusbService().write(Commands.Home(false));
                 main.getusbService().write(Commands.Home(true));
-            }
-            else
-            {
+            } else {
                 main.getusbService().write(Commands.ExcerciseStop("00",
                         "0",
                         "0",
