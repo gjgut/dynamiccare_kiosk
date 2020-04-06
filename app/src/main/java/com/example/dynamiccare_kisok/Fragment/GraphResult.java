@@ -199,7 +199,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
         {
             new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n와이파이 및 이더넷 설정을 확인해주십시오.").show();
         }
-            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
+//            new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             e.printStackTrace();
         }
     }

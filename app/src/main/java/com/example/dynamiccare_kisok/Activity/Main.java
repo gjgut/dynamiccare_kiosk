@@ -485,7 +485,7 @@ public class Main extends DCActivity implements View.OnClickListener {
             limitoff();
         } catch (Exception e) {
             Log.i("Error", e.toString());
-            new NormalAlert(main, e.toString()).show();
+//            new NormalAlert(main, e.toString()).show();
         }
 
     }

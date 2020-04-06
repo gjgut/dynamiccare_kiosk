@@ -69,7 +69,7 @@ public class Login extends DCActivity implements View.OnClickListener {
                 ChangeActivity(act);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "오류가 발생하였습니다.인터넷 연결을 확인해 주십시오.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,7 +113,7 @@ public class Login extends DCActivity implements View.OnClickListener {
             care.setDeviceID(device);
         }catch (Exception e)
         {
-            new NormalAlert(this, e.toString(), true).show();
+//            new NormalAlert(this, e.toString(), true).show();
             e.printStackTrace();
         }
     }

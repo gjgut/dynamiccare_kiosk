@@ -746,7 +746,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             {
                 new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 및 이더넷 설정을 확인해주십시오.").show();
             }
-                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
+//                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             Log.i("Error", e.toString());
         }
 
