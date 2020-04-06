@@ -88,7 +88,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         super(main);
         savedState = bundle;
         isResume = true;
-        setPropertiesFocusable(false);
+        setPropertiesFocusable();
     }
 
     public ExcerciseMode(Main main, DCfragment dCfragment, Workout workout, boolean isProgram) {
@@ -145,7 +145,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     if (!ready.IsPressed()) {
                         ready.setPressed();
                         isResume = false;
-                        setPropertiesFocusable(false);
+                        setPropertiesFocusable();
                         txt_count.setText(edt_count.getSource().getText().toString());
                         dcButtonManager.setDCState(DCButtonManager.State.Ready);
                         main.getusbService().write(Commands.ExcerciseReady(main.getCurrentExcercise().getMode(),
@@ -155,14 +155,16 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     }
                     break;
             }
+            setPropertiesFocusable();
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
 
     }
 
-    public void setPropertiesFocusable(boolean value) {
+    public void setPropertiesFocusable() {
         try {
+            boolean value=false;
             if(dcButtonManager.getDCState() != DCButtonManager.State.Clear &&
                     dcButtonManager.getDCState() != DCButtonManager.State.Setted
             )
@@ -264,7 +266,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     break;
                 case "ASS":
                     isResume = false;
-                    setPropertiesFocusable(true);
+                    setPropertiesFocusable();
                     if (isSend && ack.getData().equals("00")) {
                         DCButtonManager.setDCState(DCButtonManager.State.Clear);
                         if (ready.IsPressed())
@@ -285,6 +287,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     else
                         DCButtonManager.setDCState(DCButtonManager.State.Clear);
             }
+            setPropertiesFocusable();
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -293,7 +296,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void TakeBreak(boolean isResume) {
         try {
-            setPropertiesFocusable(false);
+            setPropertiesFocusable();
             dcButtonManager.setDCState(DCButtonManager.State.onRest);
             exc_table.setVisibility(View.INVISIBLE);
             exc_rest.setVisibility(View.VISIBLE);
@@ -310,6 +313,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                             main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
                         else if (count < 10)
                             main.PlaySound(dcSoundPlayer.getCoundSound("0"+String.valueOf(count)));
+                        Log.i("Timer Used", String.valueOf(count));
+                        Toast.makeText(main,"Timer Used"+String.valueOf(count),Toast.LENGTH_LONG);
                         count--;
                     }
 
@@ -626,7 +631,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             } else if (v.getId() == R.id.exc_btn_stop) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     count = 0;
-                    setPropertiesFocusable(true);
+                    setPropertiesFocusable();
                     exc_rest.setVisibility(View.INVISIBLE);
                     exc_table.setVisibility(View.VISIBLE);
                     if (timer != null)
@@ -653,6 +658,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     stop.setPressedwithNoSound();
                 }
             }
+            setPropertiesFocusable();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -776,7 +782,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             } else if (dcButtonManager.getDCState() != DCButtonManager.State.StartSetting) {
                 new NormalAlert(main, "바가 세팅 중입니다.세팅이 완료되면 눌러주십시오.", true).show();
                 count = 0;
-                setPropertiesFocusable(true);
+                setPropertiesFocusable();
                 exc_rest.setVisibility(View.INVISIBLE);
                 exc_table.setVisibility(View.VISIBLE);
                 if (timer != null)
