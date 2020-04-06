@@ -242,7 +242,7 @@ public class Main extends DCActivity implements View.OnClickListener {
     }
 
     private CountDownTimer SecondTimer() {
-        return new CountDownTimer(count * 1000, 1000) {
+        return new CountDownTimer(count * 1000+500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
@@ -272,7 +272,7 @@ public class Main extends DCActivity implements View.OnClickListener {
     }
 
     private CountDownTimer MinuteTimer() {
-        return new CountDownTimer(count * 1000, 1000) {
+        return new CountDownTimer(count * 1000+500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
@@ -304,7 +304,7 @@ public class Main extends DCActivity implements View.OnClickListener {
 
     public void HandleACK(ACK ack) {
         try {
-            Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Command:" + ack.getCommandCode(), Toast.LENGTH_SHORT).show();
             switch (ack.getCommandCode()) {
                 case "CHM":
                     PlaySound(new int[]{R.raw.excercise_is_going_to_stop, R.raw.thank_you_for_your_efforts, R.raw.excercise_is_going_to_stop_english, R.raw.thank_you_for_your_efforts_english});
@@ -363,7 +363,7 @@ public class Main extends DCActivity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
             Log.i("Main-Broadcasted", ack.getCommandCode() + e.toString());
-            Toast.makeText(this, "ACK:" + ack.getCommandCode() + e.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "ACK:" + ack.getCommandCode() + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -477,7 +477,7 @@ public class Main extends DCActivity implements View.OnClickListener {
         try {
             ViewMapping();
             setListener();
-            Toast.makeText(this, care.getDeviceID(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, care.getDeviceID(), Toast.LENGTH_LONG).show();
             if (care.isLimit())
                 ReplaceFragment(new TimeSetting(this));
             else

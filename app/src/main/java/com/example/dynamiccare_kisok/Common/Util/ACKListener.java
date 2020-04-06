@@ -26,10 +26,10 @@ public class ACKListener extends Handler {
                 case UsbService.MESSAGE_FROM_SERIAL_PORT: {
                     if (!msg.obj.toString().contains("$"))
                         return;
-                    Toast.makeText(main, "Command:" + msg.obj.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(main, "Command:" + msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     main.HandleACK(ParseACK(msg.obj.toString()));
                     Log.i("Tossed_main", msg.obj.toString());
-                    Toast.makeText(main, "ACK:" + msg.obj.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(main, "ACK:" + msg.obj.toString(), Toast.LENGTH_SHORT).show();
                 }
                 break;
                 case UsbService.CTS_CHANGE:

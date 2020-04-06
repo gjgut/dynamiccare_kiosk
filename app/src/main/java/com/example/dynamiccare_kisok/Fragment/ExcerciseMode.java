@@ -305,7 +305,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 if (timer != null)
                     timer.cancel();
                 count = Integer.parseInt(edt_rest.getSource().getText().toString());
-                timer = new CountDownTimer(Integer.parseInt(edt_rest.getSource().getText().toString()) * 1000, 1000) {
+                timer = new CountDownTimer(Long.parseLong(edt_rest.getSource().getText().toString()) * 1000+500, 1000l) {
+
                     @Override
                     public void onTick(long millisUntilFinished) {
                         rest_time.setText(String.valueOf(count));
@@ -327,7 +328,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             } else {
                 if (timer != null)
                     timer.cancel();
-                timer = new CountDownTimer(count * 1000, 1000) {
+                timer = new CountDownTimer(count * 1000+500, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         rest_time.setText(String.valueOf(count));
