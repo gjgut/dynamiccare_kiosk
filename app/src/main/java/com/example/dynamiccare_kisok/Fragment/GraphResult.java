@@ -416,27 +416,30 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        if (timer != null)
-            timer.cancel();
-        if (main.getCurrentFragment().getClass() != TimeSetting.class &&
-                main.getCurrentFragment().getClass() != DetailResult.class) {
-            if (DCButtonManager.getDCState() == DCButtonManager.State.MeasureReady ||
-                    DCButtonManager.getDCState() == DCButtonManager.State.Measuring) {
-                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-                        "0",
-                        "0",
-                        "0"));
-                main.getusbService().write(Commands.Home(false));
-                main.getusbService().write(Commands.Home(true));
-            } else {
-                main.getusbService().write(Commands.ExcerciseStop("00",
-                        "0",
-                        "0",
-                        "0"));
-                main.getusbService().write(Commands.Home(true));
+        try {
+            if (timer != null)
+                timer.cancel();
+            if (main.getCurrentFragment().getClass() != TimeSetting.class &&
+                    main.getCurrentFragment().getClass() != DetailResult.class) {
+                if (DCButtonManager.getDCState() == DCButtonManager.State.MeasureReady ||
+                        DCButtonManager.getDCState() == DCButtonManager.State.Measuring) {
+                    main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
+                            "0",
+                            "0",
+                            "0"));
+                    main.getusbService().write(Commands.Home(false));
+                    main.getusbService().write(Commands.Home(true));
+                } else {
+                    main.getusbService().write(Commands.ExcerciseStop("00",
+                            "0",
+                            "0",
+                            "0"));
+                    main.getusbService().write(Commands.Home(true));
+                }
             }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
-
     }
 }

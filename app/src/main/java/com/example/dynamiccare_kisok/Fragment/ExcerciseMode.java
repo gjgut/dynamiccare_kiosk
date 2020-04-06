@@ -88,6 +88,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         super(main);
         savedState = bundle;
         isResume = true;
+        setPropertiesFocusable(false);
     }
 
     public ExcerciseMode(Main main, DCfragment dCfragment, Workout workout, boolean isProgram) {
@@ -152,14 +153,6 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                                 edt_count.getSource().getText().toString(),
                                 edt_set.getSource().getText().toString()));
                     }
-//                    else {
-//                        setPropertiesFocusable(true);
-//                        dcButtonManager.setDCState(DCButtonManager.State.Setted);
-//                        main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-//                                main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-//                                edt_count.getSource().getText().toString(),
-//                                edt_set.getSource().getText().toString()));
-//                    }
                     break;
             }
         } catch (Exception e) {
@@ -170,6 +163,12 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void setPropertiesFocusable(boolean value) {
         try {
+            if(dcButtonManager.getDCState() != DCButtonManager.State.Clear &&
+                    dcButtonManager.getDCState() != DCButtonManager.State.Setted
+            )
+                value=false;
+            else
+                value=true;
             edt_count.getSource().setEnabled(value);
             edt_set.getSource().setEnabled(value);
             edt_weight.getSource().setEnabled(value);
@@ -323,7 +322,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         if (count == 15)
                             main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
                         else if (count < 10)
-                            main.HandleACK(ACKListener.ParseACK("$ACS0" + count + "#"));
+                            main.PlaySound(dcSoundPlayer.getCoundSound("0"+String.valueOf(count)));
                         count--;
                     }
 
@@ -706,8 +705,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         edt_set.getSource().getText().toString()));
                 isDown = false;
                 isSend = false;
+                main.setCurrentExcercise(null);
             }
-            main.setCurrentExcercise(null);
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }

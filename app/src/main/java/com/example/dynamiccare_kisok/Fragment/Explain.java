@@ -140,14 +140,18 @@ public class Explain extends DCfragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (main.getCurrentFragment().getClass() != TimeSetting.class &&
-                main.getCurrentFragment().getClass() != Instruction.class &&
-                main.getCurrentFragment().getClass() != GraphResult.class)
+        try {
+            if (main.getCurrentFragment().getClass() != TimeSetting.class &&
+                    main.getCurrentFragment().getClass() != Instruction.class &&
+                    main.getCurrentFragment().getClass() != GraphResult.class)
                 main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
                         "0",
                         "0",
                         "0"));
-
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 
