@@ -6,7 +6,7 @@ public class Workout {
     boolean isWorkout = false, isKinetic = false;
     Excercise excercise;
     int Weight = 0, Reps = 0,Set=0,level=0,Rest=0;
-    String index=null;
+    String index= null;
 
     public Workout(boolean isWorkout, boolean isKinetic, Excercise excercise, int weight, int reps, int set,int rest,String index) {
         this.isWorkout = isWorkout;

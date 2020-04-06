@@ -211,20 +211,6 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 //                }
 //            }, 3000);
             }
-//            else if (!button.IsPressed() && !isResume) {
-//                dcButtonManager.setDCState(DCButtonManager.State.Clear);
-//                main.getusbService().write(Commands.ExcerciseStop(main.getCurrentExcercise().getMode(),
-//                        main.getisIsoKinetic() ? String.valueOf(spinnerAdapter.getCurrentNumber()) : edt_weight.getSource().getText().toString(),
-//                        edt_count.getSource().getText().toString(),
-//                        edt_set.getSource().getText().toString()));
-//                main.setCurrentExcercise(null);
-//            }
-
-//            handler.postDelayed(new Runnable() {
-//                public void run() {
-//                    main.HandleACK(ACKListener.ParseACK("$PCA#"));
-//                }
-//            }, 3000);
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }
@@ -284,7 +270,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         if (ready.IsPressed())
                             ready.setPressedwithNoSound();
                         SendWorkoutRecord();
-                        main.ReplaceFragment(new SelectMode(main), false);
+                        if(workout!=null && prev !=null)
+                            main.ReplaceFragment(prev, false);
                     }
                     break;
                 case "AEE":
@@ -723,8 +710,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     Integer.valueOf(edt_count.getSource().getText().toString()),
                     Integer.valueOf(edt_set.getSource().getText().toString()),
                     Integer.valueOf(edt_rest.getSource().getText().toString()),
-                    workout.getIndex());
-            if (!workout.equals(sendworkdout)) {
+                    workout!=null?workout.getIndex():null);
+            if (workout!=null && !workout.equals(sendworkdout)) {
                 isProgram = onSchedule = false;
                 sendworkdout.setIndex(null);
             }
