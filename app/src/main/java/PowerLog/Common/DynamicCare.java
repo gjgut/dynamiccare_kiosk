@@ -1,13 +1,17 @@
 package PowerLog.Common;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.webkit.WebView;
 
 import PowerLog.Common.Component.DCfragment;
 import PowerLog.Common.Util.DCHttp;
 import PowerLog.Common.Util.DCSoundPlayer;
 
 import org.json.JSONObject;
+
+import java.io.InputStream;
 
 public class DynamicCare extends Application {
     public static DCSoundPlayer dcSoundPlayer;
@@ -18,6 +22,15 @@ public class DynamicCare extends Application {
     public static boolean isLimit = true;
     public static DCfragment tempFragment;
     public SharedPreferences Admin;
+    public static boolean isKiosk=false;
+
+    public static boolean IsKiosk() {
+        return isKiosk;
+    }
+
+    public static void setIsKiosk() {
+        DynamicCare.isKiosk = checkTabletDeviceWithProperties();
+    }
 
     public static DCfragment getTempFragment() {
         return tempFragment;
@@ -153,6 +166,25 @@ public class DynamicCare extends Application {
         }
     }
 
+    private static boolean checkTabletDeviceWithProperties()
+    {
+        try
+        {
+            InputStream ism = Runtime.getRuntime().exec("getprop ro.build.characteristics").getInputStream();
+            byte[] bts = new byte[1024];
+            ism.read(bts);
+            ism.close();
+
+            boolean isTablet = new String(bts).toLowerCase().contains("tablet");
+            return isTablet;
+        }
+        catch (Throwable t)
+        {
+            t.printStackTrace();
+            return false;
+        }
+    }
+
 
     @Override
     public void onCreate() {
@@ -161,5 +193,6 @@ public class DynamicCare extends Application {
         Admin = getSharedPreferences("password", MODE_PRIVATE);
         if(getAdminPassword()=="")
             setAdminPassword("0000");
+        setIsKiosk();
     }
 }
