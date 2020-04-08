@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dynamiccare_kisok">
+    package="PowerLog">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:name=".Common.DynamicCare"
+        android:name="PowerLog.Common.DynamicCare"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@drawable/dcicon"
@@ -16,27 +16,27 @@
         android:roundIcon="@drawable/dcicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.Administrator"
+        <activity android:name="PowerLog.Activity.Administrator"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".Fragment.Administrator.ModifyAdmin"
+            android:name="PowerLog.Fragment.Administrator.ModifyAdmin"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Fragment.Administrator.Authentification"
+            android:name="PowerLog.Fragment.Administrator.Authentification"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activity.Main" />
+            android:name="PowerLog.Activity.Main" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activity.QRlink"
+            android:name="PowerLog.Activity.QRlink"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activity.Splash"
+            android:name="PowerLog.Activity.Splash"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,11 +46,11 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activity.Login"
+            android:name="PowerLog.Activity.Login"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".Common.Util.UsbService"
+            android:name="PowerLog.Common.Util.UsbService"
             android:enabled="true"></service>
     </application>
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DynamicCare</string>
+    <string name="app_name">PowerLog Kiosk</string>
     <string name="title_activity_home">Home</string>
     <string name="bench_instruction">
         1. 바를 잡을 때 엄지손가락도 다른 손가락과 같은 방향으로 위치하세요\n
