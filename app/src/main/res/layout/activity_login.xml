@@ -35,7 +35,6 @@
         android:letterSpacing="-0.02"
         android:lineSpacingExtra="21sp"
         android:maxLength="15"
-        android:text="111111111111"
         android:textAlignment="textStart"
         android:textColor="#FFFFFF"
         android:textColorHint="#33ffffff"

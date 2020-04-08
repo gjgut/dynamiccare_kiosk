@@ -59,7 +59,11 @@ public class LimitOff extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_auth_limit_off, container, false);
+        View view;
+        if (care.IsKiosk())
+            view = inflater.inflate(R.layout.kiosk_fragment_auth_limit_off, container, false);
+        else
+            view = inflater.inflate(R.layout.fragment_auth_limit_off, container, false);
         super.onCreate(savedInstanceState);
         care = (DynamicCare) admin.getApplication();
 

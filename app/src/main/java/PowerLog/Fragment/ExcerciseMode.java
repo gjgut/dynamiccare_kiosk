@@ -222,7 +222,11 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_excercise_mode, container, false);
+        View view;
+        if (care.IsKiosk())
+            view = inflater.inflate(R.layout.kiosk_fragment_excercise_mode, container, false);
+        else
+            view = inflater.inflate(R.layout.fragment_excercise_mode, container, false);
         try {
             prevstate = DCButtonManager.getDCState();
             setViews(view);

@@ -95,9 +95,11 @@ public class TimeSetting extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_time_setting, container, false);
-//        if (prev == null)
-//            prev = new SelectMode(main);
+        View view;
+        if (care.IsKiosk())
+            view = inflater.inflate(R.layout.kiosk_fragment_time_setting, container, false);
+        else
+            view = inflater.inflate(R.layout.fragment_time_setting, container, false);
         if (excerciseMode != null) {
             count = excerciseMode.getSaveState().getInt("count");
         }

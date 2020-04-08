@@ -236,7 +236,7 @@ public class Main extends DCActivity implements View.OnClickListener {
     }
 
     private CountDownTimer SecondTimer() {
-        return new CountDownTimer(count * 1000+500, 1000) {
+        return new CountDownTimer(count * 1000 + 500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
@@ -260,13 +260,13 @@ public class Main extends DCActivity implements View.OnClickListener {
 
             @Override
             public void onFinish() {
-                new NormalAlert(main, "30분이 경과되었습니다.",false).show();
+                new NormalAlert(main, "30분이 경과되었습니다.", false).show();
             }
         };
     }
 
     private CountDownTimer MinuteTimer() {
-        return new CountDownTimer(count * 1000+500, 1000) {
+        return new CountDownTimer(count * 1000 + 500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
@@ -465,7 +465,10 @@ public class Main extends DCActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if (care.IsKiosk())
+            setContentView(R.layout.kiosk_activity_main);
+        else
+            setContentView(R.layout.activity_main);
         main = this;
         DCButtonManager.setMainContext(main);
         try {
@@ -533,7 +536,7 @@ public class Main extends DCActivity implements View.OnClickListener {
     public void onDestroy() {
         try {
             super.onDestroy();
-            if(main.currentFragment.getClass() != TimeSetting.class)
+            if (main.currentFragment.getClass() != TimeSetting.class)
                 dcSoundThread.stopstream();
             if (countDownTimer != null)
                 countDownTimer.cancel();

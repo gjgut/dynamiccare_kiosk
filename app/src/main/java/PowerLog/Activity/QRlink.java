@@ -15,7 +15,10 @@ public class QRlink extends DCActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_etc_qr_link);
+            if (care.IsKiosk())
+                setContentView(R.layout.kiosk_activity_etc_qr_link);
+            else
+                setContentView(R.layout.activity_etc_qr_link);
             btn_back = findViewById(R.id.btn_back);
             btn_back.setOnClickListener(new View.OnClickListener() {
                 @Override

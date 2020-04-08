@@ -3,6 +3,10 @@ package PowerLog.Common;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.webkit.WebView;
 
 import PowerLog.Common.Component.DCfragment;
@@ -28,8 +32,8 @@ public class DynamicCare extends Application {
         return isKiosk;
     }
 
-    public static void setIsKiosk() {
-        DynamicCare.isKiosk = checkTabletDeviceWithProperties();
+    public void setIsKiosk() {
+        DynamicCare.isKiosk = checkTabletDeviceWithProperties(getApplicationContext());
     }
 
     public static DCfragment getTempFragment() {
@@ -166,23 +170,10 @@ public class DynamicCare extends Application {
         }
     }
 
-    private static boolean checkTabletDeviceWithProperties()
+    private static boolean checkTabletDeviceWithProperties(Context context)
     {
-        try
-        {
-            InputStream ism = Runtime.getRuntime().exec("getprop ro.build.characteristics").getInputStream();
-            byte[] bts = new byte[1024];
-            ism.read(bts);
-            ism.close();
+        return context.getResources().getConfiguration().smallestScreenWidthDp >= 600;
 
-            boolean isTablet = new String(bts).toLowerCase().contains("tablet");
-            return isTablet;
-        }
-        catch (Throwable t)
-        {
-            t.printStackTrace();
-            return false;
-        }
     }
 
 

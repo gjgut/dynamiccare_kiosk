@@ -162,7 +162,11 @@ public class SelectWorkOut extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_workout, container, false);
+        View view;
+        if (care.IsKiosk())
+            view = inflater.inflate(R.layout.fragment_select_workout, container, false);
+        else
+            view = inflater.inflate(R.layout.fragment_select_workout, container, false);
 
         try {
             Date currentTime = Calendar.getInstance().getTime();

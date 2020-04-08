@@ -326,7 +326,11 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try {
-            View view = inflater.inflate(R.layout.fragment_result_graph, container, false);
+            View view;
+            if (care.IsKiosk())
+                view = inflater.inflate(R.layout.kiosk_fragment_result_graph, container, false);
+            else
+                view = inflater.inflate(R.layout.fragment_result_graph, container, false);
             setViews(view);
             setBottomBar(false);
             return view;

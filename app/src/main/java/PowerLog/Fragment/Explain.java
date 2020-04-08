@@ -155,7 +155,11 @@ public class Explain extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_explain, container, false);
+        View view;
+        if (care.IsKiosk())
+            view = inflater.inflate(R.layout.kiosk_fragment_explain, container, false);
+        else
+            view = inflater.inflate(R.layout.fragment_explain, container, false);
         setViews(view);
         return view;
     }

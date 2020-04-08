@@ -34,7 +34,10 @@ public class Administrator extends DCActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_administrator);
+        if(care.IsKiosk())
+            setContentView(R.layout.kiosk_activity_administrator);
+        else
+            setContentView(R.layout.activity_administrator);
         try {
             ViewMapping();
 
