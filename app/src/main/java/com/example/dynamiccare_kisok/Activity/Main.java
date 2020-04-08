@@ -226,8 +226,8 @@ public class Main extends DCActivity implements View.OnClickListener {
             countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
-//        countDownTimer = SecondTimer();
-        countDownTimer = MinuteTimer();
+        countDownTimer = SecondTimer();
+//        countDownTimer = MinuteTimer();
         countDownTimer.start();
     }
 
@@ -246,10 +246,10 @@ public class Main extends DCActivity implements View.OnClickListener {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.i("Timer", String.valueOf(count));
-                if (count == 30) {
+                if (count == 600) {
                     alertflag = true;
                     BottomRestTime.setTextColor(Color.RED);
-                } else if (count < 30 &&
+                } else if (count < 600 &&
                         alertflag
                         && DCButtonManager.getDCState() != DCButtonManager.State.Excercise
                         && DCButtonManager.getDCState() != DCButtonManager.State.Ready
