@@ -226,8 +226,8 @@ public class Main extends DCActivity implements View.OnClickListener {
             countDownTimer.cancel();
         count += time;
         BottomRestTime.setTextColor(Color.WHITE);
-        countDownTimer = SecondTimer();
-//        countDownTimer = MinuteTimer();
+//        countDownTimer = SecondTimer();
+        countDownTimer = MinuteTimer();
         countDownTimer.start();
     }
 

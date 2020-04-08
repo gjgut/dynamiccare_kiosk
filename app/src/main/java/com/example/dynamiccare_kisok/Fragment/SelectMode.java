@@ -30,14 +30,13 @@ public class SelectMode extends DCfragment {
         super(main);
         if(DCButtonManager.getDCState()== DCButtonManager.State.StartSetting)
 
-        care.UpdateJson();
         DCButton.PressedOff();
     }
 
     @Override
     public void onClick(View v) {
         try {
-//            main.getusbService().write(Commands.Home(true));
+            care.UpdateJson();
             switch (v.getId()) {
                 case R.id.btn_select_exec: {
                     goExcMode(false);

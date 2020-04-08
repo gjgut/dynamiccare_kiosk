@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -37,14 +38,15 @@ public class Login extends DCActivity implements View.OnClickListener {
     DCEditText edt_code;
     ImageView dclogo;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
             ViewMapping();
-            setDeviceID();
             setListener();
+            setDeviceID();
 
         } catch (Exception e) {
             e.printStackTrace();
