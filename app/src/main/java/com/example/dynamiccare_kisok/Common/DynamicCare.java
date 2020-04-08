@@ -1,7 +1,9 @@
 package com.example.dynamiccare_kisok.Common;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.telephony.TelephonyManager;
 
 import com.example.dynamiccare_kisok.Activity.Main;
 import com.example.dynamiccare_kisok.Common.Component.DCfragment;
@@ -13,6 +15,8 @@ import com.example.dynamiccare_kisok.Fragment.ExcerciseMode;
 import com.example.dynamiccare_kisok.Fragment.SelectWorkOut;
 
 import org.json.JSONObject;
+
+import java.util.UUID;
 
 public class DynamicCare extends Application {
     public static DCSoundPlayer dcSoundPlayer;
@@ -53,7 +57,7 @@ public class DynamicCare extends Application {
     }
 
     public static String getDeviceID() {
-        return "000000000000000";
+        return DeviceID;
     }
 
     public static void setDeviceID(String deviceID) {
@@ -157,6 +161,7 @@ public class DynamicCare extends Application {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onCreate() {

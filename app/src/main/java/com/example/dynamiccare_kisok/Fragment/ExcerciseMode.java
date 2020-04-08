@@ -315,7 +315,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         else if (count < 10)
                             main.PlaySound(dcSoundPlayer.getCoundSound("0"+String.valueOf(count)));
                         Log.i("Timer Used", String.valueOf(count));
-                        Toast.makeText(main,"Timer Used"+String.valueOf(count),Toast.LENGTH_LONG);
+//                        Toast.makeText(main,"Timer Used"+String.valueOf(count),Toast.LENGTH_LONG);
                         count--;
                     }
 
@@ -740,7 +740,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             Log.i("SendJson", jsonObject.toString());
             JSONObject result = new DCHttp().SendWorkout(jsonObject.toString());
             Log.i("SendJson", result.toString());
-            new NormalAlert(main, "결과를 전송하였습니다."+result.toString(), true).show();
+//            new NormalAlert(main, "결과를 전송하였습니다.", true).show();
         } catch (Exception e) {
             if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
             {

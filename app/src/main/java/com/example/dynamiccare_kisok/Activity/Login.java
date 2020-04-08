@@ -1,5 +1,6 @@
 package com.example.dynamiccare_kisok.Activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -24,6 +25,10 @@ import com.example.dynamiccare_kisok.Dialog.Warning;
 import com.example.dynamiccare_kisok.R;
 
 import org.json.JSONObject;
+
+import java.util.UUID;
+
+import static android.view.HapticFeedbackConstants.LONG_PRESS;
 
 
 public class Login extends DCActivity implements View.OnClickListener {
@@ -94,6 +99,7 @@ public class Login extends DCActivity implements View.OnClickListener {
         btn_login.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setDeviceID() {
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -108,9 +114,14 @@ public class Login extends DCActivity implements View.OnClickListener {
                     Toast.makeText(this, "기기식별번호 전송을 위해 카메라 권한이 필요합니다.", Toast.LENGTH_LONG).show();
                 }
             }
-            TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String device = manager.getDeviceId();
-            care.setDeviceID(device);
+            final TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            final String tmDevice, tmSerial, androidId;
+            tmDevice = "" + tm.getDeviceId();
+            tmSerial = "" + tm.getSimSerialNumber();
+            androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
+            String deviceId = deviceUuid.toString();
+            care.setDeviceID(deviceId);
         }catch (Exception e)
         {
 //            new NormalAlert(this, e.toString(), true).show();

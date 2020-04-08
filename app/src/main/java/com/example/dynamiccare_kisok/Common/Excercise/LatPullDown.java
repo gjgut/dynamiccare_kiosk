@@ -49,6 +49,6 @@ public class LatPullDown extends Excercise {
 
     @Override
     public String getDBCode() {
-        return "E";
+        return "H";
     }
 }
