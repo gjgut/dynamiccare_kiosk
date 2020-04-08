@@ -64,15 +64,14 @@ public class Login extends DCActivity implements View.OnClickListener {
                     care.setCurrentUserJson(response);
                     act = Main.class;
                 } else
-                    Toast.makeText(getApplicationContext(), "고유번호에 해당하는 사용자가 없습니다.", Toast.LENGTH_SHORT).show();
+                    new NormalAlert(this,"고유번호에 해당하는 사용자가 없습니다.").show();
             } else if (v.getId() == R.id.bt_dwload) {
                 act = QRlink.class;
             }
             care.setUserId(edt_code.getSource().getText().toString());
                 ChangeActivity(act);
         } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show();
+                new NormalAlert(this,"오류가 발생하였습니다. 고유번호를 확인해주십시오.").show();
         }
     }
 
