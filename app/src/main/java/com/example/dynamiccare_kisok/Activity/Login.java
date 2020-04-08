@@ -69,10 +69,6 @@ public class Login extends DCActivity implements View.OnClickListener {
                 act = QRlink.class;
             }
             care.setUserId(edt_code.getSource().getText().toString());
-            if (care.getCurrentUserJson() == null || care.getDeviceID() == null) {
-//                new NormalAlert(this, "오류가 발생하였습니다.인터넷 연결을 확인해 주십시오.", true).show();
-                return;
-            } else
                 ChangeActivity(act);
         } catch (Exception e) {
             e.printStackTrace();
