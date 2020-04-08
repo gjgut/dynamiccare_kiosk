@@ -543,7 +543,7 @@ public class Main extends DCActivity implements View.OnClickListener {
                 dcSoundThread.stopstream();
             if (countDownTimer != null)
                 countDownTimer.cancel();
-            care.setLimit(30);
+            care.setLimit(0);
         } catch (Exception e) {
             Log.i("Error", e.toString());
         }

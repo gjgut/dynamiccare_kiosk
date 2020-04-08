@@ -17,6 +17,7 @@ import com.example.dynamiccare_kisok.R;
 
 public class NormalAlert extends Dialog {
     Main main;
+    Context context;
     Button yes;
     String msg;
     TextView txt_messsage;
@@ -24,13 +25,15 @@ public class NormalAlert extends Dialog {
 
     public NormalAlert(@NonNull Context context,String msg) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
-        this.main = (Main)context;
+        this.context = context;
         this.msg = msg;
     }
 
     public NormalAlert(@NonNull Context context,String msg,boolean isNormal) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
-        this.main = (Main)context;
+        this.context = context;
+        if(!isNormal)
+            this.main = (Main)context;
         this.msg = msg;
         this.isNormal = isNormal;
     }
