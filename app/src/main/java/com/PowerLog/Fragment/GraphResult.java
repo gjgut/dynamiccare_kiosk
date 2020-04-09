@@ -27,14 +27,13 @@ import com.PowerLog.R;
 
 import org.json.JSONObject;
 
-public class GraphResult extends DCfragment implements View.OnTouchListener, View.OnFocusChangeListener {
+public class GraphResult extends DCfragment implements View.OnTouchListener{
 
     DCButton Low, Mid, High;
     DCActionButton Up, Down;
     DCActionButton ready, go;
     ProgressBar power;
     MeasureResult resCalculator;
-    DCEditText edt_time, edt_weight;
     DCButtonManager dcButtonManager;
     boolean isSend = true;
 
@@ -64,16 +63,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
 
     }
 
-
-    public void setPropertiesFocusable(boolean value) {
-        try {
-            edt_time.getSource().setEnabled(value);
-            edt_weight.getSource().setEnabled(value);
-        } catch (Exception e) {
-            Log.i("Error", e.toString());
-        }
-
-    }
 
 
     public void setBottomBar(boolean isShow) {
@@ -106,12 +95,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
 
             power = v.findViewById(R.id.progressBar_power);
 
-            edt_time = new DCEditText(v.findViewById(R.id.edt_time));
-            edt_weight = new DCEditText(v.findViewById(R.id.edt_weight));
-
-//            edt_time.getSource().setText(main.getMeasureTime());
-//            edt_weight.getSource().setText(main.getMeasureWeight());
-
             setListener();
 
             dcButtonManager = new DCButtonManager(go, ready, Up, Down);
@@ -122,8 +105,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
     }
 
     private void setListener() {
-        edt_time.getSource().setOnFocusChangeListener(this);
-        edt_weight.getSource().setOnFocusChangeListener(this);
 
 
         Low.getButton().setOnClickListener(this);
@@ -149,7 +130,7 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                             setBottomBar(false);
                             if (resCalculator != null)
                                 main.getusbService().write("$CSP0#".getBytes());
-                            main.getusbService().write(Commands.MeasureStart(edt_weight.getSource().getText().toString(), edt_time.getSource().getText().toString()));
+                            main.getusbService().write(Commands.MeasureStart("300","10"));
                             resCalculator = new MeasureResult();
 
                             go.getButton().setImageDrawable(getResources().getDrawable(R.drawable.btn_stop));
@@ -201,24 +182,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
         }
     }
 
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if (v.getId() == R.id.edt_weight) {
-            if (!hasFocus)
-                if (Integer.valueOf(edt_time.getSource().getText().toString()) > 500)
-                    new NormalAlert(main, "입력할 수 있는 무게 범위를 초과하였습니다.").show();
-                else
-                    main.setMeasureWeight(Integer.valueOf(edt_weight.getSource().getText().toString()));
-        } else if (v.getId() == R.id.edt_time) {
-            if (!hasFocus) {
-                if (Integer.valueOf(edt_time.getSource().getText().toString()) > 999)
-                    new NormalAlert(main, "입력할 수 있는 시간 범위를 초과하였습니다.").show();
-                else
-                    main.setMeasureTime(Integer.valueOf(edt_time.getSource().getText().toString()));
-            }
-
-        }
-    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -284,7 +247,6 @@ public class GraphResult extends DCfragment implements View.OnTouchListener, Vie
                     if (!ready.IsPressed()) {
                         ready.setPressed();
                         DCButtonManager.setDCState(DCButtonManager.State.MeasureReady);
-                        setPropertiesFocusable(false);
                         main.PlaySound(new int[]{R.raw.mesurement_will_begin_after_bee_sound, R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english});
                         main.getusbService().write(Commands.MeasureReady(String.valueOf(main.getMeasureWeight()), String.valueOf(main.getMeasureTime())));
                         go.Activate();

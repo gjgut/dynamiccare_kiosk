@@ -55,7 +55,6 @@ public class Login extends DCActivity implements View.OnClickListener {
             else
                 setContentView(R.layout.activity_login);
             if (care.IsKiosk()) {
-                Toast.makeText(this,String.valueOf(care.IsKiosk()),Toast.LENGTH_LONG).show();
                 KioskViewMapping();
                 KiosksetListener();
             } else {

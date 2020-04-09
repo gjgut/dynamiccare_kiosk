@@ -210,19 +210,15 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/edt_weight"
-                        android:layout_width="68dp"
+                    <TextView
+                        android:id="@+id/txt_lb_maxweight"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:ems="10"
+                        android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:maxLines="1"
                         android:text="300"
-                        android:textAlignment="center"
                         android:textColor="#FFFFFF"
-                        android:textSize="24sp" />
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/txt_maxweight"
@@ -271,19 +267,15 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/edt_time"
-                        android:layout_width="62dp"
+                    <TextView
+                        android:id="@+id/txt_lb_maxtime"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:maxLines="1"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="10"
-                        android:textAlignment="center"
                         android:textColor="#FFFFFF"
-                        android:textSize="24sp" />
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/txt_duration"

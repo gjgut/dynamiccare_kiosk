@@ -50,11 +50,11 @@ public class DynamicCare extends Application {
     }
 
     public String getMeasureTime() {
-        return Admin.getString("mTime", "");
+        return "300";
     }
 
     public String getMeasureWeight() {
-        return Admin.getString("mWeight", "");
+        return "10";
     }
 
     public static String getDeviceID() {
