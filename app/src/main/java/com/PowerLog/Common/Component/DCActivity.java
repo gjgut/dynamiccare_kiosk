@@ -20,6 +20,10 @@ public abstract class DCActivity extends AppCompatActivity {
 
     protected void ViewMapping(){}
     protected void setListener(){}
+    public DynamicCare getCare()
+    {
+        return care;
+    }
 
     public void ChangeActivity(Class name) {
         startActivity(new Intent(getApplicationContext(), name));

@@ -188,16 +188,20 @@ public class SelectWorkOut extends DCfragment {
             plan = view.findViewById(R.id.list_plan);
             workout = view.findViewById(R.id.list_workout);
 
-            adapter_plan = new DCListViewAdapter(R.layout.list_plan_item);
-            adapter_workout = new DCListViewAdapter(R.layout.list_workout_item);
+            if (care.IsKiosk()) {
+                adapter_plan = new DCListViewAdapter(R.layout.kiosk_list_plan_item);
+                adapter_workout = new DCListViewAdapter(R.layout.kiosk_list_workout_item);
+            }
+            else
+            {
+                adapter_plan = new DCListViewAdapter(R.layout.list_plan_item);
+                adapter_workout = new DCListViewAdapter(R.layout.list_workout_item);
+            }
             care.UpdateJson();
             this.WorkoutJson = (JSONObject) care.getCurrentUserJson().get("resultData");
             PaintListView();
             setListener();
             Pagging();
-
-            //            if (adapter_plan.getSize() == 0 && adapter_workout.getSize() == 0)
-//                main.ReplaceFragment(new SelectMode(main), false);
 
 
         } catch (Exception e) {
