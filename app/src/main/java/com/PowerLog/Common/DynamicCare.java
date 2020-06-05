@@ -3,6 +3,8 @@ package com.PowerLog.Common;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.PowerLog.Common.Component.DCfragment;
 import com.PowerLog.Common.Util.DCHttp;
@@ -20,6 +22,13 @@ public class DynamicCare extends Application {
     public static DCfragment tempFragment;
     public SharedPreferences Admin;
     public static boolean isKiosk=false;
+    private Thread.UncaughtExceptionHandler androidDefaultUEH;
+    private UnCaughtExceptionhan unCaughtExceptionhan;
+
+    public UnCaughtExceptionhan getUnCaughtExceptionhan(){
+        return unCaughtExceptionhan;
+    }
+
 
     public static boolean IsKiosk() {
         return isKiosk;
@@ -94,7 +103,7 @@ public class DynamicCare extends Application {
                 return true;
             } else
                 return false;
-            }catch (Exception e)
+        }catch (Exception e)
         {
             e.printStackTrace();
             return false;
@@ -163,16 +172,30 @@ public class DynamicCare extends Application {
         }
     }
 
-    private static boolean checkTabletDeviceWithProperties(Context context)
+    public static boolean checkTabletDeviceWithProperties(Context context)
     {
         return context.getResources().getConfiguration().smallestScreenWidthDp >= 600;
 
     }
 
+    public class UnCaughtExceptionhan implements Thread.UncaughtExceptionHandler
+    {
+        @Override
+        public void uncaughtException(Thread thread,Throwable ex)
+        {
+            Log.i("ERRORRRRRR",ex.toString());
+            Toast.makeText(getApplicationContext(),ex.toString(),Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public void onCreate() {
+        androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
+        unCaughtExceptionhan = new UnCaughtExceptionhan();
+
+        Thread.setDefaultUncaughtExceptionHandler(unCaughtExceptionhan);
         super.onCreate();
+
         dcSoundPlayer = new DCSoundPlayer();
         Admin = getSharedPreferences("password", MODE_PRIVATE);
         if(getAdminPassword()=="")
