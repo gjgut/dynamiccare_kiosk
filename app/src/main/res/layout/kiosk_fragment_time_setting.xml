@@ -81,7 +81,7 @@
         android:lineSpacingExtra="12sp"
         android:text="이용시간을 선택한 뒤 \n관리자 번호를 입력해 주세요"
         android:textColor="#FFFFFF"
-        android:textSize="40sp"
+        android:textSize="40dp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.169"

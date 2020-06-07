@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    administrator-->
+
+<!--    qr_link-->
+
+<!--    login-->
+    <dimen name="login_content_top">120dp</dimen>
+    <dimen name="login_content_left">100dp</dimen>
+    <dimen name="login_content_right">100dp</dimen>
+    <dimen name="login_content_height">380dp</dimen>
+    <dimen name="login_input_top">24dp</dimen>
+    <dimen name="login_input_etcode_top">60dp</dimen>
+    <dimen name="login_input_etcode_left">120dp</dimen>
+    <dimen name="login_input_etcode_right">120dp</dimen>
+    <dimen name="login_input_etcode_textsize">40dp</dimen>
+    <dimen name="login_input_bt_login_top">60dp</dimen>
+    <dimen name="login_input_bt_login_left">120dp</dimen>
+    <dimen name="login_input_bt_login_right">120dp</dimen>
+    <dimen name="login_input_bt_login_textsize">24dp</dimen>
+    <dimen name="login_input_bt_download_top">60dp</dimen>
+    <dimen name="login_input_bt_download_left">120dp</dimen>
+    <dimen name="login_input_bt_download_right">120dp</dimen>
+    <dimen name="login_input_bt_download_textsize">24dp</dimen>
+    <dimen name="login_input_bt_txt_log_top">60dp</dimen>
+    <dimen name="login_input_bt_txt_log_left">120dp</dimen>
+    <dimen name="login_input_bt_txt_log_right">120dp</dimen>
+    <dimen name="login_input_bt_txt_log_textsize">24dp</dimen>
+
+
+
+
+
+<!--    main-->
+<!--    splash-->
+<!--    actionbar-->
+<!--    dialog-->
+<!--    authh_authentification-->
+<!--    auth_limit_off-->
+<!--    auth_set_admin-->
+<!--    excercise_mode-->
+<!--    explain-->
+<!--    instruction-->
+<!--    result_detail-->
+<!--    result_graph-->
+<!--    select_mode-->
+<!--    select_workout-->
+<!--    time_setting-->
+
+</resources>
