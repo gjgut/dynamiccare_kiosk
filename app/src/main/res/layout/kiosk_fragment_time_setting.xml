@@ -1,163 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout10"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="#1d1f21">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/buttons"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/timesetting_margin_left"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/timesetting_margin_right"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이용 시간"
-            android:textColor="#3993de"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="12"
+            tools:layout_conversion_absoluteHeight="339dp"
+            tools:layout_conversion_absoluteWidth="700dp">
 
-        <LinearLayout
-            android:id="@+id/ButtonGroup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="#00FFFFFF"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView4">
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="12sp"
+                android:text="이용시간을 선택한 뒤 \n관리자 번호를 입력해 주세요"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/timesetting_title"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="113dp"
+                tools:layout_conversion_absoluteWidth="466dp" />
 
-            <ImageButton
-                android:id="@+id/btn_minutes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timesetting_margin_mid"
+                android:text="이용 시간"
+                android:textColor="#3993de"
+                android:textSize="@dimen/timesetting_bluetitle"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                tools:layout_conversion_absoluteHeight="54dp"
+                tools:layout_conversion_absoluteWidth="162dp" />
+
+            <LinearLayout
+                android:id="@+id/ButtonGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timesetting_margin_general"
                 android:background="#00FFFFFF"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_minute" />
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView4"
+                app:layout_constraintVertical_bias="1.0"
+                tools:layout_conversion_absoluteHeight="119dp"
+                tools:layout_conversion_absoluteWidth="680dp">
 
-            <ImageButton
-                android:id="@+id/btn_hour"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#00FFFFFF"
-                android:cropToPadding="true"
-                android:padding="0dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/btn_hr" />
+                <ImageButton
+                    android:id="@+id/btn_minutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:background="#00FFFFFF"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_minute" />
 
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btn_hour"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:background="#00FFFFFF"
+                    android:cropToPadding="true"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_hr" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:lineSpacingExtra="12sp"
-        android:text="이용시간을 선택한 뒤 \n관리자 번호를 입력해 주세요"
-        android:textColor="#FFFFFF"
-        android:textSize="40dp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="168dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttons">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/timesetting_margin_mid"
+            android:layout_weight="10"
+            tools:layout_conversion_absoluteHeight="381dp"
+            tools:layout_conversion_absoluteWidth="700dp">
 
-        <TextView
-            android:id="@+id/password_reject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="관리자 비밀번호가 틀립니다."
-            android:textColor="#8F1B1B"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
+            <TextView
+                android:id="@+id/password_reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timesetting_margin_general"
+                android:text="관리자 비밀번호가 틀립니다."
+                android:textColor="#8F1B1B"
+                android:textSize="@dimen/timesetting_reject"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_adminpw"
+                tools:layout_conversion_absoluteHeight="28dp"
+                tools:layout_conversion_absoluteWidth="239dp" />
 
-        <EditText
-            android:id="@+id/et_adminpw"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_weight="1"
-            android:backgroundTint=" #33ffffff"
-            android:ems="10"
-            android:hint="관리자 번호 입력"
-            android:inputType="numberPassword"
-            android:textColor="#FFFFFF"
-            android:textColorHighlight="#00BB3636"
-            android:textColorHint="#33ffffff"
-            android:textSize="36sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            <EditText
+                android:id="@+id/et_adminpw"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timesetting_margin_general"
+                android:backgroundTint=" #33ffffff"
+                android:ems="10"
+                android:hint="관리자 번호 입력"
+                android:inputType="numberPassword"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#00BB3636"
+                android:textColorHint="#33ffffff"
+                android:textSize="@dimen/timesetting_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                tools:layout_conversion_absoluteHeight="75dp"
+                tools:layout_conversion_absoluteWidth="700dp" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="관리자 승인"
-            android:textColor="#3993de"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관리자 승인"
+                android:textColor="#3993de"
+                android:textSize="@dimen/timesetting_bluetitle"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="54dp"
+                tools:layout_conversion_absoluteWidth="200dp" />
 
-        <Button
-            android:id="@+id/btn_ok"
-            android:layout_width="263dp"
-            android:layout_height="116dp"
-            android:layout_marginTop="56dp"
-            android:background="#37393e "
-            android:text="확인"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_reject" />
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="@dimen/timesetting_button_width"
+                android:layout_height="@dimen/timesetting_button_height"
+                android:layout_marginTop="@dimen/timesetting_margin_general"
+                android:background="#37393e "
+                android:text="확인"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/timesetting_label"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/password_reject"
+                app:layout_constraintVertical_bias="1.0"
+                tools:layout_conversion_absoluteHeight="116dp"
+                tools:layout_conversion_absoluteWidth="263dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+

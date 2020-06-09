@@ -22,22 +22,20 @@
             android:id="@+id/txt_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="60dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="@dimen/dialog_top"
             android:lineSpacingExtra="12sp"
             android:text="운동이 끝났습니다.\n다시 설정하시겠습니까?"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="36sp"
+            android:textSize="@dimen/dialog_text_big"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="106dp"
-            android:layout_marginTop="60dp"
+            android:layout_height="@dimen/dialog_height"
+            android:layout_marginTop="@dimen/dialog_top"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +50,7 @@
                 android:background="#37393e "
                 android:text="아니오"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp" />
+                android:textSize="@dimen/dialog_text_small" />
 
             <Button
                 android:id="@+id/dialog_btn_yes"
@@ -62,7 +60,7 @@
                 android:background="#37393e "
                 android:text="예"
                 android:textColor="#3993de"
-                android:textSize="30sp" />
+                android:textSize="@dimen/dialog_text_small" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

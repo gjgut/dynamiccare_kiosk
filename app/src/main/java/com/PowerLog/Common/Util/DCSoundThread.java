@@ -178,8 +178,12 @@ public class DCSoundThread {
             case R.raw.the_measurement_starts_when_you_hear_the_beep_sound_english:
                 return 4000;
             case R.raw.adjust_the_bar_or_wire_properly_english:
+            case R.raw.put_down_the_bar_to_end_point:
+            case R.raw.raise_the_bar_to_end_point:
                 return 5000;
             case R.raw.take_pose_and_place_bar_or_wire_to_right_position:
+            case R.raw.raise_the_bar_to_start_point:
+            case R.raw.put_down_the_bar_to_the_start_point:
                 return 7000;
 
         }

@@ -23,8 +23,7 @@
     <dimen name="login_input_bt_download_right">120dp</dimen>
     <dimen name="login_input_bt_download_textsize">24dp</dimen>
     <dimen name="login_input_bt_txt_log_top">60dp</dimen>
-    <dimen name="login_input_bt_txt_log_left">120dp</dimen>
-    <dimen name="login_input_bt_txt_log_right">120dp</dimen>
+    <dimen name="login_input_bt_txt_log_bottom">75dp</dimen>
     <dimen name="login_input_bt_txt_log_textsize">24dp</dimen>
 
 
@@ -39,12 +38,26 @@
 <!--    auth_limit_off-->
 <!--    auth_set_admin-->
 <!--    excercise_mode-->
+    <dimen name="excercise_text">30dp</dimen>
 <!--    explain-->
 <!--    instruction-->
-<!--    result_detail-->
+    <dimen name="instruction_margin">20dp</dimen>
+    <dimen name="instruction_title">36dp</dimen>
+    <dimen name="instruction_linespacing">15dp</dimen>
+    <dimen name="instruction_text">20dp</dimen>
+    <!--    result_detail-->
+    <dimen name="graph_margin_top">40dp</dimen>
+    <dimen name="graph_margin_bottom">40dp</dimen>
+    <dimen name="graph_margin_start">80dp</dimen>
+    <dimen name="graph_margin_end">80dp</dimen>
+    <dimen name="graph_label">30dp</dimen>
 <!--    result_graph-->
 <!--    select_mode-->
 <!--    select_workout-->
 <!--    time_setting-->
+    <dimen name="timesetting_title">40dp</dimen>
+    <dimen name="timesetting_label">40dp</dimen>
+    <dimen name="timesetting_edit">40dp</dimen>
+    <dimen name="timesetting_button">30dp</dimen>
 
 </resources>

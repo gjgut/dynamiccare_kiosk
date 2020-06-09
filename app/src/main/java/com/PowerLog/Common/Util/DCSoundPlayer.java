@@ -47,6 +47,10 @@ public class DCSoundPlayer {
             next_set_will_start_soon_english,
             raise_the_bar,
             raise_the_bar_english,
+            raise_the_bar_to_end,
+            raise_the_bar_to_start,
+            put_down_the_bar_to_start,
+            put_down_the_bar_to_end,
             start_excercise,
             start_excercise_english,
             take_a_break,
@@ -273,6 +277,12 @@ public class DCSoundPlayer {
             the_measurement_is_going_to_stop_english = soundPool.load(context, R.raw.the_measurement_is_going_to_stop_english, 1);
             please_check_the_results_english = soundPool.load(context, R.raw.please_check_the_results_english, 1);
 
+
+            raise_the_bar_to_end = soundPool.load(context, R.raw.raise_the_bar_to_end_point, 1);
+            raise_the_bar_to_start = soundPool.load(context, R.raw.raise_the_bar_to_start_point, 1);
+            put_down_the_bar_to_start = soundPool.load(context, R.raw.put_down_the_bar_to_the_start_point, 1);
+            put_down_the_bar_to_end = soundPool.load(context, R.raw.put_down_the_bar_to_end_point, 1);
+
             one = soundPool.load(context, R.raw.one, 1);
             two = soundPool.load(context, R.raw.two, 1);
             three = soundPool.load(context, R.raw.three, 1);
@@ -405,6 +415,19 @@ public class DCSoundPlayer {
                     break;
                 case R.raw.thanks_for_your_effort:
                     soundPool.play(thanks_for_your_effort, 1, 1, 0, 0, 1);
+                    break;
+
+                case R.raw.raise_the_bar_to_end_point:
+                    soundPool.play(raise_the_bar_to_end, 1, 1, 0, 0, 1);
+                    break;
+                case R.raw.raise_the_bar_to_start_point:
+                    soundPool.play(raise_the_bar_to_start, 1, 1, 0, 0, 1);
+                    break;
+                case R.raw.put_down_the_bar_to_end_point:
+                    soundPool.play(put_down_the_bar_to_end, 1, 1, 0, 0, 1);
+                    break;
+                case R.raw.put_down_the_bar_to_the_start_point:
+                    soundPool.play(put_down_the_bar_to_start, 1, 1, 0, 0, 1);
                     break;
 
                 case R.raw.one_set_complete:

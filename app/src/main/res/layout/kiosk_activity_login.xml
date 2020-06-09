@@ -10,14 +10,12 @@
     <LinearLayout
         android:id="@+id/Content"
         android:layout_width="0dp"
-        android:layout_height="380dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="100dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -36,90 +35,91 @@
                 android:clickable="false"
                 android:contextClickable="false"
                 android:longClickable="true"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:visibility="visible" />
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/Inputs"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/login_margin_side"
+                    android:layout_marginTop="@dimen/login_margin_small"
+                    android:layout_marginEnd="@dimen/login_margin_side"
+                    android:layout_weight="6"
+                    android:gravity="center"
+                    android:hint="고유번호 입력"
+                    android:inputType="number"
+                    android:letterSpacing="-0.02"
+                    android:maxLength="12"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#33ffffff"
+                    android:textSize="@dimen/login_input_textsize" />
+
+                <Button
+                    android:id="@+id/bt_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/login_margin_side"
+                    android:layout_marginTop="@dimen/login_margin_big"
+                    android:layout_marginEnd="@dimen/login_margin_side"
+                    android:layout_weight="6"
+                    android:background="#3993de"
+                    android:text="로그인"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/login_input_bt_txt_log_textsize" />
+
+                <Button
+                    android:id="@+id/bt_dwload"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/login_margin_side"
+                    android:layout_marginTop="@dimen/login_margin_big"
+                    android:layout_marginEnd="@dimen/login_margin_side"
+                    android:layout_weight="6"
+                    android:background="#ffffff"
+                    android:text="앱 다운로드"
+                    android:textColor="#3993de"
+                    android:textSize="@dimen/login_input_bt_txt_log_textsize" />
+
+                <TextView
+                    android:id="@+id/txt_log_exp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/login_margin_big"
+                    android:layout_weight="10"
+                    android:gravity="center_horizontal"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="18sp"
+                    android:text="고유번호는 다이나믹케어 앱에서 확인하실 수 있습니다\n(앱 &gt; 더보기 &gt; 키오스크 간편 로그인)"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/login_input_bt_txt_log_textsize" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Inputs"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Content">
-
-        <EditText
-            android:id="@+id/et_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="120dp"
-            android:backgroundTint=" #33ffffff"
-            android:gravity="center"
-            android:hint="고유번호 입력"
-            android:inputType="number"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="21sp"
-            android:maxLength="12"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#33ffffff"
-            android:textSize="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/bt_login"
-            android:layout_width="0dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="120dp"
-            android:background="#3993de"
-            android:text="로그인"
-            android:textColor="#ffffff"
-            android:textSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_code" />
-
-        <Button
-            android:id="@+id/bt_dwload"
-            android:layout_width="0dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="120dp"
-            android:background="#ffffff"
-            android:text="앱 다운로드"
-            android:textColor="#3993de"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bt_login" />
-
-        <TextView
-            android:id="@+id/txt_log_exp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:layout_marginBottom="75dp"
-            android:gravity="center_horizontal"
-            android:letterSpacing="-0.02"
-            android:lineSpacingExtra="18sp"
-            android:text="고유번호는 다이나믹케어 앱에서 확인하실 수 있습니다\n(앱 &gt; 더보기 &gt; 키오스크 간편 로그인)"
-            android:textColor="#ffffff"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bt_dwload" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

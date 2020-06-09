@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="@dimen/workout_item_height"
         android:background="#37393e"
         android:descendantFocusability="blocksDescendants"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout13"
-            android:layout_width="40dp"
+            android:layout_width="@dimen/workout_item_margin_arrow"
             android:layout_height="0dp"
             android:layout_marginStart="1dp"
             android:background="#3993de"
@@ -26,37 +26,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
-        <TextView
-            android:id="@+id/item_exc_title"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="32dp"
-            android:text="운동 종목"
-            android:textColor="#FFFFFF"
-            android:textSize="36sp"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout13"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/item_exc_content"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="8dp"
-            android:text="운동 분류,무게"
-            android:textColor="#808080"
-            android:textSize="30sp"
+            android:layout_marginStart="@dimen/workout_item_margin_arrow"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/linearLayout13"
-            app:layout_constraintTop_toBottomOf="@+id/item_exc_title" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/item_exc_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/workout_item_margin_vertical"
+                android:text="운동 종목"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/workout_item_text_big" />
+
+            <TextView
+                android:id="@+id/item_exc_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="운동 분류,무게"
+                android:textColor="#808080"
+                android:textSize="@dimen/workout_item_text_small" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/item_btn_ok"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="@dimen/workout_item_margin_arrow"
+            android:layout_marginEnd="@dimen/workout_item_margin_arrow"
+            android:layout_marginBottom="@dimen/workout_item_margin_arrow"
             android:adjustViewBounds="true"
             android:background="#00FFFFFF"
             android:cropToPadding="true"

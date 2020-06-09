@@ -27,7 +27,7 @@
             android:layout_marginTop="32dp"
             android:text="앱에 등록된 오늘의 운동 계획을 \n불러오시겠습니까?"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="@dimen/dialog_text_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="현재 날짜"
             android:textColor="#3993de"
-            android:textSize="24sp"
+            android:textSize="@dimen/dialog_text_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +83,7 @@
             android:layout_marginTop="28dp"
             android:text="불러온 계획은 운동 전 수정이 가능합니다."
             android:textColor="#808080"
-            android:textSize="14sp"
+            android:textSize="@dimen/dialog_text_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 

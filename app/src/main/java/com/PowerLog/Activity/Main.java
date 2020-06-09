@@ -326,6 +326,18 @@ public class Main extends DCActivity implements View.OnClickListener {
                         case "2":
                             PlaySound(new int[]{R.raw.raise_the_bar, R.raw.raise_the_bar_english});
                             break;
+                        case "3":
+                            PlaySound(new int[]{R.raw.put_down_the_bar_to_end_point});
+                            break;
+                        case "4":
+                            PlaySound(new int[]{R.raw.put_down_the_bar_to_the_start_point});
+                            break;
+                        case "5":
+                            PlaySound(new int[]{R.raw.raise_the_bar_to_end_point});
+                            break;
+                        case "6":
+                            PlaySound(new int[]{R.raw.raise_the_bar_to_end_point});
+                            break;
                     }
                     break;
                 case "AEE":

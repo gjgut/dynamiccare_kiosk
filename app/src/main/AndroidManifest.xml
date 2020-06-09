@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.PowerLog.Activity.Administrator"/>
+        <activity android:name="com.PowerLog.Activity.Administrator"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.PowerLog.Fragment.Administrator.ModifyAdmin"
             android:theme="@style/AppTheme.NoActionBar"/>

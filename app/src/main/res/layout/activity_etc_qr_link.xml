@@ -44,7 +44,7 @@
                     android:cropToPadding="true"
                     android:padding="0dp"
                     android:paddingLeft="0dp"
-                    app:srcCompat="@drawable/qr_tempo_cropped" />
+                    app:srcCompat="@drawable/qr_appstore" />
 
                 <ImageButton
                     android:id="@+id/img_apple"
@@ -74,7 +74,7 @@
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/qr_tempo_cropped" />
+                    app:srcCompat="@drawable/qr_play" />
 
                 <ImageButton
                     android:id="@+id/img_android"

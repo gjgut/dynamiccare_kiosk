@@ -51,7 +51,7 @@ public class Login extends DCActivity implements View.OnClickListener {
         try {
             super.onCreate(savedInstanceState);
             if (care.IsKiosk())
-                setContentView(R.layout.kiosk_activity_login);
+                setContentView(R.layout.scalable_activity_login);
             else
                 setContentView(R.layout.activity_login);
             if (care.IsKiosk()) {

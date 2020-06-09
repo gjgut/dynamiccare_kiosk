@@ -46,5 +46,9 @@
     <!--    select_mode-->
     <!--    select_workout-->
     <!--    time_setting-->
+    <dimen name="timesetting_title">40dp</dimen>
+    <dimen name="timesetting_label">40dp</dimen>
+    <dimen name="timesetting_edit">40dp</dimen>
+    <dimen name="timesetting_button">30dp</dimen>
 
 </resources>

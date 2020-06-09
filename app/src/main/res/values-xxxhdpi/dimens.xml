@@ -3,6 +3,8 @@
     <!--    administrator-->
 
     <!--    qr_link-->
+    <dimen name="qr_text">15dp</dimen>
+    <dimen name="qr_qr">100dp</dimen>
 
     <!--    login-->
     <dimen name="login_content_top">120dp</dimen>
@@ -10,41 +12,71 @@
     <dimen name="login_content_right">100dp</dimen>
     <dimen name="login_content_height">380dp</dimen>
     <dimen name="login_input_top">24dp</dimen>
+    <dimen name="login_margin_side">60dp</dimen>
+    <dimen name="login_margin_big">20dp</dimen>
+    <dimen name="login_margin_small">10dp</dimen>
     <dimen name="login_input_etcode_top">60dp</dimen>
-    <dimen name="login_input_etcode_left">120dp</dimen>
-    <dimen name="login_input_etcode_right">120dp</dimen>
-    <dimen name="login_input_etcode_textsize">40dp</dimen>
+    <dimen name="login_input_textsize">20dp</dimen>
+    <dimen name="login_input_etcode_textsize">10dp</dimen>
     <dimen name="login_input_bt_login_top">60dp</dimen>
-    <dimen name="login_input_bt_login_left">120dp</dimen>
-    <dimen name="login_input_bt_login_right">120dp</dimen>
-    <dimen name="login_input_bt_login_textsize">24dp</dimen>
+    <dimen name="login_input_bt_login_textsize">12dp</dimen>
     <dimen name="login_input_bt_download_top">60dp</dimen>
-    <dimen name="login_input_bt_download_left">120dp</dimen>
-    <dimen name="login_input_bt_download_right">120dp</dimen>
-    <dimen name="login_input_bt_download_textsize">24dp</dimen>
+    <dimen name="login_input_bt_download_textsize">12dp</dimen>
     <dimen name="login_input_bt_txt_log_top">60dp</dimen>
-    <dimen name="login_input_bt_txt_log_left">120dp</dimen>
-    <dimen name="login_input_bt_txt_log_right">120dp</dimen>
-    <dimen name="login_input_bt_txt_log_textsize">24dp</dimen>
-
-
-
-
+    <dimen name="login_input_bt_txt_log_textsize">10dp</dimen>
 
     <!--    main-->
     <!--    splash-->
     <!--    actionbar-->
     <!--    dialog-->
+    <dimen name="dialog_text_big">14dp</dimen>
+    <dimen name="dialog_text_small">10dp</dimen>
+    <dimen name="dialog_height">60dp</dimen>
+    <dimen name="dialog_top">10dp</dimen>
     <!--    authh_authentification-->
     <!--    auth_limit_off-->
+    <dimen name="auth_text_big">26dp</dimen>
+    <dimen name="auth_text_small">14dp</dimen>
+    <dimen name="auth_margin_mid">150dp</dimen>
+    <dimen name="auth_margin_side">20dp</dimen>
+    <dimen name="auth_button_height">65dp</dimen>
     <!--    auth_set_admin-->
     <!--    excercise_mode-->
     <!--    explain-->
     <!--    instruction-->
+    <dimen name="instruction_margin">20dp</dimen>
+    <dimen name="instruction_title">15dp</dimen>
+    <dimen name="instruction_linespacing">10dp</dimen>
+    <dimen name="instruction_text">8dp</dimen>
     <!--    result_detail-->
+    <dimen name="graph_margin_top">40dp</dimen>
+    <dimen name="graph_margin_bottom">40dp</dimen>
+    <dimen name="graph_margin_start">40dp</dimen>
+    <dimen name="graph_margin_end">40dp</dimen>
+    <dimen name="graph_label">15dp</dimen>
     <!--    result_graph-->
     <!--    select_mode-->
     <!--    select_workout-->
+    <dimen name="workout_text_big">16dp</dimen>
+    <dimen name="workout_text_small">10dp</dimen>
+    <dimen name="workout_margin_side">15dp</dimen>
+    <dimen name="workout_margin_outer">20dp</dimen>
+    <dimen name="workout_item_height">80dp</dimen>
+    <dimen name="workout_item_text_big">14dp</dimen>
+    <dimen name="workout_item_text_small">10dp</dimen>
+    <dimen name="workout_item_margin_arrow">25dp</dimen>
+    <dimen name="workout_item_margin_vertical">8dp</dimen>
     <!--    time_setting-->
+    <dimen name="timesetting_title">15dp</dimen>
+    <dimen name="timesetting_bluetitle">12dp</dimen>
+    <dimen name="timesetting_label">10dp</dimen>
+    <dimen name="timesetting_edit">10dp</dimen>
+    <dimen name="timesetting_reject">8dp</dimen>
+    <dimen name="timesetting_button_height">30dp</dimen>
+    <dimen name="timesetting_button_width">80dp</dimen>
+    <dimen name="timesetting_margin_mid">20dp</dimen>
+    <dimen name="timesetting_margin_general">15dp</dimen>
+    <dimen name="timesetting_margin_left">20dp</dimen>
+    <dimen name="timesetting_margin_right">20dp</dimen>
 
 </resources>

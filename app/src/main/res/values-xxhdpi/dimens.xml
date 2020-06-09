@@ -10,22 +10,17 @@
     <dimen name="login_content_right">100dp</dimen>
     <dimen name="login_content_height">380dp</dimen>
     <dimen name="login_input_top">24dp</dimen>
+    <dimen name="login_margin_side">80dp</dimen>
+    <dimen name="login_margin_big">60dp</dimen>
+    <dimen name="login_margin_small">40dp</dimen>
     <dimen name="login_input_etcode_top">60dp</dimen>
-    <dimen name="login_input_etcode_left">120dp</dimen>
-    <dimen name="login_input_etcode_right">120dp</dimen>
     <dimen name="login_input_etcode_textsize">40dp</dimen>
     <dimen name="login_input_bt_login_top">60dp</dimen>
-    <dimen name="login_input_bt_login_left">120dp</dimen>
-    <dimen name="login_input_bt_login_right">120dp</dimen>
     <dimen name="login_input_bt_login_textsize">24dp</dimen>
     <dimen name="login_input_bt_download_top">60dp</dimen>
-    <dimen name="login_input_bt_download_left">120dp</dimen>
-    <dimen name="login_input_bt_download_right">120dp</dimen>
     <dimen name="login_input_bt_download_textsize">24dp</dimen>
     <dimen name="login_input_bt_txt_log_top">60dp</dimen>
-    <dimen name="login_input_bt_txt_log_left">120dp</dimen>
-    <dimen name="login_input_bt_txt_log_right">120dp</dimen>
-    <dimen name="login_input_bt_txt_log_textsize">24dp</dimen>
+    <dimen name="login_input_bt_txt_log_textsize">15dp</dimen>
 
 
 
@@ -35,16 +30,55 @@
     <!--    splash-->
     <!--    actionbar-->
     <!--    dialog-->
+    <dimen name="dialog_text_big">36dp</dimen>
+    <dimen name="dialog_text_small">20dp</dimen>
+    <dimen name="dialog_height">120dp</dimen>
+    <dimen name="dialog_top">30dp</dimen>
     <!--    authh_authentification-->
     <!--    auth_limit_off-->
+    <dimen name="auth_text_big">20dp</dimen>
+    <dimen name="auth_text_small">18dp</dimen>
+    <dimen name="auth_margin_mid">300dp</dimen>
+    <dimen name="auth_margin_side">25dp</dimen>
+    <dimen name="auth_button_height">70dp</dimen>
     <!--    auth_set_admin-->
     <!--    excercise_mode-->
+    <dimen name="excercise_text">22dp</dimen>
     <!--    explain-->
     <!--    instruction-->
+    <dimen name="instruction_margin">20dp</dimen>
+    <dimen name="instruction_title">20dp</dimen>
+    <dimen name="instruction_linespacing">15dp</dimen>
+    <dimen name="instruction_text">16dp</dimen>
+    <!--    result_detail-->
+    <dimen name="graph_margin_top">60dp</dimen>
+    <dimen name="graph_margin_bottom">60dp</dimen>
+    <dimen name="graph_margin_start">70dp</dimen>
+    <dimen name="graph_margin_end">70dp</dimen>
+    <dimen name="graph_label">24dp</dimen>
     <!--    result_detail-->
     <!--    result_graph-->
     <!--    select_mode-->
     <!--    select_workout-->
+    <dimen name="workout_text_big">26dp</dimen>
+    <dimen name="workout_text_small">20dp</dimen>
+    <dimen name="workout_margin_side">60dp</dimen>
+    <dimen name="workout_item_height">80dp</dimen>
+    <dimen name="workout_item_text_big">20dp</dimen>
+    <dimen name="workout_item_text_small">16dp</dimen>
+    <dimen name="workout_item_margin_arrow">23dp</dimen>
+    <dimen name="workout_item_margin_vertical">9dp</dimen>
     <!--    time_setting-->
+    <dimen name="timesetting_title">25dp</dimen>
+    <dimen name="timesetting_bluetitle">18dp</dimen>
+    <dimen name="timesetting_label">18dp</dimen>
+    <dimen name="timesetting_edit">18dp</dimen>
+    <dimen name="timesetting_reject">15dp</dimen>
+    <dimen name="timesetting_button_height">70dp</dimen>
+    <dimen name="timesetting_button_width">160dp</dimen>
+    <dimen name="timesetting_margin_mid">80dp</dimen>
+    <dimen name="timesetting_margin_general">20dp</dimen>
+    <dimen name="timesetting_margin_left">30dp</dimen>
+    <dimen name="timesetting_margin_right">30dp</dimen>
 
 </resources>
