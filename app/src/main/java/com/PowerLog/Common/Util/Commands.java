@@ -6,7 +6,7 @@ public class Commands {
     protected static boolean withChecksum = true;
 
     public static String getFullCommand(boolean isChecksum, String content) {
-        String s = "$" + content + (withChecksum ? getCheckSums(content) : "") + "#";
+        String s = "$" + content + (isChecksum ? getCheckSums(content) : "") + "#";
         Log.i("Command",s);
         return s;
     }
@@ -96,8 +96,8 @@ public class Commands {
     }
 
     public static byte[] MeasureMode(boolean isIsotonic) {
-        Log.i("Sent Command", getFullCommand(true, "CM" + (isIsotonic ? "M" : "T")));
-        return getFullCommand(true, "CM" + (isIsotonic ? "M" : "T")).getBytes();
+        Log.i("Sent Command", getFullCommand(false, "CM" + (isIsotonic ? "M" : "T")));
+        return getFullCommand(false, "CM" + (isIsotonic ? "M" : "T")).getBytes();
     }
 
     public static byte[] MeasureSet(String Mode, String iTension, String tTension, String time, String man, String old) {

@@ -113,7 +113,6 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             switch (v.getId()) {
                 case R.id.exc_tab_btn_bench:
                     setExcercise(bench, new BenchPress(main));
-//                    TakeBreak(false);
                     break;
                 case R.id.exc_tab_btn_squat:
                     setExcercise(squat, new Squat(main));

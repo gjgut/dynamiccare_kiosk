@@ -336,7 +336,7 @@ public class Main extends DCActivity implements View.OnClickListener {
                             PlaySound(new int[]{R.raw.raise_the_bar_to_end_point});
                             break;
                         case "6":
-                            PlaySound(new int[]{R.raw.raise_the_bar_to_end_point});
+                            PlaySound(new int[]{R.raw.raise_the_bar_to_start_point});
                             break;
                     }
                     break;
