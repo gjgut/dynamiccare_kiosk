@@ -75,7 +75,10 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
         super(main);
         try {
             main.getusbService().write(Commands.ExcerciseMode(main.getisIsoKinetic()));
-            main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
+            if (main.getisIsoKinetic())
+                main.PlaySound(new int[]{R.raw.kinetic_excercise_mode_appended});
+            else
+                main.PlaySound(new int[]{R.raw.excercise_mode, R.raw.excercise_mode_english});
             main.getCare().getCurrentUserJson().put("plnVwId", null);
             main.setCurrentExcercise(null);
         } catch (Exception e) {
@@ -162,13 +165,13 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
 
     public void setPropertiesFocusable() {
         try {
-            boolean value=false;
-            if(dcButtonManager.getDCState() != DCButtonManager.State.Clear &&
+            boolean value = false;
+            if (dcButtonManager.getDCState() != DCButtonManager.State.Clear &&
                     dcButtonManager.getDCState() != DCButtonManager.State.Setted
             )
-                value=false;
+                value = false;
             else
-                value=true;
+                value = true;
             edt_count.getSource().setEnabled(value);
             edt_set.getSource().setEnabled(value);
             edt_weight.getSource().setEnabled(value);
@@ -274,7 +277,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         if (ready.IsPressed())
                             ready.setPressedwithNoSound();
                         SendWorkoutRecord();
-                        if(workout!=null && prev !=null)
+                        if (workout != null && prev != null)
                             main.ReplaceFragment(prev, false);
                     }
                     break;
@@ -307,7 +310,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                 if (timer != null)
                     timer.cancel();
                 count = Integer.parseInt(edt_rest.getSource().getText().toString());
-                timer = new CountDownTimer(Long.parseLong(edt_rest.getSource().getText().toString()) * 1000+500, 1000l) {
+                timer = new CountDownTimer(Long.parseLong(edt_rest.getSource().getText().toString()) * 1000 + 500, 1000l) {
 
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -315,7 +318,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                         if (count == 15)
                             main.PlaySound(new int[]{R.raw.next_set_will_start_soon, R.raw.next_set_will_start_soon_english});
                         else if (count < 10)
-                            main.PlaySound(dcSoundPlayer.getCoundSound("0"+String.valueOf(count)));
+                            main.PlaySound(dcSoundPlayer.getCoundSound("0" + String.valueOf(count)));
                         Log.i("Timer Used", String.valueOf(count));
 //                        Toast.makeText(main,"Timer Used"+String.valueOf(count),Toast.LENGTH_LONG);
                         count--;
@@ -330,7 +333,7 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             } else {
                 if (timer != null)
                     timer.cancel();
-                timer = new CountDownTimer(count * 1000+500, 1000) {
+                timer = new CountDownTimer(count * 1000 + 500, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         rest_time.setText(String.valueOf(count));
@@ -719,8 +722,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
                     Integer.valueOf(edt_count.getSource().getText().toString()),
                     Integer.valueOf(edt_set.getSource().getText().toString()),
                     Integer.valueOf(edt_rest.getSource().getText().toString()),
-                    workout!=null?workout.getIndex():null);
-            if (workout!=null && !workout.equals(sendworkdout)) {
+                    workout != null ? workout.getIndex() : null);
+            if (workout != null && !workout.equals(sendworkdout)) {
                 isProgram = onSchedule = false;
                 sendworkdout.setIndex(null);
             }
@@ -744,9 +747,8 @@ public class ExcerciseMode extends DCfragment implements View.OnTouchListener {
             Log.i("SendJson", result.toString());
 //            new NormalAlert(main, "결과를 전송하였습니다.", true).show();
         } catch (Exception e) {
-            if(DCHttp.getWhatKindOfNetwork(main)=="NONE")
-            {
-                new NormalAlert(main,"인터넷에 연결되지 않았습니다.\n 와이파이 및 이더넷 설정을 확인해주십시오.").show();
+            if (DCHttp.getWhatKindOfNetwork(main) == "NONE") {
+                new NormalAlert(main, "인터넷에 연결되지 않았습니다.\n 와이파이 및 이더넷 설정을 확인해주십시오.").show();
             }
 //                new NormalAlert(main, e.toString() + "exc:" + main.getCurrentExcercise(), true).show();
             Log.i("Error", e.toString());

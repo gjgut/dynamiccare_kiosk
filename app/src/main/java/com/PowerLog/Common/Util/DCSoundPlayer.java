@@ -72,6 +72,7 @@ public class DCSoundPlayer {
             excercise_mode_english,
             kinetic_excercise_mode,
             kinetic_excercise_mode_english,
+            kinetic_excercise_mode_appended,
             metric_log_mode,
             metric_log_mode_english,
             sotonic_log_mode,
@@ -262,6 +263,7 @@ public class DCSoundPlayer {
             excercise_mode_english = soundPool.load(context, R.raw.excercise_mode_english, 1);
             kinetic_excercise_mode = soundPool.load(context, R.raw.kinetic_excercise_mode, 1);
             kinetic_excercise_mode_english = soundPool.load(context, R.raw.kinetic_excercise_mode_english, 1);
+            kinetic_excercise_mode_appended = soundPool.load(context, R.raw.kinetic_excercise_mode_appended, 1);
             metric_log_mode = soundPool.load(context, R.raw.metric_log_mode, 1);
             metric_log_mode_english = soundPool.load(context, R.raw.metric_log_mode_english, 1);
             sotonic_log_mode = soundPool.load(context, R.raw.sotonic_log_mode, 1);
@@ -278,10 +280,10 @@ public class DCSoundPlayer {
             please_check_the_results_english = soundPool.load(context, R.raw.please_check_the_results_english, 1);
 
 
-            raise_the_bar_to_end = soundPool.load(context, R.raw.raise_the_bar_to_end_point, 1);
-            raise_the_bar_to_start = soundPool.load(context, R.raw.raise_the_bar_to_start_point, 1);
-            put_down_the_bar_to_start = soundPool.load(context, R.raw.put_down_the_bar_to_the_start_point, 1);
-            put_down_the_bar_to_end = soundPool.load(context, R.raw.put_down_the_bar_to_end_point, 1);
+            raise_the_bar_to_end = soundPool.load(context, R.raw.please_raise_the_bar_to_the_end_appended, 1);
+            raise_the_bar_to_start = soundPool.load(context, R.raw.please_raise_the_bar_to_the_stating_position_appended, 1);
+            put_down_the_bar_to_start = soundPool.load(context, R.raw.drop_the_bar_to_the_starting_position_appended, 1);
+            put_down_the_bar_to_end = soundPool.load(context, R.raw.drop_the_bar_to_the_end_appended, 1);
 
             one = soundPool.load(context, R.raw.one, 1);
             two = soundPool.load(context, R.raw.two, 1);
@@ -530,6 +532,9 @@ public class DCSoundPlayer {
                     break;
                 case R.raw.kinetic_excercise_mode_english:
                     soundPool.play(kinetic_excercise_mode_english, 1, 1, 0, 0, 1);
+                    break;
+                case R.raw.kinetic_excercise_mode_appended:
+                    soundPool.play(kinetic_excercise_mode_appended, 1, 1, 0, 0, 1);
                     break;
                 case R.raw.metric_log_mode:
                     soundPool.play(metric_log_mode, 1, 1, 0, 0, 1);

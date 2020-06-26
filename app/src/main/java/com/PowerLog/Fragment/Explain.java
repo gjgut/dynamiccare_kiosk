@@ -39,9 +39,9 @@ public class Explain extends DCfragment {
         try {
             main.getusbService().write(Commands.ExcerciseMode(main.getisIsoTonic()));
             if (main.getisIsoTonic())
-                main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.sotonic_log_mode_english});
+                main.PlaySound(new int[]{R.raw.sotonic_log_mode, R.raw.metric_log_mode_english});
             else
-                main.PlaySound(new int[]{R.raw.metric_log_mode, R.raw.metric_log_mode_english});
+                main.PlaySound(new int[]{R.raw.metric_log_mode, R.raw.sotonic_log_mode_english});
 
         } catch (Exception e) {
             Log.i("Error", e.toString());

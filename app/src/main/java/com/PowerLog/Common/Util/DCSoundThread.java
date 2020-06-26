@@ -180,6 +180,7 @@ public class DCSoundThread {
             case R.raw.adjust_the_bar_or_wire_properly_english:
             case R.raw.put_down_the_bar_to_end_point:
             case R.raw.raise_the_bar_to_end_point:
+            case R.raw.kinetic_excercise_mode_appended:
                 return 5000;
             case R.raw.take_pose_and_place_bar_or_wire_to_right_position:
             case R.raw.raise_the_bar_to_start_point:
