@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="general_text_size">16dp</dimen>
+    <dimen name="general_margin_small">8dp</dimen>
+    <dimen name="general_margin_mid">15dp</dimen>
+    <dimen name="general_margin_big">22dp</dimen>
+    <dimen name="general_margin_extra">30dp</dimen>
     <!--    administrator-->
 
     <!--    qr_link-->
@@ -28,12 +33,15 @@
 
     <!--    main-->
     <!--    splash-->
+    <dimen name="splash_margin_side">100dp</dimen>
     <!--    actionbar-->
     <!--    dialog-->
-    <dimen name="dialog_text_big">36dp</dimen>
-    <dimen name="dialog_text_small">20dp</dimen>
-    <dimen name="dialog_height">120dp</dimen>
-    <dimen name="dialog_top">30dp</dimen>
+    <dimen name="dialog_text_big">20dp</dimen>
+    <dimen name="dialog_text_small">16dp</dimen>
+    <dimen name="dialog_height">80dp</dimen>
+    <dimen name="dialog_top">20dp</dimen>
+    <dimen name="dialog_margin_side">30dp</dimen>
+    <dimen name="dialog_padding">30dp</dimen>
     <!--    authh_authentification-->
     <!--    auth_limit_off-->
     <dimen name="auth_text_big">20dp</dimen>
@@ -43,26 +51,27 @@
     <dimen name="auth_button_height">70dp</dimen>
     <!--    auth_set_admin-->
     <!--    excercise_mode-->
-    <dimen name="excercise_text">22dp</dimen>
+    <dimen name="excercise_text">12dp</dimen>
+    <dimen name="excercise_count">100dp</dimen>
+    <dimen name="excercise_instruction">35dp</dimen>
     <!--    explain-->
     <!--    instruction-->
     <dimen name="instruction_margin">20dp</dimen>
     <dimen name="instruction_title">20dp</dimen>
     <dimen name="instruction_linespacing">15dp</dimen>
-    <dimen name="instruction_text">16dp</dimen>
-    <!--    result_detail-->
-    <dimen name="graph_margin_top">60dp</dimen>
-    <dimen name="graph_margin_bottom">60dp</dimen>
-    <dimen name="graph_margin_start">70dp</dimen>
-    <dimen name="graph_margin_end">70dp</dimen>
-    <dimen name="graph_label">24dp</dimen>
+    <dimen name="instruction_text">12dp</dimen>
     <!--    result_detail-->
     <!--    result_graph-->
+    <dimen name="graph_margin_side">70dp</dimen>
+    <dimen name="graph_margin_vertical">80dp</dimen>
+    <dimen name="graph_label">20dp</dimen>
     <!--    select_mode-->
     <!--    select_workout-->
-    <dimen name="workout_text_big">26dp</dimen>
-    <dimen name="workout_text_small">20dp</dimen>
-    <dimen name="workout_margin_side">60dp</dimen>
+    <dimen name="workout_text_big">16dp</dimen>
+    <dimen name="workout_text_small">14dp</dimen>
+    <dimen name="workout_text_margin_start">60dp</dimen>
+    <dimen name="workout_margin_side">20dp</dimen>
+    <dimen name="workout_button_size">20dp</dimen>
     <dimen name="workout_item_height">80dp</dimen>
     <dimen name="workout_item_text_big">20dp</dimen>
     <dimen name="workout_item_text_small">16dp</dimen>

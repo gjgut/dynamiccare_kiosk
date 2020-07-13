@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="general_text_size">25dp</dimen>
 <!--    administrator-->
 
 <!--    qr_link-->
@@ -32,6 +33,7 @@
 
 <!--    main-->
 <!--    splash-->
+    <dimen name="splash_margin_side">160dp</dimen>
 <!--    actionbar-->
 <!--    dialog-->
 <!--    authh_authentification-->

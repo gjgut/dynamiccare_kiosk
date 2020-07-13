@@ -46,7 +46,7 @@
                 android:gravity="center|left"
                 android:text="   관리자 번호 변경"
                 android:textColor="#FFFFFF"
-                android:textSize="36sp"
+                android:textSize="@dimen/graph_label"
                 android:textStyle="bold"
                 android:visibility="visible" />
 

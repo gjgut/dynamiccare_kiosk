@@ -23,15 +23,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <VideoView
                 android:id="@+id/video_instruct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:clickable="false"
                 android:contextClickable="false"
                 android:longClickable="true"
@@ -67,7 +68,6 @@
                     android:gravity="center"
                     android:hint="고유번호 입력"
                     android:inputType="number|textPhonetic"
-                    android:letterSpacing="-0.02"
                     android:maxLength="12"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
@@ -110,8 +110,6 @@
                     android:layout_marginTop="@dimen/login_margin_big"
                     android:layout_weight="10"
                     android:gravity="center_horizontal"
-                    android:letterSpacing="-0.02"
-                    android:lineSpacingExtra="18sp"
                     android:text="고유번호는 다이나믹케어 앱에서 확인하실 수 있습니다\n(앱 &gt; 더보기 &gt; 키오스크 간편 로그인)"
                     android:textAlignment="center"
                     android:textColor="#ffffff"

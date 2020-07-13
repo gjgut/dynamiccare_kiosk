@@ -22,9 +22,9 @@
             android:id="@+id/Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginStart="@dimen/workout_margin_side"
+            android:layout_marginTop="@dimen/general_margin_mid"
+            android:layout_marginEnd="@dimen/workout_margin_side"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -43,7 +43,7 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/general_margin_small"
                 android:text="어떤 운동을 하시겠습니까?"
                 android:textColor="#3993de"
                 android:textSize="@dimen/workout_text_big"
@@ -77,11 +77,23 @@
                 android:layout_weight="1"
                 android:visibility="visible">
 
+                <TextView
+                    android:id="@+id/txt_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/workout_text_margin_start"
+                    android:layout_marginTop="@dimen/general_margin_extra"
+                    android:text="플랜"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/workout_text_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginBottom="28dp"
+                    android:layout_marginTop="@dimen/general_margin_big"
+                    android:layout_marginBottom="@dimen/general_margin_big"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -90,8 +102,8 @@
 
                     <ImageButton
                         android:id="@+id/btn_plan_left"
-                        android:layout_width="30dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/workout_button_size"
+                        android:layout_height="@dimen/workout_button_size"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:background="#00FFFFFF"
@@ -104,8 +116,8 @@
 
                     <ImageButton
                         android:id="@+id/btn_plan_right"
-                        android:layout_width="30dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/workout_button_size"
+                        android:layout_height="@dimen/workout_button_size"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:background="#00FFFFFF"
@@ -134,18 +146,6 @@
                     </ListView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/txt_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="44dp"
-                    android:text="플랜"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/workout_text_small"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -158,8 +158,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginTop="@dimen/general_margin_big"
+                    android:layout_marginBottom="@dimen/general_margin_big"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -168,8 +168,8 @@
 
                     <ImageButton
                         android:id="@+id/btn_workout_left"
-                        android:layout_width="30dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/workout_button_size"
+                        android:layout_height="@dimen/workout_button_size"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:background="#00FFFFFF"
@@ -182,8 +182,8 @@
 
                     <ImageButton
                         android:id="@+id/btn_workout_right"
-                        android:layout_width="30dp"
-                        android:layout_height="80dp"
+                        android:layout_width="@dimen/workout_button_size"
+                        android:layout_height="@dimen/workout_button_size"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:background="#00FFFFFF"
@@ -215,8 +215,8 @@
                     android:id="@+id/textView13"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="@dimen/workout_text_margin_start"
+                    android:layout_marginTop="@dimen/general_margin_extra"
                     android:text="일정"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/workout_text_small"

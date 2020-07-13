@@ -20,12 +20,12 @@
 
         <LinearLayout
             android:id="@+id/action_title"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/general_margin_mid"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/icon_blue"
@@ -45,7 +45,7 @@
                 android:gravity="center|left"
                 android:text="측정 결과 확인"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp"
+                android:textSize="@dimen/graph_label"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -66,12 +66,10 @@
             android:id="@+id/detail_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="60dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:padding="40dp"
+            android:padding="@dimen/detail_padding"
             android:scaleType="fitCenter"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
@@ -84,9 +82,9 @@
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_margin_big"
+            android:layout_marginEnd="@dimen/general_margin_big"
             android:layout_weight="3"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -101,11 +99,12 @@
                 android:gravity="center|left"
                 android:text=" 벤치프레스 대흉근"
                 android:textColor="#ffee00"
-                android:textSize="30sp" />
+                android:textSize="@dimen/detail_text_big" />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/general_margin_mid"
                 android:layout_weight="3"
                 android:gravity="center">
 
@@ -113,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="@dimen/general_margin_mid"
                     android:gravity="left">
 
                     <TextView
@@ -126,13 +125,13 @@
                         android:gravity="center"
                         android:text="시작 무게"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
 
                     <ProgressBar
                         android:id="@+id/progressBar_start"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/detail_progress"
                         android:layout_gravity="center"
                         android:layout_weight="10"
                         android:background="#00FFFFFF"
@@ -153,14 +152,14 @@
                         android:gravity="center"
                         android:text="0kg"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="@dimen/general_margin_mid"
                     android:gravity="left">
 
                     <TextView
@@ -173,13 +172,13 @@
                         android:gravity="center"
                         android:text="평균 무게"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
 
                     <ProgressBar
                         android:id="@+id/progressBar_average"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/detail_progress"
                         android:layout_gravity="center"
                         android:layout_weight="10"
                         android:background="#00FFFFFF"
@@ -200,14 +199,14 @@
                         android:gravity="center"
                         android:text="0kg"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="@dimen/general_margin_mid"
                     android:gravity="left">
 
                     <TextView
@@ -220,13 +219,13 @@
                         android:gravity="center"
                         android:text="최대 무게"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
 
                     <ProgressBar
                         android:id="@+id/progressBar_max"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/detail_progress"
                         android:layout_gravity="center"
                         android:layout_weight="10"
                         android:background="#00FFFFFF"
@@ -247,14 +246,14 @@
                         android:gravity="center"
                         android:text="0kg"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="@dimen/general_margin_mid"
                     android:gravity="left">
 
                     <TextView
@@ -267,13 +266,13 @@
                         android:gravity="center"
                         android:text="최소 무게"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
 
                     <ProgressBar
                         android:id="@+id/progressBar_min"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/detail_progress"
                         android:layout_gravity="center"
                         android:layout_weight="10"
                         android:background="#00FFFFFF"
@@ -294,7 +293,7 @@
                         android:gravity="center"
                         android:text="0kg"
                         android:textColor="#ffffff"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/detail_text_small" />
                 </TableRow>
             </TableLayout>
 

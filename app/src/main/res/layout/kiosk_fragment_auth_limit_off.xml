@@ -5,9 +5,116 @@
     android:id="@+id/linearLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1d1f21">
+    android:background="#1d1f21"
+    android:paddingStart="@dimen/general_margin_extra"
+    android:paddingEnd="@dimen/general_margin_extra">
 
   <LinearLayout
+      android:id="@+id/action_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/general_margin_big"
+      android:layout_weight="1"
+      android:orientation="horizontal"
+      android:visibility="visible"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:layout_editor_absoluteX="20dp">
+
+    <LinearLayout
+        android:id="@+id/icon_blue"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:background="#3993de"
+        android:orientation="horizontal"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txt_ins_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center|left"
+        android:text="  시간 제한 해제 "
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/auth_text_big"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+  </LinearLayout>
+
+  <EditText
+      android:id="@+id/et_adminpw"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:backgroundTint=" #33ffffff"
+      android:ems="10"
+      android:hint="관리자 번호 입력"
+      android:inputType="numberPassword"
+      android:textAlignment="center"
+      android:textColor="#FFFFFF"
+      android:textColorHighlight="#00BB3636"
+      android:textColorHint="#33ffffff"
+      android:textSize="@dimen/auth_text_big"
+      app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/action_title" />
+
+  <TextView
+      android:id="@+id/password_reject"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/general_margin_mid"
+      android:text="관리자 비밀번호가 틀립니다."
+      android:textColor="#8F1B1B"
+      android:textSize="@dimen/auth_text_small"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/linearLayout8"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/general_margin_2extra"
+      android:layout_weight="1"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+    <Button
+        android:id="@+id/btn_limit_deactivate"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/auth_button_height"
+        android:layout_marginStart="@dimen/auth_margin_side"
+        android:layout_marginTop="@dimen/auth_margin_mid"
+        android:layout_marginEnd="@dimen/auth_margin_side"
+        android:background="#3993de"
+        android:text="해제"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/auth_text_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
+
+    <TextView
+        android:id="@+id/txt_log_exp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/general_margin_big"
+        android:gravity="center_horizontal"
+        android:text="초기 관리자 번호는 [0000] 입니다"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/auth_text_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_limit_deactivate" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <LinearLayout
+      android:id="@+id/linearLayout14"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/auth_margin_side"
@@ -16,113 +123,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="1.0"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.158">
-
-    <LinearLayout
-        android:id="@+id/action_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-      <LinearLayout
-          android:id="@+id/icon_blue"
-          android:layout_width="110dp"
-          android:layout_height="match_parent"
-          android:layout_marginRight="10dp"
-          android:layout_weight="1"
-          android:background="#3993de"
-          android:orientation="horizontal"
-          android:visibility="visible"></LinearLayout>
-
-      <TextView
-          android:id="@+id/txt_ins_title"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center|left"
-          android:text="  시간 제한 해제 "
-          android:textColor="#FFFFFF"
-          android:textSize="@dimen/auth_text_big"
-          android:textStyle="bold"
-          android:visibility="visible" />
-
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/auth_margin_side"
-        android:layout_marginTop="160dp"
-        android:layout_marginRight="@dimen/auth_margin_side"
-        android:layout_weight="1">
-
-      <EditText
-          android:id="@+id/et_adminpw"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="52dp"
-          android:backgroundTint=" #33ffffff"
-          android:ems="10"
-          android:hint="관리자 번호 입력"
-          android:inputType="numberPassword"
-          android:textAlignment="center"
-          android:textColor="#FFFFFF"
-          android:textColorHighlight="#00BB3636"
-          android:textColorHint="#33ffffff"
-          android:textSize="@dimen/auth_text_big"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.0"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-      <TextView
-          android:id="@+id/password_reject"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="24dp"
-          android:text="관리자 비밀번호가 틀립니다."
-          android:textColor="#8F1B1B"
-          android:textSize="@dimen/auth_text_small"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
-
-      <Button
-          android:id="@+id/btn_limit_deactivate"
-          android:layout_width="0dp"
-          android:layout_height="@dimen/auth_button_height"
-          android:layout_marginTop="@dimen/auth_margin_mid"
-          android:background="#3993de"
-          android:text="해제"
-          android:textColor="#ffffff"
-          android:textSize="@dimen/auth_text_small"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="1.0"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
-
-      <TextView
-          android:id="@+id/txt_log_exp2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="32dp"
-          android:gravity="center_horizontal"
-          android:letterSpacing="-0.02"
-          android:lineSpacingExtra="36sp"
-          android:text="초기 관리자 번호는 [0000] 입니다"
-          android:textColor="#ffffff"
-          android:textSize="@dimen/auth_text_small"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.496"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/btn_limit_deactivate" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+      app:layout_constraintStart_toStartOf="parent">
 
   </LinearLayout>
 
