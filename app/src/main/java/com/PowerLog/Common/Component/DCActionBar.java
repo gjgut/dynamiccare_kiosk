@@ -89,8 +89,7 @@ public class DCActionBar implements View.OnClickListener {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
 
-        View mCustomView = LayoutInflater.from(main)
-                .inflate(R.layout.custom_actionbar, null);
+        View mCustomView = LayoutInflater.from(main).inflate(R.layout.kiosk_custom_actionbar, null);
         actionBar.setCustomView(mCustomView);
         Toolbar parent = (Toolbar) mCustomView.getParent();
         parent.setContentInsetsAbsolute(0, 0);

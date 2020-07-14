@@ -39,10 +39,7 @@ public class LoadPlan extends Dialog {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.3f;
         getWindow().setAttributes(layoutParams);
-        setContentView(R.layout.dialog_isload_workout_plan);
-
-
-            setContentView(R.layout.kiosk_dialog_isload_workout_plan);
+        setContentView(R.layout.kiosk_dialog_isload_workout_plan);
 
         Date currentTime = Calendar.getInstance().getTime();
         String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);

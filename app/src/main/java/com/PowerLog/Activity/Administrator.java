@@ -37,7 +37,7 @@ public class Administrator extends DCActivity implements View.OnClickListener {
         if(care.IsKiosk())
             setContentView(R.layout.kiosk_activity_administrator);
         else
-            setContentView(R.layout.activity_administrator);
+            setContentView(R.layout.kiosk_activity_administrator);
         try {
             ViewMapping();
 
