@@ -10,6 +10,7 @@
     <dimen name="login_content_left">100dp</dimen>
     <dimen name="login_content_right">100dp</dimen>
     <dimen name="login_content_height">380dp</dimen>
+    <dimen name="login_input_textsize">30dp</dimen>
     <dimen name="login_input_top">24dp</dimen>
     <dimen name="login_input_etcode_top">60dp</dimen>
     <dimen name="login_input_etcode_left">120dp</dimen>
@@ -40,7 +41,7 @@
 <!--    auth_limit_off-->
 <!--    auth_set_admin-->
 <!--    excercise_mode-->
-    <dimen name="excercise_text">30dp</dimen>
+    <dimen name="excercise_text">26dp</dimen>
 <!--    explain-->
 <!--    instruction-->
     <dimen name="instruction_margin">20dp</dimen>

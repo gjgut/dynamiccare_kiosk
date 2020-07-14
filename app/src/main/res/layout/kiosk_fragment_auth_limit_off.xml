@@ -12,26 +12,26 @@
   <LinearLayout
       android:id="@+id/action_title"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/general_margin_big"
-      android:layout_weight="1"
+      android:layout_height="0dp"
+      android:layout_marginTop="@dimen/general_margin_2extra"
       android:orientation="horizontal"
       android:visibility="visible"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:layout_editor_absoluteX="20dp">
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/icon_blue"
-        android:layout_width="60dp"
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
         android:layout_weight="1"
-        android:background="#3993de"
-        android:orientation="horizontal"
-        android:visibility="visible" />
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/point" />
 
     <TextView
-        android:id="@+id/txt_ins_title"
+        android:id="@+id/txt_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -49,7 +49,6 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:backgroundTint=" #33ffffff"
-      android:ems="10"
       android:hint="관리자 번호 입력"
       android:inputType="numberPassword"
       android:textAlignment="center"
@@ -88,16 +87,15 @@
         android:id="@+id/btn_limit_deactivate"
         android:layout_width="0dp"
         android:layout_height="@dimen/auth_button_height"
-        android:layout_marginStart="@dimen/auth_margin_side"
-        android:layout_marginTop="@dimen/auth_margin_mid"
-        android:layout_marginEnd="@dimen/auth_margin_side"
+        android:layout_marginStart="@dimen/auth_button_margin_side"
+        android:layout_marginEnd="@dimen/auth_button_margin_side"
         android:background="#3993de"
         android:text="해제"
         android:textColor="#ffffff"
         android:textSize="@dimen/auth_text_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_adminpw" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_log_exp2"

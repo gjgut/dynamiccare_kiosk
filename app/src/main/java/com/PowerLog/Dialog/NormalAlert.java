@@ -43,10 +43,7 @@ public class NormalAlert extends Dialog {
         layoutParams.dimAmount = 0.3f;
         getWindow().setAttributes(layoutParams);
 
-        if (context.getCare().IsKiosk())
             setContentView(R.layout.kiosk_dialog_limit_alert);
-        else
-            setContentView(R.layout.dialog_limit_alert);
 
 
         yes = findViewById(R.id.btn_yes);

@@ -477,10 +477,7 @@ public class Main extends DCActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (care.IsKiosk())
-            setContentView(R.layout.kiosk_activity_main);
-        else
-            setContentView(R.layout.activity_main);
+        setContentView(R.layout.kiosk_activity_main);
         main = this;
         DCButtonManager.setMainContext(main);
         try {

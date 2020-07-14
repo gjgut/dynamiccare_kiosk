@@ -35,10 +35,7 @@ public class FinishAlert extends Dialog implements View.OnClickListener {
         layoutParams.dimAmount = 0.3f;
         getWindow().setAttributes(layoutParams);
 
-        if (main.getCare().IsKiosk())
             setContentView(R.layout.kiosk_dialog_warning_for_finish);
-        else
-            setContentView(R.layout.dialog_warning_for_finish);
 
         yes = findViewById(R.id.btn_yes);
         no = findViewById(R.id.btn_no);

@@ -42,10 +42,7 @@ public class LoadPlan extends Dialog {
         setContentView(R.layout.dialog_isload_workout_plan);
 
 
-        if (context.getCare().IsKiosk())
             setContentView(R.layout.kiosk_dialog_isload_workout_plan);
-        else
-            setContentView(R.layout.dialog_isload_workout_plan);
 
         Date currentTime = Calendar.getInstance().getTime();
         String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);

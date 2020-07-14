@@ -59,11 +59,7 @@ public class LimitOff extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view;
-        if (care.IsKiosk())
-            view = inflater.inflate(R.layout.kiosk_fragment_auth_limit_off, container, false);
-        else
-            view = inflater.inflate(R.layout.fragment_auth_limit_off, container, false);
+        View view = inflater.inflate(R.layout.kiosk_fragment_auth_limit_off, container, false);
         super.onCreate(savedInstanceState);
         care = (DynamicCare) admin.getApplication();
 
@@ -76,7 +72,7 @@ public class LimitOff extends DCfragment {
             reject = view.findViewById(R.id.password_reject);
             reject.setVisibility(View.INVISIBLE);
 
-            title = view.findViewById(R.id.txt_ins_title);
+            title = view.findViewById(R.id.txt_detail_title);
 
             if (care.isLimit()) {
                 title.setText("시간 제한 해제");

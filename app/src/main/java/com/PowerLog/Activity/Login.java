@@ -86,7 +86,7 @@ public class Login extends DCActivity implements View.OnClickListener {
             care.setUserId(edt_code.getSource().getText().toString());
             ChangeActivity(act);
         } catch (Exception e) {
-            new NormalAlert(this, "오류가 발생하였습니다. 고유번호를 확인해주십시오.").show();
+            new NormalAlert(this, "오류가 발생하였습니다. \n고유번호를 확인해주십시오.").show();
         }
     }
 

@@ -23,25 +23,27 @@
             android:id="@+id/action_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="@dimen/general_margin_mid"
+            android:layout_marginTop="@dimen/general_margin_mid"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/icon_blue"
-                android:layout_width="80dp"
+            <ImageView
+                android:id="@+id/point"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="#3993de"
-                android:orientation="horizontal"
-                android:visibility="visible"></LinearLayout>
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/point" />
 
             <TextView
                 android:id="@+id/txt_detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/general_margin_small"
                 android:layout_weight="1"
                 android:gravity="center|left"
                 android:text="측정 그래프"

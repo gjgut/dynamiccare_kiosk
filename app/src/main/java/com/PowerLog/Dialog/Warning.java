@@ -32,7 +32,7 @@ public class Warning extends Dialog {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.3f;
         getWindow().setAttributes(layoutParams);
-        setContentView(R.layout.dialog_limit_alert);
+        setContentView(R.layout.kiosk_dialog_limit_alert);
 
 
         yes = findViewById(R.id.btn_yes);

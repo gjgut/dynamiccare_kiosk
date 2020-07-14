@@ -49,7 +49,7 @@ public class DCSpinnerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.spinner_normal, parent, false);
+                convertView = inflater.inflate(R.layout.kiosk_spinner_normal, parent, false);
             }
 
             spinnerText = (TextView) convertView.findViewById(R.id.spinnerText);
@@ -69,7 +69,7 @@ public class DCSpinnerAdapter extends BaseAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         try {
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.spinner_drop_down, parent, false);
+                convertView = inflater.inflate(R.layout.kiosk_spinner_drop_down, parent, false);
             }
 
             spinnerText = convertView.findViewById(R.id.spinnerText);

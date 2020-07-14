@@ -72,11 +72,7 @@ public class DetailResult extends DCfragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v;
-        if (care.IsKiosk())
-            v = inflater.inflate(R.layout.kiosk_fragment_result_detail, container, false);
-        else
-            v = inflater.inflate(R.layout.fragment_result_detail, container, false);
+        View v = inflater.inflate(R.layout.kiosk_fragment_result_detail, container, false);
         try {
 
             Main.getBottombar().findViewById(R.id.btn_next).setVisibility(View.INVISIBLE);

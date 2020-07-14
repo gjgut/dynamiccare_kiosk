@@ -71,7 +71,7 @@
             android:gravity="center"
             android:text="00 : 00"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/general_text_size"
+            android:textSize="@dimen/bar_text"
             app:layout_constraintBottom_toBottomOf="@+id/Bottom"
             app:layout_constraintEnd_toEndOf="@+id/Bottom"
             app:layout_constraintStart_toStartOf="@+id/Bottom"

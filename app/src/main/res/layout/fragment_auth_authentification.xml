@@ -41,7 +41,7 @@
                 android:visibility="visible"></LinearLayout>
 
             <TextView
-                android:id="@+id/txt_ins_title"
+                android:id="@+id/txt_detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

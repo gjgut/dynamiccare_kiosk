@@ -34,14 +34,9 @@ public class Instruction extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view;
-        if (care.IsKiosk())
-            view = inflater.inflate(R.layout.kiosk_fragment_instruction, container, false);
-        else
-            view = inflater.inflate(R.layout.fragment_instruction, container, false);
-
+        View view = inflater.inflate(R.layout.kiosk_fragment_instruction, container, false);
         try{
-        title = view.findViewById(R.id.txt_ins_title);
+        title = view.findViewById(R.id.txt_detail_title);
         content = view.findViewById(R.id.txt_ins_content);
 
         videoView = view.findViewById(R.id.video_instruct);

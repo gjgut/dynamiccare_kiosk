@@ -162,12 +162,7 @@ public class SelectWorkOut extends DCfragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view;
-        if (care.IsKiosk())
-            view = inflater.inflate(R.layout.kiosk_fragment_select_workout, container, false);
-        else
-            view = inflater.inflate(R.layout.fragment_select_workout, container, false);
-
+        View view = inflater.inflate(R.layout.kiosk_fragment_select_workout, container, false);
         try {
             Date currentTime = Calendar.getInstance().getTime();
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
@@ -188,15 +183,9 @@ public class SelectWorkOut extends DCfragment {
             plan = view.findViewById(R.id.list_plan);
             workout = view.findViewById(R.id.list_workout);
 
-            if (care.IsKiosk()) {
-                adapter_plan = new DCListViewAdapter(R.layout.kiosk_list_plan_item);
-                adapter_workout = new DCListViewAdapter(R.layout.kiosk_list_workout_item);
-            }
-            else
-            {
-                adapter_plan = new DCListViewAdapter(R.layout.list_plan_item);
-                adapter_workout = new DCListViewAdapter(R.layout.list_workout_item);
-            }
+            adapter_plan = new DCListViewAdapter(R.layout.kiosk_list_plan_item);
+            adapter_workout = new DCListViewAdapter(R.layout.kiosk_list_workout_item);
+
             care.UpdateJson();
             this.WorkoutJson = (JSONObject) care.getCurrentUserJson().get("resultData");
             PaintListView();
